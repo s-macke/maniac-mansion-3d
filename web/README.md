@@ -14,7 +14,7 @@ Open **http://127.0.0.1:5174/**. The first run builds if needed; subsequent runs
 
 `PORT=8080 ./walkthrough.sh` selects another port. Stop with Ctrl+C.
 
-The build uses Vite and vinext directly. No OpenAI Sites plugin, hosting configuration, or hosting account is required.
+The build uses Vite and React directly. No OpenAI Sites plugin, hosting configuration, or hosting account is required.
 
 ## Controls
 
@@ -59,22 +59,15 @@ The optional feature-detected WebMCP position-read/reset tools share the interfa
 
 Validated on 2026-09-10: static production build and TypeScript checks passed; all 15 browser/collision/assembly tests passed against the static server. The optimized GLB preserves every triangle position and baked color exactly.
 
-## Hosting under a subdirectory
+## Hosting under any server folder
 
-For **https://simulationcorner.net/maniac-mansion/**, build with:
+Build once with `./walkthrough.sh build`, then upload the contents of `web/dist/client/` to any server directory. The same output works at `/`, `/maniac-mansion-3d/`, or `/games/mansion/` without rebuilding or configuring a URL prefix. JavaScript, CSS, the favicon and room-model downloads all use relative URLs.
 
-```bash
-BASE_PATH=/maniac-mansion ./walkthrough.sh build
-```
+Use a directory URL ending in `/` (ordinary static servers redirect to this form), or open `index.html` explicitly. Query links such as `?room=kitchen` work in either form. The local server preserves query parameters when redirecting a directory URL. HTTP/HTTPS hosting is required; opening the files directly with `file://` is not supported.
 
-Upload the contents of `web/dist/client/` to the server's `maniac-mansion/` directory. The path is a build-time setting: rebuild when changing it. Both framework JavaScript/CSS and room-model downloads use this prefix. No server-side application is required.
+The build uses Vite's React plugin and exports directly to `dist/client/`. There is no server-rendering or export-rewrite step. Blender generation and the prebuild/predev room synchronization remain unchanged.
 
-For the existing localhost root URL, rebuild without `BASE_PATH`:
-
-```bash
-./walkthrough.sh build
-./walkthrough.sh
-```
+After building, run `cd web && npx playwright test tests/relative-hosting.spec.ts` from the project root to check one output at all three URL depths. The test starts an isolated temporary static server and checks model loading, movement, doors, refreshes, direct index links and directory redirects.
 
 ## Connected living room
 

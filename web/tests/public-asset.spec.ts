@@ -1,7 +1,11 @@
 import {test,expect} from '@playwright/test';
 import {publicAssetUrl} from '../lib/public-asset';
-test('room downloads use the same deployment prefix as the static app',()=>{
- expect(publicAssetUrl('/models/hall.glb','/maniac-mansion')).toBe('/maniac-mansion/models/hall.glb');
- expect(publicAssetUrl('models/hall.glb','/games/maniac-mansion')).toBe('/games/maniac-mansion/models/hall.glb');
- expect(publicAssetUrl('/models/hall.glb','')).toBe('/models/hall.glb');
+test('room downloads resolve beside the document at any deployment depth',()=>{
+ for(const folder of ['/', '/maniac-mansion-3d/', '/games/mansion/']){
+  for(const document of [folder, `${folder}index.html?room=kitchen`]){
+   for(const path of ['/models/hall.glb','models/hall.glb']){
+    expect(new URL(publicAssetUrl(path),`https://example.test${document}`).pathname).toBe(`${folder}models/hall.glb`);
+   }
+  }
+ }
 });

@@ -1,5 +1,7 @@
 # Docker and Compose builds
 
+For automatic builds and deployment on GitHub, see [GitHub Pages](github-pages.md). Its `pages` Docker target exports only the static website; the `artifacts` target below also exports Blender scenes and reports.
+
 The toolchain contains Blender 4.2.3, Node.js 22.22.0, Python/Pillow, DejaVu fonts and Blender's Linux libraries. Blender is downloaded from the official release server and checked against its pinned SHA-256 digest. Host Blender and npm installations are not required.
 
 ## Everyday commands
@@ -23,7 +25,7 @@ On a fresh checkout, run `all` before an incremental website build. After changi
 
 All paths and build ordering are implemented in **`scripts/build.py`**, shared by local Python, Compose and the Dockerfile. Compose only supplies the environment. Outputs go directly into this checkout's `generated/` and `web/dist/client/`. See [source/output ownership](rebuilding.md).
 
-The wrapper runs the cached `docker compose build builder` before each command. `BASE_PATH=/maniac-mansion ./docker-build.sh site` selects a URL prefix. No server starts and nothing is published automatically.
+The wrapper runs the cached `docker compose build builder` before each command. The same static build works at root or in any server subdirectory. No server starts and nothing is published automatically.
 
 ## Clean source-only export
 
@@ -42,7 +44,7 @@ docker buildx build --platform linux/amd64 --target artifacts \
 | `exports/docker/generated/` | Blender scenes, model exports, manifests, reports, previews and inventory |
 | `exports/docker/maniac-mansion-static.zip` | Static website ZIP |
 
-Toolchains, node_modules and transient caches are not exported. Existing working-tree models remain untouched by this clean-export command. The final stage is a file export, not a running web server image. Add `--build-arg BASE_PATH=/maniac-mansion` for a prefixed website; serve its contents at that prefix.
+Toolchains, node_modules and transient caches are not exported. Existing working-tree models remain untouched by this clean-export command. The final stage is a file export, not a running web server image. All website URLs are relative; no deployment prefix is configured at build time.
 
 For an unprefixed local preview:
 

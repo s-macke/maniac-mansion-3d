@@ -37,11 +37,13 @@ RUN cd web && npm ci
 FROM models AS build
 COPY --from=dependencies /project/web/node_modules/ web/node_modules/
 COPY web/ web/
-ARG BASE_PATH=
-ENV BASE_PATH=${BASE_PATH}
 RUN cd web && npm run build && npm run typecheck
-RUN cd web && npx playwright test tests/first-floor.spec.ts tests/doors.spec.ts tests/shared-assets.spec.ts
+RUN cd web && npx playwright test tests/first-floor.spec.ts tests/doors.spec.ts tests/shared-assets.spec.ts tests/public-asset.spec.ts
 RUN python3 scripts/build.py export /artifacts
+
+# Pages needs only the website, not editable Blender scenes or reports.
+FROM scratch AS pages
+COPY --from=build /project/web/dist/client/ /
 
 # Export files, without shipping Blender or node_modules with the website.
 FROM scratch AS artifacts

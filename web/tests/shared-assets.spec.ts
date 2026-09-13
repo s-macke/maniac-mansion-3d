@@ -40,7 +40,7 @@ test('loader fetches the kit once, waits for it before entry, and retains it acr
  GLTFLoader.prototype.load=function(url,onLoad){
   calls.push(url);
   if(url.includes('/shared/'))releaseKit=()=>onLoad({scene:library} as never);
-  else queueMicrotask(()=>onLoad({scene:templates.get(url)!.clone(true)} as never));
+  else queueMicrotask(()=>onLoad({scene:templates.get(new URL(url,'http://localhost/').pathname)!.clone(true)} as never));
  };
  const scene=new THREE.Scene(),assets=createHouseAssets(scene,{changed:()=>{},progress:()=>{},ready:()=>{ready=true;},error:m=>errors.push(m)},v);
  try{

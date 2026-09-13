@@ -11,7 +11,10 @@ const server=http.createServer(async(req,res)=>{
   if(req.method!=='GET'&&req.method!=='HEAD'){res.writeHead(405);res.end();return;}
   const url=new URL(req.url,'http://localhost');let path=resolve(root,'.'+decodeURIComponent(url.pathname));
   if(!path.startsWith(root.endsWith(sep)?root:root+sep)&&path!==root){res.writeHead(403);res.end();return;}
-  if((await stat(path)).isDirectory())path=resolve(path,'index.html');
+  if((await stat(path)).isDirectory()){
+   if(!url.pathname.endsWith('/')){res.writeHead(308,{'Location':url.pathname+'/'+url.search});res.end();return;}
+   path=resolve(path,'index.html');
+  }
   const type=mime[extname(path)]||'application/octet-stream';
   const acceptsGzip=String(req.headers['accept-encoding']||'').split(',').some(part=>{const [encoding,...parameters]=part.trim().split(';');const quality=parameters.find(p=>p.trim().startsWith('q='));return encoding==='gzip'&&(!quality||Number(quality.trim().slice(2))>0);});
   let encoding;
@@ -19,5 +22,5 @@ const server=http.createServer(async(req,res)=>{
   const body=await readFile(path);res.writeHead(200,{'Content-Type':type,'Content-Length':body.length,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff','Vary':'Accept-Encoding',...(encoding?{'Content-Encoding':encoding}:{})});res.end(req.method==='HEAD'?undefined:body);
  }catch{res.writeHead(404,{'Content-Type':'text/plain'});res.end('Not found');}
 });
-server.listen(port,'127.0.0.1',()=>console.log(`Entrance hall: http://127.0.0.1:${port}/`));
+server.listen(port,'127.0.0.1',()=>console.log(`Entrance hall: http://127.0.0.1:${server.address().port}/`));
 server.on('error',error=>{console.error(error.message);process.exitCode=1;});

@@ -36,4 +36,6 @@ For a fresh Git checkout without generated models or dependencies, follow [the s
 
 To regenerate the models and compile the website entirely in Docker, see [the Docker build instructions](docs/docker.md).
 
+The [GitHub Pages workflow](docs/github-pages.md) rebuilds the Blender assets and deploys the static website on pushes to `main`, once Pages is enabled in the repository settings.
+
 For incremental Docker builds, use `./docker-build.sh room kitchen --site`; use `./docker-build.sh all` for every room and the website. [Compose commands](docs/docker.md#everyday-builds-with-compose).

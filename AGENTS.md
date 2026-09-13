@@ -19,6 +19,7 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Project plan](PLAN.md) | Scope, decisions and development history; older version references are historical |
 | [Reference documentation](docs/README.md) | Index of the artwork inventory, palette and contact sheets |
 | [Docker build](docs/docker.md) | Container toolchain, complete asset rebuild and local output export |
+| [GitHub Pages](docs/github-pages.md) | Automated Blender build, static deployment and repository setup |
 | [Source-only rebuild](docs/rebuilding.md) | Git inputs, ignored outputs and fresh-checkout build order |
 | [Architecture](docs/architecture.md) | Room packaging, coordinates, connections, loading, doors and build workflow |
 | [Connection map](docs/connection_map.md) | Artwork-based topology and unresolved links |

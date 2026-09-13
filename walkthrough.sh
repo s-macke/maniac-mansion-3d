@@ -15,7 +15,7 @@ case "${1:-start}" in
     ;;
   dev)
     [[ -d node_modules ]] || npm ci
-    exec npm run dev -- --hostname 127.0.0.1 --port "${PORT:-5173}"
+    exec npm run dev -- --host 127.0.0.1 --port "${PORT:-5173}"
     ;;
   test)
     [[ -d node_modules ]] || npm ci
