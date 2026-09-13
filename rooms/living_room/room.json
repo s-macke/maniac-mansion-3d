@@ -1,0 +1,133 @@
+{
+  "id": "living_room",
+  "label": "Living room",
+  "backgrounds": [
+    "003"
+  ],
+  "asset": "generated/models/rooms/living_room_v4.glb",
+  "source": "generated/blender/living_room/living_room_source_v4.blend",
+  "baked": "generated/blender/living_room/living_room_v4.blend",
+  "build": "rooms/living_room/build.py",
+  "navigation": "living_room",
+  "bounds": {
+    "min": [
+      -6.6,
+      -0.25,
+      0
+    ],
+    "max": [
+      6.6,
+      5.85,
+      3.7
+    ]
+  },
+  "spawn": {
+    "x": -4.9,
+    "y": 0.65,
+    "height": 0,
+    "yaw": -0.71,
+    "pitch": 0.04
+  },
+  "geometry": {
+    "halfWidth": 6.4,
+    "depth": 5.6,
+    "obstacles": [
+      {
+        "x0": -1.91,
+        "x1": 1.91,
+        "y0": 3.48,
+        "y1": 5.04
+      },
+      {
+        "x0": -5.3,
+        "x1": -3.9,
+        "y0": 4.33,
+        "y1": 5.26
+      }
+    ]
+  },
+  "ports": [
+    {
+      "id": "left_door",
+      "position": [
+        -6.4,
+        3,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.05,
+      "state": "open",
+      "destination": "hall",
+      "height": 2.75
+    },
+    {
+      "id": "right_double_door",
+      "position": [
+        6.4,
+        3,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.8,
+      "state": "open",
+      "destination": "library",
+      "height": 2.95
+    }
+  ],
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Furniture",
+      "Windows",
+      "Artwork",
+      "Chandelier"
+    ],
+    "lights": [
+      [
+        -2,
+        2.4,
+        3.0
+      ],
+      [
+        3.5,
+        3.1,
+        2.95
+      ]
+    ],
+    "cell": 0.1,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1480,
+        650
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1280,
+        800
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1280,
+        800
+      ],
+      [
+        "04_Radio",
+        "radio",
+        1000,
+        800
+      ]
+    ],
+    "previewSuffix": "v4",
+    "startupCutaway": false
+  }
+}

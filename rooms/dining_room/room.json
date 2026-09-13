@@ -1,0 +1,120 @@
+{
+  "id": "dining_room",
+  "label": "Dining room",
+  "backgrounds": [
+    "037"
+  ],
+  "asset": "generated/models/rooms/dining_room_v1.glb",
+  "source": "generated/blender/dining_room/dining_room_source_v1.blend",
+  "baked": "generated/blender/dining_room/dining_room_v1.blend",
+  "build": "rooms/dining_room/build.py",
+  "navigation": "dining_room",
+  "bounds": {
+    "min": [
+      -9.6,
+      0,
+      -0.12
+    ],
+    "max": [
+      9.6,
+      5.55,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": -7,
+    "y": 2.9,
+    "height": 0,
+    "yaw": -1.5707963267948966,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 9.6,
+    "depth": 5.55,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "kitchen_door",
+      "position": [
+        -9.6,
+        2.9,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "kitchen"
+    },
+    {
+      "id": "pantry_door",
+      "position": [
+        9.6,
+        2.9,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "pantry"
+    }
+  ],
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -6,
+        2.9,
+        2.95
+      ],
+      [
+        0,
+        2.9,
+        2.95
+      ],
+      [
+        6,
+        2.9,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1100,
+        550
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 037.png"
+    ]
+  }
+}

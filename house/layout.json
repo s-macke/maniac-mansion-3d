@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "coordinates": "metres; Blender X/Y floor, Z up; yaw radians around +Z",
+  "start": "front_exterior",
+  "loadRadius": 24,
+  "unloadRadius": 32,
+  "rooms": [
+    {
+      "id": "hall",
+      "definition": "rooms/connected_hall/room.json",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "living_room",
+      "definition": "rooms/living_room/room.json",
+      "position": [
+        12.8,
+        0.15,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "front_exterior",
+      "definition": "rooms/front_exterior/room.json",
+      "position": [
+        -6.4,
+        2.35,
+        0
+      ],
+      "yaw": -1.5707963267948966
+    },
+    {
+      "id": "kitchen",
+      "definition": "rooms/kitchen/room.json",
+      "position": [
+        -0.82,
+        12.9,
+        0
+      ],
+      "yaw": 1.5707963267948966
+    },
+    {
+      "id": "dining_room",
+      "definition": "rooms/dining_room/room.json",
+      "position": [
+        -0.82,
+        28.9,
+        0
+      ],
+      "yaw": 1.5707963267948966
+    },
+    {
+      "id": "pantry",
+      "definition": "rooms/pantry/room.json",
+      "position": [
+        -0.82,
+        41.7,
+        0
+      ],
+      "yaw": 1.5707963267948966
+    },
+    {
+      "id": "pool",
+      "definition": "rooms/pool/room.json",
+      "position": [
+        -6.37,
+        44.1,
+        0
+      ],
+      "yaw": 3.141592653589793
+    },
+    {
+      "id": "garage",
+      "definition": "rooms/garage/room.json",
+      "position": [
+        -26.37,
+        42.9,
+        0
+      ],
+      "yaw": 3.141592653589793
+    },
+    {
+      "id": "library",
+      "definition": "rooms/library/room.json",
+      "position": [
+        25.6,
+        0.35,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "plant_room",
+      "definition": "rooms/plant_room/room.json",
+      "position": [
+        -9.6,
+        5.7,
+        3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "music_room",
+      "definition": "rooms/music_room/room.json",
+      "position": [
+        10.4,
+        5.8,
+        3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "security_hall",
+      "definition": "rooms/security_hall/room.json",
+      "position": [
+        0.2,
+        9.75,
+        3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "medical_room",
+      "definition": "rooms/medical_room/room.json",
+      "position": [
+        -2.8,
+        15.3,
+        3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "arcade",
+      "definition": "rooms/arcade/room.json",
+      "position": [
+        3.4,
+        15.3,
+        3.36
+      ],
+      "yaw": 0
+    }
+  ],
+  "connections": [
+    {
+      "a": {
+        "instance": "hall",
+        "port": "right_side"
+      },
+      "b": {
+        "instance": "living_room",
+        "port": "left_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "entrance"
+      },
+      "b": {
+        "instance": "front_exterior",
+        "port": "front_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "rear_left"
+      },
+      "b": {
+        "instance": "kitchen",
+        "port": "hall_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "kitchen",
+        "port": "dining_door"
+      },
+      "b": {
+        "instance": "dining_room",
+        "port": "kitchen_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "dining_room",
+        "port": "pantry_door"
+      },
+      "b": {
+        "instance": "pantry",
+        "port": "dining_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "pantry",
+        "port": "pool_door"
+      },
+      "b": {
+        "instance": "pool",
+        "port": "pantry_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "pool",
+        "port": "garage_path"
+      },
+      "b": {
+        "instance": "garage",
+        "port": "pool_path"
+      }
+    },
+    {
+      "a": {
+        "instance": "living_room",
+        "port": "right_double_door"
+      },
+      "b": {
+        "instance": "library",
+        "port": "living_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "landing_left"
+      },
+      "b": {
+        "instance": "plant_room",
+        "port": "landing_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "landing_right"
+      },
+      "b": {
+        "instance": "music_room",
+        "port": "landing_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "landing_center"
+      },
+      "b": {
+        "instance": "security_hall",
+        "port": "landing_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "security_hall",
+        "port": "medical_door"
+      },
+      "b": {
+        "instance": "medical_room",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "security_hall",
+        "port": "arcade_door"
+      },
+      "b": {
+        "instance": "arcade",
+        "port": "corridor_door"
+      }
+    }
+  ]
+}

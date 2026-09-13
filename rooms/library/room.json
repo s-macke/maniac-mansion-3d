@@ -1,0 +1,112 @@
+{
+  "id": "library",
+  "label": "Library",
+  "backgrounds": [
+    "005"
+  ],
+  "asset": "generated/models/rooms/library_v1.glb",
+  "source": "generated/blender/library/library_source_v1.blend",
+  "baked": "generated/blender/library/library_v1.blend",
+  "build": "rooms/library/build.py",
+  "navigation": "library",
+  "bounds": {
+    "min": [
+      -6.4,
+      0,
+      -0.12
+    ],
+    "max": [
+      6.4,
+      5.55,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": -4.5,
+    "y": 2.8,
+    "height": 0,
+    "yaw": -1.5707963267948966,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 6.4,
+    "depth": 5.55,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "living_door",
+      "position": [
+        -6.4,
+        2.8,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.8,
+      "height": 2.95,
+      "state": "open",
+      "destination": "living_room"
+    }
+  ],
+  "shell": {
+    "wall": "red",
+    "floor": "green",
+    "trim": "brown",
+    "entries": [
+      {
+        "port": "living_door",
+        "wall": "left",
+        "frame": true,
+        "owner": false
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -2.8800000000000003,
+        2.7,
+        2.95
+      ],
+      [
+        2.8800000000000003,
+        2.7,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 005.png"
+    ]
+  }
+}

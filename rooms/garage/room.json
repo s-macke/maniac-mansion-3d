@@ -1,0 +1,110 @@
+{
+  "id": "garage",
+  "label": "Garage and forecourt",
+  "backgrounds": [
+    "016"
+  ],
+  "asset": "generated/models/rooms/garage_v1.glb",
+  "source": "generated/blender/garage/garage_source_v1.blend",
+  "baked": "generated/blender/garage/garage_v1.blend",
+  "build": "rooms/garage/build.py",
+  "navigation": "garage",
+  "bounds": {
+    "min": [
+      0,
+      0,
+      -0.12
+    ],
+    "max": [
+      14,
+      8,
+      4.9
+    ]
+  },
+  "spawn": {
+    "x": 2,
+    "y": 4,
+    "height": 0,
+    "yaw": -1.5707963267948966,
+    "pitch": 0
+  },
+  "geometry": {
+    "width": 14,
+    "depth": 8,
+    "bayFront": 4,
+    "bayBack": 14,
+    "bayY0": 0.5,
+    "bayY1": 7.5,
+    "wallThickness": 0.18,
+    "height": 3.3,
+    "openingY0": 1.6,
+    "openingY1": 6.4,
+    "openingHeight": 2.95
+  },
+  "ports": [
+    {
+      "id": "pool_path",
+      "position": [
+        0,
+        4,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 2.6,
+      "height": 3.2,
+      "state": "open",
+      "destination": "pool"
+    }
+  ],
+  "bake": {
+    "collections": [
+      "Architecture"
+    ],
+    "lights": [
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        7,
+        4,
+        3.15
+      ],
+      [
+        12,
+        4,
+        3.15
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1100,
+        650
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1100,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1100,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 016.png"
+    ]
+  }
+}

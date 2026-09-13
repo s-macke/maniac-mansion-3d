@@ -1,0 +1,52 @@
+source/connection_suggestion.png
+
+.idea
+
+/.idea/
+
+# Reproducible models, Blender scenes, metadata, reports and images.
+/generated/
+/exports/
+
+# Browser build products and copies of generated room data.
+/web/public/models/
+/web/lib/house/generated.json
+/web/lib/house/adapters.generated.ts
+/web/next-env.d.ts
+/web/dist/
+/web/.next/
+/web/.vinext/
+/web/.wrangler/
+/web/.vercel/
+/web/out/
+/web/outputs/
+/web/work/
+/web/coverage/
+/web/test-results/
+/web/playwright-report/
+node_modules/
+*.tsbuildinfo
+
+# Downloaded tools, local Docker caches and machine-specific settings.
+/blender-*/
+/.docker/
+/rsync.sh
+.agents/
+.codex/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Temporary files. Hand-authored inputs belong outside generated/.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.blend[0-9]
+*.blend@
+*.log
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

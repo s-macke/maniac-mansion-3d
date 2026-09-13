@@ -1,0 +1,20 @@
+services:
+  builder:
+    build:
+      context: .
+      target: toolchain
+    platform: linux/amd64
+    working_dir: /project
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    init: true
+    environment:
+      BLENDER_BIN: /opt/blender/blender
+      BLENDER_USER_CONFIG: /tmp/blender-config
+      NPM_CONFIG_CACHE: /cache/npm
+      BASE_PATH: "${BASE_PATH:-}"
+    volumes:
+      - .:/project
+      - ./.docker/node_modules:/project/web/node_modules
+      - ./.docker/npm-cache:/cache/npm
+    entrypoint: ["python3", "scripts/build.py"]
+    command: ["list"]

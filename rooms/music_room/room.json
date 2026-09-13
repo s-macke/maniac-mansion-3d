@@ -1,0 +1,112 @@
+{
+  "id": "music_room",
+  "label": "Music room",
+  "backgrounds": [
+    "017"
+  ],
+  "asset": "generated/models/rooms/music_room_v1.glb",
+  "source": "generated/blender/music_room/music_room_source_v1.blend",
+  "baked": "generated/blender/music_room/music_room_v1.blend",
+  "build": "rooms/music_room/build.py",
+  "navigation": "music_room",
+  "bounds": {
+    "min": [
+      -4,
+      0,
+      -0.12
+    ],
+    "max": [
+      4,
+      3.95,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2.5,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 4,
+    "depth": 3.95,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "landing_door",
+      "position": [
+        -4,
+        2.7,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.05,
+      "height": 2.72,
+      "state": "open",
+      "destination": "hall"
+    }
+  ],
+  "shell": {
+    "wall": "pink",
+    "floor": "purple",
+    "trim": "brown",
+    "entries": [
+      {
+        "port": "landing_door",
+        "wall": "left",
+        "frame": true,
+        "owner": false
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -1.8,
+        2.7,
+        2.95
+      ],
+      [
+        1.8,
+        2.7,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 017.png"
+    ]
+  }
+}

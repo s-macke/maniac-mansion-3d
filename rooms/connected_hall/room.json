@@ -1,0 +1,221 @@
+{
+  "id": "connected_hall",
+  "label": "Entrance hall and landing",
+  "backgrounds": [
+    "010",
+    "011"
+  ],
+  "asset": "generated/models/rooms/connected_hall_v6.glb",
+  "source": "generated/blender/connected_hall/connected_hall_source_v6.blend",
+  "baked": "generated/blender/connected_hall/connected_hall_v6.blend",
+  "build": "rooms/connected_hall/build.py",
+  "navigation": "connected_hall",
+  "bounds": {
+    "min": [
+      -6.5,
+      0,
+      0
+    ],
+    "max": [
+      6.5,
+      9.85,
+      7.21
+    ]
+  },
+  "spawn": {
+    "x": -4.65,
+    "y": 1.1,
+    "height": 0,
+    "yaw": -0.71,
+    "pitch": 0.04
+  },
+  "geometry": {
+    "stair": {
+      "segments": 21,
+      "rise": 3.36,
+      "x": -0.55,
+      "y": 2.15,
+      "sweep": 1.3,
+      "angle": 0.8,
+      "length": 4.13,
+      "width": 2.1,
+      "taper": 0.45
+    },
+    "gallery": {
+      "front": 5.7,
+      "back": 9.75,
+      "halfWidth": 6.4,
+      "openingLeft": -1.15,
+      "openingRight": 1.55
+    }
+  },
+  "ports": [
+    {
+      "id": "entrance",
+      "position": [
+        -6.4,
+        2.35,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.85,
+      "state": "open",
+      "destination": "front_exterior",
+      "height": 3.18
+    },
+    {
+      "id": "rear_left",
+      "position": [
+        -3.72,
+        6.5,
+        0
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.3,
+      "state": "open",
+      "destination": "kitchen",
+      "height": 2.83
+    },
+    {
+      "id": "rear_right",
+      "position": [
+        3.12,
+        6.5,
+        0
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.3,
+      "state": "closed",
+      "destination": null
+    },
+    {
+      "id": "right_side",
+      "position": [
+        6.4,
+        3.15,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.05,
+      "state": "open",
+      "destination": "living_room",
+      "height": 2.75
+    },
+    {
+      "id": "landing_left",
+      "position": [
+        -6.4,
+        8.5,
+        3.36
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.05,
+      "state": "open",
+      "destination": "plant_room",
+      "height": 2.72
+    },
+    {
+      "id": "landing_right",
+      "position": [
+        6.4,
+        8.5,
+        3.36
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.05,
+      "state": "open",
+      "destination": "music_room",
+      "height": 2.72
+    },
+    {
+      "id": "landing_center",
+      "position": [
+        0.2,
+        9.75,
+        3.36
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.9,
+      "state": "open",
+      "destination": "security_hall",
+      "height": 2.72
+    }
+  ],
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors",
+      "Staircase",
+      "Clock",
+      "Plants",
+      "Pixel_ornaments",
+      "Landing",
+      "Landing_art"
+    ],
+    "lights": [
+      [
+        -3.5,
+        1.1,
+        3.3
+      ],
+      [
+        -3.5,
+        7.1,
+        6.55
+      ]
+    ],
+    "cell": 0.1,
+    "views": [
+      [
+        "05_Landing",
+        "landing",
+        1280,
+        800
+      ],
+      [
+        "06_Balcony",
+        "balcony",
+        1280,
+        800
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1280,
+        800
+      ],
+      [
+        "07_Combined",
+        "combined",
+        1480,
+        900
+      ]
+    ],
+    "references": [
+      "source/room 010.png",
+      "source/room 011.png"
+    ],
+    "previewSuffix": "v6"
+  }
+}

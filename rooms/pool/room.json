@@ -1,0 +1,131 @@
+{
+  "id": "pool",
+  "label": "Pool deck",
+  "backgrounds": [
+    "006"
+  ],
+  "asset": "generated/models/rooms/pool_v1.glb",
+  "source": "generated/blender/pool/pool_source_v1.blend",
+  "baked": "generated/blender/pool/pool_v1.blend",
+  "build": "rooms/pool/build.py",
+  "navigation": "pool",
+  "bounds": {
+    "min": [
+      0,
+      0,
+      -2.8
+    ],
+    "max": [
+      20,
+      11,
+      5
+    ]
+  },
+  "spawn": {
+    "x": 2,
+    "y": 3.2,
+    "height": 0,
+    "yaw": -1.5707963267948966,
+    "pitch": -0.08
+  },
+  "geometry": {
+    "width": 20,
+    "depth": 11,
+    "pool": {
+      "x0": 5,
+      "x1": 17.2,
+      "y0": 2.3,
+      "y1": 8.1,
+      "water": -0.28,
+      "bottom": -2.8
+    },
+    "obstacles": [
+      {
+        "x0": 10.55,
+        "x1": 11.45,
+        "y0": 7.85,
+        "y1": 8.9
+      }
+    ]
+  },
+  "ports": [
+    {
+      "id": "pantry_door",
+      "position": [
+        0,
+        3.2,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "pantry"
+    },
+    {
+      "id": "garage_path",
+      "position": [
+        20,
+        5.2,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 2.6,
+      "height": 3.2,
+      "state": "open",
+      "destination": "garage"
+    }
+  ],
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Pool",
+      "Fence",
+      "Details"
+    ],
+    "lights": [
+      [
+        6,
+        5,
+        9
+      ],
+      [
+        17,
+        8,
+        8
+      ]
+    ],
+    "cell": 0.24,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1200,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1100,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1100,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 006.png"
+    ]
+  }
+}
