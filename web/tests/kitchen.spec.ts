@@ -13,7 +13,7 @@ test('kitchen threshold aligns with hall, starts closed, opens and traverses bot
  expect(v.zoneAt(v.START)).toBe('Kitchen');expect(v.navigation.canStand(v.START,0)).toBe(true);
  const at=(x:number,y:number,height=0)=>toWorld({x,y,height},room);
  const port=at(-6.4,2.9);expect(port.x).toBeCloseTo(-3.72);expect(port.y).toBeCloseTo(6.5);
- let p={x:-3.72,y:5.4,height:0};expect(v.moveWalker(p,0,2).y).toBeLessThan(6.2);
+ v.activate('hall');let p={x:-3.72,y:5.4,height:0};expect(v.moveWalker(p,0,2).y).toBeLessThan(6.2);
  v.doors.toggle('hall:kitchen_door');v.doors.update(1,safe);
  const visit=(q:typeof p)=>{p=v.moveWalker(p,q.x-p.x,q.y-p.y);expect(Math.hypot(p.x-q.x,p.y-q.y)).toBeLessThan(.03);expect(p.height).toBe(0);};
  visit(at(-5,2.9));expect(v.zoneAt(p)).toBe('Kitchen');
@@ -21,20 +21,22 @@ test('kitchen threshold aligns with hall, starts closed, opens and traverses bot
  for(const q of [at(5,2.9),at(5,4.8),at(-5,4.8),at(-5,1),at(5,1),at(-5,2.9)])visit(q);
  visit({x:-3.72,y:5.4,height:0});expect(v.zoneAt(p)).toBe('Entrance hall');
  expect(def.ports.find(p=>p.id==='dining_door')?.state).toBe('open');
- const start=at(4.5,2.9),end=at(10,2.9);const stopped=v.moveWalker(start,end.x-start.x,end.y-start.y);
+ v.activate('kitchen');const start=at(4.5,2.9),end=at(10,2.9);const stopped=v.moveWalker(start,end.x-start.x,end.y-start.y);
  expect(stopped.y).toBeLessThan(at(6.1,2.9).y);
  v.doors.toggle('hall:kitchen_door');v.doors.update(1,safe);
  expect(v.moveWalker(at(-5,2.9),0,-3).y).toBeGreaterThan(6.7);
 });
 test('kitchen walls, unopened exits, and unloaded neighbors remain solid at both elevations',()=>{
- const v=createHouseRuntime(),room=v.rooms.find(r=>r.id==='kitchen')!;
+ const v=createHouseRuntime('kitchen'),room=v.rooms.find(r=>r.id==='kitchen')!;
  const at=(x:number,y:number,height=0)=>toWorld({x,y,height},room);
  expect(v.navigation.canStand(at(0,-.2),0)).toBe(false);
  expect(v.navigation.canStand(at(0,6),0)).toBe(false);
- expect(v.navigation.canStand(at(-4,3,3.36),3.36)).toBe(true); // existing gallery above kitchen entrance
- expect(v.navigation.floorHeight(at(-4,3,3.36),3.36)).toBe(3.36);
+ // An overlapping gallery belongs to the hall, never to the kitchen space.
+ expect(v.navigation.canStand(at(-4,3,3.36),3.36)).toBe(false);
  expect(v.navigation.floorHeight(at(-4,3),0)).toBe(0);
- expect(v.navigation.canStand(at(2,3,3.36),3.36)).toBe(false); // no invented upper floor over the rest
+ expect(v.navigation.canStand(at(2,3,3.36),3.36)).toBe(false);
+ v.activate('hall');expect(v.navigation.canStand(at(-4,3,3.36),3.36)).toBe(true);
+ expect(v.navigation.floorHeight(at(-4,3,3.36),3.36)).toBe(3.36);
  v.doors.toggle('hall:kitchen_door');v.doors.update(1,safe);v.requireLoadedRooms();v.setRoomLoaded('hall',true);
  expect(v.moveWalker({x:-3.72,y:5.4,height:0},0,3).y).toBeLessThan(6.1);
  v.setRoomLoaded('kitchen',true);expect(v.moveWalker({x:-3.72,y:5.4,height:0},0,3).y).toBeCloseTo(8.4);

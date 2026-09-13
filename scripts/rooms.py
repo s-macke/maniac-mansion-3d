@@ -19,7 +19,12 @@ def catalog(require_outputs=True):
     ids = [r['id'] for r in layout['rooms']]
     if len(set(ids)) != len(ids): raise ValueError('Duplicate house instance id')
     if layout['start'] not in ids: raise ValueError('Unknown start instance')
-    if not 0 < layout['loadRadius'] < layout['unloadRadius']: raise ValueError('Invalid loading radii')
+    groups = layout.get('spaces', [])
+    grouped = [r for g in groups for r in g['rooms']]
+    if len(grouped) != len(set(grouped)) or any(r not in ids for r in grouped): raise ValueError('Invalid space membership')
+    if len({g['id'] for g in groups}) != len(groups) or any(g['id'] in ids or g['origin'] not in g['rooms'] for g in groups): raise ValueError('Invalid space id or origin')
+    if layout.get('portalDepth', 3) != 3: raise ValueError('Portal depth must be three')
+    space_of = lambda room: next((g['id'] for g in groups if room in g['rooms']), room)
     for instance in layout['rooms']:
         if len(instance['position']) != 3 or not all(math.isfinite(v) for v in [*instance['position'],instance['yaw']]):
             raise ValueError('Invalid placement: '+instance['id'])
@@ -54,9 +59,10 @@ def catalog(require_outputs=True):
             d=read(i['definition'])
             p=next(p for p in d['ports'] if p['id']==end['port'])
             if p['state']!='open': raise ValueError('Connection uses a closed port: '+str(key))
+            if p.get('height', 0) < 1.62: raise ValueError('Connected aperture too low: '+p['id'])
             endpoints.append((world(i,p),p))
         (a,an),(b,bn) = [v[0] for v in endpoints]
-        if math.dist(a,b)>.02 or math.dist(an,[-v for v in bn])>.01: raise ValueError('Misaligned connection: '+str(link))
+        if space_of(link['a']['instance']) == space_of(link['b']['instance']) and (math.dist(a,b)>.02 or math.dist(an,[-v for v in bn])>.01): raise ValueError('Misaligned continuous connection: '+str(link))
         if abs(endpoints[0][1]['width']-endpoints[1][1]['width'])>.02: raise ValueError('Connection widths differ')
     return layout, definitions
 

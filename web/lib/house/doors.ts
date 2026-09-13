@@ -11,7 +11,7 @@ export function touchesLeaf(p:Walker,leaf:DoorLeaf,amount:number,radius=RADIUS){
  const qx=Math.max(leaf.min[0],Math.min(leaf.max[0],x)),qy=Math.max(leaf.min[1],Math.min(leaf.max[1],y));
  return Math.hypot(x-qx,y-qy)<radius;
 }
-export function createDoors(rooms:Placement[],definitions:Record<string,RoomDefinition>){
+export function createDoors(rooms:Placement[],definitions:Record<string,RoomDefinition>,resolveWalker?:(room:Placement,port:string,p:Walker)=>Walker|null){
  const items=rooms.flatMap(room=>(definitions[room.definition].geometry?.doors??[]).map(def=>({
   key:room.id+':'+def.id,room,def,port:definitions[room.definition].ports.find(p=>p.id===def.port)!,amount:def.initialOpen?1:0,target:def.initialOpen?1:0,blocked:false,
  })));
@@ -21,18 +21,19 @@ export function createDoors(rooms:Placement[],definitions:Record<string,RoomDefi
   let changed=false;
   for(const door of items){
    door.blocked=false;if(door.amount===door.target)continue;
-   const local=toLocal(walker,door.room),direction=Math.sign(door.target-door.amount);
+   const mapped=resolveWalker?resolveWalker(door.room,door.def.port,walker):walker;
+   const local=mapped?toLocal(mapped,door.room):null,direction=Math.sign(door.target-door.amount);
    const end=door.amount+direction*Math.min(Math.abs(door.target-door.amount),Math.max(0,dt)/.8);
    const steps=Math.max(1,Math.ceil(Math.abs(end-door.amount)/.01)),start=door.amount;
    for(let i=1;i<=steps;i++){
     const next=i===steps?end:start+(end-start)*(i/steps);
-    if(door.def.leaves.some(leaf=>touchesLeaf(local,leaf,next,RADIUS+.025))){door.blocked=true;break;}
+    if(local&&door.def.leaves.some(leaf=>touchesLeaf(local,leaf,next,RADIUS+.025))){door.blocked=true;break;}
     door.amount=next;changed=true;
    }
   }
   return changed;
  }
- function blocks(walker:Walker){return items.some(d=>d.def.leaves.some(l=>touchesLeaf(toLocal(walker,d.room),l,d.amount)));}
+ function blocks(walker:Walker){return items.some(d=>{const p=resolveWalker?resolveWalker(d.room,d.def.port,walker):walker;return p&&d.def.leaves.some(l=>touchesLeaf(toLocal(p,d.room),l,d.amount));});}
  return {items,toggle,update,blocks};
 }
 export type Doors=ReturnType<typeof createDoors>;

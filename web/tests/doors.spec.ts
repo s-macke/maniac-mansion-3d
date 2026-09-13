@@ -13,8 +13,11 @@ test('single and double doors block the passage when shut, and reopen from eithe
   ['living_door',{x:5,y:3.15,height:0},{x:8,y:3.15,height:0}],
   ['front_doors',{x:-5,y:2.35,height:0},{x:-8,y:2.35,height:0}],
  ] as const){
-  const v=createHouseRuntime(),key='hall:'+id;
-  const cross=(a:typeof safe,b:typeof safe)=>v.moveWalker(a,b.x-a.x,b.y-a.y);
+  const v=createHouseRuntime('hall'),key='hall:'+id;
+  const cross=(a:typeof safe,b:typeof safe)=>{
+   v.activate(a===start?'hall':id==='living_door'?'living_room':'front_exterior');
+   return v.moveWalker(a,b.x-a.x,b.y-a.y);
+  };
   expect(v.doors.items.find(d=>d.key===key)!.target).toBe(0);
   expect(v.doors.items.find(d=>d.key===key)!.amount).toBe(0);
   expect(Math.abs(cross(start,end).x-end.x)).toBeGreaterThan(1);
@@ -25,7 +28,7 @@ test('single and double doors block the passage when shut, and reopen from eithe
  }
 });
 test('swing pauses before the walker, resumes after stepping back, and can reverse',()=>{
- const v=createHouseRuntime(),door=v.doors.items.find(d=>d.def.id==='living_door')!;
+ const v=createHouseRuntime('hall'),door=v.doors.items.find(d=>d.def.id==='living_door')!;
  v.doors.toggle(door.key);v.doors.update(1,safe);
  const walker={x:5.8,y:3.15,height:0};expect(v.navigation.canStand(walker,0)).toBe(true);
  v.doors.toggle(door.key);v.doors.update(1,walker);
@@ -36,7 +39,7 @@ test('swing pauses before the walker, resumes after stepping back, and can rever
  v.doors.toggle(door.key);v.doors.update(1,safe);expect(door.amount).toBe(0);
 });
 test('door state survives unloading and its collision respects room rotation and floor',()=>{
- const v=createHouseRuntime(),door=v.doors.items[0];
+ const v=createHouseRuntime('hall'),door=v.doors.items[0];
  v.requireLoadedRooms();v.setRoomLoaded('hall',true);v.setRoomLoaded('hall',false);v.setRoomLoaded('hall',true);
  expect(door.amount).toBe(0);
  // Mutate this instance placement only for this isolated runtime.
@@ -48,7 +51,7 @@ test('door state survives unloading and its collision respects room rotation and
  }finally{Object.assign(door.room,saved);}
 });
 test('real compact GLB has pivoted leaves matching collision, selectable from both rooms',async()=>{
- const v=createHouseRuntime(),scene=new THREE.Scene(),visual=createDoorView(scene,v.doors);
+ const v=createHouseRuntime('hall'),scene=new THREE.Scene(),visual=createDoorView(scene,v.doors);
  const roots=new Map<string,THREE.Group>();
  for(const room of v.rooms){
   const filename=v.definitions[room.definition].asset.split('/').at(-1)!.replace('.glb','_compact.glb');
@@ -60,6 +63,7 @@ test('real compact GLB has pivoted leaves matching collision, selectable from bo
  const camera=new THREE.PerspectiveCamera(68,1,.05,60);
  const aim=(x:number,y:number,tx:number,ty:number)=>{camera.position.set(x,1.62,-y);camera.lookAt(tx,1.45,-ty);};
  for(const door of v.doors.items){
+  v.activate(door.room.id);
   for(const amount of [1,0,.5]){
    door.amount=amount;visual.sync();scene.updateMatrixWorld(true);
    for(const leaf of door.def.leaves){

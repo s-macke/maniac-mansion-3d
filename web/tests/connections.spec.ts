@@ -11,20 +11,20 @@ test('living room, hall and landing are traversable in both directions',()=>{
  visit(-.55,.65);visit(4.4,.65);visit(4.4,3.15);visit(8,3.15);expect(view.zoneAt(p)).toBe('Living room');
 });
 test('open door remains a solid leaf while the doorway stays passable',()=>{
- const view=createHouseRuntime();view.doors.toggle('hall:living_door');view.doors.update(1,{x:0,y:1,height:0});
+ const view=createHouseRuntime('hall');view.doors.toggle('hall:living_door');view.doors.update(1,{x:0,y:1,height:0});
  expect(view.navigation.canStand({x:5.5,y:2.625},0)).toBe(false);
  const stopped=view.moveWalker({x:5.5,y:3.15,height:0},0,-1);
  expect(stopped.y).toBeGreaterThan(2.85);
  expect(view.moveWalker({x:5,y:3.15,height:0},3,0).x).toBeCloseTo(8);
 });
 test('door jambs and unloaded neighboring rooms remain solid',()=>{
- const view=createHouseRuntime();view.doors.toggle('hall:living_door');view.doors.update(1,{x:0,y:1,height:0});const p={x:5,y:3.15,height:0};
+ const view=createHouseRuntime('hall');view.doors.toggle('hall:living_door');view.doors.update(1,{x:0,y:1,height:0});const p={x:5,y:3.15,height:0};
  expect(view.moveWalker({...p,y:3.7},4,0).x).toBeLessThan(6);
  expect(view.moveWalker({...p,height:3.36},4,0).x).toBeLessThan(6);
  view.requireLoadedRooms();view.setRoomLoaded('hall',true);
  expect(view.moveWalker(p,4,0).x).toBeLessThan(6);
  view.setRoomLoaded('living_room',true);expect(view.moveWalker(p,4,0).x).toBeCloseTo(9);
- view.setRoomLoaded('living_room',false);expect(view.moveWalker(p,4,0).x).toBeLessThan(6);
+ view.activate('hall');view.setRoomLoaded('living_room',false);expect(view.moveWalker(p,4,0).x).toBeLessThan(6);
 });
 test('mobile touch controls cross the doorway in both directions',async({browser})=>{
  test.setTimeout(180000);

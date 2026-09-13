@@ -1,5 +1,6 @@
 import {test,expect} from '@playwright/test';
 import {createHouseRuntime} from '../lib/house/runtime';
+import {portalCoordinates} from '../lib/house/portals';
 import {readFile} from 'node:fs/promises';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
@@ -16,7 +17,9 @@ const routes=[
 test('every new doorway starts closed and permits passage both ways after opening',()=>{
  for(const r of routes){
   const v=createHouseRuntime(),a={x:r.x-r.dx*1.3,y:r.y-r.dy*1.3,height:r.h},b={x:r.x+r.dx*1.3,y:r.y+r.dy*1.3,height:r.h};
-  const cross=(p:typeof a,q:typeof a)=>v.moveWalker(p,q.x-p.x,q.y-p.y);
+  const owner=v.doors.items.find(d=>d.key===r.key)!;
+  const edge=v.graph.portals.find(p=>p.from.room.id===owner.room.id&&p.from.port.id===owner.def.port)!;
+  const cross=(p:typeof a,q:typeof a)=>{v.activate(portalCoordinates(p,edge).along<=0?edge.from.room.id:edge.to.room.id);return v.moveWalker(p,q.x-p.x,q.y-p.y);};
   expect(v.doors.items.find(d=>d.key===r.key)?.amount,r.key).toBe(0);
   expect(Math.hypot(cross(a,b).x-b.x,cross(a,b).y-b.y),r.key).toBeGreaterThan(.5);
   v.doors.toggle(r.key);v.doors.update(1,{x:0,y:1,height:0});
@@ -44,7 +47,7 @@ test('actual room and shared meshes leave every new open threshold clear, includ
  const ray=new THREE.Raycaster();scene.updateMatrixWorld(true);
  // The visible floor must match navigation: roofs and lower-room ceilings cannot cut through an upstairs room.
  for(const room of v.rooms.filter(r=>['library','plant_room','music_room','security_hall','medical_room','arcade'].includes(r.id))){
-  const def=v.definitions[room.definition];
+  v.activate(room.id);const def=v.definitions[room.definition];
   for(const x of [def.bounds.min[0]+.9,0,def.bounds.max[0]-.9])for(const y of [.9,def.bounds.max[1]/2,def.bounds.max[1]-.9]){
    if(room.id==='security_hall'&&x>5)continue;
    const p={x:room.position[0]+x,y:room.position[1]+y,height:room.position[2]};if(!v.navigation.canStand(p,p.height))continue;
@@ -53,6 +56,7 @@ test('actual room and shared meshes leave every new open threshold clear, includ
    expect.soft(hits[0]?.point.y,room.id+' floor at '+x+','+y).toBeCloseTo(p.height,2);
   }
  }
+ v.activate('security_hall');
  // Stair treads track the continuous navigation ramp, with clear headroom throughout.
  for(let i=0;i<=20;i++){
   const y=10.95+3.9*i/20,p={x:6.025,y,height:3.36+3.36*i/20};

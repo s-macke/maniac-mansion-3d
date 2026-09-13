@@ -48,9 +48,13 @@ test('loader fetches the kit once, waits for it before entry, and retains it acr
   expect(ready).toBe(false);expect(v.navigation.canStand(v.START,0)).toBe(false);
   releaseKit!();await expect.poll(()=>ready).toBe(true);expect(errors).toEqual([]);
   expect(calls.filter(url=>url.includes('/shared/'))).toHaveLength(1);
+  v.activate('front_exterior');assets.selectSpace(v.activeSpace);
+  const camera=new THREE.PerspectiveCamera(68,1000/700,.05,60);camera.rotation.order='YXZ';camera.position.set(-8.5,1.62,-2.35);camera.rotation.set(.3,-Math.PI/2,0);
+  expect(assets.doorView.target(camera)?.key).toBe('hall:front_doors');
+  v.activate('hall');assets.selectSpace(v.activeSpace);
   v.doors.toggle('hall:kitchen_door');v.doors.update(1,{x:0,y:1,height:0});assets.doorView.sync();
-  assets.update({x:1000,y:1000,height:0});expect(disposedGeometry).toBe(0);
-  assets.update(v.START);await expect.poll(()=>v.navigation.canStand(v.START,0)).toBe(true);
+  v.activate('arcade');assets.update(v.START,performance.now()+11000);expect(assets.loadedRooms).not.toContain('hall');expect(disposedGeometry).toBe(0);
+  v.activate('hall');assets.update(v.START,performance.now()+12000);await expect.poll(()=>v.navigation.canStand(v.START,0)).toBe(true);
   expect(calls.filter(url=>url.includes('/shared/'))).toHaveLength(1);
   expect(v.doors.items.find(d=>d.def.id==='kitchen_door')!.amount).toBe(1);
   assets.dispose();await expect.poll(()=>disposedGeometry).toBe(7);

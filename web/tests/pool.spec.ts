@@ -10,9 +10,9 @@ const safe={x:0,y:1,height:0};
 test('pool doorway starts closed, opens both ways, and waits for the deck asset',()=>{
  const v=createHouseRuntime('pool');expect(v.zoneAt(v.START)).toBe('Pool deck');expect(v.navigation.canStand(v.START,0)).toBe(true);
  const inside={x:-4.87,y:40.9,height:0},outside={x:-7.87,y:40.9,height:0};
- expect(v.moveWalker(inside,-3,0).x).toBeGreaterThan(-6.37);expect(v.moveWalker(outside,3,0).x).toBeLessThan(-6.37);
+ v.activate('pantry');expect(v.moveWalker(inside,-3,0).x).toBeGreaterThan(-6.37);v.activate('pool');expect(v.moveWalker(outside,3,0).x).toBeLessThan(-6.37);
  v.doors.toggle('pantry:pool_door');v.doors.update(1,safe);
- expect(v.moveWalker(inside,-3,0).x).toBeCloseTo(outside.x);expect(v.moveWalker(outside,3,0).x).toBeCloseTo(inside.x);
+ v.activate('pantry');expect(v.moveWalker(inside,-3,0).x).toBeCloseTo(outside.x);v.activate('pool');expect(v.moveWalker(outside,3,0).x).toBeCloseTo(inside.x);
  v.requireLoadedRooms();v.setRoomLoaded('pantry',true);expect(v.moveWalker(inside,-3,0).x).toBeGreaterThan(-6.5);
  v.setRoomLoaded('pool',true);expect(v.moveWalker(inside,-3,0).x).toBeCloseTo(outside.x);
 });

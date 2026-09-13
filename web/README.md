@@ -39,7 +39,7 @@ The hall connects to the exterior, living room and kitchen; the kitchen connects
 
 Application: `web/components/walkthrough.tsx`. Room collision: `web/lib/rooms/connected_hall.ts`. House assembly, transforms, and movement: `web/lib/house/`. The source of truth is `house/layout.json` plus each room's `room.json`; `prebuild` and `predev` validate these and generate the browser manifest and adapter registry.
 
-The hall asset is `/models/connected_hall/connected_hall_v6.glb`, losslessly compacted from `generated/models/rooms/connected_hall_v6.glb`. Nearby room units load independently and release GPU resources when unloaded. See [the architecture guide](../docs/architecture.md) for independent room builds and connection markers.
+The hall asset is `./models/connected_hall/connected_hall_v6.glb`, losslessly compacted from `generated/models/rooms/connected_hall_v6.glb`. The current room space and connected neighbors load independently. Doorway portals isolate overlapping rooms, with views up to three doors deep; pool and garage share a continuous space. See [portal architecture](../docs/portals.md) and [the architecture guide](../docs/architecture.md).
 
 The viewer uses sRGB output and no tone mapping, preserving the baked appearance. The static room is not continuously redrawn while paused. At higher screen densities, rendering is capped at 1.5× device pixel ratio.
 

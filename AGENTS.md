@@ -22,6 +22,7 @@ Read the documents relevant to the task; this index does not require reading eve
 | [GitHub Pages](docs/github-pages.md) | Automated Blender build, static deployment and repository setup |
 | [Source-only rebuild](docs/rebuilding.md) | Git inputs, ignored outputs and fresh-checkout build order |
 | [Architecture](docs/architecture.md) | Room packaging, coordinates, connections, loading, doors and build workflow |
+| [Room portals](docs/portals.md) | Independent spaces, doorway rendering, movement transforms and continuous outdoor groups |
 | [Connection map](docs/connection_map.md) | Artwork-based topology and unresolved links |
 | [Room inventory](generated/reference/room_inventory.md) | Supplied backgrounds and candidate rooms |
 | [Scale and style](docs/scale_and_style.md) | EGA palette, display aspect and inferred dimensions |

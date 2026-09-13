@@ -20,7 +20,7 @@ The original EGA colors and soft baked vertex lighting work without browser GI. 
 
 Superseded design iterations were removed. Keep the active files named in `room.json`; see [architecture](../../docs/architecture.md) for the workflow.
 
-The plant-room wing replaces the overlapping upper facade section. Its portion of the porch canopy and two supporting columns sit below the first-floor slab, leaving the room floor unobstructed. Other porch and roof sections retain their established height.
+The independent exterior space owns the complete upper facade, siding, windows and continuous porch canopy. It does not rely on the plant room to fill a wall opening. Upstairs rooms occupy separate runtime spaces, so their floors do not require cuts or lowered columns in the exterior.
 
 ## Source and generated files
 

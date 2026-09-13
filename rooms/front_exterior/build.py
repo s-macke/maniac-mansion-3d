@@ -22,11 +22,12 @@ geo=Geometry(collections,mats);box,mesh,beam,cyl,sphere,camera=[getattr(geo,n) f
 # Facade stays on the exterior half of the entrance plane; hall owns the doors.
 geo.active='Architecture'
 box('Facade',((8+.925)/2,-.11,3.65),(8-.925,.22,7.3),'gray')
-for a,b,z0,z1 in [(-8,-3.35,0,3.36),(-8,-3.35,6.52,7.3),(-3.35,-.925,0,7.3)]:box('Facade',((a+b)/2,-.11,(z0+z1)/2),(b-a,.22,z1-z0),'gray')
+# Independent exterior space owns a complete facade, including behind upstairs rooms.
+box('Facade',((-8-.925)/2,-.11,3.65),(8-.925,.22,7.3),'gray')
 box('Door_header',(0,-.11,5.24),(1.85,.22,4.12),'gray')
 for z in [i*.24 for i in range(31)]:
- for a,b in ([(-8,-.925),(.925,8)] if z<3.25 else ([(-3.35,8)] if 3.36<=z<=6.52 else [(-8,8)])):box('Siding_joint',((a+b)/2,-.235,z),(b-a,.012,.028),'darkgray')
-for x,z0,z1 in [(-8,0,3.36),(-8,6.52,7.3),(8,0,7.3)]:box('Corner_board',(x,-.25,(z0+z1)/2),(.15,.13,z1-z0),'brown')
+ for a,b in ([(-8,-.925),(.925,8)] if z<3.25 else [(-8,8)]):box('Siding_joint',((a+b)/2,-.235,z),(b-a,.012,.028),'darkgray')
+for x,z0,z1 in [(-8,0,7.3),(8,0,7.3)]:box('Corner_board',(x,-.25,(z0+z1)/2),(.15,.13,z1-z0),'brown')
 # Narrow black windows with the original red/yellow sash and cyan reflection.
 def window(x,z,w=.90,h=1.9):
  box('Window_frame',(x,-.30,z),(w+.14,.16,h+.14),'brown')
@@ -38,7 +39,7 @@ def window(x,z,w=.90,h=1.9):
   beam('Window_cyan_glint',(x-w*.28,-.455,z+dz),(x-w*.13,-.455,z+dz+.09),.025,'cyan')
  box('Window_sill',(x,-.43,z-h/2-.10),(w+.23,.26,.12),'gray')
 for x in [-6.7,-4.9,-3.1,3.1,4.9,6.7]:window(x,1.85)
-for x in [0,3.7,6.3]:window(x,5.5,1.05,1.65)
+for x in [-6.3,-3.7,0,3.7,6.3]:window(x,5.5,1.05,1.65)
 # Two-sided entrance frame; the actual open double leaves belong to the hall.
 for x in [-1.04,1.04]:box('Entrance_post',(x,-.27,1.63),(.16,.24,3.26),'brown')
 box('Entrance_lintel',(0,-.27,3.25),(2.24,.24,.15),'brown')
@@ -76,9 +77,9 @@ for side in [-1,1]:
  box('Stair_foot',(side*1.68,-4.65,-.92),(.34,.4,.56),'darkgray');sphere('Stair_finial',(side*1.68,-4.65,-.55),(.20,.20,.19),'gray')
 for x in [-7.7,-4.6,-1.7,1.7,4.6,7.7]:
  box('Column_square_base',(x,-1.8,.12),(.29,.29,.24),'brown')
- top=3.12 if x<-3.35 else 3.805
+ top=3.805
  cyl('Porch_column',(x,-1.8,(.155+top)/2),.085,top-.155,'brown',8)
- for z in ([.3,.9,2.6,3.0] if x<-3.35 else [.3,.9,3.2,3.7]):cyl('Column_collar',(x,-1.8,z),.14,.13,'red',8)
+ for z in [.3,.9,3.2,3.7]:cyl('Column_collar',(x,-1.8,z),.14,.13,'red',8)
 for a,b in [(-8.2,-1.8),(1.8,8.2)]:
  for z in [.22,1.02]:box('Porch_rail',((a+b)/2,-2,z),(b-a,.17,.12),'red')
  box('Rail_gold_edge',((a+b)/2,-2.09,1.055),(b-a,.025,.025),'brown')
@@ -90,8 +91,8 @@ def roof(name,x,y,z,w,d,rise):
  mesh(name,v,[(0,1,2),(3,5,4)],'darkgray');mesh(name+'_slopes',v,[(0,2,5,3),(2,1,4,5)],'blue')
  for a,b in [(0,2),(2,1),(0,1)]:beam(name+'_edge',v[a],v[b],.11,'lightblue')
 geo.active='Architecture'
-# The plant wing occupies the former upper porch space; its canopy stays below the room floor.
-for a,b,z in [(-8.45,-3.35,3.12),(-3.35,8.45,3.91)]:
+# The exterior canopy is continuous; independent upstairs spaces cannot intersect it.
+for a,b,z in [(-8.45,8.45,3.91)]:
  box('Porch_canopy',((a+b)/2,-1.3,z),(b-a,3,.20),'darkgray')
  box('Canopy_red_fascia',((a+b)/2,-2.82,z-.04),(b-a,.12,.22),'brown')
 roof('Entrance_gable',0,-1.35,3.98,3.8,3.1,1.55)

@@ -13,7 +13,7 @@ The house is assembled from independently editable architectural units. Room bac
 | Rectangular shell setup, floors, ceilings, side door openings and reference markers | `scripts/blender_shared/shell.py` |
 | Reusable boxes, beams, walls, doors, material assignment | `scripts/blender_shared/geometry.py` |
 | Shared soft cel-light bake and export | `scripts/blender_shared/bake.py`, `scripts/finalize_baked_glb.py` |
-| House coordinate transforms, movement, nearby asset loading | `web/lib/house/` |
+| Room spaces, portal transforms, movement and asset loading | `web/lib/house/` |
 | Mouse, keyboard, touch controls and interface | `web/components/walkthrough.tsx` |
 
 `rooms/connected_hall/entrance.py` generates the entrance geometry in memory as the first stage of the hall builder. The complete hall is generated directly, without an intermediate Blender base scene. New rooms use the shared helpers directly. `scripts/model_connected_hall.py` is a compatibility wrapper for the current hall builder.
@@ -30,7 +30,7 @@ A house connection has the form:
 {"a":{"instance":"hall","port":"right_side"},"b":{"instance":"living","port":"entrance"}}
 ```
 
-The current connection uses the hall’s right-side port and the living room’s left door. Connections must use open ports whose transformed positions, heights, widths, and opposing normals agree. The check command catches duplicates and misalignment. Opening a connection also requires swinging the physical door leaf clear and updating its collision in the room geometry and navigation; changing the JSON alone does not cut walls or animate doors.
+The current connection uses the hall’s right-side port and the living room’s left door. Connections use open ports with matching widths and explicit aperture heights. Across independent spaces, runtime portal transforms align their endpoints and opposing normals. Inside an explicit continuous space, the transformed positions and normals must already agree; the check command validates that alignment and rejects duplicate endpoints. Opening a connection also requires swinging the physical door leaf clear and updating its collision in the room geometry and navigation; changing the JSON alone does not cut walls or animate doors.
 
 ## Commands
 
@@ -61,9 +61,11 @@ Website build/dev commands validate and copy active assets automatically. `web/l
 
 ## Loading and current limits
 
-The browser loads separate GLBs near the player, using distance to transformed room bounds. The current load radius is 24 m and unload radius 32 m, avoiding repeated loading at a boundary. Unloaded meshes, materials, and textures are disposed. The hall loads as one unit so its open sightlines stay intact. The approved rendering settings and baked colors are unchanged.
+The browser keeps the active room space and its immediate connected neighbors loaded. Further rooms load for visible portal chains, up to three doorways deep. Assets not requested for ten seconds are released, including room-owned meshes, materials and textures. Loading is independent of visibility: cached rooms never become visible merely because their coordinates overlap.
 
-The hall and living room are connected. `?room=living_room` starts in the living room within the assembled house. Future `previewOnly` entries remain isolated until connected. Coordinate transforms and loading thresholds have automated checks; doorway traversal and touch controls are checked in browser emulation; physical mobile performance is not measured. Long sightlines may require larger bounds/loading radii. The connected doors open and close through the shared door system described below. The v4 door checks exercise collision, actual GLB hinges, targeting and state retention without browser automation; physical mobile performance remains unmeasured.
+Room spaces are explicit in the runtime. The combined hall remains a single space; pool and garage form one continuous outdoor group. Neighboring interiors appear through clipped doorway render targets. Baked materials, colors, mouse/touch controls and relative-path hosting are preserved. See [portal architecture and validation](portals.md).
+
+`?room=living_room` starts inside that space. Preview-only entries remain isolated. Coordinate transforms, doorway movement, clipping and collision have automated checks; physical-mobile performance still requires device testing.
 
 ## Download optimization
 
@@ -73,7 +75,7 @@ The local server negotiates the generated `.glb.gz` sidecars through `Accept-Enc
 
 ### Doorway collision and loading
 
-The runtime bridges room-local wall bounds only within a declared open portal, with clearance for the player radius. Unlinked walls remain solid. Both room assets must be loaded before the connecting passage becomes traversable. There is no teleport or loading transition. Shared-wall surfaces must stay on their owning side of the port plane; floor edges meet at that plane rather than overlapping.
+The runtime bridges room-local wall bounds only within a declared open portal, with clearance for the player radius. Unlinked walls remain solid. Both room assets must be loaded before the connecting passage becomes traversable. Crossing a doorway transforms the walker, view direction and remaining movement into its destination space. This is visually continuous, with no fade or loading transition. Floors are evaluated using the existing room-local navigation functions within the active space. Unrelated overlapping rooms cannot provide collision or floor support.
 
 The shared living-room doorway has one physical door leaf, owned by the hall. It is hinged at the south jamb and swings 90 degrees into the hall, with panels and handles on both faces. Its generated bounds block walking through the leaf, including the portal bridge. The living-room asset supplies the matching frame without a duplicate leaf.
 

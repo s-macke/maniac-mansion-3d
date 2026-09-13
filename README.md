@@ -34,6 +34,8 @@ The [library and complete first-floor shell layout](docs/first_floor.md) are con
 
 For a fresh Git checkout without generated models or dependencies, follow [the source-only rebuild instructions](docs/rebuilding.md).
 
+Rooms now use [seamless doorway portals](docs/portals.md): overlapping spaces stay separate, while pool and garage remain one continuous outdoor area. Open-door views extend up to three doorways deep.
+
 To regenerate the models and compile the website entirely in Docker, see [the Docker build instructions](docs/docker.md).
 
 The [GitHub Pages workflow](docs/github-pages.md) rebuilds the Blender assets and deploys the static website on pushes to `main`, once Pages is enabled in the repository settings.

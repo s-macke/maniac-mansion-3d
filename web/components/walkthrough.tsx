@@ -35,7 +35,7 @@ export default function Walkthrough() {
     const resize=()=>{const {width,height}=container.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();needsRender=true;};resize();
     const observer=new ResizeObserver(resize);observer.observe(container);
     const pause=()=>{walking=false;keys.clear();dragging=false;setActive(false);if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();};
-    const reset=()=>{walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;keys.clear();sync();needsRender=true;};
+    const reset=()=>{view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;keys.clear();sync();needsRender=true;};
     const enableFallback=()=>{if(!disposed){setFallback(true);walking=true;setActive(true);container.focus();}};
     const enter=(capture=true)=>{
       if(!loaded||disposed)return;
@@ -93,8 +93,8 @@ export default function Walkthrough() {
         const turn=(Number(keys.has('ArrowLeft'))-Number(keys.has('ArrowRight')))*1.55*dt;yaw+=turn;
         let forward=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));
         let right=Number(keys.has('KeyD'))-Number(keys.has('KeyA'));const length=Math.hypot(forward,right);
-        if(length){const before=walker;forward/=length;right/=length;const speed=2.5*dt;walker=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);
-          if(!hintFinished){distanceWalked+=Math.hypot(walker.x-before.x,walker.y-before.y,walker.height-before.height);if(distanceWalked>=3){hintFinished=true;setShowHint(false);}}
+        if(length){const before=walker;forward/=length;right/=length;const speed=2.5*dt;const moved=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);walker=moved;yaw+=moved.yawDelta;eye+=moved.heightDelta;
+          if(!hintFinished){distanceWalked+=moved.crossed?speed:Math.hypot(walker.x-before.x,walker.y-before.y,walker.height-before.height);if(distanceWalked>=3){hintFinished=true;setShowHint(false);}}
         }
       }
       if(view.doors.update(walking?dt:0,walker)){assets.doorView.sync();needsRender=true;}
@@ -108,8 +108,8 @@ export default function Walkthrough() {
         const action=selected?(selected.blocked?'Step back · ': '')+(selected.target===1?'Close':'Open')+' '+selected.def.label.toLowerCase():'';
         if(action!==lastAction){lastAction=action;setDoorAction(action);}
       }
-      if(walking||needsRender){renderer.render(scene,camera);needsRender=false;}
-      container.dataset.walker=JSON.stringify({...walker,yaw,pitch,walking,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
+      if(walking||needsRender){assets.render(renderer,camera);needsRender=false;}
+      container.dataset.walker=JSON.stringify({...walker,room:view.activeRoom,space:view.activeSpace,portals:assets.portalStats,loadedRooms:assets.loadedRooms,yaw,pitch,walking,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
       frame=requestAnimationFrame(tick);
     };frame=requestAnimationFrame(tick);
     return ()=>{
@@ -135,7 +135,7 @@ export default function Walkthrough() {
       </>}
     </section>}
     {active && <div className="reticle" aria-hidden="true" />}
-    {active && doorAction && <Button className="door-action" onClick={()=>runtime.current?.interact()}>{!touch && <kbd>E</kbd>}{doorAction}</Button>}
+    {active && doorAction && <Button className="door-action" aria-label={doorAction} aria-keyshortcuts={!touch?'E':undefined} onClick={()=>runtime.current?.interact()}>{!touch && <kbd>E</kbd>}{doorAction}</Button>}
     {active && touch && <div className="touch-pad" aria-label="Movement controls">{[['KeyW','↑','Forward'],['KeyA','←','Left'],['KeyS','↓','Backward'],['KeyD','→','Right']].map(([code,label,title])=><Button key={code} aria-label={title} onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);runtime.current?.key(code,true);}} onPointerUp={()=>runtime.current?.key(code,false)} onPointerCancel={()=>runtime.current?.key(code,false)}>{label}</Button>)}</div>}
     <footer className="footer"><span className="status" aria-live="polite">{error?'ROOM UNAVAILABLE':!ready?'LOADING':active?'EXPLORING':'PAUSED'}</span><span className="desktop-help">{fallback?'Click or drag to look · Arrow keys also work · R to reset':'WASD to walk · Mouse to look · R to reset'}</span></footer>
   </main>;

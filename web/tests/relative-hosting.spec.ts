@@ -64,6 +64,7 @@ for (const mount of mounts) {
     await expect(page.locator('.door-action')).toContainText('Open');
     await page.locator('.door-action').click();
     await expect(page.locator('.door-action')).toContainText('Close');
+    await expect.poll(async () => (await state()).portals.passes).toBeGreaterThan(1);
     await page.reload();
     await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible({ timeout: 45000 });
     const favicon = await page.locator('link[rel="icon"]').getAttribute('href');

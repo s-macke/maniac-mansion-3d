@@ -1,71 +1,90 @@
 import {createDoors} from './doors';
 import data from './generated.json' with {type:'json'};
-import { adapters } from './adapters.generated';
-import { toLocal, toWorld } from './placement';
-import { moveWalker as step, RADIUS } from './navigation';
-import type { Walker, Navigation, Placement, Point, RoomDefinition } from './types';
-export function createHouseRuntime(previewId?:string|null){
- const allRooms:Placement[]=data.rooms;
- const requested=previewId?allRooms.find(r=>r.id===previewId):undefined;
- const preview=requested?.previewOnly?requested:undefined;
- const rooms:Placement[]=preview?[{...preview,position:[0,0,0],yaw:0}]:allRooms.filter(r=>!r.previewOnly);
- const house={...data,start:requested?requested.id:data.start};
- const definitions:Record<string,RoomDefinition>=data.definitions;
- const doors=createDoors(rooms,definitions);
+import {adapters} from './adapters.generated';
+import {toLocal,toWorld} from './placement';
+import {RADIUS} from './navigation';
+import {createPortals,mapThrough,portalCoordinates,mapPlacement,type Portal} from './portals';
+import type {Walker,Navigation,Placement,Point,RoomDefinition,HouseData} from './types';
+
+export function createHouseRuntime(previewId?:string|null,source:HouseData=data){
+ const requested=source.rooms.find(r=>r.id===previewId),preview=requested?.previewOnly?requested:undefined;
+ const rooms=preview?[{...preview,position:[0,0,0],yaw:0}]:source.rooms.filter(r=>!r.previewOnly);
+ const house={...source,rooms,connections:preview?[]:source.connections,start:requested?.id??source.start};
+ const definitions:Record<string,RoomDefinition>=source.definitions,graph=createPortals(house);
+ let activeRoom=house.start,activeSpace=graph.spaceOf(activeRoom),available:Set<string>|null=null;
  const initial=rooms.find(r=>r.id===house.start)!;
- let available:Set<string>|null=null;
+ const SPAWN=definitions[initial.definition].spawn,START=toWorld(SPAWN,initial),START_YAW=SPAWN.yaw+initial.yaw,START_PITCH=SPAWN.pitch;
+ const isLoaded=(id:string)=>!available||available.has(id);
  const requireLoadedRooms=()=>{available=new Set();};
- const setRoomLoaded=(id:string,loaded:boolean)=>{if(available){if(loaded)available.add(id);else available.delete(id);}};
- const SPAWN=definitions[initial.definition].spawn;
- const START=toWorld(SPAWN,initial),START_YAW=SPAWN.yaw+initial.yaw,START_PITCH=SPAWN.pitch;
-function candidates(p:Point,height:number) {
- return rooms.flatMap(room=>{
-  if(available&&!available.has(room.id))return [];
-  const local=toLocal({...p,height},room),def=definitions[room.definition];
-  if(local.x<def.bounds.min[0]||local.x>def.bounds.max[0]||local.y<def.bounds.min[1]||local.y>def.bounds.max[1])return [];
-  const nav=adapters[def.navigation];
-  if(!nav)throw new Error('Missing navigation adapter: '+def.navigation);
-  return [{room,local,nav}];
+ const setRoomLoaded=(id:string,loaded:boolean)=>{if(loaded)available?.add(id);else available?.delete(id);};
+ function activate(id:string){if(!rooms.some(r=>r.id===id))throw new Error('Unknown room: '+id);activeRoom=id;activeSpace=graph.spaceOf(id);}
+ const resetSpace=()=>activate(house.start);
+ function doorPortal(room:Placement,port:string,space=activeSpace){return graph.outgoing(space).find(p=>p.to.room.id===room.id&&p.to.port.id===port);}
+ function doorPlacement(room:Placement,port:string,space=activeSpace){
+  if(graph.spaceOf(room.id)===space)return room;
+  const p=doorPortal(room,port,space);return p?mapPlacement(room,graph.portals.find(q=>q.key===p.reverse)!):null;
+ }
+ const doors=createDoors(rooms,definitions,(room,port,p)=>{
+  if(graph.spaceOf(room.id)===activeSpace)return p;
+  const edge=doorPortal(room,port);return edge?mapThrough(p,edge):null;
  });
-}
-function support(p:Point,height:number) {
- if(doors.blocks({...p,height}))return;
- // Physical door leaves also block the portal bridge and neighboring room support.
- for(const room of rooms){
-  const local=toLocal({...p,height},room);
-  for(const box of definitions[room.definition].geometry?.doorObstacles??[]){
-   if(local.height>=box.max[2]||local.height+1.62<=box.min[2])continue;
-   const x=Math.max(box.min[0],Math.min(box.max[0],local.x)),y=Math.max(box.min[1],Math.min(box.max[1],local.y));
-   if(Math.hypot(local.x-x,local.y-y)<RADIUS)return;
+ const portalDoor=(edge:Portal)=>doors.items.find(d=>(d.room.id===edge.from.room.id&&d.def.port===edge.from.port.id)||(d.room.id===edge.to.room.id&&d.def.port===edge.to.port.id));
+ function nearOpening(p:Walker,edge:Portal,margin=RADIUS+.04){
+  const q=portalCoordinates(p,edge);
+  return Math.abs(q.along)<=.75&&Math.abs(q.across)<=Math.min(edge.from.port.width,edge.to.port.width)/2-margin&&Math.abs(q.height)<=.34;
+ }
+ function support(p:Point,height:number){
+  const walker={...p,height};
+  if(doors.blocks(walker))return;
+  for(const room of graph.members(activeSpace)){
+   const local=toLocal(walker,room);
+   for(const box of definitions[room.definition].geometry?.doorObstacles??[]){
+    if(local.height>=box.max[2]||local.height+1.62<=box.min[2])continue;
+    const x=Math.max(box.min[0],Math.min(box.max[0],local.x)),y=Math.max(box.min[1],Math.min(box.max[1],local.y));
+    if(Math.hypot(local.x-x,local.y-y)<RADIUS)return;
+   }
+  }
+  // The source wall inset is walkable only in a declared, ready aperture.
+  for(const edge of graph.outgoing(activeSpace)){
+   if(!isLoaded(edge.from.room.id)||!isLoaded(edge.to.room.id)||!nearOpening(walker,edge))continue;
+   const q=portalCoordinates(walker,edge);
+   if(q.along<=.001||edge.continuous)return {room:edge.from.room,height:edge.from.point.height,zone:adapters[definitions[edge.from.room.definition].navigation].zone(toLocal(walker,edge.from.room))};
+  }
+  for(const room of graph.members(activeSpace)){
+   if(!isLoaded(room.id))continue;
+   const local=toLocal(walker,room),def=definitions[room.definition],nav=adapters[def.navigation];
+   if(local.x<def.bounds.min[0]||local.x>def.bounds.max[0]||local.y<def.bounds.min[1]||local.y>def.bounds.max[1])continue;
+   if(nav.canStand(local,local.height))return {room,height:nav.floorHeight(local,local.height)+room.position[2],zone:nav.zone(local)};
   }
  }
- const inside=candidates(p,height).find(({local,nav})=>nav.canStand(local,local.height));
- if(inside)return inside;
- // Only declared, aligned doorways bridge the conservative room-wall collision bounds.
- for(const link of preview?[]:house.connections){
-  const a=rooms.find(r=>r.id===link.a.instance),b=rooms.find(r=>r.id===link.b.instance);
-  if(!a||!b||(available&&(!available.has(a.id)||!available.has(b.id))))continue;
-  const port=definitions[a.definition].ports.find(p=>p.id===link.a.port)!;
-  const other=definitions[b.definition].ports.find(p=>p.id===link.b.port)!;
-  if(port.state!=='open'||other.state!=='open')continue;
-  const local=toLocal({...p,height},a),dx=local.x-port.position[0],dy=local.y-port.position[1];
-  const along=dx*port.outward[0]+dy*port.outward[1],across=-dx*port.outward[1]+dy*port.outward[0];
-  if(Math.abs(along)>.75||Math.abs(across)>port.width/2-RADIUS-.04||Math.abs(local.height-port.position[2])>.34)continue;
-  const room=along<=0?a:b,point=toLocal({...p,height},room),floor=port.position[2]+a.position[2]-room.position[2];
-  const nav:Navigation={canStand:()=>true,floorHeight:()=>floor,zone:()=>adapters[definitions[room.definition].navigation].zone(point)};
-  return {room,local:point,nav};
+ const navigation:Navigation={canStand:(p,h=0)=>Boolean(support(p,h)),floorHeight:(p,h=0)=>support(p,h)?.height??NaN,zone:p=>support(p,p.height)?.zone??definitions[rooms.find(r=>r.id===activeRoom)!.definition].label};
+ function moveWalker(start:Walker,dx:number,dy:number){
+  let p={...start},yawDelta=0,heightDelta=0,crossed=false;
+  const count=Math.max(1,Math.ceil(Math.hypot(dx,dy)/.045));let sx=dx/count,sy=dy/count;
+  function attempt(x:number,y:number){
+   const q={x:p.x+x,y:p.y+y,height:p.height};
+   for(const edge of graph.outgoing(activeSpace)){
+    const before=portalCoordinates(p,edge),after=portalCoordinates(q,edge);
+    if(before.along>1e-7||after.along<=1e-7||!nearOpening(q,edge))continue;
+    if(!isLoaded(edge.from.room.id)||!isLoaded(edge.to.room.id)||doors.blocks(q))return false;
+    if(edge.continuous){activeRoom=edge.to.room.id;break;}
+    const mapped=mapThrough(q,edge),oldRoom=activeRoom;
+    activate(edge.to.room.id);
+    const floor=support(mapped,mapped.height);
+    if(!floor){activate(oldRoom);return false;}
+    p={...mapped,height:floor.height};yawDelta+=edge.yaw;heightDelta+=edge.to.point.height-edge.from.point.height;crossed=true;
+    const c=Math.cos(edge.yaw),s=Math.sin(edge.yaw),nx=c*sx-s*sy;sy=s*sx+c*sy;sx=nx;
+    return true;
+   }
+   const floor=support(q,q.height);if(!floor)return false;
+   p={...q,height:floor.height};activeRoom=floor.room.id;return true;
+  }
+  for(let i=0;i<count;i++)if(!attempt(sx,sy)){const previous=activeSpace;if(attempt(sx,0)&&activeSpace!==previous)continue;attempt(0,sy);}
+  return {...p,yawDelta,heightDelta,crossed};
  }
-}
-const navigation:Navigation={
- canStand:(p,height=0)=>Boolean(support(p,height)),
- floorHeight:(p,height=0)=>{
-  const hit=support(p,height);
-  return hit?hit.nav.floorHeight(hit.local,hit.local.height)+hit.room.position[2]:NaN;
- },
- zone:(p)=>{const hit=support(p,p.height);return hit?hit.nav.zone(hit.local):'House';},
-};
-const moveWalker=(p:Walker,dx:number,dy:number)=>step(p,dx,dy,navigation);
-const zoneAt=(p:Walker)=>navigation.zone(p);
-return {doors,house,rooms,definitions,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt,requireLoadedRooms,setRoomLoaded,preview:Boolean(preview),backgrounds:rooms.flatMap(r=>definitions[r.definition].backgrounds)};
+ const zoneAt=(p:Walker)=>navigation.zone(p);
+ return {doors,house,rooms,definitions,graph,portalDoor,doorPlacement,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt,isLoaded,requireLoadedRooms,setRoomLoaded,activate,resetSpace,
+  get activeRoom(){return activeRoom;},get activeSpace(){return activeSpace;},preview:Boolean(preview),backgrounds:rooms.flatMap(r=>definitions[r.definition].backgrounds)};
 }
 export const {house,rooms,definitions,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt}=createHouseRuntime();
+export type HouseRuntime=ReturnType<typeof createHouseRuntime>;

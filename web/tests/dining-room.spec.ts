@@ -12,10 +12,10 @@ test('hall, kitchen and empty dining room connect at ground level and return alo
  expect(v.zoneAt(v.START)).toBe('Dining room');expect(v.navigation.canStand(v.START,0)).toBe(true);
  const at=(x:number,y:number)=>toWorld({x,y,height:0},room),threshold=at(-9.6,2.9);
  expect(threshold.x).toBeCloseTo(-3.72);expect(threshold.y).toBeCloseTo(19.3);
- expect(v.moveWalker({x:-3.72,y:17.8,height:0},0,4).y).toBeLessThan(19);
- expect(v.moveWalker(at(-8,2.9),0,-4).y).toBeGreaterThan(19.4);
+ v.activate('kitchen');expect(v.moveWalker({x:-3.72,y:17.8,height:0},0,4).y).toBeLessThan(19);
+ v.activate('dining_room');expect(v.moveWalker(at(-8,2.9),0,-4).y).toBeGreaterThan(19.4);
  for(const key of ['hall:kitchen_door','kitchen:dining_door'])v.doors.toggle(key);
- v.doors.update(1,safe);let p={x:-3.72,y:5.4,height:0};
+ v.doors.update(1,safe);v.activate('hall');let p={x:-3.72,y:5.4,height:0};
  const visit=(q:typeof p)=>{p=v.moveWalker(p,q.x-p.x,q.y-p.y);expect(Math.hypot(p.x-q.x,p.y-q.y)).toBeLessThan(.03);expect(p.height).toBe(0);};
  visit({x:-3.72,y:8,height:0});expect(v.zoneAt(p)).toBe('Kitchen');
  visit(at(-8,2.9));expect(v.zoneAt(p)).toBe('Dining room');

@@ -1,9 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "coordinates": "metres; Blender X/Y floor, Z up; yaw radians around +Z",
   "start": "front_exterior",
-  "loadRadius": 24,
-  "unloadRadius": 32,
   "rooms": [
     {
       "id": "hall",
@@ -277,5 +275,16 @@
         "port": "corridor_door"
       }
     }
-  ]
+  ],
+  "spaces": [
+    {
+      "id": "pool_garage",
+      "rooms": [
+        "pool",
+        "garage"
+      ],
+      "origin": "pool"
+    }
+  ],
+  "portalDepth": 3
 }

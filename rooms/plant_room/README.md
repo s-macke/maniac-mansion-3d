@@ -2,7 +2,7 @@
 
 Original background: 014. This is an empty layout shell with the original EGA wall/floor colors and soft baked shading. Furniture and decorative details are deferred.
 
-Connects through the left landing door, owned by the hall. The overlapping upper facade section is removed so the doorway and room are unobstructed.
+Connects through the left landing door, owned by the hall. The room occupies an independent portal space, keeping its doorway and floor unobstructed while the exterior retains a complete facade.
 
 The inferred footprint is 6.4 × 5.55 m, with a 3.12 m ceiling. These dimensions and unseen walls are provisional. Placement and connections live in `house/layout.json`; [the first-floor guide](../../docs/first_floor.md) explains the complete addition.
 

@@ -1,22 +1,19 @@
 import {test,expect} from '@playwright/test';
 import {toWorld,toLocal} from '../lib/house/placement';
-import {roomDistance,nearbyRooms} from '../lib/house/visibility';
+import {neighboringRooms} from '../lib/house/visibility';
 import {createHouseRuntime} from '../lib/house/runtime';
 const {navigation,START,moveWalker}=createHouseRuntime('hall');
 const unit={id:'test',definition:'test',position:[10,-7,4],yaw:Math.PI/2};
-const bounds={min:[-2,-3,0],max:[2,3,4]};
 test('room placement rotates coordinates and retains floor elevation',()=>{
  const q=toWorld({x:2,y:3,height:1},unit);
  expect(q.x).toBeCloseTo(7);expect(q.y).toBeCloseTo(-5);expect(q.height).toBe(5);
  const p=toLocal(q,unit);expect(p.x).toBeCloseTo(2);expect(p.y).toBeCloseTo(3);expect(p.height).toBe(1);
- expect(roomDistance(q,unit,bounds)).toBeCloseTo(0);
 });
-test('nearby loading accounts for room size, rotation and unload hysteresis',()=>{
- const rooms=[unit],defs={test:{bounds}},loaded=new Set(['test']);
- const point=toWorld({x:29,y:0,height:0},unit); // 27m beyond room boundary
- expect(nearbyRooms(point,rooms,defs,new Set(),24,32).size).toBe(0);
- expect(nearbyRooms(point,rooms,defs,loaded,24,32).has('test')).toBe(true);
- expect(nearbyRooms(toWorld({x:40,y:0,height:0},unit),rooms,defs,loaded,24,32).size).toBe(0);
+test('loading follows connections and includes continuous outdoor groups',()=>{
+ const v=createHouseRuntime('hall'),neighbors=neighboringRooms(v.graph,v.activeSpace);
+ expect([...neighbors].sort()).toEqual(['front_exterior','hall','kitchen','living_room','music_room','plant_room','security_hall']);
+ expect(neighbors.has('dining_room')).toBe(false);
+ expect([...neighboringRooms(v.graph,'pool_garage')].sort()).toEqual(['garage','pantry','pool']);
 });
 test('house navigation rejects empty space and resolves both hall elevations',()=>{
  expect(navigation.canStand({x:100,y:100},0)).toBe(false);
