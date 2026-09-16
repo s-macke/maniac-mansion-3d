@@ -23,6 +23,8 @@ def load_config(path, *, generated=False, prepare=False):
         if metadata['id'] != config['id']:
             raise ValueError(f'Room manifest identity mismatch: {path}')
         geometry.update(metadata['geometry'])
+        if metadata.get('sharedAssetLibraries'):
+            config['sharedAssetLibraries'] = metadata['sharedAssetLibraries']
         if metadata.get('sharedAssetLibrary'):
             config['sharedAssetLibrary'] = metadata['sharedAssetLibrary']
     if prepare:
@@ -36,6 +38,8 @@ def save_generated(config):
     """Called after construction; never write back to the authored room.json."""
     metadata = {'id': config['id'], 'geometry': {
         key: config['geometry'].get(key, []) for key in DERIVED_GEOMETRY}}
+    if config.get('sharedAssetLibraries'):
+        metadata['sharedAssetLibraries'] = config['sharedAssetLibraries']
     if config.get('sharedAssetLibrary'):
         metadata['sharedAssetLibrary'] = config['sharedAssetLibrary']
     path = manifest_path(config)

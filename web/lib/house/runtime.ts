@@ -30,6 +30,7 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
  });
  const portalDoor=(edge:Portal)=>doors.items.find(d=>(d.room.id===edge.from.room.id&&d.def.port===edge.from.port.id)||(d.room.id===edge.to.room.id&&d.def.port===edge.to.port.id));
  function nearOpening(p:Walker,edge:Portal,margin=RADIUS+.04){
+  if(edge.from.port.kind==='hatch')return false;
   const q=portalCoordinates(p,edge);
   return Math.abs(q.along)<=.75&&Math.abs(q.across)<=Math.min(edge.from.port.width,edge.to.port.width)/2-margin&&Math.abs(q.height)<=.34;
  }
@@ -44,17 +45,17 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
     if(Math.hypot(local.x-x,local.y-y)<RADIUS)return;
    }
   }
-  // The source wall inset is walkable only in a declared, ready aperture.
-  for(const edge of graph.outgoing(activeSpace)){
-   if(!isLoaded(edge.from.room.id)||!isLoaded(edge.to.room.id)||!nearOpening(walker,edge))continue;
-   const q=portalCoordinates(walker,edge);
-   if(q.along<=.001||edge.continuous)return {room:edge.from.room,height:edge.from.point.height,zone:adapters[definitions[edge.from.room.definition].navigation].zone(toLocal(walker,edge.from.room))};
-  }
   for(const room of graph.members(activeSpace)){
    if(!isLoaded(room.id))continue;
    const local=toLocal(walker,room),def=definitions[room.definition],nav=adapters[def.navigation];
    if(local.x<def.bounds.min[0]||local.x>def.bounds.max[0]||local.y<def.bounds.min[1]||local.y>def.bounds.max[1])continue;
    if(nav.canStand(local,local.height))return {room,height:nav.floorHeight(local,local.height)+room.position[2],zone:nav.zone(local)};
+  }
+  // The source wall inset is walkable only in a declared, ready aperture.
+  for(const edge of graph.outgoing(activeSpace)){
+   if(!isLoaded(edge.from.room.id)||!isLoaded(edge.to.room.id)||!nearOpening(walker,edge))continue;
+   const q=portalCoordinates(walker,edge);
+   if(q.along<=.001||edge.continuous)return {room:edge.from.room,height:edge.from.point.height,zone:adapters[definitions[edge.from.room.definition].navigation].zone(toLocal(walker,edge.from.room))};
   }
  }
  const navigation:Navigation={canStand:(p,h=0)=>Boolean(support(p,h)),floorHeight:(p,h=0)=>support(p,h)?.height??NaN,zone:p=>support(p,p.height)?.zone??definitions[rooms.find(r=>r.id===activeRoom)!.definition].label};

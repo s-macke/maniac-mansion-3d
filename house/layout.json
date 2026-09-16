@@ -142,6 +142,136 @@
         3.36
       ],
       "yaw": 0
+    },
+    {
+      "id": "windowed_hall",
+      "definition": "rooms/windowed_hall/room.json",
+      "position": [
+        40,
+        0,
+        6.72
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "upper_corridor",
+      "definition": "rooms/upper_corridor/room.json",
+      "position": [
+        64,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "green_bedroom",
+      "definition": "rooms/green_bedroom/room.json",
+      "position": [
+        88,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "heart_bedroom",
+      "definition": "rooms/heart_bedroom/room.json",
+      "position": [
+        112,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "radio_bedroom",
+      "definition": "rooms/radio_bedroom/room.json",
+      "position": [
+        136,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "mummy_room",
+      "definition": "rooms/mummy_room/room.json",
+      "position": [
+        160,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "typewriter_room",
+      "definition": "rooms/typewriter_room/room.json",
+      "position": [
+        184,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "safe_attic",
+      "definition": "rooms/safe_attic/room.json",
+      "position": [
+        220,
+        0,
+        13.44
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "tentacle_room",
+      "definition": "rooms/tentacle_room/room.json",
+      "position": [
+        244,
+        0,
+        13.44
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "mummy_bathroom",
+      "definition": "rooms/mummy_bathroom/room.json",
+      "position": [
+        208,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "photo_room",
+      "definition": "rooms/photo_room/room.json",
+      "position": [
+        268,
+        0,
+        6.72
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "attic_stairs",
+      "definition": "rooms/attic_stairs/room.json",
+      "position": [
+        292,
+        0,
+        10.08
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "wire_attic",
+      "definition": "rooms/wire_attic/room.json",
+      "position": [
+        316,
+        0,
+        13.44
+      ],
+      "yaw": 0
     }
   ],
   "connections": [
@@ -274,6 +404,136 @@
         "instance": "arcade",
         "port": "corridor_door"
       }
+    },
+    {
+      "a": {
+        "instance": "security_hall",
+        "port": "higher_floor"
+      },
+      "b": {
+        "instance": "windowed_hall",
+        "port": "security_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "windowed_hall",
+        "port": "higher_floor"
+      },
+      "b": {
+        "instance": "upper_corridor",
+        "port": "stair_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "upper_corridor",
+        "port": "green_bedroom_door"
+      },
+      "b": {
+        "instance": "green_bedroom",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "upper_corridor",
+        "port": "heart_bedroom_door"
+      },
+      "b": {
+        "instance": "heart_bedroom",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "upper_corridor",
+        "port": "radio_bedroom_door"
+      },
+      "b": {
+        "instance": "radio_bedroom",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "upper_corridor",
+        "port": "mummy_room_door"
+      },
+      "b": {
+        "instance": "mummy_room",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "upper_corridor",
+        "port": "typewriter_door"
+      },
+      "b": {
+        "instance": "typewriter_room",
+        "port": "corridor_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "heart_bedroom",
+        "port": "ladder_hatch"
+      },
+      "b": {
+        "instance": "safe_attic",
+        "port": "ladder_hatch"
+      }
+    },
+    {
+      "a": {
+        "instance": "radio_bedroom",
+        "port": "ladder_hatch"
+      },
+      "b": {
+        "instance": "tentacle_room",
+        "port": "ladder_hatch"
+      }
+    },
+    {
+      "a": {
+        "instance": "mummy_room",
+        "port": "bathroom_door"
+      },
+      "b": {
+        "instance": "mummy_bathroom",
+        "port": "entry_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "windowed_hall",
+        "port": "photo_door"
+      },
+      "b": {
+        "instance": "photo_room",
+        "port": "entry_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "typewriter_room",
+        "port": "hidden_panel"
+      },
+      "b": {
+        "instance": "attic_stairs",
+        "port": "entry_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "attic_stairs",
+        "port": "higher_floor"
+      },
+      "b": {
+        "instance": "wire_attic",
+        "port": "entry_door"
+      }
     }
   ],
   "spaces": [
@@ -286,5 +546,71 @@
       "origin": "pool"
     }
   ],
-  "portalDepth": 3
+  "portalDepth": 3,
+  "ladders": [
+    {
+      "id": "heart_bedroom_ladder",
+      "label": "Safe attic",
+      "lower": {
+        "room": "heart_bedroom",
+        "landing": {
+          "x": 3.25,
+          "y": 4.25,
+          "height": 0
+        },
+        "shaft": {
+          "x": 3.67,
+          "y": 4.25
+        },
+        "yaw": -1.5707963267948966,
+        "port": "ladder_hatch"
+      },
+      "upper": {
+        "room": "safe_attic",
+        "landing": {
+          "x": 2,
+          "y": 3.9,
+          "height": 0
+        },
+        "shaft": {
+          "x": 2.87,
+          "y": 3.9
+        },
+        "yaw": -1.5707963267948966,
+        "port": "ladder_hatch"
+      }
+    },
+    {
+      "id": "radio_bedroom_ladder",
+      "label": "Green Tentacle\u2019s room",
+      "lower": {
+        "room": "radio_bedroom",
+        "landing": {
+          "x": -3.25,
+          "y": 4.25,
+          "height": 0
+        },
+        "shaft": {
+          "x": -3.67,
+          "y": 4.25
+        },
+        "yaw": 1.5707963267948966,
+        "port": "ladder_hatch"
+      },
+      "upper": {
+        "room": "tentacle_room",
+        "landing": {
+          "x": -2,
+          "y": 3.9,
+          "height": 0
+        },
+        "shaft": {
+          "x": -2.87,
+          "y": 3.9
+        },
+        "yaw": 1.5707963267948966,
+        "port": "ladder_hatch"
+      }
+    }
+  ]
 }

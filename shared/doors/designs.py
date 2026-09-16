@@ -47,3 +47,21 @@ def entrance_transom(geo):
  verts=[(-.925,-.19,0),(0,-.19,.32),(.925,-.19,0)]
  geo.mesh('Transom_face',verts,[(0,1,2)],'blue')
  for i in range(3):geo.beam('Entrance_transom_border',verts[i],verts[(i+1)%3],.035,'yellow')
+
+
+def concealed_panel(geo,root):
+ # Unit panel, matching the Standard_leaf placement convention. No handle or frame.
+ geo.box('Painted_panel',(0,0,0),(1,.06,1),'red')
+ image=bpy.data.images.load(str(root/'source/room 027.png'));pixels=list(image.pixels[:]);W,H=image.size
+ # Keep the original jagged EGA paint blotch, using horizontal pixel runs.
+ for v in range(18,115):
+  u=315
+  def is_paint(x):
+   off=((H-1-v)*W+x)*4
+   return pixels[off]>.8 and .15<pixels[off+1]<.5 and .15<pixels[off+2]<.5
+  while u<381:
+   if not is_paint(u):u+=1;continue
+   end=u+1
+   while end<381 and is_paint(end):end+=1
+   x0=(u-315)/66-.5;x1=(end-315)/66-.5;z0=.5-(v-18+1)/97;z1=.5-(v-18)/97
+   geo.box('Paint_blotch',((x0+x1)/2,-.033,(z0+z1)/2),(x1-x0,.006,z1-z0),'lightred');u=end

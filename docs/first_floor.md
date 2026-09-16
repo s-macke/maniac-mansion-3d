@@ -1,6 +1,6 @@
 # Library and first-floor layout
 
-The first floor means the storey immediately above the ground floor, at 3.36 m. Its existing landing remains part of the connected hall. Six independent room packages are added: the ground-floor library plus five rooms upstairs. Together the house now has 14 room GLBs and one shared door kit. The browser combines them using `house/layout.json`; Blender files remain independently editable and reproducible.
+The first floor means the storey immediately above the ground floor, at 3.36 m. Its existing landing remains part of the connected hall. Six independent room packages are added: the ground-floor library plus five rooms upstairs. This first-floor milestone introduced 14 room GLBs and one shared door kit; see [upper-floor layout](upper_floor.md) for the current extension. The browser combines them using `house/layout.json`; Blender files remain independently editable and reproducible.
 
 | Room | Background | Access | Moving door owner |
 |---|---|---|---|
@@ -13,7 +13,7 @@ The first floor means the storey immediately above the ground floor, at 3.36 m. 
 
 All new rooms are shells, with artwork-derived EGA floor and wall colors, shared doors and baked soft shading. No furnishings, gameplay, characters or runtime global illumination are added. Every interactive door starts closed and opens/closes from either side. The reinforced door retains its pixel artwork on both faces and now has a separate reusable leaf and frame.
 
-Walk up the main staircase to reach the new floor. The corridor staircase rises a further 3.36 m and ends at a closed doorway for the next storey. Background 012 and the higher floors are outside this pass. The library spiral stair's destination remains unresolved in the supplied connection drawing, so that stair is deferred rather than assigned a destination.
+Walk up the main staircase to reach the new floor. The corridor staircase rises a further 3.36 m and now connects through an initially closed shared door to the [windowed stair hall and upper-floor shells](upper_floor.md). The library spiral stair's destination remains unresolved in the supplied connection drawing, so that stair is deferred rather than assigned a destination.
 
 Connections follow the supplied cutaway and backgrounds. Footprints, unseen walls and metric dimensions are inferred. The 8 × 3.95 m music room clears the living-room ceiling and the corridor stairwell; the plant-room doorway connects through its own independent room space. The 13.2 m-wide security corridor clears the plant wing. The exterior keeps its complete facade and continuous canopy in a separate space; neither needs a cutout for the plant wing. The medical room and arcade have separate, non-overlapping footprints. These decisions can be adjusted as the rest of the house is mapped.
 
@@ -36,7 +36,7 @@ Checks cover the entire main-stair route into every upstairs room and back, stai
 | Medical room | 55,492 B | 17,076 B |
 | Arcade | 54,872 B | 16,766 B |
 
-The six new room downloads total 162,402 bytes compressed. The shared seven-mesh door library is 400,872 bytes optimized / 75,075 bytes gzip, downloaded once for the house.
+The six new room downloads total 162,402 bytes compressed. The shared door library is downloaded once for the house; it also includes the den’s concealed panel.
 
 Reproduce assembled views with:
 

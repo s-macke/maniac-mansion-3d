@@ -25,11 +25,18 @@ def blend(script, *args):
 
 def doors(force=False):
     inputs = [ROOT / p for p in ['shared/doors/build.py', 'shared/doors/designs.py',
-              'scripts/blender_shared/geometry.py', 'scripts/finalize_baked_glb.py', 'source/room 011.png']]
+              'scripts/blender_shared/geometry.py', 'scripts/finalize_baked_glb.py', 'source/room 011.png', 'source/room 027.png']]
     outputs = [ROOT / p for p in ['generated/blender/shared/doors/standard_doors_v1.blend',
                                   'generated/models/doors/standard_doors_v1.glb']]
     if force or any(not p.exists() for p in outputs) or max(p.stat().st_mtime for p in inputs) > min(p.stat().st_mtime for p in outputs):
         blend('shared/doors/build.py')
+
+
+def ladders():
+    inputs = [ROOT / p for p in ['shared/ladders/build.py', 'scripts/blender_shared/geometry.py', 'scripts/blender_shared/shell.py', 'scripts/finalize_baked_glb.py']]
+    outputs = [ROOT / p for p in ['generated/blender/shared/ladders/ladder_v1.blend', 'generated/models/ladders/ladder_v1.glb']]
+    if any(not p.exists() for p in outputs) or max(p.stat().st_mtime for p in inputs) > min(p.stat().st_mtime for p in outputs):
+        blend('shared/ladders/build.py')
 
 
 def room(room_id):
@@ -37,6 +44,8 @@ def room(room_id):
     config = definitions[room_id]
     config_path = next(r['definition'] for r in layout['rooms'] if load_config(ROOT / r['definition'])['id'] == room_id)
     doors()
+    if config['geometry'].get('ladders'):
+        ladders()
     blend(config['build'])
     blend('scripts/blender_shared/bake.py', '--', '--room-config', str(ROOT / config_path))
     for source in [ROOT / config['asset'], ROOT / 'generated/models/doors/standard_doors_v1.glb']:

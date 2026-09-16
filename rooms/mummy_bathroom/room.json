@@ -1,0 +1,112 @@
+{
+  "id": "mummy_bathroom",
+  "label": "Mummy bathroom",
+  "backgrounds": [
+    "024"
+  ],
+  "asset": "generated/models/rooms/mummy_bathroom_v1.glb",
+  "source": "generated/blender/mummy_bathroom/mummy_bathroom_source_v1.blend",
+  "baked": "generated/blender/mummy_bathroom/mummy_bathroom_v1.blend",
+  "build": "rooms/mummy_bathroom/build.py",
+  "navigation": "mummy_bathroom",
+  "bounds": {
+    "min": [
+      -4.3,
+      0,
+      -0.12
+    ],
+    "max": [
+      4.3,
+      5.1,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 4.3,
+    "depth": 5.1,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "entry_door",
+      "position": [
+        -0.7,
+        5.1,
+        0
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "mummy_room"
+    }
+  ],
+  "shell": {
+    "wall": "aqua",
+    "floor": "cyan",
+    "trim": "cyan",
+    "entries": [
+      {
+        "port": "entry_door",
+        "wall": "back",
+        "owner": false,
+        "frame": false
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -2.25,
+        2.55,
+        2.95
+      ],
+      [
+        2.25,
+        2.55,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 024.png"
+    ]
+  }
+}

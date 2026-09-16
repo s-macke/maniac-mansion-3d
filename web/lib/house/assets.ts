@@ -66,16 +66,16 @@ export function createHouseAssets(scene:THREE.Scene,callbacks:{changed:()=>void;
    for(const id of wanted){
     if(loaded.has(id)||pending.has(id)||failed.has(id))continue;
     const room=rooms.find(r=>r.id===id)!,def=definitions[room.definition];pending.add(id);
-    const kit=def.sharedAssetLibrary?library(def.sharedAssetLibrary):undefined;
+    const kit=Promise.all(Object.entries({...(def.sharedAssetLibrary?{doors:def.sharedAssetLibrary}:{}),...def.sharedAssetLibraries}).map(async([id,url])=>({id,root:await library(url)})));
     // Attach a rejection handler immediately, including when the room itself fails first.
     kit?.catch(()=>{});
     loader.load(publicAssetUrl(def.asset),async gltf=>{
      try{
       const shared=kit?await kit:undefined;
-      if(!disposed&&wanted.has(id)&&shared)instantiateSharedAssets(gltf.scene,def,shared);
+      if(!disposed&&wanted.has(id)&&shared)for(const item of shared)instantiateSharedAssets(gltf.scene,def,item.root,item.id);
      }catch{
       pending.delete(id);failed.add(id);dispose(gltf.scene);
-      if(!disposed)callbacks.error('Door assets could not load. Reload the page to try again.');return;
+      if(!disposed)callbacks.error((def.sharedAssetLibraries?'Shared assets':'Door assets')+' could not load. Reload the page to try again.');return;
      }
      pending.delete(id);
      if(disposed||!wanted.has(id)){dispose(gltf.scene);return;}

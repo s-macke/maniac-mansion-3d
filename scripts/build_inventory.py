@@ -36,7 +36,7 @@ ROWS = '''001|Front porch and grounds|Front facade, bottom of house|high|Central
 020|Speaker / record room|Upper-left roof room|high|No clear door or ladder shown in background
 021|Radio bedroom (tentacle candidate)|Upper bedroom band, center-right|high|Ladder left; door right
 022|Medical / examination room|Lower tower, left of arcade|high|Rear door; tall cabinet is a prop
-023|Dark workshop / radio room|Upper roof band, center|high|Door right; floor panel/hatch left
+023|Photo darkroom|Upper roof band, center|high|Door right to windowed stair hall (012); enlarger and print trays are fixtures, not a hatch
 024|Bathroom|Below damaged attic, right|high|Rear door; no explicit ceiling hatch visible
 025|Mummy / sarcophagus room|Upper bedroom band, far right|high|Door at each end
 026|Green bedroom (Ed candidate)|Upper bedroom band, far left|high|Rear door; window right

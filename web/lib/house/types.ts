@@ -7,12 +7,15 @@ export type Navigation = {
 };
 export type Placement = {id:string;definition:string;position:number[];yaw:number;previewOnly?:boolean};
 export type Connection = {a:{instance:string;port:string};b:{instance:string;port:string}};
-export type HouseData = {start:string;rooms:Placement[];definitions:Record<string,RoomDefinition>;connections:Connection[];spaces?:{id:string;rooms:string[];origin:string}[];portalDepth?:number};
+export type HouseData = {start:string;rooms:Placement[];definitions:Record<string,RoomDefinition>;connections:Connection[];ladders?:LadderLink[];spaces?:{id:string;rooms:string[];origin:string}[];portalDepth?:number};
 
-export type RoomDefinition={id:string;label:string;backgrounds:string[];asset:string;sharedAssetLibrary?:string;navigation:string;bounds:{min:number[];max:number[]};spawn:Walker & {yaw:number;pitch:number};geometry?:{[key:string]:unknown;sharedAssets?:SharedAssetInstance[];doors?:DoorDefinition[];doorObstacles?:{min:number[];max:number[]}[]};ports:Port[]};
-export type Port={id:string;position:number[];outward:number[];width:number;state:string;height?:number};
+export type RoomDefinition={id:string;label:string;backgrounds:string[];asset:string;sharedAssetLibrary?:string;sharedAssetLibraries?:Record<string,string>;navigation:string;bounds:{min:number[];max:number[]};spawn:Walker & {yaw:number;pitch:number};geometry?:{[key:string]:unknown;sharedAssets?:SharedAssetInstance[];doors?:DoorDefinition[];doorObstacles?:{min:number[];max:number[]}[]};ports:Port[]};
+export type Port={id:string;kind?:string;depth?:number;position:number[];outward:number[];width:number;state:string;height?:number};
 
 export type DoorLeaf={node:string;hinge:number[];openAngle:number;min:number[];max:number[]};
 export type DoorDefinition={id:string;label:string;port:string;initialOpen:boolean;leaves:DoorLeaf[]};
 
-export type SharedAssetInstance={id:string;asset:string;matrix:number[];doorNode?:string};
+export type SharedAssetInstance={id:string;asset:string;matrix:number[];library?:string;doorNode?:string};
+
+export type LadderEnd={room:string;port:string;landing:Walker;shaft:Point;yaw:number};
+export type LadderLink={id:string;label:string;lower:LadderEnd;upper:LadderEnd};

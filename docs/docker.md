@@ -14,12 +14,12 @@ The toolchain contains Blender 4.2.3, Node.js 22.22.0, Python/Pillow, DejaVu fon
 ./docker-build.sh site
 ```
 
-- `room kitchen`: rebuild/bake just the kitchen and optimize its GLB. Build the shared door kit if missing or older than its inputs.
+- `room kitchen`: rebuild/bake just the kitchen and optimize its GLB. Build the shared door kit if missing or older than its inputs; rooms with ladders also generate the shared ladder kit automatically.
 - `room kitchen --site`: additionally compile the whole website using existing outputs for the other rooms.
 - `all`: regenerate all rooms, inventories and previews, then compile/typecheck the site.
 - `site`: compile/typecheck the website using existing generated models.
 
-On a fresh checkout, run `all` before an incremental website build. After changing shared door geometry, use `all` to keep baked scenes and door metadata consistent. A single-room build does not update other rooms or assembly previews.
+On a fresh checkout, run `all` before an incremental website build. After changing shared door or ladder geometry, use `all` to keep baked scenes and door metadata consistent. A single-room build does not update other rooms or assembly previews.
 
 `compose.yaml` provides one reusable toolchain service. The shell wrapper prepares writable `.docker/` dependency/cache directories, passes your user/group IDs and invokes `docker compose run --rm`. Generated files belong to your user. Container npm dependencies stay in `.docker/node_modules/`, separate from host `web/node_modules/`.
 

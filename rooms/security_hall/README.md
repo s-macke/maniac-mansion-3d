@@ -2,7 +2,7 @@
 
 Original background: 013. This is an empty layout shell with the original EGA wall/floor colors and soft baked shading. Furniture and decorative details are deferred.
 
-Connects through the reinforced landing door, owned by the hall. Owns the medical and arcade doors. The staircase rises another 3.36 m to an unconnected, closed higher-floor door; rooms on that storey are deferred.
+Connects through the reinforced landing door, owned by the hall. Owns the medical and arcade doors. The staircase rises another 3.36 m to the initially closed `higher_floor` door, now owned here and connected to the [windowed stair hall](../windowed_hall/README.md).
 
 The inferred footprint is 13.2 × 5.55 m, with a 3.12 m ceiling. These dimensions and unseen walls are provisional. Placement and connections live in `house/layout.json`; [the first-floor guide](../../docs/first_floor.md) explains the complete addition.
 

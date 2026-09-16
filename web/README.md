@@ -88,12 +88,12 @@ Kitchen shell: `/?room=kitchen` starts in the empty kitchen within the assembled
 
 ## Shared door assets
 
-The house loads 14 room GLBs plus one shared door library at `/models/shared/standard_doors_v1.glb`. Hall v6, living-room v4, kitchen v4, dining-room v1 and pantry v1 use this kit; the exterior uses v3. The kit contains a standard leaf and frame, reused by size and mirrored for handle side. Special door artwork also comes from the library.
+The house loads 27 room GLBs plus shared door and ladder libraries at `/models/shared/standard_doors_v1.glb`. Hall v6, living-room v4, kitchen v4, dining-room v1 and pantry v1 use this kit; the exterior uses v3. The kit contains a standard leaf and frame, reused by size and mirrored for handle side. Special door artwork also comes from the library.
 
 Moving leaves share geometry/materials, while static frames and leaves use per-room instanced batches. Unloading a room keeps the kit cached and retains interactive door state. A room waits for its door assets before allowing entry. See [door authoring and lifecycle](../shared/doors/README.md).
 
 
-Dining-room shell: `/?room=dining_room` starts inside room 037. From the kitchen, open the far door; the pantry door at the other end opens into room 036. The house now has 14 room GLBs plus the shared door kit. Kitchen v4 retains the facade-clearance fix while owning this new interactive leaf.
+Dining-room shell: `/?room=dining_room` starts inside room 037. From the kitchen, open the far door; the pantry door at the other end opens into room 036. The house now has 27 room GLBs plus the shared door and ladder kits. Kitchen v4 retains the facade-clearance fix while owning this new interactive leaf.
 
 Pantry room 036 is connected beyond dining at `(-0.82,41.7,0)`, yaw `pi/2`. Its rear blue mesh door now opens onto the pool deck. See [the pantry package](../rooms/pantry/README.md).
 
@@ -101,7 +101,7 @@ Pool deck: `/?room=pool` starts outdoors beside the filled pool. Open the pantry
 
 The [garage and forecourt](../rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](../docs/first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The higher storey and unresolved library spiral staircase remain deferred.
+The [library and complete first-floor shell layout](../docs/first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The upper storey now connects through the windowed hall and upper corridor; the library spiral staircase remains deferred.
 
 Focused first-floor verification:
 
@@ -112,3 +112,5 @@ WALKTHROUGH_URL=http://127.0.0.1:5174 npx playwright test tests/downloads.spec.t
 ```
 
 These checks exercise navigation, actual GLB geometry, door reuse and HTTP downloads. They do not claim interactive-browser or physical-mobile performance validation. `scripts/preview_first_floor.py` renders the assembled doors and room connections from the current baked Blender scenes.
+
+[Ladder portals](../docs/ladders.md) connect the heart bedroom to the safe attic and the radio bedroom to Green Tentacle’s room. Approach and face the ladder, then press E or tap the climb action. Both destinations are empty shells.

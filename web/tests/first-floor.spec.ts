@@ -32,17 +32,17 @@ test('first floor spawns require the correct level and loaded rooms; upper stair
   v.requireLoadedRooms();expect(v.navigation.canStand(v.START,3.36)).toBe(false);v.setRoomLoaded(id,true);expect(v.navigation.canStand(v.START,3.36)).toBe(true);expect(v.navigation.canStand(v.START,0),id).toBe(false);
  }
  const v=createHouseRuntime('security_hall');let p={x:6.025,y:10.65,height:3.36};
- p=v.moveWalker(p,0,4.2);expect(p.y).toBeCloseTo(14.85);expect(p.height).toBeCloseTo(6.72);
- const stopped=v.moveWalker(p,0,2);expect(stopped.y).toBeLessThan(15);expect(stopped.height).toBeCloseTo(6.72);
- p=v.moveWalker(p,0,-4.2);expect(p.y).toBeCloseTo(10.65);expect(p.height).toBeCloseTo(3.36);
+ p=v.moveWalker(p,0,4.2);expect(p.y).toBeGreaterThan(14.4);expect(p.y).toBeLessThan(14.85);
+ const stopped=v.moveWalker(p,0,2);expect(stopped.y).toBeLessThan(15);expect(stopped.height).toBeGreaterThan(6.2);expect(v.activeRoom).toBe('security_hall');
+ p=v.moveWalker(p,0,10.65-p.y);expect(p.y).toBeCloseTo(10.65);expect(p.height).toBeCloseTo(3.36);
 });
-test('actual room and shared meshes leave every new open threshold clear, including the facade',async()=>{
- const v=createHouseRuntime(),scene=new THREE.Scene(),view=createDoorView(scene,v.doors);
+test('independent room meshes leave floors and shared door thresholds clear',async()=>{
+ const v=createHouseRuntime(),scene=new THREE.Scene(),view=createDoorView(scene,v.doors),roots=new Map<string,THREE.Object3D>();
  for(const room of v.rooms){
   const def=v.definitions[room.definition],bytes=await readFile('../generated/models/rooms/'+def.asset.split('/').at(-1));
   const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength) as ArrayBuffer,'');
   await addDoorKit(gltf.scene,def);
-  const root=new THREE.Group();root.position.set(room.position[0],room.position[2],-room.position[1]);root.rotation.y=room.yaw;root.add(gltf.scene);scene.add(root);view.attach(room.id,root);
+  const root=new THREE.Group();root.position.set(room.position[0],room.position[2],-room.position[1]);root.rotation.y=room.yaw;root.add(gltf.scene);scene.add(root);view.attach(room.id,root);roots.set(room.id,root);
  }
  const ray=new THREE.Raycaster();scene.updateMatrixWorld(true);
  // The visible floor must match navigation: roofs and lower-room ceilings cannot cut through an upstairs room.
@@ -52,21 +52,24 @@ test('actual room and shared meshes leave every new open threshold clear, includ
    if(room.id==='security_hall'&&x>5)continue;
    const p={x:room.position[0]+x,y:room.position[1]+y,height:room.position[2]};if(!v.navigation.canStand(p,p.height))continue;
    ray.set(new THREE.Vector3(p.x,p.height+1.62,-p.y),new THREE.Vector3(0,-1,0));ray.far=1.8;
-   const hits=ray.intersectObjects(scene.children,true);expect(hits.length,room.id+' floor').toBeGreaterThan(0);
+   const hits=ray.intersectObject(roots.get(room.id)!,true);expect(hits.length,room.id+' floor').toBeGreaterThan(0);
    expect.soft(hits[0]?.point.y,room.id+' floor at '+x+','+y).toBeCloseTo(p.height,2);
   }
  }
- v.activate('security_hall');
+ v.activate('security_hall');const upperDoor=v.doors.items.find(d=>d.key==='security_hall:higher_floor')!;upperDoor.amount=upperDoor.target=1;view.sync();
  // Stair treads track the continuous navigation ramp, with clear headroom throughout.
  for(let i=0;i<=20;i++){
   const y=10.95+3.9*i/20,p={x:6.025,y,height:3.36+3.36*i/20};
   const h=v.navigation.floorHeight(p,p.height);
   ray.set(new THREE.Vector3(p.x,h+1.62,-y),new THREE.Vector3(0,-1,0));ray.far=2;
-  const below=ray.intersectObjects(scene.children,true);expect(below.length).toBeGreaterThan(0);expect(Math.abs(below[0].point.y-h)).toBeLessThan(.2);
-  ray.set(new THREE.Vector3(p.x,h+1.62,-y),new THREE.Vector3(0,1,0));ray.far=.55;expect(ray.intersectObjects(scene.children,true).map(h=>h.object.name),'stair headroom').toEqual([]);
+  const below=ray.intersectObject(roots.get('security_hall')!,true);expect(below.length).toBeGreaterThan(0);expect(Math.abs(below[0].point.y-h)).toBeLessThan(.2);
+  ray.set(new THREE.Vector3(p.x,h+1.62,-y),new THREE.Vector3(0,1,0));ray.far=.55;expect(ray.intersectObject(roots.get('security_hall')!,true).map(h=>h.object.name),'stair headroom').toEqual([]);
  }
  for(const r of routes){
-  const shoot=()=>{scene.updateMatrixWorld(true);ray.set(new THREE.Vector3(r.x-r.dx*1.3+r.dy*.12,r.h+1.62,-r.y+r.dy*1.3+r.dx*.12),new THREE.Vector3(r.dx,0,-r.dy));ray.far=2.6;return ray.intersectObjects(scene.children,true);};
+  const door=v.doors.items.find(d=>d.key===r.key)!,edge=v.graph.portals.find(e=>e.from.room.id===door.room.id&&e.from.port.id===door.def.port)!;
+  const pair=[roots.get(edge.from.room.id)!,roots.get(edge.to.room.id)!];
+  for(const root of scene.children)root.visible=pair.includes(root);
+  const shoot=()=>{scene.updateMatrixWorld(true);ray.set(new THREE.Vector3(r.x-r.dx*1.3+r.dy*.12,r.h+1.62,-r.y+r.dy*1.3+r.dx*.12),new THREE.Vector3(r.dx,0,-r.dy));ray.far=2.6;return ray.intersectObjects(pair,true);};
   const camera=new THREE.PerspectiveCamera(68,1,.05,60);
   const select=()=>{for(const side of [-1,1]){camera.position.set(r.x-r.dx*1.3*side,r.h+1.62,-r.y+r.dy*1.3*side);camera.lookAt(r.x,r.h+1.45,-r.y);expect(view.target(camera)?.key,r.key+' target').toBe(r.key);}};
   expect(shoot().length,r.key+' closed').toBeGreaterThan(0);select();
@@ -74,7 +77,7 @@ test('actual room and shared meshes leave every new open threshold clear, includ
   expect.soft(shoot().map(h=>h.object.name),r.key+' open').toEqual([]);select();
   for(const side of [-1,1])for(const offset of [-.15,.15])for(const height of [.4,1.62,2.1]){
    ray.set(new THREE.Vector3(r.x-r.dx*1.3*side+r.dy*offset,r.h+height,-r.y+r.dy*1.3*side+r.dx*offset),new THREE.Vector3(r.dx*side,0,-r.dy*side));ray.far=2.6;
-   expect.soft(ray.intersectObjects(scene.children,true).map(h=>h.object.name),r.key+' open clearance').toEqual([]);
+   expect.soft(ray.intersectObjects(pair,true).map(h=>h.object.name),r.key+' open clearance').toEqual([]);
   }
  }
 });

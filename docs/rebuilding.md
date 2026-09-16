@@ -3,7 +3,7 @@
 ```text
 source/                    Original game backgrounds and connection_suggestion.png
 rooms/<room>/              build.py, authored room.json, README.md
-shared/doors/              Shared door builders and documentation
+shared/doors/, ladders/    Shared asset builders and documentation
 house/layout.json          Placement and connections
 scripts/build.py           Common local/Docker build command
 scripts/blender_shared/    Blender construction and baking helpers
@@ -40,7 +40,7 @@ python3 scripts/build.py all
 ./walkthrough.sh
 ```
 
-`all` creates the shared door kit, all room scenes/GLBs, inventories and assembly previews, then runs `npm ci`, compilation and typechecking. It stops immediately on failure. Use `all --assets-only` to omit npm, `room kitchen` for one room, `room kitchen --site` to also update the browser build, or `site` to compile existing models. `check`, `sync`, `doors` and `export exports/local` are also available through the same command. `scripts/rooms.py` is the lower-level catalog/sync helper; it contains no second full-build recipe.
+`all` creates the shared door and ladder kits, all room scenes/GLBs, inventories and assembly previews, then runs `npm ci`, compilation and typechecking. It stops immediately on failure. Use `all --assets-only` to omit npm, `room kitchen` for one room, `room kitchen --site` to also update the browser build, or `site` to compile existing models. `check`, `sync`, `doors` and `export exports/local` are also available through the same command. `scripts/rooms.py` is the lower-level catalog/sync helper; it contains no second full-build recipe.
 
 `npm run build` calls `scripts/build.py sync` before compilation. Browser models and TypeScript adapters are generated copies under `web/`; they remain ignored. A clean checkout must generate Blender outputs before npm compilation. Baking can take several minutes per detailed room.
 

@@ -3,11 +3,12 @@ import type {RoomDefinition} from './types';
 const basis=new THREE.Matrix4().makeRotationX(-Math.PI/2),inverse=basis.clone().invert();
 /** Placement matrices are in Blender coordinates; GLB geometry is already Y-up. */
 export function assetMatrix(matrix:number[]){return basis.clone().multiply(new THREE.Matrix4().fromArray(matrix)).multiply(inverse);}
-export function instantiateSharedAssets(root:THREE.Object3D,definition:RoomDefinition,library:THREE.Object3D){
+export function instantiateSharedAssets(root:THREE.Object3D,definition:RoomDefinition,library:THREE.Object3D,libraryId="doors"){
  const batches=new Map<string,{template:THREE.Mesh;matrices:THREE.Matrix4[];mirrored:boolean}>();
  for(const instance of definition.geometry?.sharedAssets??[]){
+  if((instance.library??'doors')!==libraryId)continue;
   const template=library.getObjectByName(instance.asset);
-  if(!template)throw new Error('Missing shared door asset: '+instance.asset);
+  if(!template)throw new Error('Missing shared asset: '+instance.asset);
   if(!instance.doorNode){
    if(!(template instanceof THREE.Mesh))throw new Error('Shared template must be a mesh: '+instance.asset);
    const matrix=assetMatrix(instance.matrix),mirrored=matrix.determinant()<0,key=instance.asset+':'+mirrored;

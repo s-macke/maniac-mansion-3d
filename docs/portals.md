@@ -12,11 +12,13 @@ The explicit `spaces` list groups `pool` and `garage` as `pool_garage`, with poo
 
 ## Movement and doors
 
-The runtime tracks `activeRoom` and `activeSpace`. It evaluates the existing floor and wall rules only inside that space. A doorway bridge provides clearance through conservative wall insets only when both sides are loaded. Movement is subdivided to prevent tunnelling; crossing transforms position, floor elevation, facing and remaining displacement. Reset and `?room=...` select an explicit starting space.
+The runtime tracks `activeRoom` and `activeSpace`. It evaluates the existing floor and wall rules only inside that space. Existing floor support takes priority, including stair slopes. A doorway bridge supplies otherwise missing clearance through conservative wall insets only when both sides are loaded. Movement is subdivided to prevent tunnelling; crossing transforms position, floor elevation, facing and remaining displacement. Reset and `?room=...` select an explicit starting space.
 
-`moveWalker()` also returns `yawDelta`, `heightDelta` and `crossed` for camera continuity. `activate()` is for explicit placement/reset/test setup, not automatic bounds-based room detection. Tests that position a walker directly must also select its room.
+`moveWalker()` also returns `yawDelta`, `heightDelta` and `crossed` for camera continuity. `activate()` is for explicit placement/reset/test setup and camera-plane switches during ladder climbing, not automatic bounds-based room detection. Tests that position a walker directly must also select its room.
 
 One persistent door state remains owned by its original room. Opposite-side leaf proxies share the original geometry/materials and copy its animated transform. They are visual instances, not extra doors or independent states. Ray targeting and collision transform into the owning room, so doors work from either side and stop swinging before the walker. Walls still occlude interaction.
+
+Horizontal hatch ports use three-component vertical normals and a rectangular width/depth aperture. [Ladder motion](ladders.md) crosses them continuously, using the same camera mapping, clipping and graph residency as doorway portals.
 
 ## Rendering and residency
 
@@ -26,7 +28,7 @@ Only the current space is drawn directly. Visible doorways render destination sp
 
 Current-space rooms and immediate neighbors are resident. Visible deeper portal chains request more rooms. Unwanted rooms remain cached for ten seconds; render targets no longer used by the current view are disposed immediately. Shared kit resources remain reusable until the walkthrough is disposed. Crossing into an unloaded or failed destination is blocked; a loading failure preserves the current space and displays the existing reload message.
 
-The renderer uses existing unlit, baked materials, sRGB output and no tone mapping or dynamic lighting. `.viewport`'s diagnostic `data-walker` includes current room/space, loaded rooms, portal passes and target count. These are debugging data, not extra interface controls.
+The renderer uses existing unlit, baked materials, sRGB output and no tone mapping or dynamic lighting. `.viewport`'s diagnostic `data-walker` includes current room/space, loaded rooms, moving door keys, portal passes and target count. These are debugging data, not extra interface controls.
 
 ## Validation
 

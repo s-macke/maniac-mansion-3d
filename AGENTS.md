@@ -36,6 +36,12 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Pool deck](rooms/pool/README.md) | Outdoor deck, filled pool and pantry connection |
 | [Garage and forecourt](rooms/garage/README.md) | Outdoor approach and empty covered garage bay |
 | [First-floor layout](docs/first_floor.md) | Library, five upstairs shells, door ownership and deferred stairs |
+| [Upper-floor layout](docs/upper_floor.md) | Windowed stair hall, upper corridor, bedroom shells and provisional connections |
+| [Mummy bathroom](rooms/mummy_bathroom/README.md) | Empty bathroom shell beyond the exercise/mummy room |
+| [Photo room](rooms/photo_room/README.md) | Darkroom shell beside the windowed-hall stairs |
+| [Hidden attic stairs](rooms/attic_stairs/README.md) | Stair passage behind the den’s painted wall panel |
+| [Wire attic](rooms/wire_attic/README.md) | Empty attic shell and den connection |
+| [Ladder portals](docs/ladders.md) | Shared ladder kit, hatch portals, controls and verified routes |
 | [Shared doors](shared/doors/README.md) | Reusable leaf/frame authoring, mirroring and runtime lifecycle |
 
 Keep affected documentation current when changing paths, workflow, room connections or accepted behavior. Prefer updating the current description over appending contradictory version notes.
@@ -43,7 +49,7 @@ Keep affected documentation current when changing paths, workflow, room connecti
 ## Files and ownership
 
 - `source/` contains original artwork and the connection drawing; preserve these inputs.
-- `rooms/<room>/` contains only source builders, authored `room.json` and README. `shared/doors/` contains the shared kit builders.
+- `rooms/<room>/` contains only source builders, authored `room.json` and README. `shared/doors/` and `shared/ladders/` contain the shared kit builders.
 - `house/layout.json` assembles independent room units in the browser. The entrance and landing remain one hall unit.
 - `scripts/build.py` is the common local, Docker and Compose entry point. `scripts/rooms.py` handles catalog validation and browser synchronization; `scripts/room_config.py` merges authored configs with generated manifests.
 - Never write generated door transforms into authored `room.json`. Builders emit `generated/reports/rooms/<room>/manifest.json` through `save_generated()`.

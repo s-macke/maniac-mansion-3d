@@ -106,7 +106,7 @@ The kitchen's entry end is below the existing gallery. Room-local navigation rej
 
 ## Shared standard door kit (current)
 
-`shared/doors/build.py` produces `standard_doors_v1.blend` and one GLB with seven meshes and one unlit vertex-color material. Standard leaves and frames across the indoor rooms reference this library through `geometry.sharedAssets`; double doors compose two mirrored/scaled leaf instances. The security door, pantry mesh door and entrance transom also come from the library.
+`shared/doors/build.py` produces `standard_doors_v1.blend` and one GLB with eight meshes and one unlit vertex-color material. Standard leaves and frames across the indoor rooms reference this library through `geometry.sharedAssets`; double doors compose two mirrored/scaled leaf instances. The security door, pantry mesh door and entrance transom also come from the library.
 
 Current room assets are hall v6, living room v4, exterior v3, kitchen v4 and dining room v1. Superseded exports, builders and configurations have been removed. Shared appearances use neutral edge shading rather than baking a different lighting pattern into each copy; rooms still use their existing static-light bake. Frame and panel proportions scale with the doorway.
 
@@ -115,6 +115,12 @@ The source helper `blender_shared/door_assets.py` replaces construction meshes w
 The loader caches one promise per shared library URL, waits for attachment before marking a room navigable, and retains shared resources on room unload. Per-room instance buffers are released then; kit geometry/materials are released at walkthrough teardown. No geometry is duplicated for different hinge sides, no runtime GI is introduced, and starting states remain closed.
 
 
+### Shared ladders and hatch portals
+
+`shared/ladders/build.py` provides one reusable rail/rung section. Generated room manifests declare the named `sharedAssetLibraries.ladders` URL and instances with `library: ladders`; existing door instances retain their default library. The loader waits for all required libraries and caches each once. Ladder sections use the same static instancing and disposal rules as door frames.
+
+[Horizontal hatch portals and guided climbing](ladders.md) connect the heart and radio bedrooms to independent upper shells. Slab openings belong to room geometry; connections and safe climb landings belong to `house/layout.json`.
+
 ### Interior/exterior clearance
 
 The current kitchen uses a shell depth of 5.55 m while retaining its placement and door ports. Its exterior-facing surface is at world x=-6.37, 3 cm behind the facade's inner face at x=-6.4. Room shells must clear the complete exterior wall thickness, not merely offset a coplanar outer face. Validate the exported bounds when placing additional shells near the facade.
@@ -122,7 +128,7 @@ The current kitchen uses a shell depth of 5.55 m while retaining its placement a
 
 ### Dining-room shell
 
-`rooms/dining_room` is an independent empty room 037 package. It continues straight beyond the kitchen at `(-0.82,28.9,0)`, yaw `pi/2`, with a 19.2 × 5.55 m footprint and 3.12 m ceiling. Kitchen v4 owns the shared connecting leaf; dining owns its frame and the interactive pantry door. The door library now contains seven meshes, including the distinctive door designs. The house has 14 room GLBs plus one shared kit.
+`rooms/dining_room` is an independent empty room 037 package. It continues straight beyond the kitchen at `(-0.82,28.9,0)`, yaw `pi/2`, with a 19.2 × 5.55 m footprint and 3.12 m ceiling. Kitchen v4 owns the shared connecting leaf; dining owns its frame and the interactive pantry door. The door library now contains eight meshes, including the distinctive door designs. The house has 27 room GLBs plus shared door and ladder kits.
 
 Pantry room 036 is connected beyond dining at `(-0.82,41.7,0)`, yaw `pi/2`. Its gray shell retains the rear blue mesh door as a closed, unassigned pool-route placeholder. See [the pantry package](../rooms/pantry/README.md).
 

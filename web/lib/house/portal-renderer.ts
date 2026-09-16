@@ -14,16 +14,20 @@ export function portalCamera(camera:THREE.PerspectiveCamera,edge:Portal){
 }
 /** Destination geometry stays on the interior side of its entrance plane. */
 export function entrancePlane(edge:Portal){
- const p=point(edge.to.point),n=new THREE.Vector3(-edge.to.normal.x,0,edge.to.normal.y);
+ const p=point(edge.to.point),n=new THREE.Vector3(-edge.to.normal.x,-edge.to.normal.height,edge.to.normal.y);
  return new THREE.Plane().setFromNormalAndCoplanarPoint(n,p.addScaledVector(n,-.002));
 }
 export function portalCorners(edge:Portal){
+ if(edge.from.port.kind==='hatch'){
+  const {port,room}=edge.from,base=point(edge.from.point);
+  return [[-1,-1],[1,-1],[1,1],[-1,1]].map(([x,y])=>base.clone().add(new THREE.Vector3(x*port.width/2,0,-y*port.depth!/2).applyAxisAngle(new THREE.Vector3(0,1,0),room.yaw)));
+ }
  const {point:p,normal:n,port}=edge.from,t=new THREE.Vector3(-n.y,0,-n.x),base=point(p);
  return [[-1,0],[1,0],[1,1],[-1,1]].map(([x,y])=>base.clone().addScaledVector(t,x*port.width/2).add(new THREE.Vector3(0,y*(port.height??2.7),0)));
 }
 /** A conservative screen footprint; near-plane intersections retain the portal. */
 export function portalRect(camera:THREE.PerspectiveCamera,edge:Portal):THREE.Vector4|null{
- const p=point(edge.from.point),n=new THREE.Vector3(edge.from.normal.x,0,-edge.from.normal.y);
+ const p=point(edge.from.point),n=new THREE.Vector3(edge.from.normal.x,edge.from.normal.height,-edge.from.normal.y);
  if(camera.position.clone().sub(p).dot(n)>.06)return null;
  camera.updateMatrixWorld(true);
  const corners=portalCorners(edge),frustum=new THREE.Frustum().setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse));
@@ -94,9 +98,11 @@ export function createPortalRenderer(renderer:THREE.WebGLRenderer,scene:THREE.Sc
     // Keep the aperture in front of the near plane until the actual crossing.
     const main=camera.clone();
     for(const edge of view.graph.outgoing(view.activeSpace)){
-     const d=camera.position.clone().sub(point(edge.from.point)),normal=new THREE.Vector3(edge.from.normal.x,0,-edge.from.normal.y);
+     const d=camera.position.clone().sub(point(edge.from.point)),normal=new THREE.Vector3(edge.from.normal.x,edge.from.normal.height,-edge.from.normal.y);
      const along=Math.abs(d.dot(normal)),across=Math.abs(d.x*normal.z-d.z*normal.x);
-     if(along<.1&&across<edge.from.port.width/2+.1&&d.y>0&&d.y<(edge.from.port.height??2.7))main.near=Math.min(main.near,Math.max(.0001,along*.4));
+     const local=d.clone().applyAxisAngle(new THREE.Vector3(0,1,0),-edge.from.room.yaw);
+     const inside=edge.from.port.kind==='hatch'?Math.abs(local.x)<edge.from.port.width/2+.1&&Math.abs(local.z)<edge.from.port.depth!/2+.1:across<edge.from.port.width/2+.1&&d.y>0&&d.y<(edge.from.port.height??2.7);
+     if(along<.1&&inside)main.near=Math.min(main.near,Math.max(.0001,along*.4));
     }
     main.updateProjectionMatrix();renderSpace(view.activeSpace,main,0,view.activeSpace);
    }

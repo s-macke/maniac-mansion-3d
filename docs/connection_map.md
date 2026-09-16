@@ -61,11 +61,14 @@ flowchart TD
     R011 -.-> R013["013 Security hall"]
     R013 -.-> R012["012 Windowed stair hall"]
     R012 -.-> R038["038 Upper corridor"]
+    R012 --- R023["023 Photo darkroom"]
     R038 -.-> R026["026 Green bedroom"]
     R038 -.-> R019["019 Heart bedroom"]
     R038 -.-> R021["021 Radio bedroom"]
-    R038 -.-> R025["025 Mummy room"]
+    R038 -.-> R025["025 Exercise / mummy room"]
+    R025 --- R024["024 Mummy bathroom"]
     R038 -.-> R027["027 Typewriter room"]
+    R027 ---|painted panel and stairs| R015["015 Wire attic"]
 ```
 
 ## Connection candidates and evidence
@@ -97,17 +100,19 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 013 ↔ 018 | Suggested | Arcade lies above corridor's right end near stairs; its door could meet a landing. |
 | 013 ↔ 012 | Suggested | Both are circulation spaces with stairs in lower/middle tower; proposed sequence, not proven endpoint mapping. |
 | 012 ↔ 038 | Suggested | Left stair rises toward upper corridor in cutaway; exact intermediate landing unresolved. |
-| 038 ↔ 026 | Suggested | Bedroom above corridor; one of four rear doors is a candidate. |
-| 038 ↔ 019 | Suggested | Bedroom above corridor; one of four rear doors is a candidate. |
-| 038 ↔ 021 | Suggested | Bedroom above corridor; one of four rear doors is a candidate. |
-| 038 ↔ 025 | Suggested | Mummy room above corridor's right end; assignment to fourth rear door is provisional. |
+| 038 ↔ 026 | User-corrected | Green bedroom: third rear door from the left. |
+| 038 ↔ 019 | User-confirmed | Red heart bedroom with ladder: second rear door from the left. |
+| 038 ↔ 021 | User-confirmed | Purple bedroom with radio and ladder to Green Tentacle’s room: leftmost rear door. |
+| 038 ↔ 025 | User-corrected | Exercise/mummy room: fourth rear door from the left. |
 | 038 ↔ 027 | Suggested | Typewriter room appears at corridor's right end and has a left door. |
-| 025 ↔ 024 | Suggested | Bathroom sits above mummy room in cutaway; spare mummy-room door is a possible route. No connecting stairs shown in background. |
-| 024 ↔ 015 | Unresolved | Attic is above bathroom and has a floor hatch; bathroom image does not show its counterpart. |
-| 021 ↔ 023 | Unresolved | Radio-bedroom ladder and workshop floor panel are candidate counterparts; cutaway placement does not prove pairing. |
-| 019 ↔ 009 | Unresolved | Bedroom ladder and boarded/projecting room are possible related spaces, but room 009 placement itself is low confidence. |
-| 026 ↔ 020 | Unresolved | Speaker room sits above green bedroom; no connecting exit is visible in either image. Adjacency alone is insufficient. |
-| 023 ↔ 028 or 014 ↔ 028 | Unresolved alternatives | Dome requires an approach; workshop's roof position and plant-room growth motif are clues only. No route is selected. |
+| 025 ↔ 024 | User-confirmed; built | Far door of exercise/mummy room reaches the mummy bathroom on the same level. |
+| 012 ↔ 023 | Built | Rear door beside the windowed-hall stairs reaches the photo darkroom, one floor below the bedrooms. |
+| 024 ↔ 015 | Rejected inference | Vertical placement in the cutaway is not an access route. The original hint book routes the wire attic through a concealed door in the den instead. |
+| 027 ↔ 015 | Confirmed route; built | Den/typewriter room → painted wall panel → hidden stair unit → wire attic, described in the original hint book, printed page 39. |
+| 021 ↔ 020 | Confirmed route | Original hint book pages 37–38: Fred’s bedroom ladder reaches Green Tentacle’s speaker room. Implemented via a hatch portal. |
+| 019 ↔ 009 | Confirmed route; inferred background match | Hint book page 43: Edna’s ladder reaches the safe attic. Background 009 matches its boarded wall/window/portrait; cutaway placement remains tentative. Implemented via a hatch portal. |
+| 026 ↔ 020 | Rejected inference | Vertical adjacency does not establish a route; the speaker-room ladder comes from 021. |
+| 014 ↔ 028 | Unresolved | Observatory approach remains unbuilt. Room 023 is the photo darkroom reached from 012; its cutaway position does not establish an observatory route. |
 | 029 ↔ 008 and/or 001 | Unresolved | Pipe corridor below porch needs an access point; neither endpoint nor hatch is explicit. |
 | 051 ↔ exterior shaft | Unresolved | Cutaway shows a long underground extension to the right; no matching corridor background or established shaft entrance. |
 | 044 / 047 ↔ grounds | Reference only | These are exterior compositions, not proof of additional doors or distinct room volumes. |
@@ -116,9 +121,9 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 
 1. Map entrance doors and upper-corridor door slots to destinations; the PNGs contain no destination metadata.
 2. Resolve the tower circulation (011/013/012/038), distinguishing depth offsets from actual floor changes.
-3. Establish access to 009, 020, 023, 028 and 029. They remain inventory entries even though the initial map cannot establish their routes.
+3. Establish access to 028 and 029. The photo room (023) connects from 012. Ladder access to 009 and 020 is documented in [ladders](ladders.md).
 4. Identify the library spiral stair destination; do not add a duplicate stair route arbitrarily.
-5. Pair attic hatches and bedroom ladders. Confirm whether 009 is the projecting gray room.
+5. Review the inferred hatch positions and the tentative cutaway location of 009.
 6. Decide whether the long cutaway-only underground connector is needed to access modeled areas.
 
 These are recorded uncertainties, not requests to stop step 1. For step 2 the entrance can be modeled with labeled destination placeholders; do not lock the complete house topology yet. Suggested initial second room: **011 landing**, since the main stair relationship is directly supported; use 003 living room for a simpler doorway-only prototype if desired.
@@ -153,4 +158,8 @@ Pantry `pool_door` local `(-0.8,5.55,0)` meets pool `pantry_door` local `(0,3.2,
 
 The [garage and forecourt](../rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The higher storey and unresolved library spiral staircase remain deferred.
+The [library and complete first-floor shell layout](first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The [upper-floor shells](upper_floor.md) now implement the provisional 013 ↔ 012 ↔ 038 route, with branches to 026, 019, 021, 025 and 027. Bedroom slots are confirmed left to right as 021, 019, 026 and 025, as documented in the upper-floor guide. The photo room (023) and mummy bathroom (024) are connected; the library spiral staircase remains unresolved.
+
+## Verified correction: attic access
+
+The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed page 39, describes access to the wire attic from the den via a door concealed by paint. It does not route this through Ted’s bathroom. Printed page 43 confirms Edna’s bedroom ladder reaches the attic containing the safe. The [ladder implementation](ladders.md) uses 009 for that destination and 020 for the speaker room above Fred’s bedroom; cutaway adjacency alone is not used to infer a route.

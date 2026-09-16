@@ -1,0 +1,136 @@
+{
+  "id": "typewriter_room",
+  "label": "Typewriter room",
+  "backgrounds": [
+    "027"
+  ],
+  "asset": "generated/models/rooms/typewriter_room_v1.glb",
+  "source": "generated/blender/typewriter_room/typewriter_room_source_v1.blend",
+  "baked": "generated/blender/typewriter_room/typewriter_room_v1.blend",
+  "build": "rooms/typewriter_room/build.py",
+  "navigation": "typewriter_room",
+  "bounds": {
+    "min": [
+      -4.5,
+      0,
+      -0.12
+    ],
+    "max": [
+      4.5,
+      5.1,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 4.5,
+    "depth": 5.1,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "corridor_door",
+      "position": [
+        -4.5,
+        2.6,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "upper_corridor"
+    },
+    {
+      "id": "hidden_panel",
+      "position": [
+        4.5,
+        2.6,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "attic_stairs"
+    }
+  ],
+  "shell": {
+    "wall": "red",
+    "floor": "purple",
+    "trim": "brown",
+    "entries": [
+      {
+        "port": "corridor_door",
+        "wall": "left",
+        "owner": false,
+        "frame": false
+      },
+      {
+        "port": "hidden_panel",
+        "wall": "right",
+        "owner": true,
+        "frame": false,
+        "asset": "Concealed_leaf",
+        "label": "Painted wall panel"
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -2.25,
+        2.55,
+        2.95
+      ],
+      [
+        2.25,
+        2.55,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 027.png"
+    ]
+  }
+}

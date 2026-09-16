@@ -9,7 +9,7 @@ for path in ['generated/models/doors','generated/blender/shared/doors','generate
 bpy.ops.wm.read_factory_settings(use_empty=True);bpy.context.preferences.filepaths.save_version=0
 scene=bpy.context.scene;col=bpy.data.collections.new('Door_kit');scene.collection.children.link(col)
 mats={}
-for name,rgb in {'black':(0,0,0),'brown':(168,84,0),'yellow':(252,252,84),'red':(168,0,0),'gray':(168,168,168),'blue':(0,0,168),'white':(252,252,252),'darkgray':(84,84,84)}.items():
+for name,rgb in {'black':(0,0,0),'brown':(168,84,0),'yellow':(252,252,84),'red':(168,0,0),'gray':(168,168,168),'blue':(0,0,168),'white':(252,252,252),'darkgray':(84,84,84),'lightred':(252,84,84)}.items():
  m=bpy.data.materials.new(name);m.diffuse_color=(*[linear(v) for v in rgb],1);mats[name]=m
 geo=Geometry({'Architecture':col},mats);geo.door('Template',0,1.3,2.83,(0,0))
 leaf=[o for o in col.objects if o.name.startswith(('Template_leaf','Template_raised_panel','Template_knob'))]
@@ -21,13 +21,13 @@ frame=[o for o in col.objects if o not in leaf]
 mat=bpy.data.materials.new('Shared_EGA_vertex_color');mat.use_nodes=True
 n=mat.node_tree.nodes;n.clear();attr=n.new('ShaderNodeVertexColor');attr.layer_name='Col';e=n.new('ShaderNodeEmission');out=n.new('ShaderNodeOutputMaterial');mat.node_tree.links.new(attr.outputs['Color'],e.inputs['Color']);mat.node_tree.links.new(e.outputs[0],out.inputs[0])
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from designs import pool_door,security_door,entrance_transom
+from designs import pool_door,security_door,entrance_transom,concealed_panel
 parts=[('Standard_leaf',leaf),('Standard_frame',frame)]
 before=set(col.objects);pool_door(geo);bpy.context.view_layer.update();pool_parts=list(set(col.objects)-before)
 parts.extend([('Pool_leaf',[o for o in pool_parts if 'jamb' not in o.name]),('Pool_frame',[o for o in pool_parts if 'jamb' in o.name])])
 before=set(col.objects);security_door(geo,ROOT);bpy.context.view_layer.update();security_parts=list(set(col.objects)-before)
 parts.extend([('Security_leaf',[o for o in security_parts if not o.name.startswith('Security_door_frame')]),('Security_frame',[o for o in security_parts if o.name.startswith('Security_door_frame')])])
-for name,build in [('Entrance_transom',lambda:entrance_transom(geo))]:
+for name,build in [('Entrance_transom',lambda:entrance_transom(geo)),('Concealed_leaf',lambda:concealed_panel(geo,ROOT))]:
  before=set(col.objects);build();bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
 for name,objects in parts:
  vs=[];fs=[];cs=[]
@@ -60,6 +60,7 @@ bpy.data.objects['Standard_leaf'].location=(-4.4625,-.18,1.59);bpy.data.objects[
 other=bpy.data.objects['Standard_leaf'].copy();col.objects.link(other);other.name='Preview_second_leaf';other.location.x=-3.5375;other.scale.x=.89
 bpy.data.objects['Standard_frame'].location.x=-4;bpy.data.objects['Standard_frame'].scale=(1.85,1,3.18)
 bpy.data.objects['Entrance_transom'].location=(-4,0,3.18)
+bpy.data.objects['Concealed_leaf'].location=(6,0,1.415);bpy.data.objects['Concealed_leaf'].scale=(1.3,1,2.83)
 bpy.data.objects['Security_leaf'].location.x=4;bpy.data.objects['Security_frame'].location.x=4
 scene.world=bpy.data.worlds.new('Door_library_preview');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.05,.05,.05,1)
 cam=bpy.data.objects.new('Library_preview',bpy.data.cameras.new('Library_preview'));scene.collection.objects.link(cam)

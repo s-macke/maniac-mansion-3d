@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { EYE_HEIGHT } from '@/lib/house/navigation';
 import { createHouseRuntime } from '@/lib/house/runtime';
 import { createHouseAssets } from '@/lib/house/assets';
+import {createLadders} from '@/lib/house/ladders';
 import * as THREE from 'three';
 
 type Runtime = { interact:()=>void; enter: (capture?:boolean) => void; reset: () => void; pause: () => void; key: (key:string,down:boolean)=>void };
@@ -17,6 +18,7 @@ export default function Walkthrough() {
   const [error,setError]=useState(''),[fallback,setFallback]=useState(true),[touch,setTouch]=useState(false);
   useEffect(()=>{
     const view=createHouseRuntime(new URLSearchParams(window.location.search).get('room'));
+    const ladders=createLadders(view);
     const {START,START_YAW,START_PITCH,moveWalker,zoneAt}=view;
     setIdentity(view.backgrounds.join(' + '));setPreview(view.preview);setZone(zoneAt(START));
     const container=host.current!;let disposed=false,frame=0,walking=false,dragging=false,needsRender=true;let lastZone=zoneAt(START);
@@ -35,7 +37,7 @@ export default function Walkthrough() {
     const resize=()=>{const {width,height}=container.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();needsRender=true;};resize();
     const observer=new ResizeObserver(resize);observer.observe(container);
     const pause=()=>{walking=false;keys.clear();dragging=false;setActive(false);if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();};
-    const reset=()=>{view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;keys.clear();sync();needsRender=true;};
+    const reset=()=>{ladders.cancel();view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;keys.clear();sync();needsRender=true;};
     const enableFallback=()=>{if(!disposed){setFallback(true);walking=true;setActive(true);container.focus();}};
     const enter=(capture=true)=>{
       if(!loaded||disposed)return;
@@ -43,7 +45,7 @@ export default function Walkthrough() {
       if(!capture || coarse || !renderer.domElement.requestPointerLock){enableFallback();return;}
       try { const p=renderer.domElement.requestPointerLock();if(p)p.catch(enableFallback); }catch{enableFallback();}
     };
-    const interact=(point?:THREE.Vector2)=>{if(!walking)return;const door=assets.doorView.target(camera,point);if(door){view.doors.toggle(door.key);needsRender=true;}};
+    const interact=(point?:THREE.Vector2)=>{if(!walking||ladders.active)return;const ladder=ladders.target(walker,yaw);if(ladder){if(ladders.begin(ladder,walker,yaw)){keys.clear();needsRender=true;}return;}const door=assets.doorView.target(camera,point);if(door){view.doors.toggle(door.key);needsRender=true;}};
     runtime.current={interact:()=>interact(),enter,reset,pause,key:(key,down)=>{if(down)keys.add(key);else keys.delete(key);}};
     const onLock=()=>{const locked=document.pointerLockElement===renderer.domElement;
       if(hadLock&&!locked)pause();if(locked)dragging=false;hadLock=locked;setFallback(!locked);
@@ -89,7 +91,9 @@ export default function Walkthrough() {
     let lastAction='',lastDoorCheck=-Infinity;
     const tick=(now:number)=>{
       if(disposed)return;const dt=Math.min((now-last)/1000,.15);last=now;
-      if(walking){
+      if(walking&&ladders.active){
+        const climb=ladders.step(dt);if(climb){walker=climb.walker;yaw+=climb.yawDelta;eye=walker.height+EYE_HEIGHT;needsRender=true;if(climb.done)keys.clear();}
+      }else if(walking){
         const turn=(Number(keys.has('ArrowLeft'))-Number(keys.has('ArrowRight')))*1.55*dt;yaw+=turn;
         let forward=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));
         let right=Number(keys.has('KeyD'))-Number(keys.has('KeyA'));const length=Math.hypot(forward,right);
@@ -104,12 +108,13 @@ export default function Walkthrough() {
       eye+=(walker.height+EYE_HEIGHT-eye)*(1-Math.exp(-16*dt));sync();
       if(now-lastDoorCheck>120){
         lastDoorCheck=now;
-        const selected=walking?assets.doorView.target(camera):null;
-        const action=selected?(selected.blocked?'Step back · ': '')+(selected.target===1?'Close':'Open')+' '+selected.def.label.toLowerCase():'';
+        const ladder=walking?ladders.target(walker,yaw):null;
+        const selected=walking&&!ladders.active&&!ladder?assets.doorView.target(camera):null;
+        const action=ladders.active?'Climbing…':ladder?(ladder.ready?ladder.label:'Loading ladder destination…'):selected?(selected.blocked?'Step back · ': '')+(selected.target===1?'Close':'Open')+' '+selected.def.label.toLowerCase():'';
         if(action!==lastAction){lastAction=action;setDoorAction(action);}
       }
       if(walking||needsRender){assets.render(renderer,camera);needsRender=false;}
-      container.dataset.walker=JSON.stringify({...walker,room:view.activeRoom,space:view.activeSpace,portals:assets.portalStats,loadedRooms:assets.loadedRooms,yaw,pitch,walking,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
+      container.dataset.walker=JSON.stringify({...walker,room:view.activeRoom,space:view.activeSpace,portals:assets.portalStats,loadedRooms:assets.loadedRooms,climbing:ladders.active,climbProgress:ladders.progress,movingDoors:view.doors.items.filter(d=>d.amount!==d.target).map(d=>d.key),yaw,pitch,walking,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
       frame=requestAnimationFrame(tick);
     };frame=requestAnimationFrame(tick);
     return ()=>{
@@ -128,7 +133,7 @@ export default function Walkthrough() {
     {(error || !ready || (active && showHint)) && <section className={`entry${ready&&!error?' hint':''}${touch?' touch-hint':''}`} aria-label="Walkthrough controls">
       <h2>{error?'Unable to enter':ready?'Explore the house':'Opening the house…'}</h2>
       {error?<p className="error" role="alert">{error}</p>:<>
-        <p>{touch?'Drag to look around. Use the arrows to walk. Tap a nearby door to open or close it.':'Walk with WASD. Click or drag to look. Aim at a nearby door and press E to open or close it.'}</p>
+        <p>{touch?'Drag to look around. Use the arrows to walk. Tap a nearby door to open it, or a ladder to climb.':'Walk with WASD. Click or drag to look. Aim at a nearby door or ladder and press E to use it.'}</p>
         <div className="key-row"><kbd>W A S D</kbd><span>walk</span><kbd>Mouse</kbd><span>look</span><kbd>Esc</kbd><span>pause</span></div>
         {!ready && <><div className="progress-line" role="progressbar" aria-label="Loading room" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}><span style={{width:`${progress}%`}} /></div><p className="small" aria-live="polite">Loading room · {progress}%</p></>}
         <p className="small">{preview?'Independent room preview. Doors stay closed for now.':'The front steps lead into the hall. Walk through to the living room or take the grand staircase upstairs.'}</p>
