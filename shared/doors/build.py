@@ -21,13 +21,13 @@ frame=[o for o in col.objects if o not in leaf]
 mat=bpy.data.materials.new('Shared_EGA_vertex_color');mat.use_nodes=True
 n=mat.node_tree.nodes;n.clear();attr=n.new('ShaderNodeVertexColor');attr.layer_name='Col';e=n.new('ShaderNodeEmission');out=n.new('ShaderNodeOutputMaterial');mat.node_tree.links.new(attr.outputs['Color'],e.inputs['Color']);mat.node_tree.links.new(e.outputs[0],out.inputs[0])
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from designs import pool_door,security_door,entrance_transom,concealed_panel
+from designs import pool_door,security_door,entrance_transom,concealed_panel,grating_leaf
 parts=[('Standard_leaf',leaf),('Standard_frame',frame)]
 before=set(col.objects);pool_door(geo);bpy.context.view_layer.update();pool_parts=list(set(col.objects)-before)
 parts.extend([('Pool_leaf',[o for o in pool_parts if 'jamb' not in o.name]),('Pool_frame',[o for o in pool_parts if 'jamb' in o.name])])
 before=set(col.objects);security_door(geo,ROOT);bpy.context.view_layer.update();security_parts=list(set(col.objects)-before)
 parts.extend([('Security_leaf',[o for o in security_parts if not o.name.startswith('Security_door_frame')]),('Security_frame',[o for o in security_parts if o.name.startswith('Security_door_frame')])])
-for name,build in [('Entrance_transom',lambda:entrance_transom(geo)),('Concealed_leaf',lambda:concealed_panel(geo,ROOT))]:
+for name,build in [('Entrance_transom',lambda:entrance_transom(geo)),('Concealed_leaf',lambda:concealed_panel(geo,ROOT)),('Grating_leaf',lambda:grating_leaf(geo))]:
  before=set(col.objects);build();bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
 for name,objects in parts:
  vs=[];fs=[];cs=[]
@@ -62,6 +62,7 @@ bpy.data.objects['Standard_frame'].location.x=-4;bpy.data.objects['Standard_fram
 bpy.data.objects['Entrance_transom'].location=(-4,0,3.18)
 bpy.data.objects['Concealed_leaf'].location=(6,0,1.415);bpy.data.objects['Concealed_leaf'].scale=(1.3,1,2.83)
 bpy.data.objects['Security_leaf'].location.x=4;bpy.data.objects['Security_frame'].location.x=4
+bpy.data.objects['Grating_leaf'].location=(-6,0,1);bpy.data.objects['Grating_leaf'].scale=(1.25,1,.72)
 scene.world=bpy.data.worlds.new('Door_library_preview');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.05,.05,.05,1)
 cam=bpy.data.objects.new('Library_preview',bpy.data.cameras.new('Library_preview'));scene.collection.objects.link(cam)
 cam.location=(0,-14,4);cam.rotation_euler=(Vector((0,0,1.5))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=11;scene.camera=cam

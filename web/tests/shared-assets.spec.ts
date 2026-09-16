@@ -6,7 +6,7 @@ import {createDoorView} from '../lib/house/door-view';
 import {loadDoorKit} from './shared-fixture';
 import {readFile} from 'node:fs/promises';
 
-test('all doors reuse eight library geometries and one material, including mirrored leaves',async()=>{
+test('all doors reuse nine library geometries and one material, including mirrored leaves',async()=>{
  const v=createHouseRuntime(),library=await loadDoorKit(),geometry=new Set(),materials=new Set();let count=0,mirrored=0;
  const scene=new THREE.Scene(),visual=createDoorView(scene,v.doors);
  for(const room of v.rooms){
@@ -19,7 +19,7 @@ test('all doors reuse eight library geometries and one material, including mirro
   const json=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString());
   expect(json.nodes.some((n:{name?:string})=>n.name?.startsWith('Shared_')||n.name?.startsWith('Door_'))).toBe(false);
  }
- expect(count).toBe(v.rooms.reduce((n,r)=>n+(v.definitions[r.definition].geometry?.sharedAssets?.filter(a=>!a.library||a.library==='doors').length??0),0));expect(geometry.size).toBe(8);expect(materials.size).toBe(1);expect(mirrored).toBeGreaterThan(0);
+ expect(count).toBe(v.rooms.reduce((n,r)=>n+(v.definitions[r.definition].geometry?.sharedAssets?.filter(a=>!a.library||a.library==='doors').length??0),0));expect(geometry.size).toBe(9);expect(materials.size).toBe(1);expect(mirrored).toBeGreaterThan(0);
  const door=v.doors.items.find(d=>d.def.id==='kitchen_door')!;
  expect(door.amount).toBe(0);v.doors.toggle(door.key);v.doors.update(1,{x:0,y:1,height:0});visual.sync();
  const before=scene.getObjectByName('Door_kitchen')!.rotation.y;
@@ -57,7 +57,7 @@ test('loader fetches the kit once, waits for it before entry, and retains it acr
   v.activate('hall');assets.update(v.START,performance.now()+12000);await expect.poll(()=>v.navigation.canStand(v.START,0)).toBe(true);
   expect(calls.filter(url=>url.includes('/shared/'))).toHaveLength(1);
   expect(v.doors.items.find(d=>d.def.id==='kitchen_door')!.amount).toBe(1);
-  assets.dispose();await expect.poll(()=>disposedGeometry).toBe(8);
+  assets.dispose();await expect.poll(()=>disposedGeometry).toBe(9);
  }finally{assets.dispose();GLTFLoader.prototype.load=original;}
 });
 

@@ -24,3 +24,5 @@ Superseded design iterations were removed. Keep the active files named in `room.
 ## Source and generated files
 
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/connected_hall/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/connected_hall/`; derived door metadata and shading reports in `generated/reports/rooms/connected_hall/`. Builders never write derived data back into `room.json`.
+
+The rear-right shared door now opens onto the [cellar](../cellar/README.md) staircase through a seamless portal. The hall owns `cellar_door`; its leaf starts closed.

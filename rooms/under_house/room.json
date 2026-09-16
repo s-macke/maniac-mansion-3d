@@ -1,0 +1,113 @@
+{
+  "id": "under_house",
+  "label": "Under-house passage",
+  "backgrounds": [
+    "029"
+  ],
+  "asset": "generated/models/rooms/under_house_v1.glb",
+  "source": "generated/blender/under_house/under_house_source_v1.blend",
+  "baked": "generated/blender/under_house/under_house_v1.blend",
+  "build": "rooms/under_house/build.py",
+  "navigation": "under_house",
+  "bounds": {
+    "min": [
+      -12,
+      0,
+      -0.12
+    ],
+    "max": [
+      12,
+      3.5,
+      2.24
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 12,
+    "depth": 3.5,
+    "height": 2.2,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "grating",
+      "kind": "crawl",
+      "position": [
+        -12,
+        1.75,
+        0.12
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.25,
+      "height": 0.72,
+      "state": "open",
+      "destination": "front_exterior"
+    }
+  ],
+  "shell": {
+    "wall": "gray",
+    "floor": "black",
+    "trim": "brown",
+    "entries": [
+      {
+        "port": "grating",
+        "wall": "left",
+        "owner": false,
+        "frame": false
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -6.0,
+        1.75,
+        2.0
+      ],
+      [
+        6.0,
+        1.75,
+        2.0
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 029.png"
+    ]
+  }
+}

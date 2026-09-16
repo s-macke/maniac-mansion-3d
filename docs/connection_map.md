@@ -51,7 +51,8 @@ flowchart TD
     R036 -.-> R006["006 Pool deck"]
     R006 ---|ladder / same pool| R002["002 Drained basin"]
     R006 -.-> R016["016 Garage"]
-    R010 -.-> R008["008 Machinery"]
+    R010 ---|cellar stairs| R008["008 Machinery"]
+    R001 ---|bush grating| R029["029 Under-house passage"]
     R008 -.-> R004["004 Dungeon"]
     R004 -.-> R030["030 Control lab"]
     R030 -.-> R031["031 Meteor chamber"]
@@ -88,7 +89,7 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 036 ↔ 006 | Suggested | Pantry's outer mesh door is a plausible pool exit; deck has house-side door. |
 | 006 ↔ 016 | Suggested | Pool deck and garage share the exterior in cutaway; garage's open front reaches outdoors. |
 | 001 ↔ 006 | Suggested | Exterior route around house is plausible; fence/gate routing is not established. |
-| 010 ↔ 008 | Suggested | Machinery stairs rise toward house in cutaway; exact entrance door unassigned. |
+| 010 ↔ 008 | User-confirmed; built | Hall rear-right door opens onto the cellar stair landing. |
 | 008 ↔ 004 | Suggested | Neighboring underground spaces with compatible side doors. |
 | 004 ↔ 030 | Suggested | Dungeon and lab occupy adjacent underground bands; secure exit is plausible, connecting geometry unspecified. |
 | 030 ↔ 031 | Suggested | Deep-band adjacency and compatible doors. |
@@ -113,7 +114,8 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 019 ↔ 009 | Confirmed route; inferred background match | Hint book page 43: Edna’s ladder reaches the safe attic. Background 009 matches its boarded wall/window/portrait; cutaway placement remains tentative. Implemented via a hatch portal. |
 | 026 ↔ 020 | Rejected inference | Vertical adjacency does not establish a route; the speaker-room ladder comes from 021. |
 | 014 ↔ 028 | Unresolved | Observatory approach remains unbuilt. Room 023 is the photo darkroom reached from 012; its cutaway position does not establish an observatory route. |
-| 029 ↔ 008 and/or 001 | Unresolved | Pipe corridor below porch needs an access point; neither endpoint nor hatch is explicit. |
+| 001 ↔ 029 | User-confirmed; built | Grating behind the left porch bush, via a low crawl portal. |
+| 029 ↔ 008 | Unresolved | No connection between these underground spaces is assumed. |
 | 051 ↔ exterior shaft | Unresolved | Cutaway shows a long underground extension to the right; no matching corridor background or established shaft entrance. |
 | 044 / 047 ↔ grounds | Reference only | These are exterior compositions, not proof of additional doors or distinct room volumes. |
 
@@ -121,7 +123,7 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 
 1. Map entrance doors and upper-corridor door slots to destinations; the PNGs contain no destination metadata.
 2. Resolve the tower circulation (011/013/012/038), distinguishing depth offsets from actual floor changes.
-3. Establish access to 028 and 029. The photo room (023) connects from 012. Ladder access to 009 and 020 is documented in [ladders](ladders.md).
+3. Establish access to 028. The under-house passage (029) now connects through the bush grating. The photo room (023) connects from 012. Ladder access to 009 and 020 is documented in [ladders](ladders.md).
 4. Identify the library spiral stair destination; do not add a duplicate stair route arbitrarily.
 5. Review the inferred hatch positions and the tentative cutaway location of 009.
 6. Decide whether the long cutaway-only underground connector is needed to access modeled areas.
@@ -136,7 +138,7 @@ The hall port `right_side` at `(6.4, 3.15, 0)` meets living-room port `left_door
 
 001 ↔ 010 is now implemented: exterior `front_door` `(0,0,0)` at placement `(-6.4,2.35,0)`, yaw `-pi/2`, meets hall `entrance` `(-6.4,2.35,0)`. Width is 1.85 m, height 3.18 m. Both front door leaves remain visible, open into the hall. The approach starts 1.2 m below the porch and reaches it via eight steps. Other exterior routes remain unresolved.
 
-The exterior now also models the metal grating behind the left stair-side bush. It is recorded as the closed `under_porch_grating` port, without an assigned destination. This preserves the visible opening for a later under-porch route without treating it as an active walking connection yet.
+The exterior now also models the metal grating behind the left stair-side bush. Its `under_porch_grating` port now connects to room 029, with an initially closed shared metal leaf and guided crouched portal crossing.
 
 
 ## Kitchen shell connection

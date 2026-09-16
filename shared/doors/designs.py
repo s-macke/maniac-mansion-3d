@@ -65,3 +65,10 @@ def concealed_panel(geo,root):
    while end<381 and is_paint(end):end+=1
    x0=(u-315)/66-.5;x1=(end-315)/66-.5;z0=.5-(v-18+1)/97;z1=.5-(v-18)/97
    geo.box('Paint_blotch',((x0+x1)/2,-.033,(z0+z1)/2),(x1-x0,.006,z1-z0),'lightred');u=end
+
+
+def grating_leaf(geo):
+ for x in [-.5,.5]:geo.box('Grate_rail',(x,0,0),(.035,.045,1),'gray')
+ for z in [-.5,.5]:geo.box('Grate_rail',(0,0,z),(1,.045,.04),'gray')
+ for i in range(1,8):geo.box('Grate_bar',(-.5+i/8,0,0),(.034,.045,1),'darkgray')
+ for z in [-.22,.22]:geo.box('Grate_cross',(0,-.024,z),(1,.035,.048),'gray')

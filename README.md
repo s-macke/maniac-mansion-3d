@@ -47,3 +47,5 @@ For incremental Docker builds, use `./docker-build.sh room kitchen --site`; use 
 The mummy bathroom (024) now connects beyond the exercise/mummy room. The photo darkroom (023) opens from the windowed stair hall one level below the bedrooms. Both are empty shells with closed shared doors.
 
 The [wire attic](rooms/wire_attic/README.md) is reached through the painted wall panel in the den/typewriter room and a short staircase. Open the panel with E or tap it; no puzzle items are needed.
+
+Two [cellar routes](docs/cellar.md) are open for review: the hall’s rear-right door leads down to room 008, and the grating behind the left porch bush leads to passage 029. Both begin as empty, separate shells.

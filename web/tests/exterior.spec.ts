@@ -22,7 +22,8 @@ test('bushes are solid and the left grating can be inspected from the side',()=>
  expect(v.navigation.canStand(at(0,-5),-1.2)).toBe(true);
  const p=at(-2.8,-5),q=at(-2.8,-2.9),stopped=v.moveWalker(p,q.x-p.x,q.y-p.y);
  expect(stopped.x).toBeLessThan(-10.1);
- expect(v.definitions.front_exterior.ports.find(p=>p.id==='under_porch_grating')?.state).toBe('closed');
+ expect(v.definitions.front_exterior.ports.find(p=>p.id==='under_porch_grating')?.state).toBe('open');
+ expect(v.doors.items.find(d=>d.def.port==='under_porch_grating')?.amount).toBe(0);
 });
 test('exterior browser entry walks up the steps through visible front doors and back',async({page})=>{
  test.setTimeout(150000);

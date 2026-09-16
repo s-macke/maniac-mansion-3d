@@ -70,7 +70,7 @@ export function createPortalRenderer(renderer:THREE.WebGLRenderer,scene:THREE.Sc
    const door=view.portalDoor(edge);
    // An owner-side closed leaf completely masks the view. Opposite-side leaves
    // still need the destination pass, because their physical offset is inside it.
-   const ownerClosed=door&&door.amount===0&&view.graph.spaceOf(door.room.id)===space;
+   const ownerClosed=door&&door.amount===0&&!edge.from.port.seeThrough&&!edge.to.port.seeThrough&&view.graph.spaceOf(door.room.id)===space;
    if(depth>=3||ownerClosed){maps.set(edge.key,blank);continue;}
    for(const room of view.graph.members(edge.to.space))visibleRooms.add(room.id);
    if(!view.isLoaded(edge.to.room.id)){maps.set(edge.key,blank);continue;}

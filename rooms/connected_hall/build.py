@@ -184,6 +184,17 @@ if next(p for p in CONFIG['ports'] if p['id']=='rear_left')['state']=='open':
  swing=Matrix.Translation(hinge)@Matrix.Rotation(angle,4,'Z')@Matrix.Translation(-hinge)
  for o in parts:o.matrix_world=swing@o.matrix_world
  CONFIG['geometry']['doors'].append({'id':'kitchen_door','label':'Kitchen door','port':'rear_left','initialOpen':False,'leaves':[movable(parts,hinge,angle,'Door_kitchen')]})
+# Cellar entrance, matching the kitchen's existing shared hinge setup.
+leaf=bpy.data.objects['Rear_right_leaf']
+parts=[o for o in bpy.data.objects if o.name.startswith(('Rear_right_leaf','Rear_right_raised_panel','Rear_right_knob'))]
+for o in list(parts):
+ if o==leaf:continue
+ back=o.copy();back.data=o.data.copy();collections['Doors'].objects.link(back);back.name=o.name+'_back';back.location.y=2*leaf.location.y-o.location.y;parts.append(back)
+bpy.context.view_layer.update()
+hinge=Vector((3.12-1.3/2,leaf.location.y,0));angle=-math.pi/2
+swing=Matrix.Translation(hinge)@Matrix.Rotation(angle,4,'Z')@Matrix.Translation(-hinge)
+for o in parts:o.matrix_world=swing@o.matrix_world
+CONFIG['geometry']['doors'].append({'id':'cellar_door','label':'Cellar door','port':'rear_right','initialOpen':False,'leaves':[movable(parts,hinge,angle,'Door_cellar')]})
 CONFIG['geometry']['doorObstacles']=[]
 
 geo.active='Cameras'

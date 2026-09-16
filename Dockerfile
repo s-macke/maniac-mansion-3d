@@ -38,7 +38,7 @@ FROM models AS build
 COPY --from=dependencies /project/web/node_modules/ web/node_modules/
 COPY web/ web/
 RUN cd web && npm run build && npm run typecheck
-RUN cd web && npx playwright test tests/first-floor.spec.ts tests/doors.spec.ts tests/shared-assets.spec.ts tests/public-asset.spec.ts tests/portals.spec.ts tests/upper-floor.spec.ts tests/ladders.spec.ts tests/wire-attic.spec.ts
+RUN cd web && npx playwright test tests/first-floor.spec.ts tests/doors.spec.ts tests/shared-assets.spec.ts tests/public-asset.spec.ts tests/portals.spec.ts tests/upper-floor.spec.ts tests/ladders.spec.ts tests/wire-attic.spec.ts tests/cellar.spec.ts
 RUN python3 scripts/build.py export /artifacts
 
 # Pages needs only the website, not editable Blender scenes or reports.

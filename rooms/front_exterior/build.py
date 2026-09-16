@@ -1,7 +1,7 @@
 """Reproducible EGA porch and exterior; original PNGs are read-only references."""
 import bpy,math,json,sys,random
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Vector,Matrix
 ROOT=Path(__file__).resolve().parents[2];OUT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT/'scripts'))
 from room_config import load_config,save_generated,manifest_path
@@ -50,14 +50,15 @@ gl,gr=gx-gw/2,gx+gw/2;gb,gt=gz-gh/2,gz+gh/2
 # A genuine recess in the brickwork, with its closed metal grille in front.
 for lo,hi in [(-8.25,gl),(gr,8.25)]:box('Porch_foundation',((lo+hi)/2,-1.1,-.63),(hi-lo,2.2,1.14),'red')
 for lo,hi in [(-1.2,gb),(gt,-.06)]:box('Grating_brick_header_sill',(gx,-1.1,(lo+hi)/2),(gw,2.2,hi-lo),'red')
-box('Grating_dark_recess',(gx,gy+grate['depth'],gz),(gw,.08,gh),'black')
+# The portal supplies the view through the recess.
 for x in [gl,gr]:
  box('Grating_reveal',(x,gy+.15,gz),(.05,.3,gh),'darkgray')
  box('Grating_metal_frame',(x,gy-.035,gz),(.07,.07,gh+.07),'gray')
  box('Grating_blue_edge',(x-.02,gy-.075,gz),(.018,.018,gh),'blue')
 for z in [gb,gt]:box('Grating_metal_frame',(gx,gy-.035,z),(gw+.07,.07,.07),'gray')
-for i in range(1,8):box('Grating_vertical_bar',(gl+i*gw/8,gy-.015,gz),(.04,.045,gh-.07),'darkgray')
-for z in [gz-.14,gz+.14]:box('Grating_cross_bar',(gx,gy-.047,z),(gw-.07,.035,.035),'gray')
+from blender_shared.door_assets import register_hinged,KIT
+config['geometry']['doors']=[];config['geometry']['sharedAssets']=[];config['sharedAssetLibrary']=KIT
+register_hinged(config,'Grating_leaf',Matrix.Translation((gx,gy+.035,gz))@Matrix.Diagonal(Vector((gw-.08,1,gh-.08,1))),(gl+.04,gy+.035,gb),math.pi/2,collections['Porch'],port='under_porch_grating',node='Door_grating',label='Metal grating')
 for x in [gl+.025,gr-.025]:
  for z in [gb+.025,gt-.025]:box('Grating_frame_bolt',(x,gy-.08,z),(.035,.02,.035),'white')
 box('Porch_deck',(0,-1.1,-.06),(16.6,2.2,.12),'gray')

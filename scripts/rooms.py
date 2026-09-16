@@ -44,7 +44,7 @@ def catalog(require_outputs=True):
         if any(not s.get('library') for s in shared) and not d.get('sharedAssetLibrary'): raise ValueError('Missing shared library reference')
         nodes={l['node'] for door in d.get('geometry',{}).get('doors',[]) for l in door['leaves']}
         for s in shared:
-            allowed=['Ladder_section'] if s.get('library')=='ladders' else ['Standard_leaf','Standard_frame','Pool_leaf','Pool_frame','Security_leaf','Security_frame','Entrance_transom','Concealed_leaf']
+            allowed=['Ladder_section'] if s.get('library')=='ladders' else ['Standard_leaf','Standard_frame','Pool_leaf','Pool_frame','Security_leaf','Security_frame','Entrance_transom','Concealed_leaf','Grating_leaf']
             if s.get('library') and s['library'] not in d.get('sharedAssetLibraries',{}): raise ValueError('Unknown shared library: '+s['library'])
             if s['asset'] not in allowed or len(s['matrix'])!=16 or not all(math.isfinite(v) for v in s['matrix']): raise ValueError('Invalid shared instance: '+s['id'])
             if s.get('doorNode') and s['doorNode'] not in nodes: raise ValueError('Unknown shared door hinge: '+s['id'])
@@ -63,7 +63,7 @@ def catalog(require_outputs=True):
             d=read(i['definition'])
             p=next(p for p in d['ports'] if p['id']==end['port'])
             if p['state']!='open': raise ValueError('Connection uses a closed port: '+str(key))
-            if p.get('kind')!='hatch' and p.get('height', 0) < 1.62: raise ValueError('Connected aperture too low: '+p['id'])
+            if p.get('kind')!='hatch' and p.get('height', 0) < (.6 if p.get('kind')=='crawl' else 1.62): raise ValueError('Connected aperture too low: '+p['id'])
             endpoints.append((world(i,p),p))
         (a,an),(b,bn) = [v[0] for v in endpoints]
         if space_of(link['a']['instance']) == space_of(link['b']['instance']) and (math.dist(a,b)>.02 or math.dist(an,[-v for v in bn])>.01): raise ValueError('Misaligned continuous connection: '+str(link))
@@ -85,6 +85,14 @@ def catalog(require_outputs=True):
             if port.get('kind')!='hatch' or port['outward'][2]!=(1 if key=='lower' else -1): raise ValueError('Invalid ladder hatch orientation')
             if key=='lower' and port['position'][2]<=end['landing']['height']: raise ValueError('Ladder must rise to its hatch')
             if not all(math.isfinite(v) for v in [*end['landing'].values(),*end['shaft'].values(),end['yaw']]): raise ValueError('Invalid ladder endpoint')
+    crawls=layout.get('crawls',[])
+    for crawl in crawls:
+        pair={(crawl[key]['room'],crawl[key]['port']) for key in ['a','b']}
+        if not any({(link[key]['instance'],link[key]['port']) for key in ['a','b']}==pair for link in layout['connections']): raise ValueError('Crawl requires connected endpoints')
+        for key in ['a','b']:
+            end=crawl[key];d=read(instances[end['room']]['definition']);p=next(p for p in d['ports'] if p['id']==end['port'])
+            if p.get('kind')!='crawl': raise ValueError('Crawl requires low portal ports')
+        if not crawl['waypoints'] or not all(math.isfinite(v) for p in [crawl['a']['landing'],crawl['b']['landing'],*crawl['waypoints']] for v in p.values()): raise ValueError('Invalid crawl path')
     return layout, definitions
 
 def sync(layout, definitions):

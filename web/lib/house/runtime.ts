@@ -30,7 +30,7 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
  });
  const portalDoor=(edge:Portal)=>doors.items.find(d=>(d.room.id===edge.from.room.id&&d.def.port===edge.from.port.id)||(d.room.id===edge.to.room.id&&d.def.port===edge.to.port.id));
  function nearOpening(p:Walker,edge:Portal,margin=RADIUS+.04){
-  if(edge.from.port.kind==='hatch')return false;
+  if(['hatch','crawl'].includes(edge.from.port.kind??''))return false;
   const q=portalCoordinates(p,edge);
   return Math.abs(q.along)<=.75&&Math.abs(q.across)<=Math.min(edge.from.port.width,edge.to.port.width)/2-margin&&Math.abs(q.height)<=.34;
  }

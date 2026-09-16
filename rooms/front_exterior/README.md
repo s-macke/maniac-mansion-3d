@@ -1,6 +1,6 @@
 # Front exterior — current package v3
 
-The exterior follows backgrounds 001, 044 and 047. Lawn elevation is -1.2 m; eight steps reach the porch at hall level. Roof and tower proportions are provisional. Both stair-side bushes and the recessed metal grating behind the left bush are present. The named `under_porch_grating` port stays closed with no destination. The hall owns the front double doors.
+The exterior follows backgrounds 001, 044 and 047. Lawn elevation is -1.2 m; eight steps reach the porch at hall level. Roof and tower proportions are provisional. Both stair-side bushes and the recessed metal grating behind the left bush are present. The `under_porch_grating` now connects to the under-house passage (029) through a low portal. Its shared metal leaf starts closed; approach beside the left bush, open it, then use the crouched passage action. See [cellar routes](../../docs/cellar.md). The hall owns the front double doors.
 
 ## Files and rebuild
 

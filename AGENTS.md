@@ -41,6 +41,7 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Photo room](rooms/photo_room/README.md) | Darkroom shell beside the windowed-hall stairs |
 | [Hidden attic stairs](rooms/attic_stairs/README.md) | Stair passage behind the den’s painted wall panel |
 | [Wire attic](rooms/wire_attic/README.md) | Empty attic shell and den connection |
+| [Cellar routes](docs/cellar.md) | Hall cellar stairs, low bush grating and guided crawl portals |
 | [Ladder portals](docs/ladders.md) | Shared ladder kit, hatch portals, controls and verified routes |
 | [Shared doors](shared/doors/README.md) | Reusable leaf/frame authoring, mirroring and runtime lifecycle |
 

@@ -88,12 +88,12 @@ Kitchen shell: `/?room=kitchen` starts in the empty kitchen within the assembled
 
 ## Shared door assets
 
-The house loads 27 room GLBs plus shared door and ladder libraries at `/models/shared/standard_doors_v1.glb`. Hall v6, living-room v4, kitchen v4, dining-room v1 and pantry v1 use this kit; the exterior uses v3. The kit contains a standard leaf and frame, reused by size and mirrored for handle side. Special door artwork also comes from the library.
+The house loads 29 room GLBs plus shared door and ladder libraries at `/models/shared/standard_doors_v1.glb`. Hall v6, living-room v4, kitchen v4, dining-room v1 and pantry v1 use this kit; the exterior uses v3. The kit contains a standard leaf and frame, reused by size and mirrored for handle side. Special door artwork also comes from the library.
 
 Moving leaves share geometry/materials, while static frames and leaves use per-room instanced batches. Unloading a room keeps the kit cached and retains interactive door state. A room waits for its door assets before allowing entry. See [door authoring and lifecycle](../shared/doors/README.md).
 
 
-Dining-room shell: `/?room=dining_room` starts inside room 037. From the kitchen, open the far door; the pantry door at the other end opens into room 036. The house now has 27 room GLBs plus the shared door and ladder kits. Kitchen v4 retains the facade-clearance fix while owning this new interactive leaf.
+Dining-room shell: `/?room=dining_room` starts inside room 037. From the kitchen, open the far door; the pantry door at the other end opens into room 036. The house now has 29 room GLBs plus the shared door and ladder kits. Kitchen v4 retains the facade-clearance fix while owning this new interactive leaf.
 
 Pantry room 036 is connected beyond dining at `(-0.82,41.7,0)`, yaw `pi/2`. Its rear blue mesh door now opens onto the pool deck. See [the pantry package](../rooms/pantry/README.md).
 

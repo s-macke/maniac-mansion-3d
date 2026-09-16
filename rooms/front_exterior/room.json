@@ -169,12 +169,14 @@
       ],
       "outward": [
         0,
-        -1
+        1
       ],
       "width": 1.25,
       "height": 0.72,
-      "state": "closed",
-      "destination": null
+      "state": "open",
+      "destination": "under_house",
+      "kind": "crawl",
+      "seeThrough": true
     }
   ],
   "bake": {

@@ -20,6 +20,8 @@ One persistent door state remains owned by its original room. Opposite-side leaf
 
 Horizontal hatch ports use three-component vertical normals and a rectangular width/depth aperture. [Ladder motion](ladders.md) crosses them continuously, using the same camera mapping, clipping and graph residency as doorway portals.
 
+Low `kind: crawl` apertures use the same doorway renderer with guided crouched motion instead of standing traversal. See [cellar routes](cellar.md) for the camera-height transition and safe landings.
+
 ## Rendering and residency
 
 Only the current space is drawn directly. Visible doorways render destination spaces into cropped render targets, using transformed cameras and clipping at the destination entrance plane. The texture is projected back into the source aperture; real walls, frames and leaves provide depth occlusion. Cropping preserves projected pixel detail without rendering a full-screen texture for every small doorway. The main near plane shrinks near a threshold to avoid a blank flash before crossing.

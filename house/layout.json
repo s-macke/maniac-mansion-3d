@@ -272,6 +272,26 @@
         13.44
       ],
       "yaw": 0
+    },
+    {
+      "id": "cellar",
+      "definition": "rooms/cellar/room.json",
+      "position": [
+        340,
+        0,
+        -3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "under_house",
+      "definition": "rooms/under_house/room.json",
+      "position": [
+        372,
+        0,
+        -1.2
+      ],
+      "yaw": 0
     }
   ],
   "connections": [
@@ -534,6 +554,26 @@
         "instance": "wire_attic",
         "port": "entry_door"
       }
+    },
+    {
+      "a": {
+        "instance": "hall",
+        "port": "rear_right"
+      },
+      "b": {
+        "instance": "cellar",
+        "port": "higher_floor"
+      }
+    },
+    {
+      "a": {
+        "instance": "front_exterior",
+        "port": "under_porch_grating"
+      },
+      "b": {
+        "instance": "under_house",
+        "port": "grating"
+      }
     }
   ],
   "spaces": [
@@ -611,6 +651,46 @@
         "yaw": 1.5707963267948966,
         "port": "ladder_hatch"
       }
+    }
+  ],
+  "crawls": [
+    {
+      "id": "under_porch",
+      "a": {
+        "room": "front_exterior",
+        "port": "under_porch_grating",
+        "landing": {
+          "x": -4.25,
+          "y": -2.85,
+          "height": -1.2
+        }
+      },
+      "b": {
+        "room": "under_house",
+        "port": "grating",
+        "landing": {
+          "x": -10.1,
+          "y": 1.75,
+          "height": 0
+        }
+      },
+      "waypoints": [
+        {
+          "x": -4.25,
+          "y": -2.31,
+          "height": -1.08
+        },
+        {
+          "x": -2.85,
+          "y": -2.31,
+          "height": -1.08
+        },
+        {
+          "x": -2.85,
+          "y": -1.6,
+          "height": -1.08
+        }
+      ]
     }
   ]
 }

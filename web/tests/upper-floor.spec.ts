@@ -38,7 +38,7 @@ test('both stair flights lead up through their portals and back down',()=>{
 });
 test('new shell GLBs have supporting floors and clear stair headroom',async()=>{
  const v=createHouseRuntime();
- for(const id of [...ids,'security_hall','attic_stairs','wire_attic']){
+ for(const id of [...ids,'security_hall','attic_stairs','wire_attic','cellar','under_house']){
   const room=v.rooms.find(r=>r.id===id)!,def=v.definitions[room.definition],bytes=await readFile('../generated/models/rooms/'+def.asset.split('/').at(-1));
   const root=(await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength) as ArrayBuffer,'')).scene;root.updateMatrixWorld(true);
   const g=def.geometry!,s=g.stairs as {x0:number;x1:number;y0:number;y1:number;rise:number;segments:number}|undefined;
