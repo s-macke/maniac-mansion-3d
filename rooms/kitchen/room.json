@@ -32,7 +32,21 @@
     "halfWidth": 6.4,
     "depth": 5.55,
     "height": 3.12,
-    "wallThickness": 0.18
+    "wallThickness": 0.18,
+    "obstacles": [
+      {
+        "x0": -3.8,
+        "x1": 3.72,
+        "y0": 4.0,
+        "y1": 5.35
+      },
+      {
+        "x0": 3.8,
+        "x1": 5.2,
+        "y0": 3.95,
+        "y1": 5.35
+      }
+    ]
   },
   "ports": [
     {

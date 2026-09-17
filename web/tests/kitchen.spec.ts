@@ -17,8 +17,8 @@ test('kitchen threshold aligns with hall, starts closed, opens and traverses bot
  v.doors.toggle('hall:kitchen_door');v.doors.update(1,safe);
  const visit=(q:typeof p)=>{p=v.moveWalker(p,q.x-p.x,q.y-p.y);expect(Math.hypot(p.x-q.x,p.y-q.y)).toBeLessThan(.03);expect(p.height).toBe(0);};
  visit(at(-5,2.9));expect(v.zoneAt(p)).toBe('Kitchen');
- // Reach all parts of the empty room and return through the same physical doorway.
- for(const q of [at(5,2.9),at(5,4.8),at(-5,4.8),at(-5,1),at(5,1),at(-5,2.9)])visit(q);
+ // Walk the clear floor in front of the fitted cabinets and return through the same physical doorway.
+ for(const q of [at(5,2.9),at(5,3.5),at(-5,3.5),at(-5,1),at(5,1),at(-5,2.9)])visit(q);
  visit({x:-3.72,y:5.4,height:0});expect(v.zoneAt(p)).toBe('Entrance hall');
  expect(def.ports.find(p=>p.id==='dining_door')?.state).toBe('open');
  v.activate('kitchen');const start=at(4.5,2.9),end=at(10,2.9);const stopped=v.moveWalker(start,end.x-start.x,end.y-start.y);

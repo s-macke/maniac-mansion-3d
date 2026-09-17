@@ -11,9 +11,9 @@ The first floor means the storey immediately above the ground floor, at 3.36 m. 
 | Medical room | 022 | Left ordinary corridor door | Security corridor |
 | Arcade | 018 | Right ordinary corridor door | Security corridor |
 
-All new rooms are shells, with artwork-derived EGA floor and wall colors, shared doors and baked soft shading. No furnishings, gameplay, characters or runtime global illumination are added. Every interactive door starts closed and opens/closes from either side. The reinforced door retains its pixel artwork on both faces and now has a separate reusable leaf and frame.
+The five upstairs rooms remain shells, with artwork-derived EGA floor and wall colors, shared doors and baked soft shading. The ground-floor library now has bookcases, a reading corner and a decorative spiral staircase. No gameplay, characters or runtime global illumination are added. Every interactive door starts closed and opens/closes from either side. The reinforced door retains its pixel artwork on both faces and now has a separate reusable leaf and frame.
 
-Walk up the main staircase to reach the new floor. The corridor staircase rises a further 3.36 m and now connects through an initially closed shared door to the [windowed stair hall and upper-floor shells](upper_floor.md). The library spiral stair's destination remains unresolved in the supplied connection drawing, so that stair is deferred rather than assigned a destination.
+Walk up the main staircase to reach the new floor. The corridor staircase rises a further 3.36 m and now connects through an initially closed shared door to the [windowed stair hall and upper-floor shells](upper_floor.md). The library spiral stair's destination remains unresolved in the supplied connection drawing, so it is modelled as a non-traversable visual feature without an assigned destination.
 
 Connections follow the supplied cutaway and backgrounds. Footprints, unseen walls and metric dimensions are inferred. The 8 × 3.95 m music room clears the living-room ceiling and the corridor stairwell; the plant-room doorway connects through its own independent room space. The 13.2 m-wide security corridor clears the plant wing. The exterior keeps its complete facade and continuous canopy in a separate space; neither needs a cutout for the plant wing. The medical room and arcade have separate, non-overlapping footprints. These decisions can be adjusted as the rest of the house is mapped.
 
@@ -29,14 +29,14 @@ Checks cover the entire main-stair route into every upstairs room and back, stai
 
 | New package | Optimized GLB | Gzip download |
 |---|---:|---:|
-| Library | 107,560 B | 34,180 B |
+| Library | See current room build outputs | Furnished after this milestone |
 | Plant room | 57,148 B | 17,681 B |
 | Music room | 61,848 B | 19,503 B |
 | Security corridor | 190,116 B | 57,196 B |
 | Medical room | 55,492 B | 17,076 B |
 | Arcade | 54,872 B | 16,766 B |
 
-The six new room downloads total 162,402 bytes compressed. The shared door library is downloaded once for the house; it also includes the den’s concealed panel.
+The original six shell downloads totalled 162,402 bytes compressed; this historical figure predates the furnished library. The shared door library is downloaded once for the house; it also includes the den’s concealed panel.
 
 Reproduce assembled views with:
 

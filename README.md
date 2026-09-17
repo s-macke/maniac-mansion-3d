@@ -21,7 +21,7 @@ The walkthrough now starts on the front approach. Walk up the steps, open the do
 
 ## Layout-first rooms
 
-New rooms begin as empty shells with doors; interior details follow after layout review. The [kitchen shell](rooms/kitchen/README.md) is connected through the hall door left of the staircase. Open that door with E or the touch button, or start directly at [the kitchen](http://127.0.0.1:5174/?room=kitchen). All interactive doors start closed.
+New rooms begin as empty shells with doors; interior details follow after layout review. The library, kitchen and dining room now have artwork-based furnishings and furniture collision. The [furnished kitchen](rooms/kitchen/README.md) is connected through the hall door left of the staircase. Open that door with E or the touch button, or start directly at [the kitchen](http://127.0.0.1:5174/?room=kitchen). All interactive doors start closed.
 
 
 Standard door models are now maintained in the [shared door kit](shared/doors/README.md). Rooms reference its leaf and frame by placement and size, including mirrored double doors. All interactive doors still start closed.
@@ -30,7 +30,7 @@ The [pantry shell](rooms/pantry/README.md) is connected beyond dining; its rear 
 
 The [garage and forecourt](rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](docs/first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The [upper-floor shells](docs/upper_floor.md) continue through the windowed stair hall, upper corridor and five adjoining rooms. The library spiral staircase remains unresolved.
+The [library and complete first-floor shell layout](docs/first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The [upper-floor shells](docs/upper_floor.md) continue through the windowed stair hall, upper corridor and five adjoining rooms. The library is furnished; its spiral staircase is visual only, with no invented upstairs destination.
 
 For a fresh Git checkout without generated models or dependencies, follow [the source-only rebuild instructions](docs/rebuilding.md).
 

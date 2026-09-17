@@ -1,6 +1,6 @@
 # Kitchen — current package v4
 
-Room 007 is an empty blue shell; furnishings are deferred. Its footprint is 12.8 × 5.55 m with a 3.12 m ceiling. The exterior-facing surface is world x=-6.37, giving 3 cm clearance behind the facade inner face at x=-6.4. The hall owns the entry leaf; the kitchen owns the dining-room leaf, which opens into the kitchen. Both start closed.
+Room 007 is furnished from the original background: brown fitted cupboards, cyan cooker, microwave, two dark-blue windows, sink and tap, knife rack and white refrigerator. The source wall/fridge stains are preserved as EGA pixel-color geometry. Appliances remain static. Its footprint is 12.8 × 5.55 m with a 3.12 m ceiling. The exterior-facing surface is world x=-6.37, giving 3 cm clearance behind the facade inner face at x=-6.4. The hall owns the entry leaf; the kitchen owns the dining-room leaf, which opens into the kitchen. Both start closed.
 
 ## Files and rebuild
 
@@ -20,8 +20,15 @@ The original EGA colors and soft baked vertex lighting work without browser GI. 
 
 Superseded design iterations were removed. Keep the active files named in `room.json`; see [architecture](../../docs/architecture.md) for the workflow.
 
-The room builder uses `scripts/blender_shared/shell.py` for scene setup, rectangular walls/floor/ceiling, side doorways, reference markers and the existing right-end door hinge convention. Colors, cameras, door ownership and special assets remain explicit in this room’s `build.py`; dimensions and ports remain in `room.json`.
+The room builder uses `scripts/blender_shared/shell.py` for scene setup, rectangular walls/floor/ceiling, side doorways, reference markers and the existing right-end door hinge convention. Colors, cameras and door ownership remain explicit in `build.py`; `interior.py` builds the furnishings. Dimensions, ports and furniture collision footprints remain in `room.json`. The clear front aisle preserves the hall-to-dining route.
 
 ## Source and generated files
 
-This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/kitchen/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/kitchen/`; derived door metadata and shading reports in `generated/reports/rooms/kitchen/`. Builders never write derived data back into `room.json`.
+This folder contains the builder, furnishing recipe, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/kitchen/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/kitchen/`; derived door metadata and shading reports in `generated/reports/rooms/kitchen/`. Builders never write derived data back into `room.json`.
+
+## Furnishing validation and download
+
+The furnished optimized GLB is 354,624 bytes (100,667 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Original painting/stain pixels use color-run geometry; no extra texture download is needed.
+
+The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
+Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.

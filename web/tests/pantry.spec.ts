@@ -9,16 +9,16 @@ import {createDoorView} from '../lib/house/door-view';
 const safe={x:0,y:1,height:0};
 test('pantry connects through a closed shared door and returns to dining',()=>{
  const v=createHouseRuntime('pantry');expect(v.zoneAt(v.START)).toBe('Pantry');expect(v.navigation.canStand(v.START,0)).toBe(true);
- const before={x:-3.72,y:37,height:0},after={x:-3.72,y:40,height:0};
+ const before={x:-3.72,y:37.6,height:0},after={x:-3.72,y:40,height:0};
  v.activate('dining_room');expect(v.moveWalker(before,0,3).y).toBeLessThan(38.5);
  v.activate('pantry');expect(v.moveWalker(after,0,-3).y).toBeGreaterThan(38.5);
  v.doors.toggle('dining_room:pantry_door');v.doors.update(1,safe);
- v.activate('dining_room');expect(v.moveWalker(before,0,3).y).toBeCloseTo(40);expect(v.moveWalker(after,0,-3).y).toBeCloseTo(37);
+ v.activate('dining_room');expect(v.moveWalker(before,0,2.4).y).toBeCloseTo(40);expect(v.moveWalker(after,0,-2.4).y).toBeCloseTo(37.6);
  const port=v.definitions.pantry.ports.find(p=>p.id==='pool_door')!;expect(port.state).toBe('open');
  const room=v.rooms.find(r=>r.id==='pantry')!,near=toWorld({x:-.8,y:4.8,height:0},room),outside=toWorld({x:-.8,y:6.5,height:0},room);
  v.activate('pantry');const stopped=v.moveWalker(near,outside.x-near.x,outside.y-near.y);expect(Math.hypot(stopped.x-outside.x,stopped.y-outside.y)).toBeGreaterThan(1);
  v.activate('dining_room');v.requireLoadedRooms();v.setRoomLoaded('dining_room',true);expect(v.moveWalker(before,0,3).y).toBeLessThan(38.5);
- v.setRoomLoaded('pantry',true);expect(v.moveWalker(before,0,3).y).toBeCloseTo(40);
+ v.setRoomLoaded('pantry',true);expect(v.moveWalker(before,0,2.4).y).toBeCloseTo(40);
  expect(v.navigation.canStand(after,3.36)).toBe(false);
 });
 test('actual shared door blocks the sightline when closed and leaves a clear passage when open',async()=>{

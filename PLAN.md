@@ -223,3 +223,7 @@ Added room 016 as an outdoor forecourt and covered garage bay, with a wide open 
 ## Library and first-floor shells — 2026-09-13
 
 Added the ground-floor library and all five rooms around the existing first-floor landing: plant room, music room, security corridor, medical room and arcade. They remain empty shells with shared interactive doors, original EGA colors and baked shading. See [the layout and deferred connections](docs/first_floor.md). The reinforced door is now an operable shared leaf/frame pair. The corridor stair ends at the next closed storey boundary; the unresolved library spiral route remains deferred. No hosting or commits.
+
+## Furnished library, kitchen and dining room
+
+The complete layout is retained while these three shells receive their artwork-based interiors (005, 007 and 037). Source builders create bookcases and a decorative library spiral stair, kitchen cabinets/appliances, and the long turquoise dining table with panelling and the original painting. Furniture footprints prevent walking through the new solids and leave routes to every existing door. Shared doors still start closed. The library staircase has no new destination; appliances and table details are static. Original colors and soft vertex-baked shading require no runtime GI.

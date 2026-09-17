@@ -7,7 +7,7 @@ from room_config import load_config,save_generated
 from .door_assets import register_static,register_hinged,KIT
 PALETTE={'black':(0,0,0),'red':(168,0,0),'brown':(168,84,0),'yellow':(252,252,84),'blue':(0,0,168),'lightblue':(84,84,252),'green':(0,168,0),'cyan':(0,168,168),'aqua':(84,252,252),'purple':(168,0,168),'pink':(252,84,252),'lightred':(252,84,84),'lime':(84,252,84),'gray':(168,168,168),'white':(252,252,252)}
 
-def build(path):
+def build(path, furnish=None):
  root=Path(__file__).resolve().parents[2];c=load_config(path,prepare=True);g=c['geometry'];style=c['shell'];W=g['halfWidth'];D=g['depth'];H=g['height'];T=g['wallThickness']
  scene,cols,geo=setup(PALETTE);box=geo.box;ports={p['id']:p for p in c['ports']};stair=g.get('stairs')
  def slab(name,x0,x1,y0,y1,z,thickness,color,holes):
@@ -79,10 +79,11 @@ def build(path):
     top=hole['top'];z=(level+top)/2
     for x in [x0,x1]:box('Hatch_shaft',(x,(y0+y1)/2,z),(.07,y1-y0+.07,top-level),style['wall'])
     for y in [y0,y1]:box('Hatch_shaft',((x0+x1)/2,y,z),(x1-x0,.07,top-level),style['wall'])
+ if furnish:furnish(geo,c)
  reference(root,c,cols,c['backgrounds'][0]);geo.active='Cameras'
  geo.camera('01_Reference',(0,-max(8,W*1.6),4.5),(0,D/2,1.3),lens=27)
  geo.camera('02_Inside',(-W+.9,.9,1.62),(0,D-.5,1.5),lens=22)
  geo.camera('03_Reverse',(W-1,D-.8,1.62),(0,.3,1.5),lens=22)
- scene.camera=bpy.data.objects['02_Inside'];scene['room_id']=c['backgrounds'][0];scene['scope']='Room shell, shared doors and circulation only; interior details deferred.'
+ scene.camera=bpy.data.objects['02_Inside'];scene['room_id']=c['backgrounds'][0];scene['scope']='Furnished room with shared doors.' if furnish else 'Room shell, shared doors and circulation only; interior details deferred.'
  scene.render.resolution_x=1000;scene.render.resolution_y=650
  save_generated(c);bpy.ops.wm.save_as_mainfile(filepath=str(root/c['source']));print('LAYOUT_ROOM_COMPLETE',c['id'],flush=True)

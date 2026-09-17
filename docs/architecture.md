@@ -11,6 +11,8 @@ The house is assembled from independently editable architectural units. Room bac
 | Position, rotation, elevation, or connection between units | `house/layout.json` |
 | Room floor and furniture collision | `web/lib/rooms/<unit>.ts` |
 | Rectangular shell setup, floors, ceilings, side door openings and reference markers | `scripts/blender_shared/shell.py` |
+| Optional shell furnishing callback; room-specific solid interiors | `scripts/blender_shared/layout_shell.py`, `rooms/<room>/build.py` and optional `interior.py` |
+| Raised panels, curved trim and original-art pixel-color runs | `scripts/blender_shared/furnishings.py` |
 | Reusable boxes, beams, walls, doors, material assignment | `scripts/blender_shared/geometry.py` |
 | Shared soft cel-light bake and export | `scripts/blender_shared/bake.py`, `scripts/finalize_baked_glb.py` |
 | Room spaces, portal transforms, movement and asset loading | `web/lib/house/` |
@@ -149,3 +151,5 @@ The [library and complete first-floor shell layout](first_floor.md) are connecte
 See [source/output ownership and the common build CLI](rebuilding.md) for the authoritative folder structure. Generated room manifests are merged through `scripts/room_config.py`; authored configs are never rewritten by builds.
 
 Pool 006/002 is a single room with two floor elevations. Its runtime-local filled/drained state controls basin navigation and the `Pool_water` mesh visibility; `web/lib/house/pool.ts` handles its same-room climb without adding portal connections.
+
+Furnished library, kitchen and dining packages keep authored furniture footprints in `geometry.obstacles`. Their navigation adapters test the walker radius against those rectangles; furniture does not create new ports or change room placements. The library supplies the optional shell furnishing callback. Kitchen and dining keep their furnishing recipes in local `interior.py` files.
