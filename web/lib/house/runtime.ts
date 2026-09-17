@@ -1,3 +1,4 @@
+import {createPoolNavigation} from '../rooms/pool';
 import {createDoors} from './doors';
 import data from './generated.json' with {type:'json'};
 import {adapters} from './adapters.generated';
@@ -24,6 +25,8 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
   if(graph.spaceOf(room.id)===space)return room;
   const p=doorPortal(room,port,space);return p?mapPlacement(room,graph.portals.find(q=>q.key===p.reverse)!):null;
  }
+ const poolState={drained:false};
+ const poolNavigation=createPoolNavigation(()=>poolState.drained);
  const doors=createDoors(rooms,definitions,(room,port,p)=>{
   if(graph.spaceOf(room.id)===activeSpace)return p;
   const edge=doorPortal(room,port);return edge?mapThrough(p,edge):null;
@@ -47,7 +50,7 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
   }
   for(const room of graph.members(activeSpace)){
    if(!isLoaded(room.id))continue;
-   const local=toLocal(walker,room),def=definitions[room.definition],nav=adapters[def.navigation];
+   const local=toLocal(walker,room),def=definitions[room.definition],nav=def.id==='pool'?poolNavigation:adapters[def.navigation];
    if(local.x<def.bounds.min[0]||local.x>def.bounds.max[0]||local.y<def.bounds.min[1]||local.y>def.bounds.max[1])continue;
    if(nav.canStand(local,local.height))return {room,height:nav.floorHeight(local,local.height)+room.position[2],zone:nav.zone(local)};
   }
@@ -84,7 +87,7 @@ export function createHouseRuntime(previewId?:string|null,source:HouseData=data)
   return {...p,yawDelta,heightDelta,crossed};
  }
  const zoneAt=(p:Walker)=>navigation.zone(p);
- return {doors,house,rooms,definitions,graph,portalDoor,doorPlacement,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt,isLoaded,requireLoadedRooms,setRoomLoaded,activate,resetSpace,
+ return {poolState,doors,house,rooms,definitions,graph,portalDoor,doorPlacement,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt,isLoaded,requireLoadedRooms,setRoomLoaded,activate,resetSpace,
   get activeRoom(){return activeRoom;},get activeSpace(){return activeSpace;},preview:Boolean(preview),backgrounds:rooms.flatMap(r=>definitions[r.definition].backgrounds)};
 }
 export const {house,rooms,definitions,SPAWN,START,START_YAW,START_PITCH,navigation,moveWalker,zoneAt}=createHouseRuntime();

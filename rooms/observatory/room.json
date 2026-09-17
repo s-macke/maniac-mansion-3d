@@ -1,0 +1,132 @@
+{
+  "id": "observatory",
+  "label": "Observatory",
+  "backgrounds": [
+    "028"
+  ],
+  "asset": "generated/models/rooms/observatory_v1.glb",
+  "source": "generated/blender/observatory/observatory_source_v1.blend",
+  "baked": "generated/blender/observatory/observatory_v1.blend",
+  "build": "rooms/observatory/build.py",
+  "navigation": "observatory",
+  "bounds": {
+    "min": [
+      -4.38,
+      -0.18,
+      -3.36
+    ],
+    "max": [
+      4.38,
+      8.58,
+      4.98
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2.1,
+    "height": 0,
+    "yaw": -0.5,
+    "pitch": 0.25
+  },
+  "geometry": {
+    "radius": 4.2,
+    "centerY": 4.2,
+    "wallHeight": 2.05,
+    "domeRise": 2.75,
+    "wallThickness": 0.16,
+    "segments": 64,
+    "roofRings": 16,
+    "slitAngle": 0.7853981633974483,
+    "slitHalfAngle": 0.39269908169872414,
+    "slitSill": 1.25,
+    "floorHoles": [
+      {
+        "x0": -3,
+        "x1": -2,
+        "y0": 3.15,
+        "y1": 4.25
+      }
+    ],
+    "ladders": [
+      {
+        "id": "den_access",
+        "position": [
+          -2.5,
+          3.92,
+          -3.36
+        ],
+        "yaw": 0,
+        "height": 4.2
+      }
+    ]
+  },
+  "ports": [
+    {
+      "id": "den_hatch",
+      "kind": "hatch",
+      "position": [
+        -2.5,
+        3.7,
+        0
+      ],
+      "outward": [
+        0,
+        0,
+        -1
+      ],
+      "width": 1,
+      "depth": 1.1,
+      "state": "open",
+      "destination": "typewriter_room"
+    }
+  ],
+  "shell": {
+    "wall": "cyan",
+    "floor": "lightblue",
+    "trim": "aqua"
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -1,
+        3.2,
+        3.2
+      ],
+      [
+        2.5,
+        6.3,
+        3.4
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 028.png"
+    ]
+  }
+}

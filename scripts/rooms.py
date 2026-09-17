@@ -44,7 +44,7 @@ def catalog(require_outputs=True):
         if any(not s.get('library') for s in shared) and not d.get('sharedAssetLibrary'): raise ValueError('Missing shared library reference')
         nodes={l['node'] for door in d.get('geometry',{}).get('doors',[]) for l in door['leaves']}
         for s in shared:
-            allowed=['Ladder_section'] if s.get('library')=='ladders' else ['Standard_leaf','Standard_frame','Pool_leaf','Pool_frame','Security_leaf','Security_frame','Entrance_transom','Concealed_leaf','Grating_leaf']
+            allowed=['Ladder_section'] if s.get('library')=='ladders' else ['Standard_leaf','Standard_frame','Pool_leaf','Pool_frame','Security_leaf','Security_frame','Entrance_transom','Concealed_leaf','Grating_leaf','Dungeon_leaf','Lab_leaf','Metal_leaf']
             if s.get('library') and s['library'] not in d.get('sharedAssetLibraries',{}): raise ValueError('Unknown shared library: '+s['library'])
             if s['asset'] not in allowed or len(s['matrix'])!=16 or not all(math.isfinite(v) for v in s['matrix']): raise ValueError('Invalid shared instance: '+s['id'])
             if s.get('doorNode') and s['doorNode'] not in nodes: raise ValueError('Unknown shared door hinge: '+s['id'])

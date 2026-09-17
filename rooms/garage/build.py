@@ -10,7 +10,16 @@ scene,collections,geo=setup({'blue':(0,0,168),'lightblue':(84,84,252),'gray':(16
 box=geo.box;W=g['width'];D=g['depth'];F=g['bayFront'];T=g['wallThickness'];H=g['height'];A=g['bayY0'];B=g['bayY1'];O0=g['openingY0'];O1=g['openingY1'];OH=g['openingHeight']
 # Original gray walls and blue floor. The outside slab meets the pool path at x=0.
 box('Forecourt_floor',(F/2,D/2,-.06),(F,D,.12),'lightblue')
-box('Garage_floor',((F+W)/2,(A+B)/2,-.06),(W-F,B-A,.12),'blue')
+holes=g.get('floorHoles',[])
+xs=sorted(set([F,W]+[h[k] for h in holes for k in ['x0','x1']]))
+ys=sorted(set([A,B]+[h[k] for h in holes for k in ['y0','y1']]))
+for x0,x1 in zip(xs,xs[1:]):
+ for y0,y1 in zip(ys,ys[1:]):
+  if any(h['x0']<(x0+x1)/2<h['x1'] and h['y0']<(y0+y1)/2<h['y1'] for h in holes):continue
+  box('Garage_floor',((x0+x1)/2,(y0+y1)/2,-.06),(x1-x0,y1-y0,.12),'blue')
+for h in holes:
+ for x in [h['x0'],h['x1']]:box('Hatch_rim',(x,(h['y0']+h['y1'])/2,.025),(.065,h['y1']-h['y0']+.065,.05),'gray')
+ for y in [h['y0'],h['y1']]:box('Hatch_rim',((h['x0']+h['x1'])/2,y,.025),(h['x1']-h['x0'],.065,.05),'gray')
 for y in [A+T/2,B-T/2]:box('Garage_side',((F+W)/2,y,H/2),(W-F,T,H),'darkgray')
 box('Garage_back',(W-T/2,(A+B)/2,H/2),(T,B-A,H),'darkgray')
 for a,b in [(A,O0),(O1,B)]:box('Garage_front',(F+T/2,(a+b)/2,H/2),(T,b-a,H),'gray')
@@ -29,6 +38,8 @@ port=config['ports'][0];cy=port['position'][1];half=port['width']/2
 for a,b in [(0,cy-half),(cy+half,D)]:box('Forecourt_edge',(.13,(a+b)/2,.12),(.26,b-a,.24),'darkgray')
 # Close the narrow non-walkable strips beside the garage with matching low boundaries.
 for y in [.25,D-.25]:box('Side_plinth',((F+W)/2,y,.06),(W-F,.5,.12),'darkgray')
+from blender_shared.ladder_assets import register
+register(config,collections['Architecture'])
 reference(ROOT,config,collections,'016')
 geo.active='Cameras'
 geo.camera('01_Reference',(-6,-3,5.5),(7,4,1.5),lens=28)

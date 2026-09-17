@@ -21,7 +21,7 @@ objects=[o for name in names for o in bpy.data.collections[name].objects if o.ty
 # Include all closed-room surfaces in shadow queries. Illumination is a point inside the room.
 verts=[];polys=[]
 for o in objects:
- if o.get('bake_unlit') or o.get('door_node'):continue
+ if o.get('bake_unlit') or o.get('bake_no_shadow') or o.get('door_node'):continue
  start=len(verts);verts.extend([o.matrix_world@v.co for v in o.data.vertices])
  polys.extend([tuple(start+i for i in p.vertices) for p in o.data.polygons])
 bvh=BVHTree.FromPolygons(verts,polys,all_triangles=False)
@@ -60,13 +60,19 @@ def emit(group,points,normal,base,colors=None):
  vs.extend(points);fs.append(tuple(range(start,start+len(points))));cs.extend(colors)
 for oi,o in enumerate(objects):
  if o.get('shared_asset'):continue
- if o.get('door_node'):group=o['door_node']
+ if o.get('bake_group'):group=o['bake_group']
+ elif o.get('door_node'):group=o['door_node']
  elif o.name.startswith('Front_inferred'):group='Cutaway_front'
  elif o.name.startswith('Ceiling_') or o.name.startswith('Stairwell_'):group='Cutaway_ceiling'
  else:group=next((name for name in names if o.name in bpy.data.collections[name].objects),'Room')
  for poly in o.data.polygons:
   pts=[o.matrix_world@o.data.vertices[i].co for i in poly.vertices]
   normal=(o.matrix_world.to_3x3().inverted().transposed()@poly.normal).normalized()
+  # Opt-in analytic normals keep curved shells smooth after vertex-color baking.
+  def shading_normal(p):
+   if 'bake_curved_center' not in o:return normal
+   center=o['bake_curved_center'];radii=o['bake_curved_radii'];sign=o['bake_curved_sign']
+   return Vector([(p[i]-center[i])/(radii[i]*radii[i])*sign if radii[i] else 0 for i in range(3)]).normalized()
   original=o.data.materials[poly.material_index];base=original.diffuse_color
   if o.get('bake_unlit'):
    emit(group,pts,normal,base,[tuple(base)]*len(pts));continue
@@ -74,7 +80,7 @@ for oi,o in enumerate(objects):
   if len(pts)==4:
    a,b,c,d=pts;nx=max(1,math.ceil(max((b-a).length,(c-d).length)/cell));ny=max(1,math.ceil(max((d-a).length,(c-b).length)/cell))
    def point(u,v):return a.lerp(b,u).lerp(d.lerp(c,u),v)
-   grid=[[shade(point(ix/nx,iy/ny),normal,base) for ix in range(nx+1)] for iy in range(ny+1)]
+   grid=[[shade(point(ix/nx,iy/ny),shading_normal(point(ix/nx,iy/ny)),base) for ix in range(nx+1)] for iy in range(ny+1)]
    def corners(ix,iy):return [grid[iy][ix],grid[iy][ix+1],grid[iy+1][ix+1],grid[iy+1][ix]]
    def uniform(ix,iy,color):return all(max(abs(a-b) for a,b in zip(c,color))<1e-7 for c in corners(ix,iy))
    used=set()
@@ -89,7 +95,7 @@ for oi,o in enumerate(objects):
      else:baked_colors=corners(ix,iy)
      used.update((xx,yy) for yy in range(iy,ey) for xx in range(ix,ex))
      emit(group,[point(ix/nx,iy/ny),point(ex/nx,iy/ny),point(ex/nx,ey/ny),point(ix/nx,ey/ny)],normal,base,baked_colors)
-  else:emit(group,pts,normal,base)
+  else:emit(group,pts,normal,base,[shade(p,shading_normal(p),base) for p in pts])
  if oi%300==0:print('Baking direct shadows',oi,'/',len(objects),flush=True)
 # Replace render geometry with a handful of meshes for low browser draw-call overhead.
 shared=[o for o in bpy.data.objects if o.get('shared_asset')]

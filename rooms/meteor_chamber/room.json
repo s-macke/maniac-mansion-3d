@@ -1,0 +1,157 @@
+{
+  "id": "meteor_chamber",
+  "label": "Meteor chamber",
+  "backgrounds": [
+    "031"
+  ],
+  "asset": "generated/models/rooms/meteor_chamber_v1.glb",
+  "source": "generated/blender/meteor_chamber/meteor_chamber_source_v1.blend",
+  "baked": "generated/blender/meteor_chamber/meteor_chamber_v1.blend",
+  "build": "rooms/meteor_chamber/build.py",
+  "navigation": "meteor_chamber",
+  "bounds": {
+    "min": [
+      -5.6,
+      0,
+      -0.12
+    ],
+    "max": [
+      5.6,
+      5.1,
+      3.4
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 5.6,
+    "depth": 5.1,
+    "height": 3.12,
+    "wallThickness": 0.18,
+    "ceilingHoles": [
+      {
+        "x0": -4.1,
+        "x1": -3.1,
+        "y0": 3.75,
+        "y1": 4.85,
+        "top": 3.36
+      }
+    ],
+    "ladders": [
+      {
+        "id": "garage_access",
+        "position": [
+          -3.6,
+          4.52,
+          0
+        ],
+        "yaw": 0,
+        "height": 3.36
+      }
+    ]
+  },
+  "ports": [
+    {
+      "id": "lab_door",
+      "position": [
+        5.6,
+        2.6,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "main_lab"
+    },
+    {
+      "id": "garage_hatch",
+      "kind": "hatch",
+      "position": [
+        -3.6,
+        4.3,
+        3.36
+      ],
+      "outward": [
+        0,
+        0,
+        1
+      ],
+      "width": 1,
+      "depth": 1.1,
+      "state": "open",
+      "destination": "garage"
+    }
+  ],
+  "shell": {
+    "wall": "blue",
+    "floor": "blue",
+    "trim": "blue",
+    "wallColors": {
+      "back": "lightblue"
+    },
+    "entries": [
+      {
+        "port": "lab_door",
+        "wall": "right",
+        "owner": false,
+        "frame": false,
+        "leaf": false,
+        "asset": "Metal_leaf",
+        "label": "Lab door"
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -2.8,
+        2.55,
+        2.95
+      ],
+      [
+        2.8,
+        2.55,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 031.png"
+    ]
+  }
+}

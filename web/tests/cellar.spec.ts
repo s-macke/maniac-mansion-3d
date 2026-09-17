@@ -14,7 +14,7 @@ test('hall cellar door starts closed; descend and return along the cellar stairs
  go(.6,0);expect(p.height).toBeCloseTo(-3.36);
  for(let i=0;i<=80;i++)go(s.y0+(s.y1-s.y0)*i/80,s.rise*i/80);
  go(5.7,3.36);p=v.moveWalker(p,0,.9);expect(v.activeRoom).toBe('hall');expect(p.height).toBeCloseTo(0);
- expect(v.graph.outgoing('cellar').map(e=>e.to.room.id)).toEqual(['hall']);
+ expect(v.graph.outgoing('cellar').map(e=>e.to.room.id)).toEqual(['hall','dungeon']);
 });
 test('grating opens, crouched crossing is continuous and returns outside safely',()=>{
  const v=createHouseRuntime('front_exterior'),c=createCrawls(v),link=v.house.crawls![0];

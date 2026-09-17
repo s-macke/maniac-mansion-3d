@@ -15,6 +15,7 @@ export function canStand(p:Point,height=0){
   if(p.y<g.bayY0+g.wallThickness+RADIUS||p.y>g.bayY1-g.wallThickness-RADIUS)return false;
   if(p.x<g.bayFront+g.wallThickness+RADIUS&&(p.y<g.openingY0+.06+RADIUS||p.y>g.openingY1-.06-RADIUS))return false;
  }
+ for(const h of g.floorHoles)if(p.x>h.x0-RADIUS&&p.x<h.x1+RADIUS&&p.y>h.y0-RADIUS&&p.y<h.y1+RADIUS)return false;
  return true;
 }
 export const zone=(p:Point)=>p.x<g.bayFront?'Garage forecourt':'Garage';

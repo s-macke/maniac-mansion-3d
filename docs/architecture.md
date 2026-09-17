@@ -106,7 +106,7 @@ The kitchen's entry end is below the existing gallery. Room-local navigation rej
 
 ## Shared standard door kit (current)
 
-`shared/doors/build.py` produces `standard_doors_v1.blend` and one GLB with nine meshes and one unlit vertex-color material. Standard leaves and frames across the indoor rooms reference this library through `geometry.sharedAssets`; double doors compose two mirrored/scaled leaf instances. The security door, pantry mesh door and entrance transom also come from the library.
+`shared/doors/build.py` produces `standard_doors_v1.blend` and one GLB with twelve meshes and one unlit vertex-color material. Standard leaves and frames across the indoor rooms reference this library through `geometry.sharedAssets`; double doors compose two mirrored/scaled leaf instances. The security door, pantry mesh door and entrance transom also come from the library.
 
 Current room assets are hall v6, living room v4, exterior v3, kitchen v4 and dining room v1. Superseded exports, builders and configurations have been removed. Shared appearances use neutral edge shading rather than baking a different lighting pattern into each copy; rooms still use their existing static-light bake. Frame and panel proportions scale with the doorway.
 
@@ -128,7 +128,7 @@ The current kitchen uses a shell depth of 5.55 m while retaining its placement a
 
 ### Dining-room shell
 
-`rooms/dining_room` is an independent empty room 037 package. It continues straight beyond the kitchen at `(-0.82,28.9,0)`, yaw `pi/2`, with a 19.2 × 5.55 m footprint and 3.12 m ceiling. Kitchen v4 owns the shared connecting leaf; dining owns its frame and the interactive pantry door. The door library now contains nine meshes, including the distinctive door designs. The house has 29 room GLBs plus shared door and ladder kits.
+`rooms/dining_room` is an independent empty room 037 package. It continues straight beyond the kitchen at `(-0.82,28.9,0)`, yaw `pi/2`, with a 19.2 × 5.55 m footprint and 3.12 m ceiling. Kitchen v4 owns the shared connecting leaf; dining owns its frame and the interactive pantry door. The door library now contains twelve meshes, including the distinctive door designs. The house has 34 room GLBs plus shared door and ladder kits.
 
 Pantry room 036 is connected beyond dining at `(-0.82,41.7,0)`, yaw `pi/2`. Its gray shell retains the rear blue mesh door as a closed, unassigned pool-route placeholder. See [the pantry package](../rooms/pantry/README.md).
 
@@ -147,3 +147,5 @@ The [garage and forecourt](../rooms/garage/README.md) connect through the far po
 The [library and complete first-floor shell layout](first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The higher storey and unresolved library spiral staircase remain deferred.
 
 See [source/output ownership and the common build CLI](rebuilding.md) for the authoritative folder structure. Generated room manifests are merged through `scripts/room_config.py`; authored configs are never rewritten by builds.
+
+Pool 006/002 is a single room with two floor elevations. Its runtime-local filled/drained state controls basin navigation and the `Pool_water` mesh visibility; `web/lib/house/pool.ts` handles its same-room climb without adding portal connections.

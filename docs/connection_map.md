@@ -33,7 +33,7 @@ These are illustration bands, **not yet measured building storeys**. Overlapping
 | Roof rooms | 020 speakers, 023 workshop, 024 bathroom; 015 attic above bathroom |
 | Dome | 028 observatory |
 
-The library's spiral stair and several ladders have no unambiguous destination in this drawing. The long right-hand underground passage/shaft is visible in the cutaway but has no clearly matched standalone background. Retain it as an unresolved connector, not an invented numbered room.
+The library's spiral stair and several ladders have no unambiguous destination in this drawing. The long right-hand underground passage/shaft is visible in the cutaway but has no clearly matched standalone background. The walkthrough now replaces that escape connector with a direct meteor-chamber-to-garage ladder at the user’s request.
 
 ## Core route diagram
 
@@ -53,10 +53,11 @@ flowchart TD
     R006 -.-> R016["016 Garage"]
     R010 ---|cellar stairs| R008["008 Machinery"]
     R001 ---|bush grating| R029["029 Under-house passage"]
-    R008 -.-> R004["004 Dungeon"]
-    R004 -.-> R030["030 Control lab"]
-    R030 -.-> R031["031 Meteor chamber"]
-    R030 -.-> R051["051 Operating lab"]
+    R008 --- R004["004 Dungeon"]
+    R004 --- R051["051 Outer laboratory"]
+    R051 --- R030["030 Main laboratory"]
+    R030 --- R031["031 Meteor chamber"]
+    R031 ---|simplified escape ladder| R016
     R011 -.-> R014["014 Plant room"]
     R011 -.-> R017["017 Music room"]
     R011 -.-> R013["013 Security hall"]
@@ -70,6 +71,7 @@ flowchart TD
     R025 --- R024["024 Mummy bathroom"]
     R038 -.-> R027["027 Typewriter room"]
     R027 ---|painted panel and stairs| R015["015 Wire attic"]
+    R027 ---|ceiling hatch / plant route| R028["028 Observatory"]
 ```
 
 ## Connection candidates and evidence
@@ -80,7 +82,7 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 |---|---|---|
 | 001 ↔ 010 | Visible | Front double entrance corresponds to entrance hall's double door; shown at porch level in cutaway. |
 | 010 ↔ 011 | Visible | Entrance stair rises to the landing over it in the cutaway; landing foreground is open to the stair. |
-| 006 ↔ 002 | Visible | Pool rim, ladder and pool setting identify deck and basin of the same structure. This is one pool, not a second room volume. |
+| 006 ↔ 002 | Built as one room | E/tap drains the pool and enables the existing ladder into the basin; deck and bottom share one GLB and independent space. |
 | 010 ↔ 003 | Implemented interpretation | Hall right-side door ↔ living-room left door. The cutaway suggests this adjacency; doorway positions are aligned in the 3D prototype. |
 | 003 ↔ 005 | Suggested | Living room and library are adjacent in cutaway; double-door cues are compatible. |
 | 010 ↔ 007 | Implemented blockout interpretation | Hall rear-left door meets kitchen left-end door at ground level; kitchen extends behind the hall beneath the gallery at its entrance. |
@@ -90,10 +92,10 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 006 ↔ 016 | Suggested | Pool deck and garage share the exterior in cutaway; garage's open front reaches outdoors. |
 | 001 ↔ 006 | Suggested | Exterior route around house is plausible; fence/gate routing is not established. |
 | 010 ↔ 008 | User-confirmed; built | Hall rear-right door opens onto the cellar stair landing. |
-| 008 ↔ 004 | Suggested | Neighboring underground spaces with compatible side doors. |
-| 004 ↔ 030 | Suggested | Dungeon and lab occupy adjacent underground bands; secure exit is plausible, connecting geometry unspecified. |
-| 030 ↔ 031 | Suggested | Deep-band adjacency and compatible doors. |
-| 030 ↔ 051 | Suggested | Deep-band adjacency and compatible doors. |
+| 008 ↔ 004 | Built; hint-book supported | Cellar left door meets dungeon right rear door. |
+| 004 ↔ 051 | Built interpretation | Dungeon laboratory door reaches the outer laboratory / ready-room shell; background assignment is inferred from artwork. |
+| 030 ↔ 031 | Built interpretation | Main laboratory left gray door meets meteor chamber right gray door. |
+| 030 ↔ 051 | Built interpretation | Matching teal doors connect the main and outer laboratory shells. |
 | 011 ↔ 014 | Suggested | Plant room sits left of landing; room has a single door. |
 | 011 ↔ 017 | Suggested | Music room sits right of landing; room has a single door. |
 | 011 ↔ 013 | Suggested | Candidate onward route into tower/security corridor; secure-door cues support it, but continuous geometry is unclear. |
@@ -113,20 +115,21 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 021 ↔ 020 | Confirmed route | Original hint book pages 37–38: Fred’s bedroom ladder reaches Green Tentacle’s speaker room. Implemented via a hatch portal. |
 | 019 ↔ 009 | Confirmed route; inferred background match | Hint book page 43: Edna’s ladder reaches the safe attic. Background 009 matches its boarded wall/window/portrait; cutaway placement remains tentative. Implemented via a hatch portal. |
 | 026 ↔ 020 | Rejected inference | Vertical adjacency does not establish a route; the speaker-room ladder comes from 021. |
-| 014 ↔ 028 | Unresolved | Observatory approach remains unbuilt. Room 023 is the photo darkroom reached from 012; its cutaway position does not establish an observatory route. |
+| 014 ↔ 028 | Rejected inference | The observatory is reached from the den, not the downstairs plant room. |
+| 027 ↔ 028 | Hint-book supported; built | Ceiling opening above the den plant; the shell stage substitutes a shared ladder for climbing the grown plant. |
 | 001 ↔ 029 | User-confirmed; built | Grating behind the left porch bush, via a low crawl portal. |
 | 029 ↔ 008 | Unresolved | No connection between these underground spaces is assumed. |
-| 051 ↔ exterior shaft | Unresolved | Cutaway shows a long underground extension to the right; no matching corridor background or established shaft entrance. |
+| 031 ↔ 016 | User-requested simplification; built | Direct ladder from the meteor chamber to a garage floor hatch replaces the original exit door and long passage. |
 | 044 / 047 ↔ grounds | Reference only | These are exterior compositions, not proof of additional doors or distinct room volumes. |
 
 ## Questions to resolve before full-house blockout
 
 1. Map entrance doors and upper-corridor door slots to destinations; the PNGs contain no destination metadata.
 2. Resolve the tower circulation (011/013/012/038), distinguishing depth offsets from actual floor changes.
-3. Establish access to 028. The under-house passage (029) now connects through the bush grating. The photo room (023) connects from 012. Ladder access to 009 and 020 is documented in [ladders](ladders.md).
+3. Review the inferred hatch position for the built den-to-observatory route (027 ↔ 028). The under-house passage (029) now connects through the bush grating. The photo room (023) connects from 012. Ladder access to 009 and 020 is documented in [ladders](ladders.md).
 4. Identify the library spiral stair destination; do not add a duplicate stair route arbitrarily.
 5. Review the inferred hatch positions and the tentative cutaway location of 009.
-6. Decide whether the long cutaway-only underground connector is needed to access modeled areas.
+6. The long underground escape connector is replaced by the requested direct garage ladder; its original geometry is deferred.
 
 These are recorded uncertainties, not requests to stop step 1. For step 2 the entrance can be modeled with labeled destination placeholders; do not lock the complete house topology yet. Suggested initial second room: **011 landing**, since the main stair relationship is directly supported; use 003 living room for a simpler doorway-only prototype if desired.
 
@@ -165,3 +168,5 @@ The [library and complete first-floor shell layout](first_floor.md) are connecte
 ## Verified correction: attic access
 
 The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed page 39, describes access to the wire attic from the den via a door concealed by paint. It does not route this through Ted’s bathroom. Printed page 43 confirms Edna’s bedroom ladder reaches the attic containing the safe. The [ladder implementation](ladders.md) uses 009 for that destination and 020 for the speaker room above Fred’s bedroom; cutaway adjacency alone is not used to infer a route.
+
+The [cellar extension](cellar.md#dungeon-and-laboratories) now implements 008 → 004 → 051 → 030 → 031. Door slots and background 051’s outer-lab role remain explicit blockout interpretations.

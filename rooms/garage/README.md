@@ -21,3 +21,5 @@ Validation: 15 focused navigation, shared-door and actual-GLB checks pass, plus 
 ## Source and generated files
 
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/garage/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/garage/`; derived door metadata and shading reports in `generated/reports/rooms/garage/`. Builders never write derived data back into `room.json`.
+
+A shared ladder now links the meteor chamber to a real floor hatch inside the garage. This user-requested shortcut replaces the old meteor-chamber exit door and the original long passage. Use E/click/tap to climb in either direction. Ordinary walking cannot fall through the garage hatch.

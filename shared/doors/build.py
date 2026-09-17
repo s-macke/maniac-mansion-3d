@@ -21,7 +21,7 @@ frame=[o for o in col.objects if o not in leaf]
 mat=bpy.data.materials.new('Shared_EGA_vertex_color');mat.use_nodes=True
 n=mat.node_tree.nodes;n.clear();attr=n.new('ShaderNodeVertexColor');attr.layer_name='Col';e=n.new('ShaderNodeEmission');out=n.new('ShaderNodeOutputMaterial');mat.node_tree.links.new(attr.outputs['Color'],e.inputs['Color']);mat.node_tree.links.new(e.outputs[0],out.inputs[0])
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from designs import pool_door,security_door,entrance_transom,concealed_panel,grating_leaf
+from designs import pool_door,security_door,entrance_transom,concealed_panel,grating_leaf,artwork_leaf
 parts=[('Standard_leaf',leaf),('Standard_frame',frame)]
 before=set(col.objects);pool_door(geo);bpy.context.view_layer.update();pool_parts=list(set(col.objects)-before)
 parts.extend([('Pool_leaf',[o for o in pool_parts if 'jamb' not in o.name]),('Pool_frame',[o for o in pool_parts if 'jamb' in o.name])])
@@ -29,6 +29,8 @@ before=set(col.objects);security_door(geo,ROOT);bpy.context.view_layer.update();
 parts.extend([('Security_leaf',[o for o in security_parts if not o.name.startswith('Security_door_frame')]),('Security_frame',[o for o in security_parts if o.name.startswith('Security_door_frame')])])
 for name,build in [('Entrance_transom',lambda:entrance_transom(geo)),('Concealed_leaf',lambda:concealed_panel(geo,ROOT)),('Grating_leaf',lambda:grating_leaf(geo))]:
  before=set(col.objects);build();bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
+for name,bg,crop in [('Dungeon_leaf','004',(482,18,524,102)),('Lab_leaf','030',(584,16,617,114)),('Metal_leaf','031',(378,18,392,120))]:
+ before=set(col.objects);artwork_leaf(geo,ROOT,bg,crop);bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
 for name,objects in parts:
  vs=[];fs=[];cs=[]
  for o in objects:
@@ -63,9 +65,11 @@ bpy.data.objects['Entrance_transom'].location=(-4,0,3.18)
 bpy.data.objects['Concealed_leaf'].location=(6,0,1.415);bpy.data.objects['Concealed_leaf'].scale=(1.3,1,2.83)
 bpy.data.objects['Security_leaf'].location.x=4;bpy.data.objects['Security_frame'].location.x=4
 bpy.data.objects['Grating_leaf'].location=(-6,0,1);bpy.data.objects['Grating_leaf'].scale=(1.25,1,.72)
+for i,name in enumerate(['Dungeon_leaf','Lab_leaf','Metal_leaf']):
+ bpy.data.objects[name].location=(8+i*2,0,1.415);bpy.data.objects[name].scale=(1.3,1,2.83)
 scene.world=bpy.data.worlds.new('Door_library_preview');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.05,.05,.05,1)
 cam=bpy.data.objects.new('Library_preview',bpy.data.cameras.new('Library_preview'));scene.collection.objects.link(cam)
-cam.location=(0,-14,4);cam.rotation_euler=(Vector((0,0,1.5))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=11;scene.camera=cam
+cam.location=(3,-18,4);cam.rotation_euler=(Vector((3,0,1.5))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=20;scene.camera=cam
 scene.render.engine='CYCLES';scene.cycles.samples=4;scene.view_settings.view_transform='Standard';scene.view_settings.look='None'
 scene.render.resolution_x=1200;scene.render.resolution_y=500;scene.render.resolution_percentage=100
 scene.render.filepath=str(ROOT/'generated/previews/shared/doors.png')

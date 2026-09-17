@@ -47,18 +47,21 @@ water=box('Water_surface',((x0+x1)/2,(y0+y1)/2,p['water']),(x1-x0-.18,y1-y0-.18,
 for i in range(26):
  x=rng.uniform(x0+.4,x1-.4);y=rng.uniform(y0+.3,y1-.3)
  o=box('Water_glint',(x,y,p['water']+.02),(rng.uniform(.07,.24),.018,.01),'cyan');o['bake_unlit']=True
-# Metal ladder and handrails on the far rim; basin entry is deferred while filled.
+# Metal ladder and handrails reach the basin floor in the drained state.
 geo.active='Details'
 for x in [10.65,11.35]:
- geo.beam('Ladder_rail',(x,y1-.16,-2.35),(x,y1-.16,.65),.055,'gray')
+ geo.beam('Ladder_rail',(x,y1-.16,p['bottom']+.12),(x,y1-.16,.65),.055,'gray')
  geo.beam('Ladder_grip',(x,y1-.16,.65),(x,y1+.6,.65),.055,'white')
  geo.beam('Ladder_foot',(x,y1+.6,.65),(x,y1+.6,0),.055,'gray')
-for z in [-2.15,-1.83,-1.51,-1.19,-.87,-.55,-.23,.09,.41]:geo.beam('Ladder_rung',(10.65,y1-.16,z),(11.35,y1-.16,z),.048,'white')
+for z in [-2.55,-2.23,-1.83,-1.51,-1.19,-.87,-.55,-.23,.09,.41]:geo.beam('Ladder_rung',(10.65,y1-.16,z),(11.35,y1-.16,z),.048,'white')
 # Pink floating chair silhouette visible in the original pool background.
 box('Chair_seat',(12,5.5,p['water']+.16),(.72,.72,.13),'pink')
 box('Chair_back',(12,5.82,p['water']+.54),(.65,.12,.78),'pink')
 box('Chair_side',(11.65,5.5,p['water']+.25),(.10,.70,.20),'purple')
 for x in [11.72,12.28]:geo.beam('Chair_foot',(x,5.15,p['water']+.02),(x,5.85,p['water']+.02),.07,'black')
+# Keep wet-only surfaces in one independently switchable baked mesh.
+for o in bpy.data.objects:
+ if o.type=='MESH' and o.name.startswith(('Water_','Chair_')):o['bake_group']='Pool_water';o['bake_no_shadow']=True
 geo.active='Fence'
 def fence(a,b):
  length=math.dist(a,b);n=math.ceil(length/.36)
@@ -92,7 +95,7 @@ geo.active='Cameras'
 geo.camera('01_Reference',(10,-9,8),(10,5,0),lens=30)
 geo.camera('02_Inside',(2,3.2,1.62),(12,6,1),lens=20)
 geo.camera('03_Reverse',(18.4,7,1.62),(0,3.2,1.3),lens=22)
-scene.camera=bpy.data.objects['02_Inside'];scene['room_id']='006';scene['scope']='Pool deck exploration; filled water remains a boundary; outdoor path connects to garage.';scene.render.resolution_x=1100;scene.render.resolution_y=650
+scene.camera=bpy.data.objects['02_Inside'];scene['room_id']='006';scene['scope']='One pool unit: filled deck and explorable drained basin, with a same-room ladder.';scene.render.resolution_x=1100;scene.render.resolution_y=650
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/config['source']))
 print('POOL_SOURCE_COMPLETE',flush=True)
 

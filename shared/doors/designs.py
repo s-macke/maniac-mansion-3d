@@ -72,3 +72,29 @@ def grating_leaf(geo):
  for z in [-.5,.5]:geo.box('Grate_rail',(0,0,z),(1,.045,.04),'gray')
  for i in range(1,8):geo.box('Grate_bar',(-.5+i/8,0,0),(.034,.045,1),'darkgray')
  for z in [-.22,.22]:geo.box('Grate_cross',(0,-.024,z),(1,.035,.048),'gray')
+
+
+def artwork_leaf(geo,root,background,crop):
+ """Unit leaf with original EGA pixel runs on both faces; shared across rooms."""
+ x0,y0,x1,y1=crop
+ geo.box('Metal_leaf_body',(0,0,0),(1,.08,1),'blue')
+ image=bpy.data.images.load(str(root/f'source/room {background}.png'));pixels=list(image.pixels[:]);W,H=image.size
+ materials={};verts=[];faces=[];indices=[]
+ for y in range(y0,y1):
+  x=x0
+  def color(u):
+   offset=((H-1-y)*W+u)*4
+   return tuple(round(pixels[offset+i]*255) for i in range(3))
+  while x<x1:
+   rgb=color(x);end=x+1
+   while end<x1 and color(end)==rgb:end+=1
+   if rgb not in materials:
+    m=bpy.data.materials.new('Door_pixel_'+'_'.join(map(str,rgb)));m.diffuse_color=(*[linear(v) for v in rgb],1);materials[rgb]=m
+   a=(x-x0)/(x1-x0)-.5;b=(end-x0)/(x1-x0)-.5;lo=.5-(y-y0+1)/(y1-y0);hi=.5-(y-y0)/(y1-y0)
+   for depth,reverse in [(-.041,False),(.041,True)]:
+    start=len(verts);verts.extend([(a,depth,lo),(b,depth,lo),(b,depth,hi),(a,depth,hi)])
+    face=tuple(range(start,start+4));faces.append(tuple(reversed(face)) if reverse else face);indices.append(list(materials).index(rgb))
+   x=end
+ obj=geo.mesh('Original_metal_door',verts,faces,None)
+ for mat in materials.values():obj.data.materials.append(mat)
+ for poly,index in zip(obj.data.polygons,indices):poly.material_index=index

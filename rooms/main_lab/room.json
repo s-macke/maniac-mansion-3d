@@ -1,0 +1,143 @@
+{
+  "id": "main_lab",
+  "label": "Main laboratory",
+  "backgrounds": [
+    "030"
+  ],
+  "asset": "generated/models/rooms/main_lab_v1.glb",
+  "source": "generated/blender/main_lab/main_lab_source_v1.blend",
+  "baked": "generated/blender/main_lab/main_lab_v1.blend",
+  "build": "rooms/main_lab/build.py",
+  "navigation": "main_lab",
+  "bounds": {
+    "min": [
+      -8.2,
+      0,
+      -0.12
+    ],
+    "max": [
+      8.2,
+      5.5,
+      3.16
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 2,
+    "height": 0,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "geometry": {
+    "halfWidth": 8.2,
+    "depth": 5.5,
+    "height": 3.12,
+    "wallThickness": 0.18
+  },
+  "ports": [
+    {
+      "id": "outer_lab_door",
+      "position": [
+        8.2,
+        2.6,
+        0
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "outer_lab"
+    },
+    {
+      "id": "meteor_door",
+      "position": [
+        -8.2,
+        2.6,
+        0
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 1.3,
+      "height": 2.83,
+      "state": "open",
+      "destination": "meteor_chamber"
+    }
+  ],
+  "shell": {
+    "wall": "blue",
+    "floor": "blue",
+    "trim": "blue",
+    "wallColors": {
+      "back": "lightblue"
+    },
+    "entries": [
+      {
+        "port": "outer_lab_door",
+        "wall": "right",
+        "owner": false,
+        "frame": false,
+        "leaf": false,
+        "asset": "Lab_leaf",
+        "label": "Outer lab door"
+      },
+      {
+        "port": "meteor_door",
+        "wall": "left",
+        "owner": true,
+        "frame": false,
+        "leaf": false,
+        "asset": "Metal_leaf",
+        "label": "Meteor door"
+      }
+    ]
+  },
+  "bake": {
+    "collections": [
+      "Architecture",
+      "Doors"
+    ],
+    "lights": [
+      [
+        -4.1,
+        2.75,
+        2.95
+      ],
+      [
+        4.1,
+        2.75,
+        2.95
+      ]
+    ],
+    "cell": 0.22,
+    "views": [
+      [
+        "01_Reference",
+        "reference",
+        1000,
+        600
+      ],
+      [
+        "02_Inside",
+        "inside",
+        1000,
+        650
+      ],
+      [
+        "03_Reverse",
+        "reverse",
+        1000,
+        650
+      ]
+    ],
+    "previewSuffix": "v1",
+    "startupCutaway": false,
+    "references": [
+      "source/room 030.png"
+    ]
+  }
+}

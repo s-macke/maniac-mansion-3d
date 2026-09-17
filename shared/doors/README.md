@@ -4,7 +4,7 @@
 
 The leaf has unit body width/height and retains the established 0.13 m thickness. The frame is normalized to nominal opening width/height. Both use one vertex-color unlit material with neutral face/edge shading. They need no textures, browser lights, GI, or animation clips. Trim proportions scale with the door, so slight per-room variations are intentionally standardized. The library also includes `Pool_leaf` and `Pool_frame` (the pantry blue mesh door), `Security_leaf` and `Security_frame` (the reinforced landing door with original pixel artwork), and `Entrance_transom`. These distinctive designs use natural metre dimensions and a bottom-centre origin, with their visible face toward local negative Y. The standard leaf/frame keep their normalized dimensions and independent origins.
 
-The saved Blender scene arranges the three door designs side by side at natural display proportions, with the transom above the wooden door. These object transforms are for inspection only: the GLB export and room builders use the underlying local-space meshes. `generated/previews/shared/doors.png` shows this arrangement.
+The saved Blender scene arranges the door designs side by side at natural display proportions, with the transom above the wooden door. These object transforms are for inspection only: the GLB export and room builders use the underlying local-space meshes. `generated/previews/shared/doors.png` shows this arrangement.
 
 ## Authoring
 
@@ -35,9 +35,9 @@ All designs use the same unlit vertex-color material and neutral edge shading. T
 
 The browser loads one library for the house. Tests cover geometry reuse, mirrored instances, door collision and targeting, one library request, room reload and resource disposal. Open/closed Blender previews live in `generated/previews/assembly/`.
 
-The complete library is 400,872 bytes optimized / 75,075 bytes gzip, shared across the house. Regenerate exports with `scripts/rooms.py sync`. The wooden leaf/frame triangles and colors were checked against their previous exports; security-door and transom placement were checked against the previous hall source.
+The optimized library is shared across the house. Regenerate exports with `scripts/rooms.py sync`. The wooden leaf/frame triangles and colors were checked against their previous exports; security-door and transom placement were checked against the previous hall source.
 
-Validation after extraction: Blender geometry/placement checks and room previews pass; runtime tests cover all nine library meshes, existing door interactions and lifecycle. Static build, typecheck and gzip download checks pass. Nothing was committed.
+Validation after extraction: Blender geometry/placement checks and room previews pass; runtime tests cover all twelve library meshes, existing door interactions and lifecycle. Static build, typecheck and gzip download checks pass. Nothing was committed.
 
 `register_hinged` attaches the mesh-door leaf with its hinge, open rest transform, collision bounds and initially closed state. Both faces share the same source design.
 
@@ -46,3 +46,5 @@ The reinforced door has separate leaf/frame meshes and pixel artwork on both fac
 `Concealed_leaf` is a flat red unit panel with the original paint blotch sampled from `source/room 027.png`. It reuses the standard hinge, interaction, collision and resource lifecycle. The den entry selects it through `shell.entries[].asset` and supplies a descriptive `label`; ordinary entries retain `Standard_leaf`. Adding this mesh preserves the existing seven templates and their transforms.
 
 `Grating_leaf` is the reusable metal-bar leaf of the low porch opening. Its frame stays in the exterior model; the leaf uses the same shared hinge, collision and disposal rules as doors. The crawl action requires it fully open.
+
+`Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` are normalized unit leaves with original EGA pixels from backgrounds 004, 030 and 031 on both faces. They retain shallow physical thickness, use the same unlit material and hinge lifecycle, and are reused throughout the cellar extension. Closed placeholder leaves can select these assets too.

@@ -28,6 +28,7 @@ export function createHouseAssets(scene:THREE.Scene,callbacks:{changed:()=>void;
   return pending;
  }
  function selectSpace(space:string){
+  const water=loaded.get('pool')?.getObjectByName('Pool_water');if(water)water.visible=!view.poolState.drained;
   for(const [id,root] of loaded)root.visible=view.graph.spaceOf(id)===space;
   for(const edge of view.graph.portals.filter(p=>!p.continuous)){
    const door=view.portalDoor(edge),owner=door&&loaded.get(door.room.id);

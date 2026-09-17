@@ -122,7 +122,7 @@ def main():
         link='../'+r['file'].replace(' ','%20')
         md.append(f"| {r['id']} | [{r['name']}]({link}) | {r['width']}×{r['height']} | {r['scope']} | {r['cutaway_location']} | {r['match_confidence']} | {r['exit_cues']} |")
     md += ['', '## Alternate views and states','',
-        '- 006 and 002 depict the pool deck and drained pool interior. They belong to one spatial structure. The current walkthrough uses the filled-pool state from 006 with a walkable deck. Drained-basin exploration and ladder descent are deferred; water/draining gameplay is out of scope.',
+        '- 006 and 002 depict the pool deck and drained pool interior. They belong to one spatial structure. The walkthrough starts filled; E/tap toggles a drained exploration state and enables the same-room ladder into the basin. There are no draining puzzles, timers or swimming mechanics.',
         '- 033 and 047 are related distant-house compositions, not two separate locations to model.',
         '- 034 and 035 contain multiple telescope close-ups; 043 contains keypad close-ups.',
         '- 052 may show an altered pool/garage boundary. Keep it as a state reference until the location is verified; do not create an additional room.',

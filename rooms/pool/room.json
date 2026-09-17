@@ -2,7 +2,8 @@
   "id": "pool",
   "label": "Pool deck",
   "backgrounds": [
-    "006"
+    "006",
+    "002"
   ],
   "asset": "generated/models/rooms/pool_v1.glb",
   "source": "generated/blender/pool/pool_source_v1.blend",
@@ -37,7 +38,23 @@
       "y0": 2.3,
       "y1": 8.1,
       "water": -0.28,
-      "bottom": -2.8
+      "bottom": -2.8,
+      "ladder": {
+        "upper": {
+          "x": 11,
+          "y": 9.25,
+          "height": 0
+        },
+        "lower": {
+          "x": 11,
+          "y": 7.15,
+          "height": -2.8
+        },
+        "shaft": {
+          "x": 11,
+          "y": 7.64
+        }
+      }
     },
     "obstacles": [
       {
@@ -125,7 +142,8 @@
     "previewSuffix": "v1",
     "startupCutaway": false,
     "references": [
-      "source/room 006.png"
+      "source/room 006.png",
+      "source/room 002.png"
     ]
   }
 }

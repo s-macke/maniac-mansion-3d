@@ -49,3 +49,9 @@ The mummy bathroom (024) now connects beyond the exercise/mummy room. The photo 
 The [wire attic](rooms/wire_attic/README.md) is reached through the painted wall panel in the den/typewriter room and a short staircase. Open the panel with E or tap it; no puzzle items are needed.
 
 Two [cellar routes](docs/cellar.md) are open for review: the hall’s rear-right door leads down to room 008, and the grating behind the left porch bush leads to passage 029. Both begin as empty, separate shells.
+
+The cellar continues through empty dungeon, outer-laboratory, main-laboratory and meteor-chamber shells. See [cellar routes](docs/cellar.md) for the connection evidence and the simplified garage escape ladder.
+
+The [observatory shell](rooms/observatory/README.md) is circular, with an open dome slit and a seamless climb from the den ceiling hatch.
+
+The pool and its basin are one room. Use E/tap at the edge to drain, then the ladder to explore below; refill from the deck after climbing out.

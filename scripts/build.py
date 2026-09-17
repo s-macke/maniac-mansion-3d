@@ -25,7 +25,7 @@ def blend(script, *args):
 
 def doors(force=False):
     inputs = [ROOT / p for p in ['shared/doors/build.py', 'shared/doors/designs.py',
-              'scripts/blender_shared/geometry.py', 'scripts/finalize_baked_glb.py', 'source/room 011.png', 'source/room 027.png']]
+              'scripts/blender_shared/geometry.py', 'scripts/finalize_baked_glb.py', 'source/room 011.png', 'source/room 027.png', 'source/room 004.png', 'source/room 030.png', 'source/room 031.png']]
     outputs = [ROOT / p for p in ['generated/blender/shared/doors/standard_doors_v1.blend',
                                   'generated/models/doors/standard_doors_v1.glb']]
     if force or any(not p.exists() for p in outputs) or max(p.stat().st_mtime for p in inputs) > min(p.stat().st_mtime for p in outputs):

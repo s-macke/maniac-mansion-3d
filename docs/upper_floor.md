@@ -2,7 +2,7 @@
 
 The route continues from the security corridor's existing stairs into **012 windowed stair hall**, then up its left staircase into **038 upper corridor**. The four rear doors now run left to right: purple/radio bedroom with ladder (021), red heart bedroom with ladder (019), green bedroom (026), and exercise/mummy room (025). This order follows the user’s confirmed background identification. The corridor's right door reaches the typewriter room (027).
 
-These are independent room spaces with empty interiors, shared doors and soft baked shading. The stair hall retains three dark framed windows and a usable left stair; bedroom furniture, wallpaper patterns, plants, pictures and decorative fixtures are deferred. All interactive doors start closed. With the two [ladder destination shells](ladders.md), the house has 29 room GLBs plus shared door and ladder kits.
+These are independent room spaces with empty interiors, shared doors and soft baked shading. The stair hall retains three dark framed windows and a usable left stair; bedroom furniture, wallpaper patterns, plants, pictures and decorative fixtures are deferred. All interactive doors start closed. With the two [ladder destination shells](ladders.md), the house has 34 room GLBs plus shared door and ladder kits.
 
 ## Interpretation and unresolved exits
 

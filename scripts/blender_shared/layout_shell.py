@@ -67,7 +67,7 @@ def build(path):
   if e.get('frame'):register_static(c,[('Standard_frame',base@Matrix.Diagonal(Vector((w,1,h,1))),cols['Doors'],key+'_frame')])
   closed=base@Matrix.Translation(Vector((0,-.18,h/2)))@Matrix.Diagonal(Vector((-(w-.035),1,h-.10,1)))
   if e.get('owner'):register_hinged(c,e.get('asset','Standard_leaf'),closed,base@Vector((-w/2,-.18,0)),-math.pi/2,cols['Doors'],port=key,node='Door_'+key,label=e.get('label',key.replace('_',' ').capitalize()),instance_id=key+'_leaf')
-  elif e.get('leaf'):register_static(c,[('Standard_leaf',closed,cols['Doors'],key+'_leaf')])
+  elif e.get('leaf'):register_static(c,[(e.get('asset','Standard_leaf'),closed,cols['Doors'],key+'_leaf')])
  from .ladder_assets import register as register_ladders
  register_ladders(c,cols['Architecture'])
  for level,holes in [(0,g.get('floorHoles',[])),(H,g.get('ceilingHoles',[]))]:

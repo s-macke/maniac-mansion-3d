@@ -292,6 +292,56 @@
         -1.2
       ],
       "yaw": 0
+    },
+    {
+      "id": "dungeon",
+      "definition": "rooms/dungeon/room.json",
+      "position": [
+        404,
+        0,
+        -3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "outer_lab",
+      "definition": "rooms/outer_lab/room.json",
+      "position": [
+        436,
+        0,
+        -3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "main_lab",
+      "definition": "rooms/main_lab/room.json",
+      "position": [
+        468,
+        0,
+        -3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "meteor_chamber",
+      "definition": "rooms/meteor_chamber/room.json",
+      "position": [
+        500,
+        0,
+        -3.36
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "observatory",
+      "definition": "rooms/observatory/room.json",
+      "position": [
+        532,
+        0,
+        13.44
+      ],
+      "yaw": 0
     }
   ],
   "connections": [
@@ -574,6 +624,66 @@
         "instance": "under_house",
         "port": "grating"
       }
+    },
+    {
+      "a": {
+        "instance": "cellar",
+        "port": "dungeon_door"
+      },
+      "b": {
+        "instance": "dungeon",
+        "port": "cellar_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "dungeon",
+        "port": "lab_door"
+      },
+      "b": {
+        "instance": "outer_lab",
+        "port": "dungeon_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "outer_lab",
+        "port": "main_lab_door"
+      },
+      "b": {
+        "instance": "main_lab",
+        "port": "outer_lab_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "main_lab",
+        "port": "meteor_door"
+      },
+      "b": {
+        "instance": "meteor_chamber",
+        "port": "lab_door"
+      }
+    },
+    {
+      "a": {
+        "instance": "typewriter_room",
+        "port": "observatory_hatch"
+      },
+      "b": {
+        "instance": "observatory",
+        "port": "den_hatch"
+      }
+    },
+    {
+      "a": {
+        "instance": "meteor_chamber",
+        "port": "garage_hatch"
+      },
+      "b": {
+        "instance": "garage",
+        "port": "cellar_hatch"
+      }
     }
   ],
   "spaces": [
@@ -650,6 +760,70 @@
         },
         "yaw": 1.5707963267948966,
         "port": "ladder_hatch"
+      }
+    },
+    {
+      "id": "observatory_access",
+      "label": "Observatory",
+      "lower": {
+        "room": "typewriter_room",
+        "port": "observatory_hatch",
+        "landing": {
+          "x": 3.1,
+          "y": 3.55,
+          "height": 0
+        },
+        "shaft": {
+          "x": 3.1,
+          "y": 4.07
+        },
+        "yaw": 0
+      },
+      "upper": {
+        "room": "observatory",
+        "port": "den_hatch",
+        "landing": {
+          "x": -2.5,
+          "y": 2.6,
+          "height": 0
+        },
+        "shaft": {
+          "x": -2.5,
+          "y": 3.47
+        },
+        "yaw": 0
+      }
+    },
+    {
+      "id": "garage_escape",
+      "label": "Garage escape",
+      "lower": {
+        "room": "meteor_chamber",
+        "port": "garage_hatch",
+        "landing": {
+          "x": -3.6,
+          "y": 3.5,
+          "height": 0
+        },
+        "shaft": {
+          "x": -3.6,
+          "y": 4.07
+        },
+        "yaw": 0
+      },
+      "upper": {
+        "room": "garage",
+        "port": "cellar_hatch",
+        "landing": {
+          "x": 12,
+          "y": 2.9,
+          "height": 0
+        },
+        "shaft": {
+          "x": 12,
+          "y": 3.77
+        },
+        "yaw": 0
       }
     }
   ],

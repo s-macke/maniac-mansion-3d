@@ -10,7 +10,7 @@ test('outdoor path connects pool to forecourt and covered garage in both directi
  const at=(x:number,y:number)=>toWorld({x,y,height:0},garage),deck=toWorld({x:18.5,y:5.2,height:0},pool);
  expect(v.zoneAt(v.START)).toBe('Garage forecourt');expect(v.navigation.canStand(v.START,0)).toBe(true);
  let pos=deck;
- for(const q of [at(1.5,4),at(6,4),at(12,4),at(6,2.2),at(6,5.8),at(2,4),deck]){
+ for(const q of [at(1.5,4),at(6,4),at(10.8,4),at(6,2.2),at(6,5.8),at(2,4),deck]){
   pos=v.moveWalker(pos,q.x-pos.x,q.y-pos.y);expect(Math.hypot(pos.x-q.x,pos.y-q.y)).toBeLessThan(.03);expect(pos.height).toBe(0);
  }
  expect(v.zoneAt(at(7,4))).toBe('Garage');

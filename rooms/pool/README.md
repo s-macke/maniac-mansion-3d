@@ -1,12 +1,16 @@
-# Pool deck — outdoor unit v1
+# Pool deck and basin — one outdoor unit
 
-Room 006 is an independent outdoor builder. It recreates the stone deck, turquoise coping, blue filled pool, metal ladder, pink floating chair silhouette, teal/yellow fence and sparse night backdrop using the original EGA palette and baked lighting. No indoor shell template is used.
+Backgrounds 006 (filled deck) and 002 (drained basin) share one independent outdoor builder. It recreates the stone deck, turquoise coping, blue filled pool, metal ladder, pink floating chair silhouette, teal/yellow fence and sparse night backdrop using the original EGA palette and baked lighting. No indoor shell template is used.
 
 The provisional deck is 20 × 11 m; the pool opening is 12.2 × 5.8 m. The deck stays at the pantry floor elevation for continuous exploration. The near curb and unseen dimensions are inferred. The far fence opening now connects to the garage forecourt; the around-house connection is deferred.
 
 The pantry owns the shared blue mesh door. Its leaf now separates from the fixed frame, has detail on both faces and starts closed. Open it with E / click / touch to step onto the deck. Pool placement is `(-6.37,44.1,0)`, yaw `pi`; its `pantry_door` meets the pantry rear port at world `(-6.37,40.9,0)`.
 
-You can walk around the deck. Water, ladder and the fenced perimeter remain solid boundaries except at the garage path opening. This pass follows the filled-pool state in room 006; the drained basin shown in room 002 and ladder descent are deferred. There is no draining or swimming gameplay.
+The pool starts filled. Face it from a nearby deck edge and press **E**, click or tap **Drain pool**. Water, glints and the floating chair disappear together. At the far-rim ladder, use **Climb into pool**; the same action below becomes **Climb out of pool**. After climbing out, step away from the ladder along the rim and use **Refill pool**. Refill is unavailable in the basin or during a climb. There are no draining puzzles, timers or swimming mechanics.
+
+The basin is 2.8 m below the deck. It is part of this same GLB and room instance, with no separate portal or duplicated pool. Navigation uses the selected floor height and runtime-local drained state; ordinary walking cannot fall over the rim. The original ladder geometry now reaches the bottom. Reactor equipment, pipes and depth markings from 002 remain deferred.
+
+`web/lib/house/pool.ts` owns the toggle and guided same-room ladder motion. `createPoolNavigation` supplies deck/basin collision without shared global state. The bake keeps water and chair meshes in the named `Pool_water` group; the asset loader updates its visibility even after unloading/reloading the room. Wet-only props are excluded from baked shadow queries so they leave no fixed shadow in the empty basin. Leaving the area or resetting position preserves the selected state; reloading the page starts filled.
 
 `build.py` / `room.json` own the geometry, dimensions, ports and lighting. Outputs are `generated/blender/pool/pool_source_v1.blend`, `generated/blender/pool/pool_v1.blend`, `generated/previews/rooms/pool/` and `generated/models/rooms/pool_v1.glb` with compact/gzip companions.
 
@@ -18,8 +22,10 @@ python3 scripts/build.py check
 
 Start locally at http://127.0.0.1:5174/?room=pool or walk through the pantry. No hosting or commits are part of this change.
 
-The optimized pool GLB is 598,004 bytes / 169,186 bytes gzip. Sixteen focused navigation, door and shared-library checks pass, including a complete deck circuit, blocked water/fences and both sides of the pantry threshold. Room and assembled doorway previews were inspected in Blender; no physical-mobile performance test was run. `scripts/preview_pool.py` reproduces the assembled open/closed views.
+`tests/pool-basin.spec.ts` covers state isolation, refill restrictions, continuous climbing, basin support and separate wet geometry. `tests/pool-basin-browser.spec.ts` exercises draining, basin walking, ascent and refilling in Chrome. `scripts/preview_pool.py` reproduces the assembled doorway views.
 
 ## Source and generated files
 
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/pool/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/pool/`; derived door metadata and shading reports in `generated/reports/rooms/pool/`. Builders never write derived data back into `room.json`.
+
+Validated: Blender rebuild, production web build, TypeScript and catalog checks passed. Eleven focused pool/ladder tests passed, including the complete Chrome drain → descend → walk → ascend → refill sequence. Twelve neighboring-route and portal checks also passed; the old garage walking test was adjusted to stop before its newly added hatch. Drained, basin and refilled browser views were inspected. Physical-mobile performance was not tested.

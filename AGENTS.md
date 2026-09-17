@@ -33,7 +33,7 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Kitchen](rooms/kitchen/README.md) | Empty shell, facade clearance and dining-door ownership |
 | [Dining room](rooms/dining_room/README.md) | Empty shell, provisional proportions and pantry boundary |
 | [Pantry](rooms/pantry/README.md) | Gray shell and shared doors to dining and pool |
-| [Pool deck](rooms/pool/README.md) | Outdoor deck, filled pool and pantry connection |
+| [Pool deck](rooms/pool/README.md) | Outdoor deck, drain/refill state, basin ladder and pantry connection |
 | [Garage and forecourt](rooms/garage/README.md) | Outdoor approach and empty covered garage bay |
 | [First-floor layout](docs/first_floor.md) | Library, five upstairs shells, door ownership and deferred stairs |
 | [Upper-floor layout](docs/upper_floor.md) | Windowed stair hall, upper corridor, bedroom shells and provisional connections |
@@ -41,7 +41,8 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Photo room](rooms/photo_room/README.md) | Darkroom shell beside the windowed-hall stairs |
 | [Hidden attic stairs](rooms/attic_stairs/README.md) | Stair passage behind the den’s painted wall panel |
 | [Wire attic](rooms/wire_attic/README.md) | Empty attic shell and den connection |
-| [Cellar routes](docs/cellar.md) | Hall cellar stairs, low bush grating and guided crawl portals |
+| [Observatory](rooms/observatory/README.md) | Circular dome, open telescope slit and den hatch |
+| [Cellar routes](docs/cellar.md) | Hall cellar stairs, dungeon/laboratory shells, low bush grating and crawl portals |
 | [Ladder portals](docs/ladders.md) | Shared ladder kit, hatch portals, controls and verified routes |
 | [Shared doors](shared/doors/README.md) | Reusable leaf/frame authoring, mirroring and runtime lifecycle |
 
