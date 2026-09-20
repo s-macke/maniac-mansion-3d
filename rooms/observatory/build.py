@@ -1,4 +1,4 @@
-"""Circular EGA observatory shell with a genuinely open dome slit and floor hatch."""
+"""Furnished circular EGA observatory with an open dome slit and floor hatch."""
 from pathlib import Path
 import sys,math,bpy
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'scripts'))
@@ -64,9 +64,12 @@ for angle in [g['slitAngle']-g['slitHalfAngle'],g['slitAngle']+g['slitHalfAngle'
 for x in [hole['x0'],hole['x1']]:geo.box('Hatch_rim',(x,(hole['y0']+hole['y1'])/2,.025),(.065,hole['y1']-hole['y0']+.065,.05),'cyan')
 for y in [hole['y0'],hole['y1']]:geo.box('Hatch_rim',((hole['x0']+hole['x1'])/2,y,.025),(hole['x1']-hole['x0'],.065,.05),'cyan')
 c['geometry']['sharedAssets']=[];c['geometry']['doors']=[];register(c,cols['Architecture'])
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from interior import furnish
+furnish(geo,c)
 reference(ROOT,c,cols,'028');geo.active='Cameras'
-geo.camera('01_Reference',(0,-3.2,2.8),(0,C,2.3),lens=22)
+geo.camera('01_Reference',(-.2,1.10,2.25),(0,5.9,2.0),lens=15)
 geo.camera('02_Inside',(-.6,1.8,1.62),(2,6.5,2.6),lens=20)
-geo.camera('03_Reverse',(1.5,6.2,1.62),(-2.5,3.7,.3),lens=22)
-scene.camera=bpy.data.objects['02_Inside'];scene['scope']='Circular shell, open telescope slit and den hatch; equipment deferred.'
+geo.camera('03_Reverse',(2.9,3.3,1.62),(-2.5,3.7,.3),lens=22)
+scene.camera=bpy.data.objects['02_Inside'];scene['scope']='Furnished circular observatory; real dome slit and den hatch remain open.'
 save_generated(c);bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/c['source']));print('OBSERVATORY_COMPLETE',flush=True)

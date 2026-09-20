@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {createHouseRuntime} from '../lib/house/runtime';
 import {toWorld} from '../lib/house/placement';
 
-for(const id of ['library','kitchen','dining_room','garage','pantry'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
+for(const id of ['library','kitchen','dining_room','garage','pantry','plant_room','music_room','security_hall','medical_room','arcade','windowed_hall','photo_room','upper_corridor','radio_bedroom','heart_bedroom','green_bedroom','mummy_room','mummy_bathroom','typewriter_room','safe_attic','tentacle_room','wire_attic','observatory'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
  await page.goto('/?room='+id);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
@@ -25,6 +25,24 @@ for(const id of ['library','kitchen','dining_room','garage','pantry'])test(id+' 
  if(id==='dining_room'){await go(-8.7,1);await go(-3.5,1);await aim(0,3.5);}
  if(id==='garage'){await go(4.8,4);await aim(8.45,4.6);await page.screenshot({path:'test-results/garage-car.png'});await go(4.8,2.2);await go(12,2.2);await go(12,2.9);await aim(12,4.22);}
  if(id==='pantry'){await go(0,2.9);await aim(1.4,4.9);}
+ if(id==='plant_room'){await go(1.8,2.2);await aim(0,3.6);}
+ if(id==='music_room'){await go(1.9,1.4);await aim(-1,2.8);}
+ if(id==='security_hall'){await go(0,3.7);await aim(0,5.35);}
+ if(id==='medical_room'){await go(1.4,1.4);await go(1.4,3.4);await aim(-1,4.8);}
+ if(id==='arcade'){await go(0,3.4);await aim(0,4.9);}
+ if(id==='windowed_hall'){await go(-1.6,2.3);await aim(2,5.9);}
+ if(id==='photo_room'){await go(0,3);await aim(-2.2,4.15);}
+ if(id==='upper_corridor'){await go(-4.5,2.5);await aim(0,4.7);}
+ if(id==='radio_bedroom'){await go(0,2.3);await aim(.3,4.6);}
+ if(id==='heart_bedroom'){await go(0,2.2);await aim(-1,4.6);}
+ if(id==='green_bedroom'){await go(1.5,2.3);await aim(-1.8,4.4);}
+ if(id==='mummy_room'){await go(1.5,2.5);await aim(-1,4.5);}
+ if(id==='mummy_bathroom'){await go(-.7,2.5);await aim(1.6,4.4);}
+ if(id==='typewriter_room'){await go(0,2.3);await aim(-1.2,4.6);}
+ if(id==='safe_attic'){await go(1.5,2.6);await aim(3.95,1.85);}
+ if(id==='tentacle_room'){await go(0,2.5);await aim(.5,4.9);}
+ if(id==='wire_attic'){await go(0,2.7);await aim(1,4.9);}
+ if(id==='observatory'){await go(-.8,3.4);await aim(1.55,6.14);}
  expect((await state()).room).toBe(id);expect(errors).toEqual([]);
  await page.screenshot({path:`test-results/${id}-furnished.png`});
 });

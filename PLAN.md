@@ -231,3 +231,19 @@ The complete layout is retained while these three shells receive their artwork-b
 ## Furnished garage and pantry
 
 Backgrounds 016 and 036 now supply the garage car and storage rack, open shutter fixtures, and pantry shelves/supplies with cracked plaster and exposed brick. Car, appliances and supplies remain static exploration scenery. Furniture footprints route walking around the car to the existing cellar hatch and leave the pantry dining/pool doors clear. Shared doors, floor heights, independent spaces and the continuous pool/garage group are unchanged. All geometry and shading rebuild through the existing room commands; generated files remain ignored.
+
+## Furnished floor above the entrance
+
+The complete five-room landing group is furnished from its original backgrounds: art studio 014 (formerly mislabelled Plant room; stable `plant_room` ID), music room 017, security corridor 013, medical room 022 and arcade 018. Original canvas, posters, portraits, chalkboard and cabinet signs use source pixel geometry; major furniture and display props are solid 3D forms. Machines, instruments, skeleton and statue remain static scenery. Furniture collision preserves door approaches and the corridor stair route. This group is at 3.36 m, called the first floor in the existing floor-height documentation.
+
+## Furnished windowed-hall level
+
+The next physical level above the landing rooms, at 6.72 m, now has a furnished windowed stair hall (012) and photo darkroom (023). Original wallpaper, window lattice, columns, plant, balustrade and picture guide the hall; the darkroom keeps its black palette with a red bench, enlarger, safelight, trays and drawer cabinet. Furniture remains static and its collision footprints leave both stair flights and the shared photo-room doorway usable. The bedroom level at 10.08 m remains the next furnishing group.
+
+### Furnished bedroom level
+
+Completed the upper corridor, radio/heart/green bedrooms, exercise/mummy room, mummy bathroom and typewriter den from backgrounds 038, 021, 019, 026, 025, 024 and 027. Preserve original artwork, browser baked shading and shared doors. Existing ladders, hidden passage and room transforms remain in place; furniture footprints leave their routes clear.
+
+### Furnished top floor
+
+Furnished the safe attic (009), Green Tentacle’s music room (020), wire attic (015) and observatory (028), preserving existing ladder/door routes and the real dome slit. The inferred hidden stairs remain unchanged. See `docs/top_floor.md` for scope, original-art decisions and rebuild commands.

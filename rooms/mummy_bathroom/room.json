@@ -32,7 +32,27 @@
     "halfWidth": 4.3,
     "depth": 5.1,
     "height": 3.12,
-    "wallThickness": 0.18
+    "wallThickness": 0.18,
+    "obstacles": [
+      {
+        "x0": -3.29,
+        "x1": -1.86,
+        "y0": 3.94,
+        "y1": 4.83
+      },
+      {
+        "x0": -3.96,
+        "x1": -3.0,
+        "y0": 2.0,
+        "y1": 3.3
+      },
+      {
+        "x0": 0.76,
+        "x1": 3.83,
+        "y0": 3.18,
+        "y1": 4.8
+      }
+    ]
   },
   "ports": [
     {
@@ -53,7 +73,7 @@
     }
   ],
   "shell": {
-    "wall": "aqua",
+    "wall": "cyan",
     "floor": "cyan",
     "trim": "cyan",
     "entries": [

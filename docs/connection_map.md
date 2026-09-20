@@ -25,7 +25,7 @@ These are illustration bands, **not yet measured building storeys**. Overlapping
 | Directly beneath porch | 029 pipe corridor |
 | Ground / garden | 001 porch, 010 entrance, 003 living room, 005 library; 006 pool and 016 garage to right |
 | Above ground rooms | 007 kitchen, 037 dining room, 036 pantry |
-| Left wing / stair area | 014 plant room, 011 landing, 017 music room |
+| Left wing / stair area | 014 art studio, 011 landing, 017 music room |
 | Lower tower | 013 security hall; 022 medical room and 018 arcade above it |
 | Middle tower | 012 windowed stair hall; projecting room tentatively 009 |
 | Upper corridor | 038 four-door hall, 027 typewriter room at right |
@@ -58,7 +58,7 @@ flowchart TD
     R051 --- R030["030 Main laboratory"]
     R030 --- R031["031 Meteor chamber"]
     R031 ---|simplified escape ladder| R016
-    R011 -.-> R014["014 Plant room"]
+    R011 -.-> R014["014 Art studio"]
     R011 -.-> R017["017 Music room"]
     R011 -.-> R013["013 Security hall"]
     R013 -.-> R012["012 Windowed stair hall"]
@@ -96,7 +96,7 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 004 ↔ 051 | Built interpretation | Dungeon laboratory door reaches the outer laboratory / ready-room shell; background assignment is inferred from artwork. |
 | 030 ↔ 031 | Built interpretation | Main laboratory left gray door meets meteor chamber right gray door. |
 | 030 ↔ 051 | Built interpretation | Matching teal doors connect the main and outer laboratory shells. |
-| 011 ↔ 014 | Suggested | Plant room sits left of landing; room has a single door. |
+| 011 ↔ 014 | Suggested | Art studio sits left of landing; room has a single door. |
 | 011 ↔ 017 | Suggested | Music room sits right of landing; room has a single door. |
 | 011 ↔ 013 | Suggested | Candidate onward route into tower/security corridor; secure-door cues support it, but continuous geometry is unclear. |
 | 013 ↔ 022 | Suggested | Medical room lies above security corridor; rear door could meet that circulation. |
@@ -115,8 +115,8 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 021 ↔ 020 | Confirmed route | Original hint book pages 37–38: Fred’s bedroom ladder reaches Green Tentacle’s speaker room. Implemented via a hatch portal. |
 | 019 ↔ 009 | Confirmed route; inferred background match | Hint book page 43: Edna’s ladder reaches the safe attic. Background 009 matches its boarded wall/window/portrait; cutaway placement remains tentative. Implemented via a hatch portal. |
 | 026 ↔ 020 | Rejected inference | Vertical adjacency does not establish a route; the speaker-room ladder comes from 021. |
-| 014 ↔ 028 | Rejected inference | The observatory is reached from the den, not the downstairs plant room. |
-| 027 ↔ 028 | Hint-book supported; built | Ceiling opening above the den plant; the shell stage substitutes a shared ladder for climbing the grown plant. |
+| 014 ↔ 028 | Rejected inference | The observatory is reached from the den, not the downstairs art studio. |
+| 027 ↔ 028 | Hint-book supported; built | Ceiling opening above the den plant; the walkthrough substitutes a shared ladder for climbing the grown plant. |
 | 001 ↔ 029 | User-confirmed; built | Grating behind the left porch bush, via a low crawl portal. |
 | 029 ↔ 008 | Unresolved | No connection between these underground spaces is assumed. |
 | 031 ↔ 016 | User-requested simplification; built | Direct ladder from the meteor chamber to a garage floor hatch replaces the original exit door and long passage. |
@@ -163,7 +163,7 @@ Pantry `pool_door` local `(-0.8,5.55,0)` meets pool `pantry_door` local `(0,3.2,
 
 The [garage and forecourt](../rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The [upper-floor shells](upper_floor.md) now implement the provisional 013 ↔ 012 ↔ 038 route, with branches to 026, 019, 021, 025 and 027. Bedroom slots are confirmed left to right as 021, 019, 026 and 025, as documented in the upper-floor guide. The photo room (023) and mummy bathroom (024) are connected; the library spiral staircase remains unresolved.
+The [library and complete furnished landing-floor layout](first_floor.md) are connected: art studio, music room, security corridor, medical room and arcade. All connecting doors start closed. The [furnished upper floors](upper_floor.md) now implement the provisional 013 ↔ 012 ↔ 038 route, with branches to 026, 019, 021, 025 and 027. Bedroom slots are confirmed left to right as 021, 019, 026 and 025, as documented in the upper-floor guide. The photo room (023) and mummy bathroom (024) are connected; the library spiral staircase remains unresolved.
 
 ## Verified correction: attic access
 

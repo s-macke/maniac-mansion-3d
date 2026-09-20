@@ -1,7 +1,9 @@
-# Mummy room — room 025
+# Exercise / mummy room — room 025
 
-Empty shell based on [the original background](../../source/room%20025.png), with shared doors and soft baked shading. Furniture and decorative objects are deferred. See [upper-floor layout](../../docs/upper_floor.md) for provisional connections and unresolved exits.
+Furnished from [the original background](../../source/room%20025.png), preserving the EGA palette and soft baked shading. Static blue Egyptian sarcophagus, strength machine with weights and pulleys, low cabinet with original contents, calendar and mummy wall diagram. The central aisle connects both side doors.
 
-`build.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room mummy_room`. Generated scenes, models and previews live under `generated/`; the browser starts here with `?room=mummy_room`.
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
 
-The right-hand `bathroom_door` is now an interactive shared door to the [mummy bathroom](../mummy_bathroom/README.md), closed initially. The corridor places this room fourth from the left.
+Rebuild with `./docker-build.sh room mummy_room`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=mummy_room`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
+
+The optimized room model is 297,092 bytes (76,798 bytes with gzip); door and ladder kits are shared separately.

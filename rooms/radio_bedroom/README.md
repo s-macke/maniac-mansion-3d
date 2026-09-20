@@ -1,7 +1,11 @@
 # Radio bedroom — room 021
 
-Empty shell based on [the original background](../../source/room%20021.png), with shared doors and soft baked shading. Furniture and decorative objects are deferred. See [upper-floor layout](../../docs/upper_floor.md) for provisional connections and unresolved exits.
+Furnished from [the original background](../../source/room%20021.png), preserving the EGA palette and soft baked shading. Blue bed with rounded wooden ends, radio console with tuning scales, coils, loop aerial and microphones, hanging light, original Fred portrait and wanted poster. The light-blue floor follows the source. The left ladder approach stays clear.
 
-`build.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room radio_bedroom`. Generated scenes, models and previews live under `generated/`; the browser starts here with `?room=radio_bedroom`.
+The existing shared ladder and ceiling hatch retain their continuous portal connection to Green Tentacle’s room. Furniture stays outside the approach, shaft and landing.
 
-The shared ladder now connects through a seamless hatch portal to Green Tentacle’s room (020). See [ladder controls and authoring](../../docs/ladders.md).
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
+
+Rebuild with `./docker-build.sh room radio_bedroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=radio_bedroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
+
+The optimized room model is 314,240 bytes (85,874 bytes with gzip); door and ladder kits are shared separately.

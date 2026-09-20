@@ -1,7 +1,9 @@
 # Mummy bathroom — room 024
 
-Empty shell based on [the original background](../../source/room%20024.png), preserving its EGA palette. Furnishings and fixtures are deferred. The entrance connects to `mummy_room` through a seamless doorway portal, with one shared interactive door owned by that room and closed initially.
+Furnished from [the original background](../../source/room%20024.png), preserving the EGA palette and soft baked shading. Tiled walls and floor, high toilet cistern with pull chain, bowl, wall basin with exposed trap and cracked mirror, an open tub with shower and folded curtain, an opaque side window, and original wall graffiti. The rear entry is the only room connection; there is no attic route.
 
-The rear bathroom doorway follows the supplied image. There is no attic connection.
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
 
-Dimensions and independent-space placement are provisional. Rebuild with `./docker-build.sh room mummy_bathroom`; generated scenes and models remain under `generated/`. Review locally using `?room=mummy_bathroom`. See [upper-floor layout](../../docs/upper_floor.md).
+Rebuild with `./docker-build.sh room mummy_bathroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=mummy_bathroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
+
+The optimized room model is 408,252 bytes (104,763 bytes with gzip); door and ladder kits are shared separately.

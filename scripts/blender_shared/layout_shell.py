@@ -5,7 +5,7 @@ from mathutils import Matrix,Vector
 from .shell import setup,reference
 from room_config import load_config,save_generated
 from .door_assets import register_static,register_hinged,KIT
-PALETTE={'black':(0,0,0),'red':(168,0,0),'brown':(168,84,0),'yellow':(252,252,84),'blue':(0,0,168),'lightblue':(84,84,252),'green':(0,168,0),'cyan':(0,168,168),'aqua':(84,252,252),'purple':(168,0,168),'pink':(252,84,252),'lightred':(252,84,84),'lime':(84,252,84),'gray':(168,168,168),'white':(252,252,252)}
+PALETTE={'black':(0,0,0),'red':(168,0,0),'brown':(168,84,0),'yellow':(252,252,84),'blue':(0,0,168),'lightblue':(84,84,252),'green':(0,168,0),'cyan':(0,168,168),'aqua':(84,252,252),'purple':(168,0,168),'pink':(252,84,252),'lightred':(252,84,84),'lime':(84,252,84),'gray':(168,168,168),'white':(252,252,252),'darkgray':(84,84,84)}
 
 def build(path, furnish=None):
  root=Path(__file__).resolve().parents[2];c=load_config(path,prepare=True);g=c['geometry'];style=c['shell'];W=g['halfWidth'];D=g['depth'];H=g['height'];T=g['wallThickness']

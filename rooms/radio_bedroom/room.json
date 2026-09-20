@@ -53,6 +53,20 @@
         "y1": 4.8,
         "top": 3.36
       }
+    ],
+    "obstacles": [
+      {
+        "x0": -2.62,
+        "x1": 0.32,
+        "y0": 3.17,
+        "y1": 4.63
+      },
+      {
+        "x0": 0.72,
+        "x1": 3.18,
+        "y0": 3.72,
+        "y1": 4.75
+      }
     ]
   },
   "ports": [
@@ -93,7 +107,7 @@
   ],
   "shell": {
     "wall": "purple",
-    "floor": "brown",
+    "floor": "lightblue",
     "trim": "brown",
     "entries": [
       {

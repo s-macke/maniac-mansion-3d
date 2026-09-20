@@ -4,6 +4,24 @@ import {toWorld} from '../lib/house/placement';
 
 test('furniture blocks walking while each furnished room retains a continuous circulation route',()=>{
  const cases=[
+  {id:'safe_attic',blocked:[[3.72,1.85]],route:[[0,2],[1.9,2],[2,3.9],[1.6,3.9],[1.6,2],[-2.5,2],[-2.5,4.3]]},
+  {id:'tentacle_room',blocked:[[-1.9,4.61],[2.95,4.61],[.46,3.95]],route:[[0,2],[-2,2],[-2,3.9],[-2,2],[2.9,2],[2.9,3.6]]},
+  {id:'wire_attic',blocked:[],route:[[0,2],[0,.5],[0,2],[-3.2,2],[-3.2,4.3],[3.2,4.3],[3.2,2],[0,2]]},
+  {id:'observatory',blocked:[[1.55,6.14],[-3.1,5.62]],route:[[0,2.1],[-2.5,2.6],[-1.4,2.6],[-1.4,5.1],[-.5,6.6],[-.5,4.3],[2.6,4.3],[2.6,3]]},
+  {id:'upper_corridor',blocked:[[-3.6,1.1],[0,1.1],[3.6,1.1]],route:[[0,2],[-7.5,2.4],[7.5,2.4],[5.4,2.4],[5.4,4],[-5.4,4],[-5.4,2.4]]},
+  {id:'radio_bedroom',blocked:[[-1.15,3.9],[1.95,4.23]],route:[[0,2],[3.4,2.6],[0,2],[-3.25,2],[-3.25,4.25]]},
+  {id:'heart_bedroom',blocked:[[-2.15,4.18],[1.15,3.82],[-3.45,1.18]],route:[[0,2],[-3.4,2.6],[0,2],[3.25,2],[3.25,4.25]]},
+  {id:'green_bedroom',blocked:[[-2.1,3.78],[.15,4.36],[1.08,1]],route:[[0,2],[1.5,2.4],[1.5,4.35],[1.5,2.4],[-2.8,2.2]]},
+  {id:'mummy_room',blocked:[[-3.73,4.32],[-1.94,4.13],[.03,4.14]],route:[[0,2],[-4.1,2.6],[4.1,2.6],[0,2]]},
+  {id:'mummy_bathroom',blocked:[[-2.58,4.38],[-3.48,2.82],[2.29,3.99]],route:[[0,2],[-.7,3.3],[-.7,4.3],[-.7,3.3],[0,2],[2.6,2.3]]},
+  {id:'typewriter_room',blocked:[[-1.8,4.39],[.56,4.14],[-3.59,4.05],[2.22,4.54]],route:[[0,2],[-3.6,2.6],[3.4,2.6],[3.1,3.55],[3.1,4.07]]},
+  {id:'windowed_hall',blocked:[[.85,3.05],[-4.04,4.63],[4.38,4.75]],route:[[0,2],[0,4.1],[-2.7,4.1],[-2.7,5],[-2.7,2],[0,.65],[-5.45,.65]]},
+  {id:'photo_room',blocked:[[-2.38,4.1],[1.42,4.47]],route:[[0,2],[2.9,2.6],[2.9,3.2],[0,3],[-3.1,2.8],[0,2]]},
+  {id:'plant_room',blocked:[[0,3.6],[1.96,4.47],[-2.05,2.7]],route:[[0,2.5],[1.8,2.2],[1.8,1],[-2.4,1],[-2.5,1.6]]},
+  {id:'music_room',blocked:[[-1.3,2.7],[.65,3.12],[2.54,3.12]],route:[[-3.2,2.7],[-3.2,.55],[0,.55],[0,1.4],[2.3,1.4]]},
+  {id:'medical_room',blocked:[[0,2.89],[-1.5,4.8],[2.4,4.86]],route:[[0,1.45],[1.4,1.45],[1.4,3.6],[0,3.7],[-1.55,3.7],[-1.55,1.4],[0,1.45]]},
+  {id:'arcade',blocked:[[0,4.8],[-1.88,2.27]],route:[[0,2.5],[1.8,2.5],[1.8,3.65],[-2,3.65],[0,3.65],[0,1.3]]},
+  {id:'security_hall',blocked:[[-5.45,3.78]],route:[[0,2.5],[-3,2.5],[-3,4.5],[-3,2.5],[3.2,2.5],[3.2,4.5],[3.2,2.5],[0,2.5]]},
   {id:'garage',blocked:[[8.45,4.6],[7.9,7]],route:[[2,4],[4.8,4],[4.8,2.2],[12,2.2],[12,2.9],[12,2.2],[4.8,2.2],[4.8,4],[2,4]]},
   {id:'pantry',blocked:[[1.4,4.9]],route:[[-1.6,2.9],[1.4,2.9],[1.4,4.1],[-.8,4.1],[-.8,3],[-1.6,2.9]]},
   {id:'library',blocked:[[0,3.3],[4.85,2.1],[0,4.9]],route:[[-4.5,2.8],[-3,1],[2.5,1],[2.5,3.5],[2.5,1],[-3,1],[-4.5,2.8]]},
@@ -13,8 +31,8 @@ test('furniture blocks walking while each furnished room retains a continuous ci
  for(const c of cases){
   const v=createHouseRuntime(c.id),room=v.rooms.find(r=>r.id===c.id)!;
   const at=(a:number[])=>toWorld({x:a[0],y:a[1],height:0},room);
-  expect(v.navigation.canStand(v.START,0),c.id+' spawn').toBe(true);
-  for(const q of c.blocked)expect(v.navigation.canStand(at(q),0),c.id+' furniture '+q).toBe(false);
+  expect(v.navigation.canStand(v.START,v.START.height),c.id+' spawn').toBe(true);
+  for(const q of c.blocked)expect(v.navigation.canStand(at(q),room.position[2]),c.id+' furniture '+q).toBe(false);
   let p=at(c.route[0]);
   for(const q of c.route.slice(1).map(at)){
    p=v.moveWalker(p,q.x-p.x,q.y-p.y);

@@ -35,13 +35,14 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Pantry](rooms/pantry/README.md) | Stocked shelf, worn plaster and shared doors to dining and pool |
 | [Pool deck](rooms/pool/README.md) | Outdoor deck, drain/refill state, basin ladder and pantry connection |
 | [Garage and forecourt](rooms/garage/README.md) | Outdoor approach, parked EGA car, covered bay and cellar hatch |
-| [First-floor layout](docs/first_floor.md) | Library, five upstairs shells, door ownership and deferred stairs |
-| [Upper-floor layout](docs/upper_floor.md) | Windowed stair hall, upper corridor, bedroom shells and provisional connections |
-| [Mummy bathroom](rooms/mummy_bathroom/README.md) | Empty bathroom shell beyond the exercise/mummy room |
-| [Photo room](rooms/photo_room/README.md) | Darkroom shell beside the windowed-hall stairs |
+| [First-floor layout](docs/first_floor.md) | Library, five furnished landing-floor rooms, door ownership and stairs |
+| [Upper-floor layout](docs/upper_floor.md) | Furnished stair hall, bedroom level and provisional connections |
+| [Top-floor interiors](docs/top_floor.md) | Safe attic, speaker room, wire attic and observatory furnishings |
+| [Mummy bathroom](rooms/mummy_bathroom/README.md) | Furnished bathroom beyond the exercise/mummy room |
+| [Photo room](rooms/photo_room/README.md) | Furnished darkroom beside the windowed-hall stairs |
 | [Hidden attic stairs](rooms/attic_stairs/README.md) | Stair passage behind the den’s painted wall panel |
-| [Wire attic](rooms/wire_attic/README.md) | Empty attic shell and den connection |
-| [Observatory](rooms/observatory/README.md) | Circular dome, open telescope slit and den hatch |
+| [Wire attic](rooms/wire_attic/README.md) | Damaged plaster, boards, wiring and den connection |
+| [Observatory](rooms/observatory/README.md) | Telescope, circular dome, open slit and den hatch |
 | [Cellar routes](docs/cellar.md) | Hall cellar stairs, dungeon/laboratory shells, low bush grating and crawl portals |
 | [Ladder portals](docs/ladders.md) | Shared ladder kit, hatch portals, controls and verified routes |
 | [Shared doors](shared/doors/README.md) | Reusable leaf/frame authoring, mirroring and runtime lifecycle |

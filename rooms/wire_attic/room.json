@@ -32,7 +32,8 @@
     "halfWidth": 4.3,
     "depth": 5.2,
     "height": 3.12,
-    "wallThickness": 0.18
+    "wallThickness": 0.18,
+    "obstacles": []
   },
   "ports": [
     {
@@ -54,7 +55,7 @@
   ],
   "shell": {
     "wall": "cyan",
-    "floor": "gray",
+    "floor": "darkgray",
     "trim": "brown",
     "entries": [
       {
@@ -63,7 +64,11 @@
         "owner": false,
         "frame": false
       }
-    ]
+    ],
+    "wallColors": {
+      "left": "darkgray",
+      "front": "darkgray"
+    }
   },
   "bake": {
     "collections": [

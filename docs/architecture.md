@@ -146,10 +146,20 @@ These are optional functions, not a required template for every room. The pool, 
 
 The [garage and forecourt](../rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The higher storey and unresolved library spiral staircase remain deferred.
+The [library and complete furnished landing-floor layout](first_floor.md) are connected: art studio, music room, security corridor, medical room and arcade. All connecting doors start closed. The higher storeys are connected as documented in `upper_floor.md`; the library spiral staircase remains decorative without an assigned destination.
 
 See [source/output ownership and the common build CLI](rebuilding.md) for the authoritative folder structure. Generated room manifests are merged through `scripts/room_config.py`; authored configs are never rewritten by builds.
 
 Pool 006/002 is a single room with two floor elevations. Its runtime-local filled/drained state controls basin navigation and the `Pool_water` mesh visibility; `web/lib/house/pool.ts` handles its same-room climb without adding portal connections.
 
 Furnished library, kitchen, dining, pantry and garage packages keep authored furniture footprints in `geometry.obstacles`. Their navigation adapters test the walker radius against those rectangles; furniture does not create new ports or change room placements. The library supplies the optional shell furnishing callback. Kitchen, dining, pantry and garage keep their furnishing recipes in local `interior.py` files.
+
+The five furnished landing-floor packages (art studio, music room, security corridor, medical room and arcade) use the same optional shell callback and authored `geometry.obstacles` convention. Background 014 is labelled Art studio in the UI; its existing `plant_room` identifier and URLs remain stable.
+
+The windowed stair hall and photo darkroom use the same furnishing callback and authored obstacle rectangles. `shell-navigation.ts` accepts optional `geometry.obstacles` so furnished rectangular rooms preserve their existing stair and floor-hole rules. Other shell adapters without obstacles keep the same behavior.
+
+The common shell palette includes all 16 RGB colors found in the source backgrounds, including dark gray `(84,84,84)`. Source-art color runs therefore retain that charcoal tone instead of approximating it with brown.
+
+The seven bedroom-level packages follow the same room-local furnishing callback and obstacle convention. `bedroom_furniture.py` shares small solid bed, cabinet, plant, wallpaper and pendant forms; authored room recipes retain their visual composition and reference-art crops. No portal transforms or shared door ownership change when furnishing a room.
+
+The furnished top-floor rooms retain local `interior.py` recipes. The observatory attaches its recipe to the custom circular builder and combines furniture obstacles with its circular boundary and hatch checks. Exact source-color wall details can use shallow depth layers, as in the wire attic; these create no extra room openings.

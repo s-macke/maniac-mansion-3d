@@ -52,6 +52,14 @@
         "y0": 3.3499999999999996,
         "y1": 4.45
       }
+    ],
+    "obstacles": [
+      {
+        "x0": 3.61,
+        "x1": 4.12,
+        "y0": 1.28,
+        "y1": 2.42
+      }
     ]
   },
   "ports": [
@@ -75,9 +83,9 @@
     }
   ],
   "shell": {
-    "wall": "gray",
-    "floor": "blue",
-    "trim": "brown",
+    "wall": "darkgray",
+    "floor": "darkgray",
+    "trim": "black",
     "entries": []
   },
   "bake": {

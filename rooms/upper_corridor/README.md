@@ -1,7 +1,9 @@
 # Upper corridor — room 038
 
-Empty shell based on [the original background](../../source/room%20038.png), with shared doors and soft baked shading. Furniture and decorative objects are deferred. See [upper-floor layout](../../docs/upper_floor.md) for provisional connections and unresolved exits.
+Furnished from [the original background](../../source/room%20038.png), preserving the EGA palette and soft baked shading. Diamond-patterned blue walls, timber wainscot panels, three hanging lamps, a purple floor with bordered rug, corner drapery and three bare decorative branches. The branches have small collision footprints along the front edge; the full rear doorway aisle remains clear.
 
-`build.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room upper_corridor`. Generated scenes, models and previews live under `generated/`; the browser starts here with `?room=upper_corridor`.
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
 
-Rear door slots, from left: purple/radio bedroom with ladder (021), red heart bedroom with ladder (019), green bedroom (026), exercise/mummy room (025). The bathroom is reached through the exercise room; the photo room is on the windowed-hall level below.
+Rebuild with `./docker-build.sh room upper_corridor`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=upper_corridor`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
+
+The optimized room model is 435,768 bytes (116,943 bytes with gzip); door and ladder kits are shared separately.

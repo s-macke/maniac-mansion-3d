@@ -6,11 +6,11 @@ Four climb routes use shared ladders and continuous hatch portals:
 |---|---|---|
 | Heart bedroom / Edna (019) | Safe attic (009) | Original hint book, printed page 43 |
 | Radio bedroom / Fred (021) | Green Tentacle’s speaker room (020) | Original hint book, printed pages 37–38 |
-| Den / typewriter room (027) | Observatory (028) | Printed pages 39–41; temporary ladder replaces plant climbing in this shell stage |
+| Den / typewriter room (027) | Observatory (028) | Printed pages 39–41; shared ladder substitutes for climbing the grown plant |
 
-The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf) confirms these routes. Background 009 is used as the safe-attic reference: boarded wall, left window and portrait on the right. Its position in the supplied cutaway remains tentative; the blue circular telescope overlay is not reproduced as room lighting. Room 020 supplies the speaker-room palette. Furnishings, including the safe, painting and speakers, remain deferred. Hatch placement and dimensions are inferred to suit the walkthrough.
+The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf) confirms these routes. Background 009 is used as the safe-attic reference: boarded wall, left window and portrait on the right. Its position in the supplied cutaway remains tentative; the blue circular telescope overlay is not reproduced as room lighting. Room 020 supplies the speaker-room palette. The safe attic and speaker room are now furnished; their landing footprints stay clear. See the [top-floor guide](top_floor.md). Hatch placement and dimensions are inferred to suit the walkthrough.
 
-The mummy bathroom has no attic connection. The separate wire attic (015) is accessed from the den/typewriter room (027), according to printed page 39; that route now uses an interactive painted wall panel and [walkable stairs](../rooms/attic_stairs/README.md), followed by a seamless portal into the empty attic shell.
+The mummy bathroom has no attic connection. The separate wire attic (015) is accessed from the den/typewriter room (027), according to printed page 39; that route now uses an interactive painted wall panel and [walkable stairs](../rooms/attic_stairs/README.md), followed by a seamless portal into the furnished wire attic.
 
 The fourth route is a user-requested direct **meteor chamber (031) ↔ garage (016)** ladder. It replaces the original exit door and long passage; the garage floor has an actual open hatch.
 

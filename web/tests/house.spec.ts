@@ -11,9 +11,9 @@ test('room placement rotates coordinates and retains floor elevation',()=>{
 });
 test('loading follows connections and includes continuous outdoor groups',()=>{
  const v=createHouseRuntime('hall'),neighbors=neighboringRooms(v.graph,v.activeSpace);
- expect([...neighbors].sort()).toEqual(['front_exterior','hall','kitchen','living_room','music_room','plant_room','security_hall']);
+ expect([...neighbors].sort()).toEqual(['cellar','front_exterior','hall','kitchen','living_room','music_room','plant_room','security_hall']);
  expect(neighbors.has('dining_room')).toBe(false);
- expect([...neighboringRooms(v.graph,'pool_garage')].sort()).toEqual(['garage','pantry','pool']);
+ expect([...neighboringRooms(v.graph,'pool_garage')].sort()).toEqual(['garage','meteor_chamber','pantry','pool']);
 });
 test('house navigation rejects empty space and resolves both hall elevations',()=>{
  expect(navigation.canStand({x:100,y:100},0)).toBe(false);

@@ -30,7 +30,7 @@ The [furnished pantry](rooms/pantry/README.md) is connected beyond dining; its r
 
 The [garage and forecourt](rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete first-floor shell layout](docs/first_floor.md) are connected: plant room, music room, security corridor, medical room and arcade. All connecting doors start closed. The [upper-floor shells](docs/upper_floor.md) continue through the windowed stair hall, upper corridor and five adjoining rooms. The library is furnished; its spiral staircase is visual only, with no invented upstairs destination.
+The [library and furnished landing floor](docs/first_floor.md) are connected: art studio (`plant_room`), music room, security corridor, medical room and arcade. These five rooms are now furnished. All connecting doors start closed. The [furnished upper floors](docs/upper_floor.md) continue through the windowed stair hall, upper corridor and five adjoining rooms. The library is furnished; its spiral staircase is visual only, with no invented upstairs destination.
 
 For a fresh Git checkout without generated models or dependencies, follow [the source-only rebuild instructions](docs/rebuilding.md).
 
@@ -42,16 +42,16 @@ The [GitHub Pages workflow](docs/github-pages.md) rebuilds the Blender assets an
 
 For incremental Docker builds, use `./docker-build.sh room kitchen --site`; use `./docker-build.sh all` for every room and the website. [Compose commands](docs/docker.md#everyday-builds-with-compose).
 
-[Ladder portals](docs/ladders.md) connect the heart bedroom to the safe attic and the radio bedroom to Green Tentacle’s room. Approach and face the ladder, then press E or tap the climb action. Both destinations are empty shells.
+[Ladder portals](docs/ladders.md) connect the heart bedroom to the safe attic and the radio bedroom to Green Tentacle’s room. Approach and face the ladder, then press E or tap the climb action. Both destinations are furnished; see the [top-floor guide](docs/top_floor.md).
 
-The mummy bathroom (024) now connects beyond the exercise/mummy room. The photo darkroom (023) opens from the windowed stair hall one level below the bedrooms. Both are empty shells with closed shared doors.
+The mummy bathroom (024) now connects beyond the exercise/mummy room. The photo darkroom (023) opens from the windowed stair hall one level below the bedrooms. The hall, darkroom, bedroom corridor, three bedrooms, exercise/mummy room, mummy bathroom and typewriter den are furnished. Shared doors start closed.
 
-The [wire attic](rooms/wire_attic/README.md) is reached through the painted wall panel in the den/typewriter room and a short staircase. Open the panel with E or tap it; no puzzle items are needed.
+The furnished [wire attic](rooms/wire_attic/README.md), with damaged plaster, boards and wiring, is reached through the painted wall panel in the den/typewriter room and a short staircase. Open the panel with E or tap it; no puzzle items are needed.
 
 Two [cellar routes](docs/cellar.md) are open for review: the hall’s rear-right door leads down to room 008, and the grating behind the left porch bush leads to passage 029. Both begin as empty, separate shells.
 
 The cellar continues through empty dungeon, outer-laboratory, main-laboratory and meteor-chamber shells. See [cellar routes](docs/cellar.md) for the connection evidence and the simplified garage escape ladder.
 
-The [observatory shell](rooms/observatory/README.md) is circular, with an open dome slit and a seamless climb from the den ceiling hatch.
+The [observatory](rooms/observatory/README.md) is furnished with its telescope and controls, retaining the circular dome, open slit and seamless climb from the den ceiling hatch.
 
 The pool and its basin are one room. Use E/tap at the edge to drain, then the ladder to explore below; refill from the deck after climbing out.

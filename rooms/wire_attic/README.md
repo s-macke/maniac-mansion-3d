@@ -1,9 +1,11 @@
 # Wire attic — room 015
 
-Empty shell based on [the original background](../../source/room%20015.png): cyan wall surfaces and gray floor, with soft baked shading. The damaged plaster, boards, wiring and roof detail are deferred until furnishing. Dimensions and the stair arrival opening are inferred for layout review.
+Furnished from [the original background](../../source/room%20015.png). Original jagged plaster, cracks, damp streaks and exposed laths separated into shallow depth layers; solid angled yellow boards over the dark window recess; projecting loose wire ends and a hanging fitting. The floor and left wall use the source’s dark gray.
 
-Reach it through the paint-blotched panel on the right wall of the [den/typewriter room](../typewriter_room/README.md), then walk up the [hidden stairs](../attic_stairs/README.md). The [original hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed page 39, confirms this route. There is no connection from the mummy bathroom.
+The front portal leads to the hidden attic stairs, then the den’s painted panel. There is no new floor hatch or additional route. The damaged window remains opaque; the room does not reveal unrelated spaces.
 
-Rebuild with `./docker-build.sh room wire_attic`; start directly with `?room=wire_attic`. The panel uses ordinary door controls: E or click/tap, no paint-remover puzzle. Both transitions use seamless doorway portals. No character, puzzle or wire-repair gameplay is included.
+`build.py`, `interior.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room wire_attic`; generated Blender scenes, models and previews stay under `generated/`. Local review: `http://127.0.0.1:5174/?room=wire_attic`. See [top-floor guide](../../docs/top_floor.md) and [ladder connections](../../docs/ladders.md).
 
-Validation: Docker/Blender generation, catalog check, static build and typecheck passed. Focused tests cover the closed panel, shared asset lifecycle, stair movement and exported floor/headroom. A software-rendered Chrome test opened the panel, walked to the attic and back, then closed it without page errors.
+Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; existing room placements and portals are unchanged.
+
+The optimized model is 427,620 bytes (122,445 bytes with gzip); ladder geometry is shared separately.

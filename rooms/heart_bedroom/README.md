@@ -1,7 +1,11 @@
 # Heart bedroom — room 019
 
-Empty shell based on [the original background](../../source/room%20019.png), with shared doors and soft baked shading. Furniture and decorative objects are deferred. See [upper-floor layout](../../docs/upper_floor.md) for provisional connections and unresolved exits.
+Furnished from [the original background](../../source/room%20019.png), preserving the EGA palette and soft baked shading. Red heart wallpaper, vanity with cracked aqua mirror and bottles, curtained red bed, potted plant, hanging light and original Edna portrait. The right-side ladder and its landing remain accessible.
 
-`build.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room heart_bedroom`. Generated scenes, models and previews live under `generated/`; the browser starts here with `?room=heart_bedroom`.
+The existing shared ladder and ceiling hatch retain their continuous portal connection to the safe attic. Furniture stays outside the approach, shaft and landing.
 
-The shared ladder now connects through a seamless hatch portal to the safe attic (009). See [ladder controls and authoring](../../docs/ladders.md).
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
+
+Rebuild with `./docker-build.sh room heart_bedroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=heart_bedroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
+
+The optimized room model is 355,608 bytes (96,710 bytes with gzip); door and ladder kits are shared separately.

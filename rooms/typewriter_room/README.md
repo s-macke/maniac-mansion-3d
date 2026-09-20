@@ -1,11 +1,11 @@
-# Typewriter room — room 027
+# Typewriter den — room 027
 
-Empty shell based on [the original background](../../source/room%20027.png), with shared doors and soft baked shading. Furniture and decorative objects are deferred. See [upper-floor layout](../../docs/upper_floor.md) for provisional connections and unresolved exits.
+Furnished from [the original background](../../source/room%20027.png), preserving the EGA palette and soft baked shading. Patterned wallpaper, wood panels, solid stone fireplace with a dark recess, original family portrait, typewriter and table, left plant, empty blue pot and bordered rug. The right pot stands beside the existing ladder approach so it does not block the observatory route.
 
-`build.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room typewriter_room`. Generated scenes, models and previews live under `generated/`; the browser starts here with `?room=typewriter_room`.
+The right painted wall panel remains a shared `Concealed_leaf`, initially closed. It opens into the hidden attic stairs leading to the wire attic. The separate ceiling hatch and shared ladder still lead to the observatory; their existing transforms are unchanged.
 
-The paint blotch on the right wall is now a shared `Concealed_leaf` panel. It starts closed and opens with E or click/tap, revealing the [hidden stairs](../attic_stairs/README.md) up to the [wire attic](../wire_attic/README.md). The patch uses pixels from background 027; it has no conventional door frame or handle. The plant-to-ceiling route remains deferred.
+`build.py`, `interior.py` and `room.json` are the authored inputs. Solid furnishings use `geometry.obstacles` for walking collision. Shared doors start closed; existing room placements and portal destinations are unchanged.
 
-The ceiling hatch above the right-hand blue pot now connects to the [observatory](../observatory/README.md). A shared ladder makes that route usable during the shell stage; it is independent of the painted-panel attic stairs.
+Rebuild with `./docker-build.sh room typewriter_room`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=typewriter_room`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The temporary den ladder faces the back wall beneath the visible ceiling opening above the right-hand blue pot, beside the painted wall (local X 3.1, Y 4.52). Its ceiling opening and the observatory ladder align through the portal; the painted-panel door remains on the right wall.
+The optimized room model is 612,808 bytes (138,836 bytes with gzip); door and ladder kits are shared separately.

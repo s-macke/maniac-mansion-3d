@@ -16,8 +16,8 @@ test('round boundary and hatch block walking without enclosing the telescope sli
  const hits=(x:number,y:number,z:number,dx:number,dy:number,dz:number,far=12)=>{
   ray.set(new THREE.Vector3(x,z,-y),new THREE.Vector3(dx,dz,-dy).normalize());ray.far=far;return ray.intersectObject(shell,true);
  };
- // Physical aperture: this line of sight leaves the dome, while the opposite ray hits its shell.
- expect(hits(0,4.2,1.62,3,3,1.9)).toHaveLength(0);
+ // Physical aperture: an offset ray clears the telescope and leaves the dome; the opposite ray hits the shell.
+ expect(hits(-.7,4.9,1.62,3,3,1.9)).toHaveLength(0);
  expect(hits(0,4.2,1.62,-3,-3,1.9).length).toBeGreaterThan(0);
  // Camera/body clearance at the actual access portal, not a black hatch painted over a floor.
  expect(hits(-2.5,3.7,-.35,0,0,1,.7)).toHaveLength(0);
