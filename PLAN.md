@@ -227,3 +227,7 @@ Added the ground-floor library and all five rooms around the existing first-floo
 ## Furnished library, kitchen and dining room
 
 The complete layout is retained while these three shells receive their artwork-based interiors (005, 007 and 037). Source builders create bookcases and a decorative library spiral stair, kitchen cabinets/appliances, and the long turquoise dining table with panelling and the original painting. Furniture footprints prevent walking through the new solids and leave routes to every existing door. Shared doors still start closed. The library staircase has no new destination; appliances and table details are static. Original colors and soft vertex-baked shading require no runtime GI.
+
+## Furnished garage and pantry
+
+Backgrounds 016 and 036 now supply the garage car and storage rack, open shutter fixtures, and pantry shelves/supplies with cracked plaster and exposed brick. Car, appliances and supplies remain static exploration scenery. Furniture footprints route walking around the car to the existing cellar hatch and leave the pantry dining/pool doors clear. Shared doors, floor heights, independent spaces and the continuous pool/garage group are unchanged. All geometry and shading rebuild through the existing room commands; generated files remain ignored.

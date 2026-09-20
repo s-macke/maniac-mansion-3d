@@ -9,6 +9,7 @@ export function floorHeight(p:Point,height=0){
  return 0;
 }
 export function canStand(p:Point,height=0){
+ for(const b of g.obstacles){const x=Math.max(b.x0,Math.min(b.x1,p.x)),y=Math.max(b.y0,Math.min(b.y1,p.y));if(Math.hypot(p.x-x,p.y-y)<RADIUS)return false;}
  if(!Number.isFinite(floorHeight(p,height)))return false;
  if(p.x<RADIUS+.26||p.x>g.width-g.wallThickness-RADIUS||p.y<RADIUS+.26||p.y>g.depth-.26-RADIUS)return false;
  if(p.x>g.bayFront-RADIUS){

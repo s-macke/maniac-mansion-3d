@@ -152,4 +152,4 @@ See [source/output ownership and the common build CLI](rebuilding.md) for the au
 
 Pool 006/002 is a single room with two floor elevations. Its runtime-local filled/drained state controls basin navigation and the `Pool_water` mesh visibility; `web/lib/house/pool.ts` handles its same-room climb without adding portal connections.
 
-Furnished library, kitchen and dining packages keep authored furniture footprints in `geometry.obstacles`. Their navigation adapters test the walker radius against those rectangles; furniture does not create new ports or change room placements. The library supplies the optional shell furnishing callback. Kitchen and dining keep their furnishing recipes in local `interior.py` files.
+Furnished library, kitchen, dining, pantry and garage packages keep authored furniture footprints in `geometry.obstacles`. Their navigation adapters test the walker radius against those rectangles; furniture does not create new ports or change room placements. The library supplies the optional shell furnishing callback. Kitchen, dining, pantry and garage keep their furnishing recipes in local `interior.py` files.

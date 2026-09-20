@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {createHouseRuntime} from '../lib/house/runtime';
 import {toWorld} from '../lib/house/placement';
 
-for(const id of ['library','kitchen','dining_room'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
+for(const id of ['library','kitchen','dining_room','garage','pantry'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
  await page.goto('/?room='+id);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
@@ -23,6 +23,8 @@ for(const id of ['library','kitchen','dining_room'])test(id+' furnished interior
  if(id==='library'){await go(-4.5,1.2);await aim(0,4.7);}
  if(id==='kitchen'){await go(0,2.9);await aim(0,5);}
  if(id==='dining_room'){await go(-8.7,1);await go(-3.5,1);await aim(0,3.5);}
+ if(id==='garage'){await go(4.8,4);await aim(8.45,4.6);await page.screenshot({path:'test-results/garage-car.png'});await go(4.8,2.2);await go(12,2.2);await go(12,2.9);await aim(12,4.22);}
+ if(id==='pantry'){await go(0,2.9);await aim(1.4,4.9);}
  expect((await state()).room).toBe(id);expect(errors).toEqual([]);
  await page.screenshot({path:`test-results/${id}-furnished.png`});
 });

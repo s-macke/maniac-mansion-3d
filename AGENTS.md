@@ -32,9 +32,9 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Front exterior](rooms/front_exterior/README.md) | Porch, roof, bushes and unresolved metal grating |
 | [Kitchen](rooms/kitchen/README.md) | Empty shell, facade clearance and dining-door ownership |
 | [Dining room](rooms/dining_room/README.md) | Empty shell, provisional proportions and pantry boundary |
-| [Pantry](rooms/pantry/README.md) | Gray shell and shared doors to dining and pool |
+| [Pantry](rooms/pantry/README.md) | Stocked shelf, worn plaster and shared doors to dining and pool |
 | [Pool deck](rooms/pool/README.md) | Outdoor deck, drain/refill state, basin ladder and pantry connection |
-| [Garage and forecourt](rooms/garage/README.md) | Outdoor approach and empty covered garage bay |
+| [Garage and forecourt](rooms/garage/README.md) | Outdoor approach, parked EGA car, covered bay and cellar hatch |
 | [First-floor layout](docs/first_floor.md) | Library, five upstairs shells, door ownership and deferred stairs |
 | [Upper-floor layout](docs/upper_floor.md) | Windowed stair hall, upper corridor, bedroom shells and provisional connections |
 | [Mummy bathroom](rooms/mummy_bathroom/README.md) | Empty bathroom shell beyond the exercise/mummy room |

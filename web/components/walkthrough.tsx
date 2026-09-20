@@ -16,13 +16,13 @@ export default function Walkthrough() {
   const [doorAction,setDoorAction]=useState('');
   const [showHint,setShowHint]=useState(true);
   const [zone,setZone]=useState('Entrance hall');
-  const [identity,setIdentity]=useState('010 + 011'),[preview,setPreview]=useState(false);
+  const [preview,setPreview]=useState(false);
   const [error,setError]=useState(''),[fallback,setFallback]=useState(true),[touch,setTouch]=useState(false);
   useEffect(()=>{
     const view=createHouseRuntime(new URLSearchParams(window.location.search).get('room'));
     const ladders=createLadders(view),crawls=createCrawls(view),pool=createPool(view);
     const {START,START_YAW,START_PITCH,moveWalker,zoneAt}=view;
-    setIdentity(view.backgrounds.join(' + '));setPreview(view.preview);setZone(zoneAt(START));
+    setPreview(view.preview);setZone(zoneAt(START));
     const container=host.current!;let disposed=false,frame=0,walking=false,dragging=false,needsRender=true;let lastZone=zoneAt(START);
     let loaded=false,hadLock=false,distanceWalked=0,hintFinished=false;
     const coarse=matchMedia('(pointer:coarse)').matches;setTouch(coarse);
@@ -134,7 +134,7 @@ export default function Walkthrough() {
   },[]);
   return <main className="walkthrough">
     <div ref={host} className="viewport" tabIndex={-1} aria-label={`First-person view of ${zone}`} />
-    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION / {identity}</p><h1>{zone}</h1></div><div className="hud-actions">
+    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION</p><h1>{zone}</h1></div><div className="hud-actions">
       {ready && !error && <Button className="hud-button" onClick={()=>active?runtime.current?.pause():runtime.current?.enter()}>{active?'Pause':'Resume'}</Button>}
       <Button className="hud-button" disabled={!ready} onClick={()=>runtime.current?.reset()}>Reset position</Button>
     </div></header>
