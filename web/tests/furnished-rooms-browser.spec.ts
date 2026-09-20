@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {createHouseRuntime} from '../lib/house/runtime';
 import {toWorld} from '../lib/house/placement';
 
-for(const id of ['library','kitchen','dining_room','garage','pantry','plant_room','music_room','security_hall','medical_room','arcade','windowed_hall','photo_room','upper_corridor','radio_bedroom','heart_bedroom','green_bedroom','mummy_room','mummy_bathroom','typewriter_room','safe_attic','tentacle_room','wire_attic','observatory'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
+for(const id of ['cellar','under_house','dungeon','outer_lab','main_lab','meteor_chamber','library','kitchen','dining_room','garage','pantry','plant_room','music_room','security_hall','medical_room','arcade','windowed_hall','photo_room','upper_corridor','radio_bedroom','heart_bedroom','green_bedroom','mummy_room','mummy_bathroom','typewriter_room','safe_attic','tentacle_room','wire_attic','observatory'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
  await page.goto('/?room='+id);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
@@ -20,6 +20,12 @@ for(const id of ['library','kitchen','dining_room','garage','pantry','plant_room
   await aim(x,y);const p=await state(),q=toWorld({x,y,height:0},room),dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy);
   await page.keyboard.down('w');try{await expect.poll(async()=>{const s=await state();return ((s.x-p.x)*dx+(s.y-p.y)*dy)/d;},{timeout:15000,intervals:[50]}).toBeGreaterThan(d-.13);}finally{await page.keyboard.up('w');}
  }
+ if(id==='cellar'){await go(0,2.6);await aim(1,5.4);}
+ if(id==='under_house'){await go(0,1.5);await aim(5,3);}
+ if(id==='dungeon'){await go(0,2.7);await aim(-1.9,4.5);}
+ if(id==='outer_lab'){await go(0,2.6);await aim(1,4.8);}
+ if(id==='main_lab'){await go(0,1.2);await aim(0,5);}
+ if(id==='meteor_chamber'){await go(-2.6,2.6);await aim(0,4.5);}
  if(id==='library'){await go(-4.5,1.2);await aim(0,4.7);}
  if(id==='kitchen'){await go(0,2.9);await aim(0,5);}
  if(id==='dining_room'){await go(-8.7,1);await go(-3.5,1);await aim(0,3.5);}

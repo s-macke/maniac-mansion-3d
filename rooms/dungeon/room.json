@@ -32,7 +32,15 @@
     "halfWidth": 6.4,
     "depth": 5.1,
     "height": 3.12,
-    "wallThickness": 0.18
+    "wallThickness": 0.18,
+    "obstacles": [
+      {
+        "x0": -2.97,
+        "x1": -1.09,
+        "y0": 3.13,
+        "y1": 4.65
+      }
+    ]
   },
   "ports": [
     {
@@ -70,10 +78,10 @@
   ],
   "shell": {
     "wall": "blue",
-    "floor": "brown",
+    "floor": "red",
     "trim": "blue",
     "wallColors": {
-      "back": "brown"
+      "back": "gray"
     },
     "entries": [
       {

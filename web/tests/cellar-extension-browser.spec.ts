@@ -26,6 +26,10 @@ test('walk the complete cellar laboratory route and return through the same door
  async function open(){
   await expect(page.locator('.door-action')).toContainText('Open');await page.keyboard.press('e');
   await expect(page.locator('.door-action')).toContainText('Close');
+  // Leave room for the leaf to swing; frame timing can carry the last walking
+  // step into its safety margin, where the UI correctly asks us to step back.
+  const start=await state();await page.keyboard.down('s');
+  try{await expect.poll(async()=>{const p=await state();return Math.hypot(p.x-start.x,p.y-start.y);},{intervals:[50]}).toBeGreaterThan(.4);}finally{await page.keyboard.up('s');}
   await expect.poll(async()=>(await state()).movingDoors).toHaveLength(0);
  }
  await go(333.6,2.6);await aim(331.8,2.6);await open();await cross(330.8,2.6,'dungeon');

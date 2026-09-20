@@ -43,3 +43,14 @@ test('one GLB separates wet surfaces and supports the basin below them',async()=
  expect(ray.intersectObject(wet,true)[0].point.y).toBeGreaterThan(-.4);
  wet.removeFromParent();const hit=ray.intersectObject(root,true)[0];expect(hit.point.y).toBeCloseTo(-2.8);
 });
+
+
+test('drained basin equipment blocks walking while the ladder and central aisle stay clear',()=>{
+ const v=createHouseRuntime('pool'),r=v.rooms.find(r=>r.id==='pool')!;v.poolState.drained=true;
+ const at=(x:number,y:number)=>toWorld({x,y,height:-2.8},r);
+ for(const [x,y] of [[14.65,7.25],[16.2,7.25],[7.1,7.02]])expect(v.navigation.canStand(at(x,y),-2.8)).toBe(false);
+ let p=at(11,7.15);
+ for(const [x,y] of [[11,5],[15.5,5],[6,5],[9,5],[11,7.15]]){
+  const q=at(x,y);expect(v.navigation.canStand(q,-2.8)).toBe(true);p=v.moveWalker(p,q.x-p.x,q.y-p.y);expect(Math.hypot(p.x-q.x,p.y-q.y)).toBeLessThan(.03);
+ }
+});

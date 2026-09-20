@@ -247,3 +247,7 @@ Completed the upper corridor, radio/heart/green bedrooms, exercise/mummy room, m
 ### Furnished top floor
 
 Furnished the safe attic (009), Green Tentacle’s music room (020), wire attic (015) and observatory (028), preserving existing ladder/door routes and the real dome slit. The inferred hidden stairs remain unchanged. See `docs/top_floor.md` for scope, original-art decisions and rebuild commands.
+
+## Furnished cellar and drained basin
+
+Backgrounds 008, 029, 004, 051, 030 and 031 now supply the cellar machinery, under-house supports/pipes, dungeon stonework and remains, and laboratory consoles/chairs/equipment. Background 002 adds reactor equipment, hose, depth markings, drain and plug to the existing pool basin. Shared helpers keep pipe and panel authoring consistent. All props remain exploration scenery; the existing stairs, doors, crawl, garage ladder and pool drain/refill route remain in place. Authored footprints preserve circulation, with separate deck and basin obstacles. Source builders generate the Blender scenes and compact browser models with the established EGA/baked-shading pipeline.

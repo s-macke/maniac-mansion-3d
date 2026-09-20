@@ -163,3 +163,5 @@ The common shell palette includes all 16 RGB colors found in the source backgrou
 The seven bedroom-level packages follow the same room-local furnishing callback and obstacle convention. `bedroom_furniture.py` shares small solid bed, cabinet, plant, wallpaper and pendant forms; authored room recipes retain their visual composition and reference-art crops. No portal transforms or shared door ownership change when furnishing a room.
 
 The furnished top-floor rooms retain local `interior.py` recipes. The observatory attaches its recipe to the custom circular builder and combines furniture obstacles with its circular boundary and hatch checks. Exact source-color wall details can use shallow depth layers, as in the wire attic; these create no extra room openings.
+
+Cellar furnishings use per-room `interior.py` callbacks and the small shared `blender_shared/lab_furniture.py` pipe/panel helpers. Pool basin furnishings use the same geometry helpers inside its independent outdoor builder. Basin obstacles are authored under `geometry.pool.obstacles` and apply only at the drained lower floor; deck obstacles remain separate.

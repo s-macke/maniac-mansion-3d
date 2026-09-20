@@ -32,7 +32,15 @@
     "halfWidth": 12,
     "depth": 3.5,
     "height": 2.2,
-    "wallThickness": 0.18
+    "wallThickness": 0.18,
+    "obstacles": [
+      {
+        "x0": -11.55,
+        "x1": 11.55,
+        "y0": 2.48,
+        "y1": 3.32
+      }
+    ]
   },
   "ports": [
     {
@@ -54,9 +62,9 @@
     }
   ],
   "shell": {
-    "wall": "gray",
+    "wall": "black",
     "floor": "black",
-    "trim": "brown",
+    "trim": "black",
     "entries": [
       {
         "port": "grating",
@@ -64,7 +72,10 @@
         "owner": false,
         "frame": false
       }
-    ]
+    ],
+    "wallColors": {
+      "back": "darkgray"
+    }
   },
   "bake": {
     "collections": [

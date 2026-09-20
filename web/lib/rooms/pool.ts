@@ -14,7 +14,15 @@ function floorHeight(p:Point,height=0){
 }
 function canStand(p:Point,height=0){
  if(!Number.isFinite(floorHeight(p,height)))return false;
- if(Math.abs(height-c.pool.bottom)<.34){const b=c.pool,m=RADIUS+.1;return p.x>b.x0+m&&p.x<b.x1-m&&p.y>b.y0+m&&p.y<b.y1-m;}
+ if(Math.abs(height-c.pool.bottom)<.34){
+  const b=c.pool,m=RADIUS+.1;
+  if(!(p.x>b.x0+m&&p.x<b.x1-m&&p.y>b.y0+m&&p.y<b.y1-m))return false;
+  for(const o of b.obstacles){
+   const x=Math.max(o.x0,Math.min(o.x1,p.x)),y=Math.max(o.y0,Math.min(o.y1,p.y));
+   if(Math.hypot(p.x-x,p.y-y)<RADIUS)return false;
+  }
+  return true;
+ }
  if(p.x<RADIUS+.18||p.x>c.width-.36-RADIUS||p.y<.36+RADIUS||p.y>c.depth-.36-RADIUS)return false;
  for(const b of [c.pool,...c.obstacles]){
   const x=Math.max(b.x0,Math.min(b.x1,p.x)),y=Math.max(b.y0,Math.min(b.y1,p.y));if(Math.hypot(p.x-x,p.y-y)<RADIUS)return false;

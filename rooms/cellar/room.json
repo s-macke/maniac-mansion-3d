@@ -40,7 +40,27 @@
       "y1": 5.2,
       "rise": 3.36,
       "segments": 20
-    }
+    },
+    "obstacles": [
+      {
+        "x0": -0.36,
+        "x1": 3.5,
+        "y0": 4.04,
+        "y1": 5.72
+      },
+      {
+        "x0": -7.4,
+        "x1": 4.96,
+        "y0": 5.29,
+        "y1": 5.94
+      },
+      {
+        "x0": -8.02,
+        "x1": -7.78,
+        "y0": 3.94,
+        "y1": 4.87
+      }
+    ]
   },
   "ports": [
     {
@@ -77,9 +97,9 @@
     }
   ],
   "shell": {
-    "wall": "gray",
-    "floor": "gray",
-    "trim": "brown",
+    "wall": "darkgray",
+    "floor": "darkgray",
+    "trim": "darkgray",
     "entries": [
       {
         "port": "higher_floor",

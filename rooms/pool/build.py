@@ -3,6 +3,7 @@ import bpy,json,math,sys,random
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];OUT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0,str(OUT))
 from room_config import load_config,save_generated,manifest_path
 from blender_shared.geometry import Geometry,linear
 config=load_config(OUT/'room.json',prepare=True);g=config['geometry'];W=g['width'];D=g['depth'];p=g['pool']
@@ -10,7 +11,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True);bpy.context.preferences.filepat
 scene=bpy.context.scene;scene.unit_settings.system='METRIC';scene.render.engine='CYCLES';scene.cycles.samples=16
 scene.world=bpy.data.worlds.new('Night');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(0,0,0,1)
 scene.view_settings.view_transform='Standard';scene.view_settings.look='None';scene.render.resolution_percentage=100;scene.render.image_settings.file_format='PNG'
-colors={'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
+colors={'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'lightgreen':(84,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
 mats={}
 for name,rgb in colors.items():
  m=bpy.data.materials.new('EGA_'+name);m.diffuse_color=(*[linear(v) for v in rgb],1);m.use_nodes=True;n=m.node_tree.nodes;n.clear();e=n.new('ShaderNodeEmission');e.inputs[0].default_value=m.diffuse_color;o=n.new('ShaderNodeOutputMaterial');m.node_tree.links.new(e.outputs[0],o.inputs[0]);mats[name]=m
@@ -54,6 +55,8 @@ for x in [10.65,11.35]:
  geo.beam('Ladder_grip',(x,y1-.16,.65),(x,y1+.6,.65),.055,'white')
  geo.beam('Ladder_foot',(x,y1+.6,.65),(x,y1+.6,0),.055,'gray')
 for z in [-2.55,-2.23,-1.83,-1.51,-1.19,-.87,-.55,-.23,.09,.41]:geo.beam('Ladder_rung',(10.65,y1-.16,z),(11.35,y1-.16,z),.048,'white')
+from interior import furnish
+furnish(geo,p)
 # Pink floating chair silhouette visible in the original pool background.
 box('Chair_seat',(12,5.5,p['water']+.16),(.72,.72,.13),'pink')
 box('Chair_back',(12,5.82,p['water']+.54),(.65,.12,.78),'pink')
