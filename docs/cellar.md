@@ -36,18 +36,18 @@ The common build creates the new shared grille template automatically. Generated
 
 ## Dungeon and laboratories
 
-The underground route is **008 cellar → 004 dungeon → 051 outer laboratory → 030 main laboratory → 031 meteor chamber**. Each room is an independent portal space. All four connecting leaves start closed and open from either side without keys or puzzles. Provisional dimensions and a common cellar floor level avoid inventing unseen stairs.
+The underground route is **008 cellar → 004 dungeon → 031 big-screen outer laboratory → 030 three-apparatus main laboratory → 051 meteor chamber**. Each room is an independent portal space. All four connecting leaves start closed and open from either side without keys or puzzles. Provisional dimensions and a common cellar floor level avoid inventing unseen stairs.
 
 | Owner | Door | Destination |
 |---|---|---|
 | Cellar | Left door | Dungeon right rear door |
 | Dungeon | Left rear laboratory door | Outer laboratory right door |
-| Outer laboratory | Left teal door | Main laboratory right teal door |
-| Main laboratory | Left gray door | Meteor chamber right gray door |
+| Outer laboratory | Left gray door | Main laboratory right gray door |
+| Main laboratory | Left teal door | Meteor chamber right teal door |
 
-The supplied cutaway establishes the underground arrangement; matching door colors in the original backgrounds establish this blockout's door slots. The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed pages 5, 21 and 45–46, supports the basement/dungeon connection, the laboratory approach through a ready room and the meteor room beside the laboratory. Matching background 051 to the outer/ready room remains an artwork-based interpretation, not a verified game-script mapping. The older proposed direct 004 → 030 link omitted this intervening room.
+The user confirmed the artwork order as dungeon (004) → big-screen room (031) → three-apparatus room (030) → meteor room (051). This corrects the earlier reversed assignment of 031 and 051. Shared gray doors join the screen room to the main laboratory; shared teal doors join the main laboratory to the meteor chamber. Room IDs retain their semantic roles, and the final meteor room retains the requested garage escape ladder. Side-door positions and room dimensions remain walkthrough interpretations.
 
-The dungeon has irregular stonework, barred recesses, graffiti, a chandelier and skeletal remains above a red/brown floor. The laboratories have blue floors and sides with riveted light-blue rear panels, colored pipes, consoles and machinery. Shared `Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` templates reproduce source EGA door pixels on both faces. The main laboratory includes three apparatus chairs, a drinks machine and radiation-marked cabinet; the meteor chamber has its green monitor, console and articulated arm. The nested locked-door mechanism remains simplified to one shared interactive leaf. All equipment is static scenery.
+The dungeon has irregular stonework, barred recesses, graffiti, a chandelier and skeletal remains above a red/brown floor. The laboratories have blue floors and sides with riveted light-blue rear panels, colored pipes, consoles and machinery. Shared `Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` templates reproduce source EGA door pixels on both faces. The main laboratory includes three apparatus chairs, a drinks machine and radiation-marked cabinet; the outer laboratory has its green monitor, console and articulated arm, and the meteor chamber has the suspended apparatus, lever cabinet and horizontal tank. The nested locked-door mechanism remains simplified to one shared interactive leaf. All equipment is static scenery.
 
 At the user's request, the meteor chamber's former exit door is replaced by a direct ladder portal into the garage floor. The original door and long escape passage are omitted in this walkthrough interpretation. The radiation-marked compartment in 030 is equipment, not an extra room connection.
 
@@ -63,4 +63,4 @@ The [drained pool basin](../rooms/pool/README.md) is furnished in this same pass
 
 Focused coverage includes furnished-room collision routes and browser views, hall stairs and bush crawl round trips, the complete laboratory route, the garage ladder and the pool drain/climb/refill sequence.
 
-Validation: all seven Blender room builds, production web build, TypeScript and catalog checks passed. Twenty-one focused navigation/asset checks and twelve Chrome walkthrough checks passed, including all six furnished cellar views, hall stairs, bush crawl (also with emulated touch), the complete laboratory route, garage ladder and pool drain/climb/refill sequence. The route test steps back before waiting for swinging doors to finish, matching the existing safety prompt. Physical-mobile performance was not tested.
+Validation of the corrected artwork order: all three affected Blender builds, production web build, TypeScript and catalog checks passed. Ten focused navigation/asset checks and four Chrome checks passed: the full cellar route in both directions, both reassigned interiors, and the meteor-room/garage ladder round trip. The route test steps back before waiting for swinging doors to finish, matching the existing safety prompt. Earlier hall-stair, bush-crawl and pool checks remain documented with those features; physical-mobile performance was not tested.

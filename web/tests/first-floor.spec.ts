@@ -91,9 +91,9 @@ test('main stairs lead continuously into every first-floor room and back to grou
  for(const q of stair.reverse())go(q.x,q.y);go(p.x,1.5);expect(p.height).toBe(0);
 });
 
-test('first-floor room footprints meet at boundaries without overlapping',()=>{
+test('overlapping first-floor footprints belong to separate portal spaces',()=>{
  const v=createHouseRuntime();
  const boxes=v.rooms.filter(r=>r.position[2]===3.36).map(r=>{const g=v.definitions[r.definition].geometry!;return{id:r.id,x0:r.position[0]-Number(g.halfWidth),x1:r.position[0]+Number(g.halfWidth),y0:r.position[1],y1:r.position[1]+Number(g.depth)};});
  boxes.push({id:'landing',x0:-6.4,x1:6.4,y0:5.7,y1:9.75});
- for(let i=0;i<boxes.length;i++)for(const b of boxes.slice(i+1)){const a=boxes[i];const width=Math.min(a.x1,b.x1)-Math.max(a.x0,b.x0),depth=Math.min(a.y1,b.y1)-Math.max(a.y0,b.y0);expect(width<=.001||depth<=.001,a.id+' / '+b.id).toBe(true);}
+ for(let i=0;i<boxes.length;i++)for(const b of boxes.slice(i+1)){const a=boxes[i];const width=Math.min(a.x1,b.x1)-Math.max(a.x0,b.x0),depth=Math.min(a.y1,b.y1)-Math.max(a.y0,b.y0);if(width>.001&&depth>.001)expect(v.graph.spaceOf(a.id==='landing'?'hall':a.id),a.id+' / '+b.id).not.toBe(v.graph.spaceOf(b.id==='landing'?'hall':b.id));}
 });

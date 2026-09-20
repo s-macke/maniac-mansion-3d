@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 for(const [from,to,approach,door,out,back,label] of [
- ['mummy_room','mummy_bathroom',[163.3,2.6],[165.2,2.6],[166.2,2.6],[207.3,6.2],'bathroom door'],
- ['windowed_hall','photo_room',[37.3,4.2],[37.3,6.1],[37.3,7.1],[273.4,2.6],'photo door'],
+ ['mummy_room','mummy_bathroom',[163.3,2.6],[165.2,2.6],[166.2,2.6],[207.3,5.6],'bathroom door'],
+ ['windowed_hall','photo_room',[37.3,4.2],[37.3,6.1],[37.3,7.1],[272.8,2],'photo door'],
 ] as const)test(`open portal from ${from} to ${to} and return`,async({page})=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});

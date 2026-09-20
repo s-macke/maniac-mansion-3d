@@ -165,3 +165,11 @@ The seven bedroom-level packages follow the same room-local furnishing callback 
 The furnished top-floor rooms retain local `interior.py` recipes. The observatory attaches its recipe to the custom circular builder and combines furniture obstacles with its circular boundary and hatch checks. Exact source-color wall details can use shallow depth layers, as in the wire attic; these create no extra room openings.
 
 Cellar furnishings use per-room `interior.py` callbacks and the small shared `blender_shared/lab_furniture.py` pipe/panel helpers. Pool basin furnishings use the same geometry helpers inside its independent outdoor builder. Basin obstacles are authored under `geometry.pool.obstacles` and apply only at the drained lower floor; deck obstacles remain separate.
+
+### Furniture placement in resized rooms
+
+`scripts/blender_shared/placement.py` provides `rear_anchored(authored_depth)` for existing artwork compositions. It translates only the objects created by the furnishing callback to follow the rear wall, preserving object dimensions and leaving the config-built shell, doors and ladders untouched. `offset_group` relocates complete furniture groups, including meshes authored in world coordinates. Front-anchored pieces cancel the rear offset locally; long wall details are generated for the current dimensions. Room configs separately own the matching collision bounds and hatch geometry; `house/layout.json` owns ladder landing and shaft positions. See the [size audit](room_size_audit.md) for the ten revised footprints.
+
+### Baked fixture lights
+
+Room `bake.practicalLights` can add local directed lights with `position`, `range`, `strength`, `radius` (soft shadow source radius) and `coneAngle` (half angle in degrees), and optional normalized `direction` (defaults to downward `[0, 0, -1]`). Their distance/cone falloff and occlusion are baked into vertex colors. Optional `fillStrength` scales the existing broad fill. Both are opt-in; other rooms keep their existing bake. Visible bulb/glass geometry can use `bake_unlit` without adding runtime lights. The medical desk lamp is the first fixture using this path.

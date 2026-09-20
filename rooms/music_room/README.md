@@ -1,6 +1,6 @@
 # Music room — furnished room v1
 
-Original background: 017. A solid grand piano with keyboard, bench and vase sits among pink wall panels and white pilasters. The gramophone horn, stereo cabinet and blue-screen television preserve the source silhouettes and EGA palette. Instruments and equipment are static scenery.
+Original background: 017. A slightly angled grand piano with a solid black keybed supporting its keyboard, bench and vase sits among pink wall panels and white pilasters. The gramophone horn, stereo cabinet with a visible cassette and twin reel windows, and blue-screen television preserve the source silhouettes and EGA palette. The foreground wooden desk carries a black vinyl record with grooves and a gray label. Its inferred legs and depth leave a clear aisle behind it. The original wall-paint and blood pixels conform to the layered wall surfaces with a 1 mm offset to avoid flicker. Instruments and equipment are static scenery.
 
 Connects through the right landing door, owned by the hall. Its front wall sits beyond the living-room ceiling footprint to avoid overlap.
 
@@ -24,6 +24,10 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 284,120 bytes optimized, 79,815 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 325,712 bytes optimized, 92,805 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
+
+## Artwork refinement
+
+The piano composition is wider while retaining its height, depth, slight rotation and solid keybed. The piano, stereo and television are redistributed to preserve the entry clearance and front aisle. The CRT uses the original rounded rectangular glass pixels, including the corner highlights, instead of an oval approximation. See the [five-room artwork review](../../docs/artwork_review.md).

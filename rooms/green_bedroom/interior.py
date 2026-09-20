@@ -1,9 +1,11 @@
 """026: patterned bedspread, model aircraft, plans, hamster enclosure and piggy bank."""
+from blender_shared.placement import rear_anchored, offset_group
 from pathlib import Path
 import random,bpy
 from blender_shared.furnishings import source_patch,curved_line
 from blender_shared.bedroom_furniture import bed,cabinet,finish
 ROOT=Path(__file__).resolve().parents[2]
+@rear_anchored(5.1)
 def furnish(g,c):
  b=g.box;bed(g,-2.10,3.78,2.75,1.58,'lime','gray')
  # This bed has an open metal frame, unlike the two wooden beds.
@@ -23,12 +25,13 @@ def furnish(g,c):
  cabinet(g,'Hamster_cabinet',.15,4.36,.90,.75,.92,'green')
  b('Hamster_tank',(.15,4.36,1.21),(.79,.62,.49),'blue')
  source_patch(g,ROOT/'source/room 026.png',(164,55,193,72),(.15,4.032,1.21),(.74,.49),'Hamster_tank_front')
- cabinet(g,'Piggy_table',1.08,1.0,1.04,.69,.54)
- g.sphere('Piggy_bank',(1.08,1,.85),(.36,.17,.23),'lightred');g.sphere('Pig_snout',(1.43,1,.85),(.08,.12,.095),'lightred')
- for x in [.89,1.29]:
-  for y in [.88,1.12]:b('Pig_foot',(x,y,.66),(.075,.06,.13),'lightred')
- for y in [.91,1.09]:g.mesh('Pig_ear',[(1.23,y,1),(1.31,y,1.19),(1.37,y,1)],[(0,1,2)],'lightred')
- b('Coin_slot',(1.08,1,1.075),(.14,.025,.007),'black');g.sphere('Pig_eye',(1.34,.84,.95),(.025,.012,.025),'black')
+ with offset_group(y=5.1-c['geometry']['depth']):
+  cabinet(g,'Piggy_table',1.08,1.0,1.04,.69,.54)
+  g.sphere('Piggy_bank',(1.08,1,.85),(.36,.17,.23),'lightred');g.sphere('Pig_snout',(1.43,1,.85),(.08,.12,.095),'lightred')
+  for x in [.89,1.29]:
+   for y in [.88,1.12]:b('Pig_foot',(x,y,.66),(.075,.06,.13),'lightred')
+  for y in [.91,1.09]:g.mesh('Pig_ear',[(1.23,y,1),(1.31,y,1.19),(1.37,y,1)],[(0,1,2)],'lightred')
+  b('Coin_slot',(1.08,1,1.075),(.14,.025,.007),'black');g.sphere('Pig_eye',(1.34,.84,.95),(.025,.012,.025),'black')
  for x,y,z,col in [(-2.8,3.7,2.74,'blue'),(-1.25,3.95,2.91,'white')]:
   g.cyl('Model_plane_thread',(x,y,(3.12+z)/2),.005,3.12-z,'gray')
   b('Plane_fuselage',(x,y,z),(.075,.69,.07),col);b('Plane_wings',(x,y-.04,z),( .72,.14,.045),col);b('Plane_tail',(x,y+.27,z+.03),(.30,.10,.035),col)

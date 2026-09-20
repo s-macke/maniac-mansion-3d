@@ -1,9 +1,11 @@
 """021: Fred's blue bed, radio laboratory and original wall art."""
+from blender_shared.placement import rear_anchored
 from pathlib import Path
 import math
 from blender_shared.furnishings import source_patch,panel,curved_line
 from blender_shared.bedroom_furniture import bed,cabinet,chandelier,finish
 ROOT=Path(__file__).resolve().parents[2]
+@rear_anchored(5.1)
 def furnish(g,c):
  b=g.box
  bed(g,-1.15,3.9,2.8,1.35)

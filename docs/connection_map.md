@@ -20,7 +20,7 @@ These are illustration bands, **not yet measured building storeys**. Overlapping
 
 | Cutaway band, bottom to top | Matching backgrounds |
 |---|---|
-| Deep underground | 031 meteor chamber, 030 control laboratory, 051 operating laboratory |
+| Deep underground | 051 meteor chamber, 030 control laboratory, 031 big-screen outer laboratory |
 | Upper underground | 004 dungeon, 008 machinery; 002 pool basin farther right |
 | Directly beneath porch | 029 pipe corridor |
 | Ground / garden | 001 porch, 010 entrance, 003 living room, 005 library; 006 pool and 016 garage to right |
@@ -54,10 +54,10 @@ flowchart TD
     R010 ---|cellar stairs| R008["008 Machinery"]
     R001 ---|bush grating| R029["029 Under-house passage"]
     R008 --- R004["004 Dungeon"]
-    R004 --- R051["051 Outer laboratory"]
-    R051 --- R030["030 Main laboratory"]
-    R030 --- R031["031 Meteor chamber"]
-    R031 ---|simplified escape ladder| R016
+    R004 --- R031["031 Outer laboratory"]
+    R031 --- R030["030 Main laboratory"]
+    R030 --- R051["051 Meteor chamber"]
+    R051 ---|simplified escape ladder| R016
     R011 -.-> R014["014 Art studio"]
     R011 -.-> R017["017 Music room"]
     R011 -.-> R013["013 Security hall"]
@@ -93,9 +93,9 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 001 ↔ 006 | Suggested | Exterior route around house is plausible; fence/gate routing is not established. |
 | 010 ↔ 008 | User-confirmed; built | Hall rear-right door opens onto the cellar stair landing. |
 | 008 ↔ 004 | Built; hint-book supported | Cellar left door meets dungeon right rear door. |
-| 004 ↔ 051 | Built interpretation | Dungeon laboratory door reaches the outer laboratory / ready-room shell; background assignment is inferred from artwork. |
-| 030 ↔ 031 | Built interpretation | Main laboratory left gray door meets meteor chamber right gray door. |
-| 030 ↔ 051 | Built interpretation | Matching teal doors connect the main and outer laboratory shells. |
+| 004 ↔ 031 | Built interpretation | User-confirmed: dungeon door reaches the big-screen outer laboratory, background 031. |
+| 030 ↔ 051 | Built interpretation | User-confirmed: main laboratory left teal door meets meteor chamber right teal door. |
+| 030 ↔ 031 | Built interpretation | Matching gray doors connect the main laboratory and the big-screen outer laboratory. |
 | 011 ↔ 014 | Suggested | Art studio sits left of landing; room has a single door. |
 | 011 ↔ 017 | Suggested | Music room sits right of landing; room has a single door. |
 | 011 ↔ 013 | Suggested | Candidate onward route into tower/security corridor; secure-door cues support it, but continuous geometry is unclear. |
@@ -119,7 +119,7 @@ Do not interpret left/right image positions as world directions. Exact door-slot
 | 027 ↔ 028 | Hint-book supported; built | Ceiling opening above the den plant; the walkthrough substitutes a shared ladder for climbing the grown plant. |
 | 001 ↔ 029 | User-confirmed; built | Grating behind the left porch bush, via a low crawl portal. |
 | 029 ↔ 008 | Unresolved | No connection between these underground spaces is assumed. |
-| 031 ↔ 016 | User-requested simplification; built | Direct ladder from the meteor chamber to a garage floor hatch replaces the original exit door and long passage. |
+| 051 ↔ 016 | User-requested simplification; built | Direct ladder from the meteor chamber to a garage floor hatch replaces the original exit door and long passage. |
 | 044 / 047 ↔ grounds | Reference only | These are exterior compositions, not proof of additional doors or distinct room volumes. |
 
 ## Questions to resolve before full-house blockout
@@ -169,4 +169,4 @@ The [library and complete furnished landing-floor layout](first_floor.md) are co
 
 The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed page 39, describes access to the wire attic from the den via a door concealed by paint. It does not route this through Ted’s bathroom. Printed page 43 confirms Edna’s bedroom ladder reaches the attic containing the safe. The [ladder implementation](ladders.md) uses 009 for that destination and 020 for the speaker room above Fred’s bedroom; cutaway adjacency alone is not used to infer a route.
 
-The [cellar extension](cellar.md#dungeon-and-laboratories) now implements 008 → 004 → 051 → 030 → 031. Door slots and background 051’s outer-lab role remain explicit blockout interpretations.
+The [cellar extension](cellar.md#dungeon-and-laboratories) now implements 008 → 004 → 031 → 030 → 051. The user confirmed the artwork sequence: big screen, three apparatus seats/tubes, then meteor room. Door slots remain spatial interpretations.

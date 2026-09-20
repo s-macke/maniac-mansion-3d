@@ -25,16 +25,20 @@ def furnish(geo,config):
             if rng.random()<.68:
                 for zz in [z+.13,z+h-.015]:box('Book_binding',(x+w/2,4.669,zz),(w*.78,.014,.018),'white' if color!='white' else 'gray')
             x+=w+.025
+    box('Bookcase_crown',(0,4.81,3.065),(10.92,.74,.11),'brown')
     # Brown helical flight as drawn, ending at the ceiling; no invented destination.
-    cx,cy=-.1,3.3
-    geo.cyl('Spiral_central_column',(cx,cy,1.56),.20,3.12,'brown',20)
+    cx,cy=-.1,3.05
+    geo.cyl('Spiral_central_column',(cx,cy,1.56),.26,3.12,'brown',20)
     outer=[]
     for i in range(21):
         a=-math.pi/2+i*math.tau/25;b=a+math.tau/25;z=.12+i*.143
-        vs=[(cx+r*math.cos(t),cy+r*math.sin(t),zz) for zz in [z-.08,z] for r,t in [(.2,a),(1.18,a),(1.18,b),(.2,b)]]
+        vs=[(cx+r*math.cos(t),cy+r*math.sin(t),zz) for zz in [z-.08,z] for r,t in [(.2,a),(1.45,a),(1.45,b),(.2,b)]]
         geo.mesh('Spiral_tread',vs,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],'brown')
         geo.beam('Spiral_tread_edge',vs[5],vs[6],.035,'yellow')
-        p=(cx+1.18*math.cos(a),cy+1.18*math.sin(a),z)
+        # Broad curved outer stringer is a defining silhouette in background 005.
+        band=[(cx+1.47*math.cos(t),cy+1.47*math.sin(t),h) for t,h in [(a,max(.02,z-.25)),(b,max(.02,z+.143-.25)),(b,z+.143),(a,z)]]
+        geo.mesh('Spiral_outer_stringer',band,[(0,1,2,3)],'brown')
+        p=(cx+1.45*math.cos(a),cy+1.45*math.sin(a),z)
         if z+.68<3.12:geo.beam('Spiral_baluster',p,(p[0],p[1],z+.68),.045,'brown')
         outer.append((p[0],p[1],min(z+.68,3.09)))
     curved_line(geo,'Spiral_handrail',outer,.085,'brown')
@@ -49,12 +53,12 @@ def furnish(geo,config):
     for x in [3.32,3.98]:
         for y in [1.86,2.34]:box('Telephone_table_leg',(x,y,.25),(.07,.07,.5),'brown')
     box('Telephone_base',(3.65,2.1,.68),(.48,.34,.13),'green')
-    box('Telephone_receiver',(3.65,2.13,.80),(.53,.13,.09),'black')
+    box('Telephone_receiver',(3.65,2.13,.80),(.53,.13,.09),'green')
     box('Telephone_dial',(3.65,1.92,.72),(.16,.025,.1),'cyan')
     for x,y in [(-5.1,3.8),(5.55,3.6)]:
         geo.cyl('Floor_lamp_base',(x,y,.06),.22,.1,'brown')
         geo.cyl('Floor_lamp_stem',(x,y,1.03),.027,1.95,'yellow')
         geo.mesh('Floor_lamp_shade',[(x+r*math.cos(i*math.tau/12),y+r*math.sin(i*math.tau/12),z) for z,r in [(1.85,.06),(2.18,.23)] for i in range(12)],[(i,(i+1)%12,(i+1)%12+12,i+12) for i in range(12)],'white')
-        geo.sphere('Floor_lamp_glow',(x,y,2.13),(.12,.12,.08),'yellow')
+        glow=geo.sphere('Floor_lamp_glow',(x,y,2.13),(.12,.12,.08),'yellow');glow['bake_unlit']=True;glow['bake_no_shadow']=True
 
 build(Path(__file__).with_name('room.json'),furnish)

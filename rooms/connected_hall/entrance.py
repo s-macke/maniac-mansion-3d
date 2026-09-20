@@ -82,7 +82,6 @@ def build_entrance():
       a,b=cuts[i][1],cuts[i+1][0]
       if b>a:localbox(name+'_shell', (a+b)/2,.11,H/2,b-a,.22,H,'cyan',origin,rot)
      for x,w,h in doors:localbox(name+'_header',x,.11,(H+h)/2,w,.22,H-h,'cyan',origin,rot)
-     def visible(u,z):return not any(abs(u-x)<w/2+.005 and z<h for x,w,h in doors)
      # Narrow alternating stripes stay geometric and retain exact palette from all angles.
      for i in range(int(width/.12)):
       u=-width/2+(i+.5)*.12
@@ -92,16 +91,24 @@ def build_entrance():
       if z0<H:
        localbox(name+'_stripe',u,-.007,(z0+H)/2,.045,.016,H-z0,'aqua',origin,rot)
        localbox(name+'_stripe_ink',u-.036,-.009,(z0+H)/2,.017,.02,H-z0,'black',origin,rot)
-     # Repeated wooden wainscot panels, clipped around door apertures.
-     for i in range(int(width/.85)):
-      u=-width/2+(i+.5)*width/int(width/.85);w=width/int(width/.85)-.06
-      if not all(visible(t,.4) for t in [u-w/2,u,u+w/2]):continue
-      localbox(name+'_panel_black',u,-.025,.43,w,.07,.84,'black',origin,rot)
-      localbox(name+'_panel_red',u,-.065,.43,w-.035,.025,.80,'red',origin,rot)
-      localbox(name+'_panel_gold',u,-.084,.43,w-.09,.018,.68,'yellow',origin,rot)
-      localbox(name+'_panel_wood',u,-.097,.43,w-.14,.016,.62,'brown',origin,rot)
-      localbox(name+'_panel_inset',u,-.107,.43,w-.27,.013,.44,'red',origin,rot)
-      localbox(name+'_panel_center',u,-.12,.43,w-.32,.016,.39,'brown',origin,rot)
+     # Continuous wooden backing and clipped panels fill the wall beside jambs.
+     spans=[(cuts[i][1],cuts[i+1][0]) for i in range(len(cuts)-1) if cuts[i+1][0]>cuts[i][1]]
+     for a,b in spans:
+      localbox(name+'_panel_backing',(a+b)/2,-.018,.43,b-a,.025,.84,'brown',origin,rot)
+     count=int(width/.85);step=width/count
+     for i in range(count):
+      centre=-width/2+(i+.5)*step;nominal=step-.06
+      for a,b in spans:
+       left=max(centre-nominal/2,a+.025);right=min(centre+nominal/2,b-.025)
+       w=right-left
+       if w<.35:continue
+       u=(left+right)/2
+       localbox(name+'_panel_black',u,-.025,.43,w,.07,.84,'black',origin,rot)
+       localbox(name+'_panel_red',u,-.065,.43,w-.035,.025,.80,'red',origin,rot)
+       localbox(name+'_panel_gold',u,-.084,.43,w-.09,.018,.68,'yellow',origin,rot)
+       localbox(name+'_panel_wood',u,-.097,.43,w-.14,.016,.62,'brown',origin,rot)
+       localbox(name+'_panel_inset',u,-.107,.43,w-.27,.013,.44,'red',origin,rot)
+       localbox(name+'_panel_center',u,-.12,.43,w-.32,.016,.39,'brown',origin,rot)
      for z,h,mat in [(.07,.13,'red'),(.84,.07,'black'),(.91,.06,'yellow'),(.97,.06,'brown'),(3.61,.07,'brown')]:
       for i in range(len(cuts)-1):
        a,b=cuts[i][1],cuts[i+1][0]

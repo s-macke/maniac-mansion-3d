@@ -2,7 +2,7 @@
   "id": "meteor_chamber",
   "label": "Meteor chamber",
   "backgrounds": [
-    "031"
+    "051"
   ],
   "asset": "generated/models/rooms/meteor_chamber_v1.glb",
   "source": "generated/blender/meteor_chamber/meteor_chamber_source_v1.blend",
@@ -56,22 +56,28 @@
     ],
     "obstacles": [
       {
-        "x0": -1.93,
-        "x1": 1.7,
-        "y0": 3.48,
-        "y1": 4.92
+        "x0": -3.21,
+        "x1": -1.89,
+        "y0": 3.9,
+        "y1": 4.77
       },
       {
-        "x0": 2.57,
-        "x1": 4.07,
-        "y0": 4.09,
-        "y1": 4.96
+        "x0": -0.68,
+        "x1": 1.29,
+        "y0": 4.02,
+        "y1": 4.86
       },
       {
-        "x0": -5.07,
-        "x1": -4.38,
-        "y0": 4.58,
-        "y1": 4.91
+        "x0": 2.64,
+        "x1": 4.3,
+        "y0": 4.05,
+        "y1": 4.85
+      },
+      {
+        "x0": -5.25,
+        "x1": 5.25,
+        "y0": 4.6,
+        "y1": 4.93
       }
     ]
   },
@@ -125,7 +131,7 @@
         "owner": false,
         "frame": false,
         "leaf": false,
-        "asset": "Metal_leaf",
+        "asset": "Lab_leaf",
         "label": "Lab door"
       }
     ]
@@ -171,7 +177,7 @@
     "previewSuffix": "v1",
     "startupCutaway": false,
     "references": [
-      "source/room 031.png"
+      "source/room 051.png"
     ]
   }
 }

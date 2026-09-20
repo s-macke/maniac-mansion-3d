@@ -22,7 +22,7 @@ test('room loads, mouse look and walking work, pause and reset recover',async({p
 test('pointer-lock denial falls back to dragging; reset button shares state',async({page})=>{
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Test denial'));});
  await page.goto('/?room=hall');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
- await expect(page.getByText('Click or drag to look · Arrow keys also work · R to reset')).toBeVisible();
+ await expect(page.getByText('Click or drag to look · Shift to walk faster · Arrow keys also work · R to reset')).toBeVisible();
  const before=await state(page);await page.mouse.move(800,400);await page.mouse.down();await page.mouse.move(950,450,{steps:5});await page.mouse.up();
  await expect.poll(async()=>Math.abs((await state(page)).yaw-before.yaw)).toBeGreaterThan(.1);
  await page.keyboard.down('w');await page.waitForTimeout(180);await page.keyboard.up('w');

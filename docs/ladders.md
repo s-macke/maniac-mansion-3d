@@ -12,7 +12,7 @@ The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.
 
 The mummy bathroom has no attic connection. The separate wire attic (015) is accessed from the den/typewriter room (027), according to printed page 39; that route now uses an interactive painted wall panel and [walkable stairs](../rooms/attic_stairs/README.md), followed by a seamless portal into the furnished wire attic.
 
-The fourth route is a user-requested direct **meteor chamber (031) ↔ garage (016)** ladder. It replaces the original exit door and long passage; the garage floor has an actual open hatch.
+The fourth route is a user-requested direct **meteor chamber (051) ↔ garage (016)** ladder. It replaces the original exit door and long passage; the garage floor has an actual open hatch.
 
 ## Controls and movement
 

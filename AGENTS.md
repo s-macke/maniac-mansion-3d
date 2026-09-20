@@ -26,6 +26,8 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Connection map](docs/connection_map.md) | Artwork-based topology and unresolved links |
 | [Room inventory](generated/reference/room_inventory.md) | Supplied backgrounds and candidate rooms |
 | [Scale and style](docs/scale_and_style.md) | EGA palette, display aspect and inferred dimensions |
+| [Room size audit](docs/room_size_audit.md) | All 34 room footprints, artwork comparisons and resizing priorities |
+| [Five-room artwork review](docs/artwork_review.md) | Library, music room, cellar, darkroom and bathroom fidelity corrections |
 | [Web README](web/README.md) | Local build, controls, runtime and validation instructions |
 | [Connected hall](rooms/connected_hall/README.md) | Entrance, staircase, landing and hall-owned doors |
 | [Living room](rooms/living_room/README.md) | Furnished room and corrected arched radio |

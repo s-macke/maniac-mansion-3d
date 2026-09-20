@@ -44,7 +44,7 @@ ROWS = '''001|Front porch and grounds|Front facade, bottom of house|high|Central
 028|Observatory|Top dome|high|No clear walking entrance in background
 029|Under-house pipe corridor|Directly below porch|high|Passage extends to both image edges
 030|Laboratory, control chairs|Deepest underground band, center-left|high|Door at each end; radiation-marked cabinet/compartment at right
-031|Meteor / machine chamber|Deepest underground band, far left|high|Vault-like door left; regular door right
+031|Outer laboratory / big screen|Deepest underground band, far left|high|Vault-like door left; regular door right
 032|Moon landing / ending scene|Moon vignette, upper left|medium|Off-site scene; not a house room
 033|Distant house panorama|Exterior mood reference|not mapped|Related composition to 047; not a separate interior
 034|Telescope view panels A|Not mapped|not mapped|Three circular close-up views; not rooms
@@ -63,7 +63,7 @@ ROWS = '''001|Front porch and grounds|Front facade, bottom of house|high|Central
 048|Flying car / ending scene|Not mapped|not mapped|Ending illustration
 049|Title logo|Not mapped|not mapped|UI only
 050|Save / load menu|Not mapped|not mapped|UI only
-051|Laboratory, operating apparatus|Deepest underground band, right|high|Door at each end
+051|Meteor chamber / suspended apparatus|Deepest underground band, right|high|Door at each end
 052|Damaged exterior fence / opening|Pool/garage exterior candidate|low|Possible altered exterior state; exact relation to 006/016 unresolved'''
 
 

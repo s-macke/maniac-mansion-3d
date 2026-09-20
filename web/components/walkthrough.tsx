@@ -57,7 +57,7 @@ export default function Walkthrough() {
       if(e.code==='Escape'){pause();return;}
       if(!walking)return;
       if(e.code==='KeyE'&&!e.repeat){e.preventDefault();interact();return;}
-      if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyR'].includes(e.code)) {
+      if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','ShiftLeft','ShiftRight','KeyR'].includes(e.code)) {
         e.preventDefault();if(e.code==='KeyR')reset();else keys.add(e.code);
       }
     };
@@ -103,7 +103,7 @@ export default function Walkthrough() {
         const turn=(Number(keys.has('ArrowLeft'))-Number(keys.has('ArrowRight')))*1.55*dt;yaw+=turn;
         let forward=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));
         let right=Number(keys.has('KeyD'))-Number(keys.has('KeyA'));const length=Math.hypot(forward,right);
-        if(length){const before=walker;forward/=length;right/=length;const speed=2.5*dt;const moved=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);walker=moved;yaw+=moved.yawDelta;eye+=moved.heightDelta;
+        if(length){const before=walker;forward/=length;right/=length;const speed=2.5*(keys.has('ShiftLeft')||keys.has('ShiftRight')?2:1)*dt;const moved=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);walker=moved;yaw+=moved.yawDelta;eye+=moved.heightDelta;
           if(!hintFinished){distanceWalked+=moved.crossed?speed:Math.hypot(walker.x-before.x,walker.y-before.y,walker.height-before.height);if(distanceWalked>=3){hintFinished=true;setShowHint(false);}}
         }
       }
@@ -142,7 +142,7 @@ export default function Walkthrough() {
       <h2>{error?'Unable to enter':ready?'Explore the house':'Opening the house…'}</h2>
       {error?<p className="error" role="alert">{error}</p>:<>
         <p>{touch?'Drag to look around. Use the arrows to walk. Tap a nearby door to open it, or a ladder to climb.':'Walk with WASD. Click or drag to look. Aim at a nearby door or ladder and press E to use it.'}</p>
-        <div className="key-row"><kbd>W A S D</kbd><span>walk</span><kbd>Mouse</kbd><span>look</span><kbd>Esc</kbd><span>pause</span></div>
+        <div className="key-row"><kbd>W A S D</kbd><span>walk</span><kbd>Shift</kbd><span>faster</span><kbd>Mouse</kbd><span>look</span><kbd>Esc</kbd><span>pause</span></div>
         {!ready && <><div className="progress-line" role="progressbar" aria-label="Loading room" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}><span style={{width:`${progress}%`}} /></div><p className="small" aria-live="polite">Loading room · {progress}%</p></>}
         <p className="small">{preview?'Independent room preview. Doors stay closed for now.':'The front steps lead into the hall. Walk through to the living room or take the grand staircase upstairs.'}</p>
       </>}
@@ -150,6 +150,6 @@ export default function Walkthrough() {
     {active && <div className="reticle" aria-hidden="true" />}
     {active && doorAction && <Button className="door-action" aria-label={doorAction} aria-keyshortcuts={!touch?'E':undefined} onClick={()=>runtime.current?.interact()}>{!touch && <kbd>E</kbd>}{doorAction}</Button>}
     {active && touch && <div className="touch-pad" aria-label="Movement controls">{[['KeyW','↑','Forward'],['KeyA','←','Left'],['KeyS','↓','Backward'],['KeyD','→','Right']].map(([code,label,title])=><Button key={code} aria-label={title} onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);runtime.current?.key(code,true);}} onPointerUp={()=>runtime.current?.key(code,false)} onPointerCancel={()=>runtime.current?.key(code,false)}>{label}</Button>)}</div>}
-    <footer className="footer"><span className="status" aria-live="polite">{error?'ROOM UNAVAILABLE':!ready?'LOADING':active?'EXPLORING':'PAUSED'}</span><span className="desktop-help">{fallback?'Click or drag to look · Arrow keys also work · R to reset':'WASD to walk · Mouse to look · R to reset'}</span></footer>
+    <footer className="footer"><span className="status" aria-live="polite">{error?'ROOM UNAVAILABLE':!ready?'LOADING':active?'EXPLORING':'PAUSED'}</span><span className="desktop-help">{fallback?'Click or drag to look · Shift to walk faster · Arrow keys also work · R to reset':'WASD to walk · Shift to walk faster · Mouse to look · R to reset'}</span></footer>
   </main>;
 }

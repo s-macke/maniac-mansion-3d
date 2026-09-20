@@ -38,6 +38,13 @@ door_hinges={o['door_node']:Vector(o['door_hinge']) for o in objects if o.get('d
 lights=[Vector(v) for v in settings['lights']]
 light_groups=[[l]+[l+Vector((math.cos(i*math.tau/8)*.32,math.sin(i*math.tau/8)*.32,0)) for i in range(8)] for l in lights]
 light_samples=light_groups[0]
+# Optional fixture lights are local, directed cones with a finite range. Legacy
+# fill lights keep their existing behavior for rooms without this setting.
+practical_lights=[]
+for fixture in settings.get('practicalLights',[]):
+ center=Vector(fixture['position']);radius=fixture.get('radius',.04)
+ samples=[center]+[center+Vector((math.cos(i*math.tau/8)*radius,math.sin(i*math.tau/8)*radius,0)) for i in range(8)]
+ practical_lights.append((fixture,center,samples,Vector(fixture.get('direction',[0,0,-1])).normalized()))
 def smooth(a,b,x):
  t=max(0,min(1,(x-a)/(b-a)));return t*t*(3-2*t)
 def shade(p,normal,base):
@@ -51,8 +58,17 @@ def shade(p,normal,base):
    hit=bvh.ray_cast(p+normal*.008+direction*.002,direction,max(0,distance-.015))[0]
    visible+=hit is None
   factors.append(.43+(lit-.43)*visible/len(samples))
- factor=max(factors)
- return tuple(c*factor for c in base[:3])+(1.,)
+ factor=max(factors)*settings.get('fillStrength',1.)
+ for fixture,center,samples,beam in practical_lights:
+  toward=center-p;distance=toward.length
+  if distance<.0001 or distance>=fixture['range']:continue
+  direction=toward/distance;nd=max(0,normal.dot(direction))
+  cone=smooth(math.cos(math.radians(fixture.get('coneAngle',70))),1.,-direction.dot(beam))
+  if nd*cone<=0:continue
+  visible=sum(bvh.ray_cast(p+normal*.008+(sample-p).normalized()*.002,(sample-p).normalized(),max(0,(sample-p).length-.015))[0] is None for sample in samples)/len(samples)
+  falloff=(1.-(distance/fixture['range'])**2)**2
+  factor+=fixture.get('strength',.75)*nd*cone*falloff*visible
+ return tuple(min(1.,c*factor) for c in base[:3])+(1.,)
 
 def emit(group,points,normal,base,colors=None):
  vs,fs,cs=groups.setdefault(group,([],[],[]));start=len(vs)
@@ -135,6 +151,6 @@ for o in front+ceilings:o.hide_render=settings.get('startupCutaway',False)
 cam,name,w,h=views[0];scene.camera=bpy.data.objects[cam]
 scene.render.resolution_x=w;scene.render.resolution_y=h;scene.render.filepath=str(OUT/f'{name}_{suffix}.png')
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/config['baked']))
-report={'method':'Interpolated vertex lighting with soft direct shadows and softened cel bands; no GI','light_position':list(light),'light_positions':[list(v) for v in lights],'cell_size_m':cell,'shadow_samples':len(light_samples),'render_meshes':sum(o.type=='MESH' and not o.get('shared_asset') for o in baked.objects),'shared_instances':sum(o.type=='MESH' for o in shared),'vertices':sum(len(o.data.vertices) for o in baked.objects if o.type=='MESH' and not o.get('shared_asset')),'faces':sum(len(o.data.polygons) for o in baked.objects if o.type=='MESH' and not o.get('shared_asset')),'browser_requirements':'Standard glTF COLOR_0 and KHR_materials_unlit; no lights or custom shaders'}
+report={'method':'Interpolated vertex lighting with soft direct shadows and softened cel bands; no GI','light_position':list(light),'light_positions':[list(v) for v in lights],'practical_lights':settings.get('practicalLights',[]),'fill_strength':settings.get('fillStrength',1.),'cell_size_m':cell,'shadow_samples':len(light_samples),'render_meshes':sum(o.type=='MESH' and not o.get('shared_asset') for o in baked.objects),'shared_instances':sum(o.type=='MESH' for o in shared),'vertices':sum(len(o.data.vertices) for o in baked.objects if o.type=='MESH' and not o.get('shared_asset')),'faces':sum(len(o.data.polygons) for o in baked.objects if o.type=='MESH' and not o.get('shared_asset')),'browser_requirements':'Standard glTF COLOR_0 and KHR_materials_unlit; no lights or custom shaders'}
 (manifest_path(config).parent/f'shading_report_{suffix}.json').write_text(json.dumps(report,indent=2)+'\n')
 print('ROOM_BAKE_COMPLETE',json.dumps(report),flush=True)

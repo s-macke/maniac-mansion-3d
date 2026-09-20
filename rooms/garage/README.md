@@ -1,6 +1,6 @@
 # Garage and forecourt — furnished room v1
 
-Room 016 shows an outdoor forecourt leading into a covered garage bay. This package keeps that distinction: an open-air approach from the pool, a wide open vehicle entrance, gray walls, blue floor and a simple pitched roof. The covered bay now contains the static red-and-turquoise car from background 016, with real wheels, window panels, rear fins, circular headlight pods, chrome trim and the original EDSEL plate. A sparse storage rack and raised shutter slats/tracks complete the garage fixtures. The shutter remains open and the car is not drivable.
+Room 016 shows an outdoor forecourt leading into a covered garage bay. This package keeps that distinction: an open-air approach from the pool, a wide open vehicle entrance, gray walls, blue floor and a simple pitched roof. The covered bay now contains the static red-and-turquoise car from background 016, with real wheels, window panels, rear fins, circular taillight housings, chrome trim and the original EDSEL rear plate. The rear/trunk faces the forecourt, matching the source; the nose points into the bay. A sparse storage rack and raised shutter slats/tracks complete the garage fixtures. The shutter remains open and the car is not drivable.
 
 The provisional unit is 14 × 8 m. The forecourt occupies the first 4 m; the covered bay is 10 × 7 m with a 3.3 m eave height and 4.75 m ridge. The entrance is 4.8 × 2.95 m. Roof shape follows the cutaway; unseen dimensions and gray roof finish are inferred. There is no new interactive door leaf in this pass.
 
@@ -26,7 +26,7 @@ A shared ladder now links the meteor chamber to a real floor hatch inside the ga
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 264,056 bytes (77,080 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
+The furnished optimized GLB is 262,316 bytes (76,617 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
 
 Static build, typecheck, catalog validation and 15 focused navigation/GLB checks pass, including furniture collision, clear door thresholds, the pool approach and the garage hatch landing.
 Three desktop Chrome checks pass: garage circulation to the hatch, pantry interior movement, and the meteor-chamber/garage ladder round trip. Browser screenshots were inspected, including the simplified title without background numbers. No physical-mobile validation was performed.

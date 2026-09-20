@@ -1,8 +1,9 @@
 # Step 1: room inventory and initial map
 
-Step 1 is complete as an initial planning pass. The supplied artwork establishes the layout basis; uncertain door destinations and unmatched connectors remain explicitly recorded. The local walkthrough now contains 14 room units; see [the architecture guide](architecture.md) for the current implementation.
+Step 1 is complete as an initial planning pass. The supplied artwork establishes the layout basis; uncertain door destinations and unmatched connectors remain explicitly recorded. The local walkthrough now contains 34 room units; see [the architecture guide](architecture.md) for the current implementation.
 
 - [Room inventory](../generated/reference/room_inventory.md): all 51 images, descriptive names, visible exits, cutaway matches, and state/reference classification.
+- [Room size audit](room_size_audit.md): current footprints, artwork comparisons and resizing priorities for all 34 room units.
 - [Connection map](connection_map.md): spatial bands, route diagram, evidence per connection, and unresolved links.
 - [Display aspect and scale](scale_and_style.md): provisional 1.2 vertical display correction, exact source colors, and shared Blender dimensions.
 - [Machine-readable inventory](../generated/reference/room_inventory.csv): dimensions, metadata, and source hashes.
@@ -27,3 +28,5 @@ The filenames have gaps; page labels are descriptive ranges, not counts. See the
 See the [project README](../README.md) and [room workflow](architecture.md). The inventory above remains the original planning reference.
 
 See [the library and first-floor layout](first_floor.md) for the current upstairs shells, door ownership and deferred routes.
+
+See the [five-room artwork review](artwork_review.md) for the current detail and lighting refinements.

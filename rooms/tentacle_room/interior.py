@@ -1,9 +1,11 @@
 """020: two giant speaker cabinets, green bed, hi-fi shelf and original posters."""
+from blender_shared.placement import rear_anchored
 from pathlib import Path
 import math,bpy
 from blender_shared.furnishings import source_patch
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
+@rear_anchored(5.2)
 def furnish(g,c):
  b=g.box
  # Batch thin blue wall stripes above the timber panelling.
@@ -15,8 +17,8 @@ def furnish(g,c):
  for x in [-4+i*.30 for i in range(28)]:b('Wainscot_stile',(x,4.925,.55),(.026,.02,.88),'lightred')
  for z,col in [(.08,'red'),(1.02,'yellow'),(1.09,'red')]:b('Wainscot_rail',(0,4.91,z),(8.16,.045,.035),col)
  for x in [-4.085,4.085]:
-  b('Side_wainscot',(x,2.60,.54),(.055,4.78,1.0),'brown')
-  for z,col in [(1.02,'yellow'),(1.09,'red')]:b('Side_panel_rail',(x,2.60,z),(.075,4.78,.035),col)
+  b('Side_wainscot',(x,(5.2-c['geometry']['depth'])/2+2.60,.54),(.055,c['geometry']['depth']-.42,1.0),'brown')
+  for z,col in [(1.02,'yellow'),(1.09,'red')]:b('Side_panel_rail',(x,(5.2-c['geometry']['depth'])/2+2.60,z),(.075,c['geometry']['depth']-.42,.035),col)
  def disc(name,x,y,z,r,depth,col):
   o=g.cyl(name,(0,0,0),r,depth,col,40);o.rotation_euler.x=math.pi/2;o.location=(x,y,z);return o
  for x in [-1.90,2.95]:

@@ -18,6 +18,12 @@ def furnish(g,c):
  for x in [-4.75,-3.58,-2.94]:pipe(g,'Slender_copper_pipe',[(x,5.73,3.1),(x,5.73,1.00),(x+.42,5.73,.83)],.064,'cyan')
  pipe(g,'Red_hot_pipe',[(-3.55,5.62,.47),(.24,5.62,.47),(.24,5.62,1.61)],.068,'red')
  for i in range(34):b('Hot_pipe_rib',(-3.4+i*.1,5.54,.47),(.022,.14,.17),'yellow')
+ # Three ribbed gray return pipes visible behind the cyan risers in 008.
+ for z in [.87,1.13,1.39]:
+  cylinder(g,'Return_pipe',(-4.98,5.79,z),(.74,5.79,z),.073,'gray')
+  for i in range(48):
+   x=-4.94+i*.12;cylinder(g,'Return_pipe_rib',(x-.016,5.79,z),(x+.016,5.79,z),.095,'darkgray')
+ machine_before=set(bpy.data.objects)
  # Blue furnace housing, vented cooler and red pressure dome.
  b('Furnace_body',(2.54,4.86,.80),(1.75,1.20,1.60),'blue');b('Furnace_firebox',(2.54,4.234,.47),(1.40,.065,.70),'lightblue')
  b('Firebox_dark_border',(2.54,4.192,.47),(1.27,.025,.57),'blue');b('Firebox_face',(2.54,4.17,.47),(1.15,.023,.48),'lightblue')
@@ -36,6 +42,9 @@ def furnish(g,c):
  g.cyl('Extinguisher',(1.25,4.22,1.14),.13,.69,'red',20);g.sphere('Extinguisher_top',(1.25,4.22,1.49),(.13,.13,.13),'red')
  pipe(g,'Extinguisher_hose',[(1.25,4.23,1.57),(1.05,4.14,1.70),(.93,4.16,1.40)],.025,'cyan',False)
  pipe(g,'Boiler_outlet',[(3.2,5.08,1.62),(4.42,5.08,1.62),(4.42,5.65,2.11)],.055,'cyan')
+ bpy.context.view_layer.update()
+ machine_transform=Matrix.Translation((1.5,0,0))@Matrix.Diagonal((1.25,1,1,1))@Matrix.Translation((-1.5,0,0))
+ for o in set(bpy.data.objects)-machine_before:o.matrix_world=machine_transform@o.matrix_world
  # Small electrical cabinet on the left wall, clear of the dungeon door.
  before=set(bpy.data.objects)
  b('Electrical_box',(0,0,1.44),(.80,.13,1.05),'blue');b('Electrical_box_trim',(0,-.079,1.44),(.73,.025,.98),'gray');b('Electrical_panel',(0,-.1,1.44),(.63,.025,.86),'lightblue')

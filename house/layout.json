@@ -705,12 +705,12 @@
         "room": "heart_bedroom",
         "landing": {
           "x": 3.25,
-          "y": 4.25,
+          "y": 3.65,
           "height": 0
         },
         "shaft": {
           "x": 3.67,
-          "y": 4.25
+          "y": 3.65
         },
         "yaw": -1.5707963267948966,
         "port": "ladder_hatch"
@@ -719,12 +719,12 @@
         "room": "safe_attic",
         "landing": {
           "x": 2,
-          "y": 3.9,
+          "y": 3.2,
           "height": 0
         },
         "shaft": {
           "x": 2.87,
-          "y": 3.9
+          "y": 3.2
         },
         "yaw": -1.5707963267948966,
         "port": "ladder_hatch"
@@ -737,12 +737,12 @@
         "room": "radio_bedroom",
         "landing": {
           "x": -3.25,
-          "y": 4.25,
+          "y": 3.65,
           "height": 0
         },
         "shaft": {
           "x": -3.67,
-          "y": 4.25
+          "y": 3.65
         },
         "yaw": 1.5707963267948966,
         "port": "ladder_hatch"
@@ -751,12 +751,12 @@
         "room": "tentacle_room",
         "landing": {
           "x": -2,
-          "y": 3.9,
+          "y": 3.2,
           "height": 0
         },
         "shaft": {
           "x": -2.87,
-          "y": 3.9
+          "y": 3.2
         },
         "yaw": 1.5707963267948966,
         "port": "ladder_hatch"

@@ -24,7 +24,11 @@ This folder contains only the builder, authored `room.json` and documentation. O
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 747,548 bytes (196,329 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
+The furnished optimized GLB is 792,800 bytes (218,770 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
 
 The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
 Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.
+
+## Artwork refinement
+
+The spiral now has a 1.45 m tread radius and a broad curved outer stringer. A complete top rail caps the bookcases; the telephone receiver is green. The two reading lamps have bright bulb geometry and local upward/backward illumination baked onto nearby surfaces. See the [five-room artwork review](../../docs/artwork_review.md).

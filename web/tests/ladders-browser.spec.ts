@@ -19,7 +19,7 @@ for(const [id,x,upper] of [['heart_bedroom',112,'safe_attic'],['radio_bedroom',1
  }
 
  const sign=id==='heart_bedroom'?1:-1;
- await go(x+sign*3.15,2);await go(x+sign*3.15,4.25);await aim(x+sign*4.12,4.25);
+ await go(x+sign*3.15,2);await go(x+sign*3.15,3.65);await aim(x+sign*4.12,3.65);
  await page.mouse.move(650,600);await page.mouse.down();await page.mouse.move(650,220,{steps:8});await page.mouse.up();
  await expect(page.locator('.door-action')).toContainText('Climb up');
  await expect.poll(async()=>(await state()).portals.visibleRooms).toContain(upper);
@@ -31,7 +31,7 @@ for(const [id,x,upper] of [['heart_bedroom',112,'safe_attic'],['radio_bedroom',1
  await expect.poll(async()=>(await state()).climbing,{timeout:15000}).toBe(false);
  expect((await state()).height).toBeCloseTo(13.44);
  const upperX=id==='heart_bedroom'?220:244;
- await aim(upperX+sign*3.1,3.9);
+ await aim(upperX+sign*3.1,3.2);
  await page.mouse.move(650,160);await page.mouse.down();await page.mouse.move(650,870,{steps:8});await page.mouse.up();
  await expect(page.locator('.door-action')).toContainText('Climb down');
  await expect.poll(async()=>(await state()).portals.visibleRooms).toContain(id);
@@ -68,7 +68,7 @@ test('mobile touch controls climb a hatch in both directions',async({browser})=>
   await touch('touchStart',button.x+button.width/2,button.y+button.height/2);
   try{await expect.poll(async()=>{const q=await state();return((q.x-p.x)*dx+(q.y-p.y)*dy)/length;},{timeout:20000,intervals:[70]}).toBeGreaterThan(length-.14);}finally{await touch('touchEnd');}
  }
- await walk(115.15,2);await walk(115.15,4.25);await look(116.12,4.25);
+ await walk(115.15,2);await walk(115.15,3.65);await look(116.12,3.65);
  await expect(page.locator('.door-action')).toContainText('Climb up');await page.locator('.door-action').tap();
  await expect.poll(async()=>(await state()).room,{timeout:15000}).toBe('safe_attic');
  await expect.poll(async()=>(await state()).climbing,{timeout:15000}).toBe(false);

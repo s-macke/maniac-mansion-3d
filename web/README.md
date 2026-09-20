@@ -21,7 +21,7 @@ The build uses Vite and React directly. No OpenAI Sites plugin, hosting configur
 - Walking starts automatically when the room loads.
 - The controls hint disappears after 3 metres of actual walking.
 - Click the scene to capture the mouse, or drag to look.
-- **WASD** walks; the **mouse** looks around.
+- **WASD** walks; the **mouse** looks around. Hold either **Shift** key to move twice as fast (5 m/s instead of 2.5 m/s). Release it to return to normal speed. Ladder and crawl animations keep their normal speed.
 - **Arrow Up/Down** walk, **Arrow Left/Right** turn.
 - **Esc** pauses and releases the mouse; click the scene or **Resume** to continue.
 - **R** or **Reset position** returns to the initial viewpoint.

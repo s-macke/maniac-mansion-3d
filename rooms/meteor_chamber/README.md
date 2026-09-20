@@ -1,6 +1,6 @@
 # Meteor chamber
 
-Furnished from [background 031](../../source/room%20031.png). Green monitor with the original pixel diagram, vented console base, cooling fins, cyan pipes, small keypad and articulated arm. The garage ladder landing stays clear; no original exit door is reinstated. Original EGA colors and soft baked shading use the existing browser pipeline.
+Furnished from [background 051](../../source/room%20051.png): riveted panels, colored pipes, lever cabinet, horizontal tank and suspended meteor apparatus with pincers. This is the final cellar room, after the three-apparatus main laboratory (030). Its garage ladder and landing remain clear. Original EGA colors and soft baked shading use the existing browser pipeline.
 
 See [cellar layout](../../docs/cellar.md) for door ownership, route evidence and unresolved exits. Dimensions are provisional for walkthrough review.
 

@@ -7,3 +7,7 @@ The entrance hall owns the interactive `rear_right` cellar door. Its portal conn
 Rebuild with `./docker-build.sh room cellar`; use `?room=cellar` for direct review. Generated Blender scenes, GLBs and previews live under `generated/`. See [cellar routes](../../docs/cellar.md).
 
 `interior.py` adds scenery to the shared shell builder; authored `room.json` keeps its collision footprints. All generated Blender scenes, previews and models remain under `generated/`.
+
+## Artwork refinement
+
+Three ribbed gray return pipes now span the rear wall behind the cyan risers. The furnace/cooler group is broader horizontally; chimney height remains unchanged and the right staircase stays clear. See the [five-room artwork review](../../docs/artwork_review.md).

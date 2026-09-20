@@ -1,9 +1,11 @@
 """015: original broken plaster and exposed laths, boarded window and loose wires."""
+from blender_shared.placement import rear_anchored
 from pathlib import Path
 import bpy,math
 from blender_shared.furnishings import source_patch,curved_line
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
+@rear_anchored(5.2)
 def furnish(g,c):
  b=g.box
  # The original jagged silhouettes form separate depth layers, exposing timber below plaster.
@@ -23,5 +25,5 @@ def furnish(g,c):
  # Hanging fitting and cable, and a few physical rafter edges at the roof line.
  curved_line(g,'Attic_cable',[(-1.53,4.36,3.10),(-1.53,4.36,2.83),(-1.72,4.34,2.65)],.024,'black')
  b('Crooked_light_shade',(-1.71,4.34,2.66),(.39,.20,.055),'blue');g.cyl('Exposed_bulb',(-1.71,4.34,2.50),.048,.19,'white')
- for x in [-3.93,3.93]:g.beam('Roof_edge',(x,.3,3.035),(x,4.92,3.035),.075,'darkgray')
+ for x in [-3.93,3.93]:g.beam('Roof_edge',(x,5.2-c['geometry']['depth']+.3,3.035),(x,4.92,3.035),.075,'darkgray')
  finish(c)

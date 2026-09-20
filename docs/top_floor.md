@@ -1,6 +1,8 @@
 # Furnished top floor
 
-Four independent rooms at 13.44 m complete the existing top level. All are reconstructed from the original EGA backgrounds with simple geometry and baked vertex colors. They retain their original ports, ladder landings and placements.
+The safe attic, Tentacle room and wire attic now measure 8.6 × 4.5 m. Their rear furnishings, hatch geometry and ladder endpoints follow the shorter shells without scaling the shared ladder kit. The observatory is unchanged. See the [room size audit](room_size_audit.md).
+
+Four independent rooms at 13.44 m complete the existing top level. All are reconstructed from the original EGA backgrounds with simple geometry and baked vertex colors. They retain their portal destinations and room placements; local hatch and landing positions follow the current room dimensions.
 
 | Room | Background | Furnishings | Access |
 |---|---|---|---|
@@ -28,7 +30,7 @@ The circular observatory keeps its curved shell, open slit and real floor hatch.
 
 Review locally at `http://127.0.0.1:5174/?room=observatory` (substitute any room ID above). Generated Blender scenes, models and previews stay under `generated/`. Door and ladder kits remain shared.
 
-The four optimized room models total 452,473 bytes with gzip (about 452 KB), excluding the shared ladder kit. Their individual sizes are recorded in the room READMEs.
+The four optimized room models total 441,183 bytes with gzip (about 441 KB), excluding the shared ladder kit. Their individual sizes are recorded in the room READMEs.
 
 ## Validation
 

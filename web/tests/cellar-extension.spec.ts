@@ -19,6 +19,10 @@ test('cellar extension portals have one closed shared door and allow return trav
 });
 test('cellar route follows door order and uses the requested garage escape ladder',()=>{
  const v=createHouseRuntime();
+ // Anchor the route to the artwork, not just semantic room IDs.
+ expect(v.definitions.outer_lab.backgrounds).toEqual(['031']); // big green screen
+ expect(v.definitions.main_lab.backgrounds).toEqual(['030']); // three apparatus seats/tubes
+ expect(v.definitions.meteor_chamber.backgrounds).toEqual(['051']); // suspended meteor apparatus
  const neighbors=(id:string)=>v.graph.outgoing(id).map(e=>e.to.room.id).sort();
  expect(neighbors('cellar')).toEqual(['dungeon','hall']);
  expect(neighbors('dungeon')).toEqual(['cellar','outer_lab']);

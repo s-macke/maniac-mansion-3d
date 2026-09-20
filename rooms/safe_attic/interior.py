@@ -1,10 +1,12 @@
 """009: boarded attic, cracked walls, small window and portrait-covered safe."""
+from blender_shared.placement import rear_anchored
 from pathlib import Path
 import math,random,bpy
 from mathutils import Matrix
 from blender_shared.furnishings import source_patch,curved_line
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
+@rear_anchored(5.2)
 def furnish(g,c):
  b=g.box
  # Gray boards retain the room's base colors; the reference's telescope overlay is not room lighting.
@@ -24,7 +26,7 @@ def furnish(g,c):
  for x,w,d,h,col in [(-4.075,1.10,.08,1.65,'black'),(-4.023,1.02,.055,1.55,'gray'),(-3.985,.88,.025,1.40,'black')]:b('Attic_window',(x,3.73,1.81),(d,w,h),col)
  b('Window_crossbar',(-3.96,3.73,1.81),(.035,.90,.035),'gray')
  for y,z in [(3.42,2.13),(3.86,1.58),(3.77,2.32)]:b('Window_star',(-3.963,y,z),(.012,.02,.025),'white')
- for pts in [[(-4.108,.75,.3),(-4.108,1.13,.7),(-4.108,.98,1.04),(-4.108,1.28,1.43)], [(-4.108,3.1,2.65),(-4.108,2.9,2.9),(-4.108,2.45,3.08)]]:curved_line(g,'Wall_crack',pts,.014,'black')
+ for pts in [[(-4.108,1.45,.3),(-4.108,1.83,.7),(-4.108,1.68,1.04),(-4.108,1.98,1.43)], [(-4.108,3.1,2.65),(-4.108,2.9,2.9),(-4.108,2.45,3.08)]]:curved_line(g,'Wall_crack',pts,.014,'black')
  # Closed, static safe case behind the portrait. No puzzle or new moving mechanism.
  b('Safe_case',(3.98,1.85,1.85),(.25,1.03,1.63),'black')
  b('Safe_door',(3.84,1.85,1.85),(.035,.95,1.53),'darkgray')

@@ -193,7 +193,11 @@
         "owner": true,
         "frame": true
       }
-    ]
+    ],
+    "wallColors": {
+      "left": "brown",
+      "right": "brown"
+    }
   },
   "bake": {
     "collections": [
@@ -237,6 +241,57 @@
     "startupCutaway": false,
     "references": [
       "source/room 038.png"
+    ],
+    "fillStrength": 0.83,
+    "practicalLights": [
+      {
+        "position": [
+          -3.6,
+          4.15,
+          2.72
+        ],
+        "direction": [
+          0,
+          0.38,
+          -1
+        ],
+        "range": 2.8,
+        "strength": 1.4,
+        "radius": 0.13,
+        "coneAngle": 92
+      },
+      {
+        "position": [
+          0,
+          4.15,
+          2.72
+        ],
+        "direction": [
+          0,
+          0.38,
+          -1
+        ],
+        "range": 2.8,
+        "strength": 1.4,
+        "radius": 0.13,
+        "coneAngle": 92
+      },
+      {
+        "position": [
+          3.6,
+          4.15,
+          2.72
+        ],
+        "direction": [
+          0,
+          0.38,
+          -1
+        ],
+        "range": 2.8,
+        "strength": 1.4,
+        "radius": 0.13,
+        "coneAngle": 92
+      }
     ]
   }
 }
