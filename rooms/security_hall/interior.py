@@ -21,6 +21,12 @@ def furnish(geo,c):
  for crop,x,z,w,h in [((313,29,362,75),0,2.05,1.30,1.23),((62,34,92,55),-4.93,2.13,.66,.46),((206,32,231,57),-1.73,2.25,.48,.48),((402,42,427,70),1.61,2.08,.50,.56)]:
   panel(geo,'Portrait_frame',x,5.25,z,w+.16,h+.16)
   source_patch(geo,ROOT/'source/room 013.png',crop,(x,5.18,z),(w,h),'Original_corridor_portrait')
+ # Small wall keypad beside the medical door, as in background 013.
+ b('Security_keypad_case',(-3.96,5.285,1.82),(.27,.12,.61),'black')
+ b('Security_keypad_face',(-3.96,5.216,1.82),(.21,.019,.53),'gray')
+ b('Security_keypad_display',(-3.96,5.2,2.00),(.15,.013,.10),'blue')
+ for row in range(5):
+  for col in range(3):b('Security_keypad_button',(-4.02+col*.06,5.188,1.68+row*.052),(.029,.014,.025),'aqua')
  # Inset rug has negligible height and never changes the walking surface.
  for layer,(w,d,col) in enumerate([(6.4,1.42,'black'),(6.25,1.3,'red'),(6.04,1.12,'pink')]):b('Corridor_rug',(0,2.1,.001+layer*.001),(w,d,.0005),col)
  for x in [-4.2,2.01]:

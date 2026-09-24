@@ -10,4 +10,9 @@ The shared floor hatch returns to the radio bedroom. The left speaker is placed 
 
 Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; room placements and portal destinations are unchanged.
 
-The optimized room model is 453,536 bytes (115,938 bytes with gzip).
+The optimized room model is 468,368 bytes (119,394 bytes with gzip).
+
+
+### Artwork detail review
+
+Added the small green/yellow key on the right wall as static scenery. Room connections and navigation footprints are unchanged.

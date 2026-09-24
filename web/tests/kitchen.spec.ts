@@ -67,12 +67,18 @@ test('the exported kitchen shell stays 3 cm behind the exterior inner facade pla
  const v=createHouseRuntime(),room=v.rooms.find(r=>r.id==='kitchen')!,exterior=v.rooms.find(r=>r.id==='front_exterior')!;
  const filename=v.definitions.kitchen.asset.split('/').at(-1)!,bytes=await readFile('../generated/models/rooms/'+filename);
  const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength) as ArrayBuffer,'');
- const root=new THREE.Group();root.position.set(room.position[0],room.position[2],-room.position[1]);root.rotation.y=room.yaw;root.add(gltf.scene);
- const bounds=new THREE.Box3().setFromObject(root);
- // The exterior facade ends at local y=0, or world x=-6.4. Kitchen must be inside that plane.
+ // Window scenery is intentionally outside the shell; whole-model bounds include
+ // distant sky and projecting window reveals. Measure the solid rear wall itself.
+ for(const name of ['Kitchen_window_2_sky','Kitchen_window_3_sky'])gltf.scene.getObjectByName(name)?.removeFromParent();
+ gltf.scene.updateMatrixWorld(true);
  const plane=toWorld({x:0,y:0,height:0},exterior).x;
- expect(bounds.min.x-plane).toBeGreaterThan(.0299);
- expect(bounds.min.x-plane).toBeCloseTo(.03,4);
+ for(const x of [-5.9,0,5.9]){
+  const ray=new THREE.Raycaster(new THREE.Vector3(x,1.4,-8),new THREE.Vector3(0,0,1),0,4);
+  const hit=ray.intersectObject(gltf.scene,true)[0];expect(hit).toBeTruthy();
+  const wall=toWorld({x:hit.point.x,y:-hit.point.z,height:hit.point.y},room);
+  expect(wall.x-plane).toBeGreaterThan(.0299);
+  expect(wall.x-plane).toBeCloseTo(.03,4);
+ }
  const port=v.definitions.kitchen.ports.find(p=>p.id==='hall_door')!;
  const threshold=toWorld({x:port.position[0],y:port.position[1],height:0},room);
  expect(threshold.x).toBeCloseTo(-3.72);expect(threshold.y).toBeCloseTo(6.5);

@@ -130,6 +130,20 @@
     "startupCutaway": false,
     "references": [
       "source/room 009.png"
+    ],
+    "fillStrength": 0.6,
+    "practicalLights": [
+      {
+        "position": [
+          0,
+          2.96,
+          2.5
+        ],
+        "range": 5.5,
+        "strength": 1.25,
+        "radius": 0.1,
+        "coneAngle": 120
+      }
     ]
   }
 }

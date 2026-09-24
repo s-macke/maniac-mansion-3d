@@ -1,6 +1,6 @@
 # Garage and forecourt — furnished room v1
 
-Room 016 shows an outdoor forecourt leading into a covered garage bay. This package keeps that distinction: an open-air approach from the pool, a wide open vehicle entrance, gray walls, blue floor and a simple pitched roof. The covered bay now contains the static red-and-turquoise car from background 016, with real wheels, window panels, rear fins, circular taillight housings, chrome trim and the original EDSEL rear plate. The rear/trunk faces the forecourt, matching the source; the nose points into the bay. A sparse storage rack and raised shutter slats/tracks complete the garage fixtures. The shutter remains open and the car is not drivable.
+Room 016 shows an outdoor forecourt leading into a covered garage bay. This package keeps that distinction: an open-air approach from the pool, a wide open vehicle entrance, gray walls and covered floor, blue outdoor forecourt and a simple pitched roof. The covered bay now contains the static red-and-turquoise car from background 016, with real wheels, window panels, rear fins, circular taillight housings, curved rear trim, bumper guards, sloping rear-window artwork and the original EDSEL rear plate. The rear/trunk faces the forecourt, matching the source; the nose points into the bay. A sparse storage rack and raised shutter slats/tracks complete the garage fixtures. The shutter remains open and the car is not drivable.
 
 The provisional unit is 14 × 8 m. The forecourt occupies the first 4 m; the covered bay is 10 × 7 m with a 3.3 m eave height and 4.75 m ridge. The entrance is 4.8 × 2.95 m. Roof shape follows the cutaway; unseen dimensions and gray roof finish are inferred. There is no new interactive door leaf in this pass.
 
@@ -26,7 +26,19 @@ A shared ladder now links the meteor chamber to a real floor hatch inside the ga
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 262,316 bytes (76,617 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
+The furnished optimized GLB is 281,224 bytes (80,902 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
 
 Static build, typecheck, catalog validation and 15 focused navigation/GLB checks pass, including furniture collision, clear door thresholds, the pool approach and the garage hatch landing.
 Three desktop Chrome checks pass: garage circulation to the hatch, pantry interior movement, and the meteor-chamber/garage ladder round trip. Browser screenshots were inspected, including the simplified title without background numbers. No physical-mobile validation was performed.
+
+
+## Artwork detail review — 2026-09-24
+
+Restored the small white/red bumper sticker beside the rear plate using the original artwork pixels.
+
+
+## Deeper artwork review
+
+The covered floor now matches the dark gray in 016, with a lighter gray threshold. The rear window carries the source cyan arc and yellow emblem on its actual sloping glass. Curved shoulder trim, the trunk badge and bumper guards complete the rear details; the EDSEL plate has a solid bracket rather than floating ahead of the body. Floor/hatch positions and the existing circulation route are unchanged.
+
+Remaining: the compound car body curves and roof profile are still simplified. The unseen nose, roof construction and bay depth remain inferred; the rear-facing orientation and pool/cellar routes are established decisions.

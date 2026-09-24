@@ -24,10 +24,22 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 325,712 bytes optimized, 92,805 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 361,896 bytes optimized, 105,230 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 
 ## Artwork refinement
 
 The piano composition is wider while retaining its height, depth, slight rotation and solid keybed. The piano, stereo and television are redistributed to preserve the entry clearance and front aisle. The CRT uses the original rounded rectangular glass pixels, including the corner highlights, instead of an oval approximation. See the [five-room artwork review](../../docs/artwork_review.md).
+
+
+## Artwork detail review — 2026-09-24
+
+Added the pedal lyre, crossbar and three pedals beneath the keyboard, following the existing piano rotation.
+
+
+## Deeper artwork review
+
+The piano has a smoother curved tail with the accepted width, angle, supported keys and pedals. The lower wall now has black-outlined white panels. The gramophone has a flared outer horn, recessed red lining and dark throat; its purple record has a yellow label, spindle and supported tonearm. The vase has a blue foot and open neck. The reverse review camera now stands clear of the television. Existing baked illumination remains unchanged.
+
+Remaining: pilaster capitals and turned piano legs are simplified, and the keyboard uses a reduced key count. Equipment depth and the unseen walls remain inferred from the single background.

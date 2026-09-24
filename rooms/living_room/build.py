@@ -118,32 +118,65 @@ for x in [-1.64,1.64]:
  rounded('Sofa_rolled_arm',(x,4.24,.89),(.40,1.30,.56),'purple',.18)
  sphere('Arm_scroll',(x,3.60,.99),(.22,.13,.22),'pink')
  beam('Sofa_gold_arm_front',(x,3.62,.25),(x,3.62,.88),.075,'brown')
-for x in [-1,-.5,0,.5,1]:
+for x in [-.65,0,.65]:
  for z in [1.03,1.34]:
   sphere('Tuft_button',(x,4.635,z),(.042,.018,.034),'purple')
   for dx,dz in [(-.16,-.10),(.16,-.10),(-.16,.10),(.16,.10)]:beam('Tuft_seam',(x,4.64,z),(x+dx,4.64,z+dz),.014,'purple')
+box('Sofa_front_wood_rail',(0,3.65,.36),(3.35,.10,.065),'brown')
+box('Sofa_front_gold_edge',(0,3.59,.395),(3.35,.018,.021),'yellow')
 # Radio on its small cabinet, at the left of the seating arrangement.
 for x in [-5.12,-4.08]:
  for y in [4.51,5.13]:box('Radio_cabinet_leg',(x,y,.24),(.085,.085,.48),'brown')
-box('Radio_cabinet',(-4.6,4.82,.52),(1.22,.76,.47),'brown');box('Cabinet_top',(-4.6,4.80,.80),(1.35,.86,.10),'yellow')
+box('Radio_cabinet',(-4.6,4.82,.52),(1.22,.76,.47),'brown');box('Cabinet_top',(-4.6,4.80,.80),(1.35,.86,.10),'brown')
 box('Cabinet_drawer_ink',(-4.6,4.419,.57),(.99,.02,.25),'black');box('Cabinet_drawer',(-4.6,4.398,.57),(.91,.025,.19),'brown');box('Drawer_handle',(-4.6,4.37,.60),(.20,.035,.045),'yellow')
 # Curved radio cabinet carries the original grille and dial pixels.
 profile=[(-.41,0),(-.41,.30),(-.32,.52),(-.16,.64),(0,.69),(.16,.64),(.32,.52),(.41,.30),(.41,0)]
 vs=[(-4.6+x,y,.85+z) for y in [4.65,5.02] for x,z in profile];n=len(profile)
 mesh('Radio_arched_case',vs,[tuple(reversed(range(n))),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],'brown')
 geo.active='Artwork';art('Original_radio_face',(116,62,140,87),-4.6,4.638,.85,.79,height=.66,outline=[(-4.6+x,.85+z) for x,z in profile])
-# Windows retain every branch, broken pane and curtain pixel from the reference.
+# Cut real openings behind the original curtains and broken-pane linework.
+from blender_shared.windows import cut_wall
+geo.active='Architecture'
+holes=[(x-.84,x+.84,.65,3.30) for x in [-2.92,2.92]]
+for prefix in ['Back_wall','Wallpaper_ink','Wallpaper_gold']:
+ cut_wall(geo,prefix,holes)
 geo.active='Windows'
 for x,rect in [(-2.92,(175,16,242,100)),(2.92,(390,16,458,100))]:
- box('Window_recess',(x,5.45,1.89),(1.9,.28,2.43),'black')
- art('Original_window_and_drapes',rect,x,5.29,.57,1.85)
+ # Black inside the pane becomes open space. Retain black curtain contours by
+ # flood-filling only the blue/black pane components, bounded by colored cloth.
+ u0,v0,u1,v1=rect
+ def rgb(u,v):
+  off=((H-1-v)*W+u)*4;return tuple(round(pixels[off+i]*255) for i in range(3))
+ pane=set();todo=[(u,v) for v in range(v0+9,v1-7) for u in range(u0+5,u1-5) if rgb(u,v)==(0,0,168)]
+ while todo:
+  u,v=todo.pop()
+  if (u,v) in pane or not(u0+5<=u<u1-5 and v0+9<=v<v1-7) or rgb(u,v) not in [(0,0,0),(0,0,168)]:continue
+  pane.add((u,v));todo.extend([(u-1,v),(u+1,v),(u,v-1),(u,v+1)])
+ # Exact colored runs are retained, with only the pane's black faces removed.
+ o=art('Original_window_and_drapes',rect,x,5.525,.57,1.85)
+ pitch=1.85/(u1-u0);vertical=pitch*1.2
+ import bmesh
+ bm=bmesh.new();bm.from_mesh(o.data)
+ for f in list(bm.faces):
+  c=f.calc_center_median();u=int((c.x-(x-.925))/pitch)+u0;v=v1-1-int((c.z-.57)/vertical)
+  if (u,v) in pane and rgb(u,v)==(0,0,0):bm.faces.remove(f)
+ bm.to_mesh(o.data);bm.free()
+ for dx in [-.84,.84]:box('Window_jamb',(x+dx,5.81,1.975),(.07,.38,2.65),'brown')
+ for z in [.65,3.30]:box('Window_reveal',(x,5.81,z),(1.75,.38,.065),'brown')
+ # Enclosed black night beyond the wall, not an opaque pane at the frame.
+ for label,loc,size in [
+  ('Night',(x,24,1.8),(3.6,.04,8)),
+  ('Night_side',(x-1.8,15,1.8),(.04,18,8)),
+  ('Night_side',(x+1.8,15,1.8),(.04,18,8)),
+  ('Night_top',(x,15,5.8),(3.6,18,.04)),
+  ('Night_bottom',(x,15,-2.2),(3.6,18,.04))]:
+  o=box(label,loc,size,'black');o['bake_unlit']=True;o['bake_no_shadow']=True;o['bake_group']='Living_window_sky'
  for dx in [-.90,.90]:
-  # Folded curtain edges project into the room around the original face.
-  for j in range(3):beam('Velvet_curtain_fold',(x+dx+(j-1)*.033,5.22-j*.015,.60),(x+dx+(j-1)*.026,5.22-j*.015,2.72),.05,'purple' if j%2 else 'pink')
- box('Window_sill',(x,5.27,.53),(2.0,.38,.09),'brown')
+  for j in range(3):beam('Velvet_curtain_fold',(x+dx+(j-1)*.033,5.49-j*.015,.60),(x+dx+(j-1)*.026,5.49-j*.015,2.72),.05,'purple' if j%2 else 'pink')
+ box('Window_sill',(x,5.48,.53),(2.0,.38,.09),'brown')
 # Landscape artwork in its gold frame; original pixels, not a new painting.
-geo.active='Artwork';box('Painting_frame',(4.67,5.39,2.61),(1.49,.25,.99),'brown')
-art('Original_landscape',(480,21,537,56),4.67,5.245,2.15,1.43)
+geo.active='Artwork';box('Painting_frame',(4.67,5.535,2.61),(1.49,.12,.99),'brown')
+art('Original_landscape',(480,21,537,56),4.67,5.47,2.15,1.43)
 # Crystal chandelier with chains, curved arms, candles and hanging facets.
 geo.active='Chandelier'
 cyl('Ceiling_rose',(0,3.45,3.46),.16,.06,'yellow')
@@ -157,6 +190,8 @@ for i in range(8):
  for j in range(1,5):
   t=j/5;p=Vector((0,3.45,3.10)).lerp(end,t);p.z-=math.sin(t*math.pi)*.17;sphere('Crystal_bead',p,(.025,.025,.043),'white')
  beam('Crystal_drop_wire',mid,mid-Vector((0,0,.17)),.012,'gray');sphere('Crystal_drop',mid-Vector((0,0,.20)),(.036,.036,.075),'aqua')
+for o in collections['Chandelier'].objects:
+ if o.name.startswith('Candle_flame'):o['bake_unlit']=True;o['bake_no_shadow']=True
 # The irregular pale floor mark in the source, represented as a shallow pixel patch.
 geo.active='Artwork'
 o=art('Original_floor_mark',(271,108,370,128),0,0,0,2.5)

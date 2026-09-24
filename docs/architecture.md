@@ -173,3 +173,18 @@ Cellar furnishings use per-room `interior.py` callbacks and the small shared `bl
 ### Baked fixture lights
 
 Room `bake.practicalLights` can add local directed lights with `position`, `range`, `strength`, `radius` (soft shadow source radius) and `coneAngle` (half angle in degrees), and optional normalized `direction` (defaults to downward `[0, 0, -1]`). Their distance/cone falloff and occlusion are baked into vertex colors. Optional `fillStrength` scales the existing broad fill. Both are opt-in; other rooms keep their existing bake. Visible bulb/glass geometry can use `bake_unlit` without adding runtime lights. The medical desk lamp is the first fixture using this path.
+
+
+### Outside windows
+
+`blender_shared/windows.py` supplies `cut_wall` and `outside_window`. The cutter
+splits existing axis-aligned wall slabs around one or more rectangular apertures,
+preserving pre-existing door openings and materials. Rear-anchored builders pass
+their authored Y offset explicitly. The window adds open frames, mullions, jambs
+and sills plus a distant enclosed sky; it creates no opaque glass panel, runtime
+light or traversable portal. Navigation keeps its normal room boundary.
+
+The green bedroom, mummy bathroom and kitchen use the helper with blue skies
+matching their backgrounds. The safe attic retains its already verified custom
+black-sky window. Living-room branches/broken panes, leaded stair-hall windows and
+the boarded wire-attic opening still need their own artwork-specific treatment.

@@ -7,3 +7,7 @@ See [cellar layout](../../docs/cellar.md) for door ownership, route evidence and
 Build with `./docker-build.sh room main_lab --site`; start locally at `/?room=main_lab`.
 
 `interior.py` adds scenery to the shared shell builder; authored `room.json` keeps its collision footprints. All generated Blender scenes, previews and models remain under `generated/`.
+
+## Artwork detail review — 2026-09-22
+
+The meter bank has three columns of two green meters, with a separate switch beneath each meter, matching background 030.

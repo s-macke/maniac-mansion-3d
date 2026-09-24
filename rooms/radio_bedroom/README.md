@@ -10,4 +10,9 @@ The existing shared ladder and ceiling hatch retain their continuous portal conn
 
 Rebuild with `./docker-build.sh room radio_bedroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=radio_bedroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 310,408 bytes (84,364 bytes with gzip).
+The optimized room model is 317,404 bytes (86,604 bytes with gzip).
+
+
+### Artwork detail review
+
+Restored the central third globe to the ceiling fixture; the shared helper previously supplied only two. Room connections and navigation footprints are unchanged.

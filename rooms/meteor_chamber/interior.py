@@ -1,7 +1,9 @@
 """051 meteor chamber: riveted wall, parallel pipes, switch cabinet and suspended laboratory rig."""
-import math
+import math,bpy
+from pathlib import Path
+from mathutils import Matrix
 from blender_shared.lab_furniture import metal_wall,pipe,panel,gauge,cylinder
-from blender_shared.furnishings import curved_line
+from blender_shared.furnishings import curved_line,source_patch
 from blender_shared.bedroom_furniture import finish
 
 def furnish(g,c):
@@ -25,5 +27,10 @@ def furnish(g,c):
  for s in [-1,1]:
   curved_line(g,'Rig_pincer',[(x+s*.48,y,2.2),(x+s*.68,y,1.94),(x+s*.47,y,1.79)],.035,'gray')
   b('Red_terminal',(x+s*.68,4.7,1.24),(.30,.20,.12),'lightred')
- g.mesh('Purple_floor_stain',[(2.1,1.0,.003),(2.7,.89,.003),(3.2,1.1,.003),(2.9,1.24,.003),(2.35,1.19,.003)],[(0,1,2,3,4)],'purple')
+ # Preserve the irregular purple spill, pink flecks and detached droplets.
+ before=set(bpy.data.objects)
+ source_patch(g,Path(__file__).resolve().parents[2]/'source/room 051.png',(311,109,361,124),(0,0,0),(1.24,.38),'Original_floor_spill',only={'purple','pink'})
+ bpy.context.view_layer.update()
+ transform=Matrix.Translation((2.65,1.08,.005))@Matrix.Rotation(-math.pi/2,4,'X')
+ for obj in set(bpy.data.objects)-before:obj.matrix_world=transform@obj.matrix_world
  finish(c)

@@ -1,6 +1,6 @@
 # Pool deck and basin — one outdoor unit
 
-Backgrounds 006 (filled deck) and 002 (drained basin) share one independent outdoor builder. It recreates the stone deck, turquoise coping, blue filled pool, metal ladder, pink floating chair silhouette, teal/yellow fence and sparse night backdrop using the original EGA palette and baked lighting. No indoor shell template is used.
+Backgrounds 006 (filled deck) and 002 (drained basin) share one independent outdoor builder. It recreates the stone deck, turquoise coping, blue filled pool, metal ladder, pink floating chair silhouette, teal/yellow fence and sparse distant night sky using the original EGA palette and baked lighting. No indoor shell template is used.
 
 The provisional deck is 20 × 11 m; the pool opening is 12.2 × 5.8 m. The deck stays at the pantry floor elevation for continuous exploration. The near curb and unseen dimensions are inferred. The far fence opening now connects to the garage forecourt; the around-house connection is deferred.
 
@@ -29,3 +29,5 @@ Start locally at http://127.0.0.1:5174/?room=pool or walk through the pantry. No
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/pool/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/pool/`; derived door metadata and shading reports in `generated/reports/rooms/pool/`. Builders never write derived data back into `room.json`.
 
 Validated: Blender rebuild, production web build, TypeScript and catalog checks passed. Focused checks cover basin equipment collision, floor support, state isolation and ladder continuity; Chrome completed drain → descend → walk → ascend → refill. Drained, reactor and refilled browser views were inspected. Physical-mobile performance was not tested.
+
+The stars occupy a 40 m hemisphere around the deck, including overhead, instead of a narrow plane just behind the fence. Tiny cyan points and occasional blue crosses retain the source's sparse EGA appearance. The sky geometry is unlit, casts no baked shadows and has no opaque backdrop that could hide the adjoining garage.

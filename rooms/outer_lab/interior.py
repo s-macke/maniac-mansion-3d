@@ -1,5 +1,6 @@
 """031 outer laboratory: green monitor console, cooling stack and articulated handling arm."""
 from pathlib import Path
+import math
 from blender_shared.lab_furniture import metal_wall,pipe,disc,gauge
 from blender_shared.furnishings import source_patch
 from blender_shared.bedroom_furniture import finish
@@ -12,8 +13,18 @@ def furnish(g,c):
  b('Console_foot',(-.19,4.14,.18),(3.08,1.18,.36),'black');b('Foot_grille',(-.19,3.527,.19),(2.75,.029,.24),'gray')
  for i in range(36):b('Console_vent',(-1.48+i*.074,3.506,.19),(.028,.014,.18),'black')
  b('Console_pedestal',(-.19,4.32,.79),(2.51,.79,.94),'cyan');b('Console_lower_face',(-.19,3.898,.79),(2.35,.044,.77),'black')
- for x in [-.92,-.29]:
-  disc(g,'Pink_gauge',x,3.851,.87,.18,'pink');disc(g,'Gauge_inset',x,3.830,.87,.12,'aqua');b('Gauge_needle',(x,3.811,.89),(.022,.016,.16),'black')
+ for index,x in enumerate([-.92,-.29]):
+  disc(g,'Gauge_ink_rim',x,3.851,.87,.185,'black')
+  disc(g,'Gauge_pink_rim',x,3.831,.87,.160,'pink')
+  disc(g,'Gauge_face',x,3.810,.87,.135,'aqua' if index==0 else 'black')
+  if index==0:
+   pts=[(x,3.787,.87)]+[(x+.134*math.cos(i*math.pi/20),3.787,.87+.134*math.sin(i*math.pi/20)) for i in range(21)]
+   g.mesh('Gauge_pink_upper_half',pts,[tuple(range(len(pts)))],'pink')
+  for i in range(8):
+   a=i*math.tau/8
+   g.beam('Gauge_tick',(x+.113*math.cos(a),3.778,.87+.113*math.sin(a)),(x+.137*math.cos(a),3.778,.87+.137*math.sin(a)),.010,'white')
+  g.beam('Gauge_needle',(x,3.764,.87),(x,3.764,.982),.014,'black' if index==0 else 'white')
+  disc(g,'Gauge_hub',x,3.752,.87,.030,'white',.014)
  b('Console_button_panel',(.54,3.846,.84),(.64,.035,.65),'cyan')
  for z,col in [(.61,'black'),(.82,'purple'),(1.04,'red')]:disc(g,'Console_button',.38,3.814,z,.065,col);b('Button_label',(.63,3.807,z),(.23,.018,.022),'black')
  # Original green screen is inset into a substantial three-dimensional housing.

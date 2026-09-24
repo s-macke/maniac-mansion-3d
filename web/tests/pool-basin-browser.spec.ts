@@ -19,13 +19,20 @@ test('drain the pool, walk its basin, climb out and refill without changing room
 
 
 
+ await aim(-16.37,28);
+ await page.screenshot({path:'test-results/pool-sky-entry.png'});
+ await page.mouse.move(650,430);await page.mouse.down();await page.mouse.move(650,160,{steps:5});await page.mouse.up();
+ await page.screenshot({path:'test-results/pool-sky-overhead.png'});
+ await page.mouse.move(650,160);await page.mouse.down();await page.mouse.move(650,430,{steps:5});await page.mouse.up();
  await go(-10.17,40.9);await aim(-14.37,39.1);
  await expect(page.locator('.door-action')).toContainText('Drain pool');await page.keyboard.press('e');
  await expect.poll(async()=>(await state()).poolDrained).toBe(true);
  await page.mouse.move(650,430);await page.mouse.down();await page.mouse.move(650,600,{steps:5});await page.mouse.up();
  await page.screenshot({path:'test-results/pool-drained.png'});
  await page.mouse.move(650,600);await page.mouse.down();await page.mouse.move(650,430,{steps:5});await page.mouse.up();
- await go(-10.17,34.7);await go(-17.37,34.85);await aim(-17.37,36.46);
+ await go(-10.17,34.7);await go(-17.37,34.85);await aim(-17.37,25);
+ await page.screenshot({path:'test-results/pool-sky-far-rim.png'});
+ await aim(-17.37,36.46);
  await expect(page.locator('.door-action')).toContainText('Climb into pool');await page.locator('.door-action').click();
  await expect.poll(async()=>(await state()).poolClimbing).toBe(true);
  await expect.poll(async()=>(await state()).poolClimbing,{timeout:12000}).toBe(false);

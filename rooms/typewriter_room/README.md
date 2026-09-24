@@ -8,4 +8,9 @@ The right painted wall panel remains a shared `Concealed_leaf`, initially closed
 
 Rebuild with `./docker-build.sh room typewriter_room`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=typewriter_room`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 612,808 bytes (138,836 bytes with gzip); door and ladder kits are shared separately.
+The optimized room model is 659,332 bytes (147,046 bytes with gzip); door and ladder kits are shared separately.
+
+
+### Artwork detail review
+
+Replaced generic rectangular fireplace decoration with the original irregular stone faces and colored flecks, mounted on the solid piers and lintel. Room connections and navigation footprints are unchanged.

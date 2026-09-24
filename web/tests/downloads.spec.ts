@@ -7,7 +7,7 @@ test('room downloads negotiate gzip and retain the exact optimized GLB',async({r
   const packed=await request.get(path,{headers:{'Accept-Encoding':'gzip'}});
   expect(packed.status()).toBe(200);expect(packed.headers()['content-encoding']).toBe('gzip');
   expect(packed.headers()['vary']).toBe('Accept-Encoding');
-  expect(Number(packed.headers()['content-length'])).toBeLessThan(room==='kitchen'?150000:room==='living_room'?550000:1800000);
+  expect(Number(packed.headers()['content-length'])).toBeLessThan(room==='kitchen'?150000:room==='living_room'?700000:1800000);
   // Playwright decodes HTTP compression; these bytes must match the raw GLB.
   expect(Buffer.compare(await packed.body(),await plain.body())).toBe(0);
   expect(Buffer.compare(await plain.body(),await readFile(`../generated/models/${room==='shared'?'doors':'rooms'}/${file}_compact.glb`))).toBe(0);

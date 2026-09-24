@@ -77,7 +77,11 @@ def furnish(g,c):
   for x in [a+.07,bx-.07]:b('Panel_stile',(x,4.49,.47),(.038,.045,.77),'yellow')
  for x in [-3.6,0,3.6]:
   # Bare sculptural branches occupy the front border, leaving the whole doorway aisle free.
-  g.cyl('Branch_pot',(x,1.10,.18),.17,.34,'lightred');g.cyl('Branch_pot_lip',(x,1.10,.36),.19,.07,'yellow')
+  # The source has square red planters with pale rectangular rims.
+  b('Branch_pot',(x,1.10,.18),(.34,.34,.34),'lightred')
+  b('Branch_pot_dark_side',(x+.165,1.10,.18),(.016,.34,.34),'red')
+  b('Branch_pot_lip',(x,1.10,.36),(.39,.39,.06),'yellow')
+  b('Branch_pot_soil',(x,1.10,.397),(.30,.30,.012),'brown')
   trunk=[(x,1.10,.39),(x+.12,1.10,.82),(x-.05,1.10,1.24),(x+.18,1.10,1.70),(x+.04,1.10,2.14)]
   curved_line(g,'Bare_branch',trunk,.037,'black')
   for s,z in [(-1,.94),(1,1.33),(-1,1.60)]:curved_line(g,'Bare_twig',[(x,1.10,z),(x+s*.28,1.10,z+.32),(x+s*.32,1.10,z+.60)],.027,'black')

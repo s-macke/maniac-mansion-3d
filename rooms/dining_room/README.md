@@ -37,7 +37,11 @@ This folder contains the builder, furnishing recipe, authored `room.json` and do
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 1,082,036 bytes (271,824 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Original painting/stain pixels use color-run geometry; no extra texture download is needed.
+The furnished optimized GLB is 1,104,980 bytes (277,881 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Original painting/stain pixels use color-run geometry; no extra texture download is needed.
 
 The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
 Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.
+
+## Artwork detail review — 2026-09-22
+
+The platters distinguish the roast bird from the sliced ham: the bird retains its projecting bone, while the ham has a white fat rim, red cut face and fine white marbling, following background 037.

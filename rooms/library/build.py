@@ -1,6 +1,7 @@
 """Room 005: book-lined library, reading corner and decorative spiral stair."""
 from pathlib import Path
 import sys,math,random,bpy
+from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts'))
 from blender_shared.layout_shell import build
@@ -25,6 +26,19 @@ def furnish(geo,config):
             if rng.random()<.68:
                 for zz in [z+.13,z+h-.015]:box('Book_binding',(x+w/2,4.669,zz),(w*.78,.014,.018),'white' if color!='white' else 'gray')
             x+=w+.025
+    # Clear the plant bay after generating books so all other book colors stay stable.
+    for obj in list(bpy.data.objects):
+        if obj.name.startswith(('Book_spine','Book_binding')) and obj.location.x>4.12 and 1.56<obj.location.z<2.31:
+            bpy.data.objects.remove(obj,do_unlink=True)
+    # Low red/yellow pot and spreading green leaves on the middle shelf.
+    px,py=4.65,4.85
+    geo.sphere('Shelf_plant_pot',(px,py,1.73),(.30,.18,.12),'yellow')
+    geo.sphere('Shelf_pot_red_base',(px,py,1.64),(.24,.145,.035),'red')
+    geo.cyl('Shelf_pot_rim',(px,py,1.84),.27,.045,'red')
+    for side in [-1,1]:
+        for k in range(3):
+            tip=px+side*(.30+k*.09)
+            curved_line(geo,'Shelf_plant_leaf',[(px+side*(.36*t*(1-t)+abs(tip-px)*t*t),py-.045*k*t,1.85*(1-t)**2+2*(2.15+k*.02)*t*(1-t)+(1.91-k*.035)*t*t) for t in [j/8 for j in range(9)]],.035,'green')
     box('Bookcase_crown',(0,4.81,3.065),(10.92,.74,.11),'brown')
     # Brown helical flight as drawn, ending at the ceiling; no invented destination.
     cx,cy=-.1,3.05
@@ -43,9 +57,22 @@ def furnish(geo,config):
         outer.append((p[0],p[1],min(z+.68,3.09)))
     curved_line(geo,'Spiral_handrail',outer,.085,'brown')
     # Reading chair, phone table and slim standing lamps.
-    box('Armchair_seat',(4.85,2.1,.48),(1.25,1.05,.27),'black')
-    back=box('Armchair_back',(4.85,2.57,1.03),(1.1,.3,1.16),'black');back.rotation_euler.x=-.14
-    for x in [4.23,5.47]:box('Armchair_arm',(x,2.08,.72),(.22,1.18,.5),'black')
+    def upholstered(name,loc,size,bevel):
+        obj=box(name,loc,size,'black')
+        modifier=obj.modifiers.new('Soft_upholstery_edges','BEVEL');modifier.width=bevel;modifier.segments=3
+        bpy.context.view_layer.objects.active=obj;obj.select_set(True);bpy.ops.object.modifier_apply(modifier=modifier.name);obj.select_set(False)
+        return obj
+    upholstered('Armchair_seat',(4.85,2.1,.48),(1.25,1.05,.27),.10)
+    back=upholstered('Armchair_back',(4.85,2.57,1.03),(1.1,.3,1.16),.10);back.rotation_euler.x=-.14
+    for x in [4.23,5.47]:
+        upholstered('Armchair_arm',(x,2.08,.72),(.22,1.18,.5),.10)
+        # Thin gray piping outlines the rolled fronts, as in the black source chair.
+        pts=[(x+.084*math.cos(t),1.486,.77+.145*math.sin(t)) for t in [i*math.pi/12 for i in range(13)]]
+        curved_line(geo,'Armchair_arm_piping',pts,.010,'darkgray')
+    bpy.context.view_layer.update()
+    pts=[(-.40,-.152,-.40),(-.43,-.152,.36),(-.37,-.152,.47),(.37,-.152,.47),(.43,-.152,.36),(.40,-.152,-.40)]
+    curved_line(geo,'Armchair_back_piping',[back.matrix_world@Vector(p) for p in pts],.010,'darkgray')
+    curved_line(geo,'Armchair_seat_piping',[(4.32,1.58,.54),(4.40,1.568,.59),(5.30,1.568,.59),(5.38,1.58,.54)],.010,'darkgray')
     for x in [4.4,5.3]:
         for y in [1.72,2.47]:box('Armchair_foot',(x,y,.15),(.1,.1,.3),'brown')
     panel(geo,'Telephone_table_front',3.65,1.8,.3,.7,.38)
@@ -53,12 +80,21 @@ def furnish(geo,config):
     for x in [3.32,3.98]:
         for y in [1.86,2.34]:box('Telephone_table_leg',(x,y,.25),(.07,.07,.5),'brown')
     box('Telephone_base',(3.65,2.1,.68),(.48,.34,.13),'green')
-    box('Telephone_receiver',(3.65,2.13,.80),(.53,.13,.09),'green')
-    box('Telephone_dial',(3.65,1.92,.72),(.16,.025,.1),'cyan')
+    curved_line(geo,'Telephone_receiver',[(3.41,2.13,.79),(3.44,2.13,.84),(3.50,2.13,.86),(3.80,2.13,.86),(3.86,2.13,.84),(3.89,2.13,.79)],.065,'green')
+    for x in [3.43,3.87]:geo.sphere('Telephone_earpiece',(x,2.13,.79),(.08,.08,.05),'green')
+    geo.cyl('Telephone_rotary_plate',(3.65,2.02,.752),.093,.015,'cyan',20)
+    for i in range(10):
+        a=i*math.tau/10;geo.cyl('Telephone_dial_hole',(3.65+.066*math.cos(a),2.02+.066*math.sin(a),.762),.014,.006,'black',8)
+    curved_line(geo,'Telephone_coiled_cord',[(3.91+.018*math.cos(i*math.pi/2),2.12+i*.007,.75-.24*math.sin(i/40*math.pi)+.018*math.sin(i*math.pi/2)) for i in range(41)],.009,'black')
     for x,y in [(-5.1,3.8),(5.55,3.6)]:
         geo.cyl('Floor_lamp_base',(x,y,.06),.22,.1,'brown')
-        geo.cyl('Floor_lamp_stem',(x,y,1.03),.027,1.95,'yellow')
+        geo.cyl('Floor_lamp_stem',(x,y,1.03),.027,1.95,'black')
         geo.mesh('Floor_lamp_shade',[(x+r*math.cos(i*math.tau/12),y+r*math.sin(i*math.tau/12),z) for z,r in [(1.85,.06),(2.18,.23)] for i in range(12)],[(i,(i+1)%12,(i+1)%12+12,i+12) for i in range(12)],'white')
         glow=geo.sphere('Floor_lamp_glow',(x,y,2.13),(.12,.12,.08),'yellow');glow['bake_unlit']=True;glow['bake_no_shadow']=True
 
 build(Path(__file__).with_name('room.json'),furnish)
+
+# Reverse review camera stands in the clear right aisle, outside the bookcase.
+camera=bpy.data.objects['03_Reverse'];camera.location=(5.95,1.0,1.62)
+camera.rotation_euler=(Vector((3.9,4.7,1.4))-camera.location).to_track_quat('-Z','Y').to_euler()
+bpy.ops.wm.save_as_mainfile(filepath=bpy.data.filepath)

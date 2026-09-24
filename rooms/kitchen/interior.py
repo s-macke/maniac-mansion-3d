@@ -30,12 +30,11 @@ def furnish(geo,root):
     for i in range(3):
         for j in range(4):box('Microwave_key',(-1.23+i*.045,4.211,2.18-j*.055),(.028,.018,.026),'white')
     box('Microwave_display',(-1.18,4.213,1.85),(.17,.02,.06),'blue')
-    # Original dark-blue framed windows (opaque to keep independent spaces private).
-    for x,w in [(-4.9,1.3),(2.05,2.05)]:
-        panel(geo,'Window_surround',x,5.25,2.18,w+.16,1.12)
-        box('Window_blue_glass',(x,5.177,2.18),(w,.02,.96),'blue')
-        for dx in [-w/2,0,w/2] if w<1.5 else [-w/2,-w/6,w/6,w/2]:box('Window_vertical',(x+dx,5.145,2.18),(.045,.035,.98),'brown')
-        box('Window_horizontal',(x,5.145,2.18),(w,.035,.045),'brown')
+    # Both original blue night windows have real openings and recessed frames.
+    from blender_shared.windows import cut_wall,outside_window
+    cut_wall(geo,'Kitchen_back',[(-5.55,-4.25,1.70,2.66),(1.025,3.075,1.70,2.66)])
+    for x,w,cols in [(-4.9,1.3,2),(2.05,2.05,3)]:
+        outside_window(geo,'Kitchen_window_'+str(cols),(x,5.37,2.18),(0,1),w,.96,columns=cols,seed=7+cols,edge='red')
     # Sink inset and arched faucet.
     box('Sink_rim',(2.25,4.68,1.06),(1.03,.68,.025),'gray')
     box('Sink_bowl',(2.25,4.68,1.077),(.83,.49,.015),'black')
@@ -43,12 +42,20 @@ def furnish(geo,root):
     for x in [1.91,2.58]:box('Tap_handle',(x,4.97,1.12),(.18,.06,.05),'gray')
     # Knife rack, cleaver, chainsaw silhouette and wall stains sampled from the source.
     box('Knife_rack',(.05,5.02,1.82),(1.68,.25,.07),'black')
-    for x in [-.48,-.18,.13]:
+    for x in [-.18,.13]:
         box('Knife_handle',(x,4.92,1.98),(.07,.09,.27),'gray')
         geo.mesh('Knife_blade',[(x-.06,4.89,1.79),(x+.065,4.89,1.79),(x+.065,4.89,1.37)],[(0,1,2)],'white')
-    box('Cleaver_blade',(.48,4.87,1.57),(.24,.07,.35),'gray')
-    box('Cleaver_handle',(.48,4.9,1.94),(.08,.08,.27),'black')
+    box('Cleaver_blade',(-.48,4.87,1.57),(.27,.07,.35),'gray')
+    box('Cleaver_handle',(-.48,4.9,1.94),(.08,.08,.27),'black')
+    box('Cleaver_hole',(-.55,4.829,1.46),(.045,.012,.04),'darkgray')
+    # The rightmost tool is the chainsaw: white guide bar with a toothed chain.
+    box('Chainsaw_chain',(.48,4.87,1.56),(.26,.07,.41),'black')
+    box('Chainsaw_guide',(.48,4.825,1.57),(.19,.025,.34),'white')
+    for z in [1.39+i*.07 for i in range(5)]:
+        for x in [.335,.625]:box('Chainsaw_tooth',(x,4.87,z),(.035,.075,.025),'gray')
     box('Red_appliance',(.5,4.96,2.04),(.45,.26,.32),'red')
+    geo.sphere('Chainsaw_motor_rim',(.5,4.814,2.04),(.145,.018,.135),'black')
+    geo.sphere('Chainsaw_motor_face',(.5,4.791,2.04),(.105,.013,.095),'red')
     curved_line(geo,'Appliance_handle',[(.27,4.95,2.2),(.33,4.95,2.35),(.67,4.95,2.35),(.73,4.95,2.2)],.045,'black')
     source_patch(geo,root/'source/room 007.png',(304,11,365,50),(.2,5.30,2.58),(1.5,.85),'Wall_stains',only={'red'})
     # Rounded white refrigerator with a recessed black outline and source stains.

@@ -2,7 +2,7 @@
 from blender_shared.placement import rear_anchored
 from pathlib import Path
 import math,bpy
-from blender_shared.furnishings import source_patch
+from blender_shared.furnishings import source_patch,curved_line
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
 @rear_anchored(5.2)
@@ -57,4 +57,9 @@ def furnish(g,c):
  source_patch(g,ROOT/'source/room 020.png',(360,17,400,62),(1.60,4.90,2.37),(.67,.93),'Mom_portrait')
  b('Bedside_outlet',(.4,4.899,.84),(.15,.015,.12),'white')
  for x in [.365,.435]:b('Outlet_slot',(x,4.885,.85),(.012,.008,.045),'black')
+ # Small green/yellow wall key to the right of the speaker; scenery only.
+ # It follows the right wall, so the bow lies in its Y/Z plane.
+ curved_line(g,'Wall_key_bow',[(4.097,3.05+.065*math.cos(i*math.tau/24),1.40+.045*math.sin(i*math.tau/24)) for i in range(25)],.021,'green')
+ g.beam('Wall_key_shaft',(4.105,3.05,1.36),(4.105,3.05,1.16),.024,'yellow')
+ for z in [1.17,1.24]:g.beam('Wall_key_tooth',(4.105,3.05,z),(4.105,3.11,z),.022,'yellow')
  finish(c)

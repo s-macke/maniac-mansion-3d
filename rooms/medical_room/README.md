@@ -26,10 +26,15 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 369,516 bytes optimized, 96,003 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 370,692 bytes optimized, 96,473 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 
 The green desk lamp is visibly switched on: bright EGA green glass and a yellow underside accompany a soft downward fixture light baked onto the desktop. `bake.practicalLights` supplies its position, range and cone; `fillStrength` gently reduces the otherwise uniform fill. There are no browser lights, bloom or runtime GI.
 
 The cupboard/frame/crack/lamp correction passes the static build, typecheck, catalog check, furnished-room circulation test, exported lamp-color check and local Chrome walking/render check. Blender and browser views were inspected; the lamp test verifies brighter nearby desktop vertices, bounded colors and absence of runtime light extensions.
+
+
+## Artwork detail review — 2026-09-24
+
+Added the white sheet hanging over both short ends of the examination table, with folded lower edges.

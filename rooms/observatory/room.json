@@ -141,6 +141,19 @@
     "startupCutaway": false,
     "references": [
       "source/room 028.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -0.8,
+          5.95,
+          3.55
+        ],
+        "strength": 1.0,
+        "range": 6,
+        "radius": 0.1,
+        "coneAngle": 100
+      }
     ]
   }
 }

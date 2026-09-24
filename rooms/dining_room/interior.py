@@ -56,7 +56,15 @@ def furnish(geo,root):
         geo.sphere('Serving_platter',(x,2.8,1.075),(.53,.34,.035),'gray')
         geo.sphere('Roast',(x,2.8,1.22),(.40,.26,.16),'brown' if x<-1 else 'red')
         geo.sphere('Roast_highlight',(x+.21,2.61,1.22),(.13,.04,.10),'lightred')
-        geo.beam('Roast_bone',(x+.26,2.8,1.28),(x+.51,2.8,1.38),.055,'white')
+        if x<-1:
+            geo.beam('Roast_bone',(x+.26,2.8,1.28),(x+.51,2.8,1.38),.055,'white')
+        else:
+            # The second platter carries a sliced ham, not another bone-in bird.
+            geo.sphere('Ham_cut_fat_rim',(x+.21,2.568,1.23),(.16,.030,.135),'white')
+            geo.sphere('Ham_cut_meat',(x+.21,2.540,1.23),(.127,.018,.104),'red')
+            geo.sphere('Ham_cut_center',(x+.21,2.521,1.23),(.040,.008,.034),'white')
+            for offset in [-.16,-.02]:
+                curved_line(geo,'Ham_marbling',[(x+offset+.035*math.sin(t*math.pi),2.8-.255*math.sin(t*math.pi),1.22+.163*math.cos(t*math.pi)) for t in [j/16 for j in range(9)]],.012,'white')
     # Twin three-globe chandeliers; baked color rather than runtime lights.
     for x in [-5.6,5.6]:
         geo.cyl('Chandelier_chain',(x,3.95,2.86),.022,.52,'yellow')

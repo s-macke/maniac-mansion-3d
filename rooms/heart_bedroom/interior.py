@@ -67,12 +67,12 @@ def furnish(g,c):
  for obj in set(bpy.data.objects)-vanity_before:
   obj.matrix_world=Matrix.Translation((-2.60,0,0)) @ Matrix.Diagonal(Vector((.82,1,1,1))) @ Matrix.Translation((2.15,0,0)) @ obj.matrix_world
  # Bed runs left-to-right. Its head/pillow is at the curtained right end.
- b('Bed_frame',(.825,3.82,.32),(3.25,1.53,.47),'red')
- b('Bed_mattress',(.825,3.82,.62),(3.17,1.45,.20),'red')
- b('Bed_cover_front',(.825,3.025,.43),(3.23,.055,.65),'red')
- b('Bed_cover_piping',(.825,2.990,.765),(3.23,.022,.022),'lightred')
- b('Bed_footboard',(-.80,3.82,.49),(.14,1.65,.84),'brown')
- for y in [3.04,4.60]:
+ b('Bed_frame',(.825,3.90,.32),(3.25,1.80,.47),'red')
+ b('Bed_mattress',(.825,3.90,.62),(3.17,1.74,.20),'red')
+ b('Bed_cover_front',(.825,2.985,.43),(3.23,.055,.65),'red')
+ b('Bed_cover_piping',(.825,2.950,.765),(3.23,.022,.022),'lightred')
+ b('Bed_footboard',(-.80,3.90,.49),(.14,1.80,.84),'brown')
+ for y in [3.10,4.70]:
   g.sphere('Footboard_scroll',(-.80,y,.96),(.075,.10,.12),'brown')
   g.sphere('Footboard_scroll_inset',(-.88,y,.98),(.009,.025,.027),'black')
  # Small stuffed cushion: curved heart outline, softly inflated faces and a
@@ -99,8 +99,15 @@ def furnish(g,c):
  pillow=g.mesh('Soft_heart_pillow',verts,[tuple(reversed(face)) for face in faces],'red')
  pillow['bake_curved_center']=[1.99,3.63+c['geometry']['depth']-5.1,center_z]
  pillow['bake_curved_radii']=[.42,.12,.22];pillow['bake_curved_sign']=1
- # The curtain pair hangs against the rear wall above the head of the bed.
- # Its open center must face into the room, not be edge-on to the reference view.
+ # Pillow faces the foot of the bed, with its rounded shape preserved.
+ bpy.context.view_layer.update()
+ turn=Matrix.Translation((2.10,3.90,center_z)) @ Matrix.Rotation(-math.pi/2,4,'Z') @ Matrix.Translation((-1.99,-3.63,-center_z))
+ pillow.matrix_world=turn @ pillow.matrix_world
+ pillow['bake_curved_center']=[2.10,3.90+c['geometry']['depth']-5.1,center_z]
+ pillow['bake_curved_radii']=[.12,.42,.22]
+ # Headboard and curtains span the whole right end, perpendicular to the
+ # mattress length. Do not place this assembly flat against the rear wall.
+ head_before=set(bpy.data.objects)
  b('Canopy_red_back',(1.845,4.86,1.67),(1.55,.10,2.05),'red')
  for x,sign in [(1.12,1),(2.57,-1)]:
   b('Canopy_post',(x,4.59,1.43),(.075,.075,2.68),'red')
@@ -112,19 +119,28 @@ def furnish(g,c):
   curved_line(g,'Curtain_edge',[(x+sign*w,4.494,zz) for zz,w in [(2.65,.59),(2.18,.49),(1.57,.28),(1.15,.08),(.95,.22)]],.018,'lightred')
  b('Canopy_valance',(1.845,4.53,2.77),(1.65,.25,.32),'red')
  for x in [1.08+i*.20 for i in range(9)]:b('Valance_pleat',(x,4.396,2.79),(.018,.018,.22),'lightred')
+ bpy.context.view_layer.update()
+ head_transform=Matrix.Translation((2.50,3.90,0)) @ Matrix.Rotation(-math.pi/2,4,'Z') @ Matrix.Diagonal(Vector((1.09,1,1,1))) @ Matrix.Translation((-1.845,-4.53,0))
+ for obj in set(bpy.data.objects)-head_before:obj.matrix_world=head_transform @ obj.matrix_world
+ b('Bed_headboard',(2.50,3.90,.56),(.14,1.80,1.0),'red')
  # Heavy yellow frame with purple inner bevel, attached to the rear wall.
  b('Portrait_back',(.13,4.875,2.14),(1.52,.09,1.44),'red')
  for w,h,col,yy in [(1.48,1.40,'yellow',4.818),(1.26,1.18,'purple',4.803),(1.09,1.02,'black',4.792)]:
   b('Portrait_frame_layer',(.13,yy,2.14),(w,.018,h),col)
  source_patch(g,ROOT/'source/room 019.png',(193,22,231,56),(.13,4.781,2.14),(1.02,.94),'Original_doctor_portrait')
- # Foreground bedside cupboard, offset left of the ladder aisle.
- with offset_group(x=-.12, y=-.28+5.1-c['geometry']['depth']):
+ # Bedside cupboard backs onto the right wall, with its front facing inward.
+ cupboard_before=set(bpy.data.objects)
+ with offset_group(y=5.1-c['geometry']['depth']):
   b('Bedside_cupboard',(2.57,1.67,.32),(.80,.58,.64),'red')
   b('Bedside_cupboard_top',(2.57,1.67,.675),(.88,.64,.07),'red')
   inset('Bedside_panel',2.57,1.368,.34,.67,.52)
   b('Bedside_key_bow',(2.45,1.65,.72),(.09,.09,.018),'yellow')
   b('Bedside_key_shaft',(2.60,1.65,.72),(.23,.023,.018),'yellow')
   b('Bedside_key_tooth',(2.68,1.68,.72),(.025,.07,.018),'yellow')
+ bpy.context.view_layer.update()
+ front_offset=5.1-c['geometry']['depth']
+ cupboard_transform=Matrix.Translation((3.98,1.39+front_offset,0)) @ Matrix.Rotation(-math.pi/2,4,'Z') @ Matrix.Translation((-2.57,-1.67-front_offset,0))
+ for obj in set(bpy.data.objects)-cupboard_before:obj.matrix_world=cupboard_transform @ obj.matrix_world
  with offset_group(y=5.1-c['geometry']['depth']):
   plant(g,-3.45,1.18,1.25,'purple')
  # Compact ceiling fixture: black upright, two aqua shades and white glints.

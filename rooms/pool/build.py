@@ -1,6 +1,7 @@
 """Independent outdoor pool deck based on room 006; no indoor shell template."""
 import bpy,json,math,sys,random
 from pathlib import Path
+from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2];OUT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT/'scripts'))
 sys.path.insert(0,str(OUT))
@@ -87,10 +88,22 @@ fence((W-.22,centre+half+.14),(W-.22,D-.22))
 box('Near_deck_curb',(W/2,.18,.12),(W,.36,.24),'darkgray')
 geo.active='Details'
 for a,b,w in [((19.4,10.3,0),(19.1,10.1,4.7),.22),((19.1,10.1,3.4),(17.1,10.1,4.8),.12),((19.1,10.1,4.0),(19.8,9.1,4.9),.10),((17.1,10.1,4.8),(15.5,10.4,4.6),.06)]:geo.beam('Bare_tree',a,b,w,'darkgray')
-for i in range(32):
- x=rng.uniform(.5,19.5);z=rng.uniform(2.8,5)
- o=box('Star',(x,D-.02,z),(.04,.01,.12),'aqua');o['bake_unlit']=True
- o=box('Star',(x,D-.03,z),(.12,.01,.025),'aqua');o['bake_unlit']=True
+# Distant sparse sky, not a fence-height plane of nearby crosses.
+# Tangent quads wrap overhead and around the deck; no opaque sky shell hides
+# the garage, tree or house. Keep the whole deck's sky within the 60 m camera far plane.
+sky_rng=random.Random(6006);sky_center=Vector((W/2,D/2,1.62));sky_radius=40
+for i in range(80):
+ azimuth=sky_rng.uniform(0,math.tau);elevation=math.asin(sky_rng.uniform(.035,1))
+ direction=Vector((math.cos(azimuth)*math.cos(elevation),math.sin(azimuth)*math.cos(elevation),math.sin(elevation)))
+ center=sky_center+direction*sky_radius
+ right=Vector((-math.sin(azimuth),math.cos(azimuth),0));up=direction.cross(right)
+ # Most source stars are tiny dots; only occasional stars have a cross silhouette.
+ size=sky_rng.uniform(.022,.045)
+ strokes=[(size,size)] if i%10 else [(.026,.15),(.12,.026)]
+ for half_width,half_height in strokes:
+  vertices=[center+right*x+up*z for x,z in [(-half_width,-half_height),(half_width,-half_height),(half_width,half_height),(-half_width,half_height)]]
+  o=geo.mesh('Distant_star',vertices,[(0,1,2,3)],'lightblue' if i%10==0 else 'cyan')
+  o['bake_unlit']=True;o['bake_no_shadow']=True;o['bake_group']='Pool_sky'
 image=bpy.data.images.load(str(ROOT/'source/room 006.png'));image.pack();ref=bpy.data.objects.new('Reference_room_006',None);collections['Reference'].objects.link(ref);ref.empty_display_type='IMAGE';ref.data=image;ref.hide_render=True;ref.hide_viewport=True
 for port in config['ports']:
  o=bpy.data.objects.new('PORT_'+port['id'],None);collections['Connection_ports'].objects.link(o);o.location=port['position'];o.empty_display_type='ARROWS';o['state']=port['state'];o['outward']=port['outward'];o['width']=port['width']

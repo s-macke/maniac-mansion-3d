@@ -30,6 +30,12 @@ def furnish(geo,c):
  b('Exam_table_top',(-.10,2.89,.89),(1.95,.84,.11),'white');b('Exam_table_pad',(-.10,2.89,.965),(1.65,.64,.035),'cyan')
  for x in [-.92,.72]:
   for y in [2.57,3.21]:b('Exam_table_leg',(x,y,.44),(.1,.1,.88),'black')
+ # White sheet hangs over both short ends in 022, with a rounded lower edge.
+ for side in [-1,1]:
+  xx=-.10+side*.976
+  pts=[(xx,2.49,.96),(xx,3.29,.96),(xx,3.29,.52),(xx,3.23,.44),(xx,3.12,.43),(xx,3.06,.52),(xx,2.76,.59),(xx,2.58,.49),(xx,2.49,.53)]
+  geo.mesh('Exam_table_draped_sheet',pts,[tuple(range(len(pts)))],'white')
+  geo.beam('Sheet_fold',(xx+side*.003,2.58,.88),(xx+side*.003,2.59,.54),.018,'gray')
  b('Exam_lower_shelf',(-.1,2.89,.38),(1.65,.65,.08),'cyan')
  # Cabinet backs onto the right wall; its red-cross doors face left into the room.
  cupboard_before=set(bpy.data.objects)

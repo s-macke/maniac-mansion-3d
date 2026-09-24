@@ -24,7 +24,11 @@ This folder contains the builder, furnishing recipe, authored `room.json` and do
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 224,692 bytes (58,531 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
+The furnished optimized GLB is 214,804 bytes (56,500 bytes with gzip). The existing vertex-color bake supplies soft shading without runtime global illumination.
 
 Static build, typecheck, catalog validation and 15 focused navigation/GLB checks pass, including furniture collision, clear door thresholds, the pool approach and the garage hatch landing.
 Three desktop Chrome checks pass: garage circulation to the hatch, pantry interior movement, and the meteor-chamber/garage ladder round trip. Browser screenshots were inspected, including the simplified title without background numbers. No physical-mobile validation was performed.
+
+## Artwork detail review — 2026-09-22
+
+The shelving has red backing behind the stocked upper bays and a brown lower compartment, matching background 036 rather than exposing the gray room wall through every shelf.

@@ -15,12 +15,9 @@ def furnish(g,c):
  b('Fireplace_dark_recess',(x,4.765,.57),(1.43,.03,1.08),'black')
  for dx in [-.81,.81]:b('Stone_fireplace_pier',(x+dx,y,.57),(.43,.74,1.14),'gray')
  b('Fireplace_lintel',(x,y,1.07),(2.10,.74,.27),'gray');b('Fireplace_mantel',(x,y,1.26),(2.26,.88,.12),'brown')
- # Raised irregular stone faces wrap around the opening.
- for dx in [-.81,.81]:
-  for k in range(5):
-   z=.12+k*.20
-   g.mesh('Fireplace_stone',[(x+dx-.17,y-.382,z-.08),(x+dx+.16,y-.382,z-.09),(x+dx+.19,y-.382,z+.065),(x+dx-.12,y-.382,z+.09)],[(0,1,2,3)],'brown' if k%2 else 'red')
- for dx in [-.48,0,.48]:b('Lintel_stone',(x+dx,y-.382,1.09),(.39,.025,.15),'brown')
+ # Original irregular red/brown stone faces and colored flecks, flush with
+ # the solid three-dimensional piers and lintel (the opening remains empty).
+ source_patch(g,ROOT/'source/room 027.png',(99,74,183,108),(x,4.012,.57),(2.10,1.14),'Original_fireplace_stones',only={'red','lightred','brown','gray','darkgray'})
  panel(g,'Family_portrait_frame',-1.8,4.79,2.18,1.80,1.60)
  source_patch(g,ROOT/'source/room 027.png',(115,13,168,61),(-1.8,4.71,2.18),(1.55,1.36),'Original_family_portrait')
  cabinet(g,'Typewriter_table',.56,4.14,1.33,.89,.75,'red')

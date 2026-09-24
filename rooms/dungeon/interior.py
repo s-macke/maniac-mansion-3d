@@ -9,11 +9,11 @@ ROOT=Path(__file__).resolve().parents[2]
 def furnish(g,c):
  b=g.box;rng=random.Random(4)
  # Irregular stone polygons, with mortar gaps and the existing door apertures left clear.
- for row in range(9):
-  for col in range(19):
-   x=-6.08+col*.66+(row%2)*.30;z=.17+row*.34
+ for row in range(12):
+  for col in range(27):
+   x=-6.08+col*.46+(row%2)*.23+rng.uniform(-.025,.025);z=.14+row*.255+rng.uniform(-.012,.012)
    if x>6.1 or any(abs(x-p['position'][0])<p['width']/2+.36 and z<p['height']+.13 for p in c['ports']):continue
-   w=rng.uniform(.44,.61);h=rng.uniform(.24,.31);pts=[(-w*.47,-h*.33),(-w*.5,h*.13),(-w*.22,h*.50),(w*.32,h*.46),(w*.52,-h*.06),(w*.27,-h*.48)]
+   w=rng.uniform(.43,.50);h=rng.uniform(.25,.29);pts=[(-w*.47,-h*.33),(-w*.5,h*.13),(-w*.22,h*.50),(w*.32,h*.46),(w*.52,-h*.06),(w*.27,-h*.48)]
    g.mesh('Stone_red_edge',[(x+u,4.896,z+v) for u,v in pts],[tuple(range(6))],'red')
    g.mesh('Stone_brown_face',[(x+u*.81,4.882,z+v*.81) for u,v in pts],[tuple(range(6))],'brown')
  # Two arched barred windows are opaque decorative recesses, not extra room connections.

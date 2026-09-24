@@ -13,8 +13,11 @@ def furnish(g,c):
  b('Control_bank',(-.73,5.00,2.02),(5.48,.30,2.06),'cyan')
  for x in [-2.78,-1.94,-1.10]:
   b('Meter_column',(x,4.828,2.15),(.57,.035,1.67),'black')
-  for z in [1.59,2.04,2.49]:
+  # Two meters per column, with their separate colored switches (source 030).
+  for z in [1.82,2.49]:
    b('Meter_case',(x,4.800,z),(.39,.04,.28),'gray');b('Meter_glass',(x,4.772,z),(.29,.024,.18),'green');b('Meter_glint',(x-.065,4.753,z+.035),(.046,.015,.075),'white')
+   b('Meter_switch_frame',(x,4.79,z-.23),(.16,.035,.11),'white')
+   b('Meter_switch',(x,4.766,z-.23),(.11,.016,.065),'pink' if x<-1.5 else 'lightred')
  for x in [.24,.91,1.58]:
   b('Indicator_black_column',(x,4.82,2.22),(.38,.039,1.48),'black')
   for i in range(11):b('Indicator_lamp',(x,4.788,1.58+i*.127),(.26,.021,.069),['aqua','yellow','lightred','lime'][i%4])

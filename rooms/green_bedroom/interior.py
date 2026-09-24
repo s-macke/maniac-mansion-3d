@@ -34,14 +34,19 @@ def furnish(g,c):
   b('Coin_slot',(1.08,1,1.075),(.14,.025,.007),'black');g.sphere('Pig_eye',(1.34,.84,.95),(.025,.012,.025),'black')
  for x,y,z,col in [(-2.8,3.7,2.74,'blue'),(-1.25,3.95,2.91,'white')]:
   g.cyl('Model_plane_thread',(x,y,(3.12+z)/2),.005,3.12-z,'gray')
+  # Complete the propeller, upright tail and wheels of each hanging model.
+  g.beam('Plane_propeller',(x-.13,y-.365,z),(x+.13,y-.365,z),.018,col)
+  g.sphere('Plane_spinner',(x,y-.365,z),(.045,.045,.045),col)
+  g.mesh('Plane_vertical_tail',[(x,y+.14,z+.03),(x,y+.29,z+.15),(x,y+.32,z+.03)],[(0,1,2)],col)
+  for dx in [-.11,.11]:
+   g.beam('Plane_undercarriage',(x+dx,y-.10,z),(x+dx,y-.10,z-.12),.015,'gray')
+   g.sphere('Plane_wheel',(x+dx,y-.10,z-.13),(.025,.045,.045),'black')
   b('Plane_fuselage',(x,y,z),(.075,.69,.07),col);b('Plane_wings',(x,y-.04,z),( .72,.14,.045),col);b('Plane_tail',(x,y+.27,z+.03),(.30,.10,.035),col)
  source_patch(g,ROOT/'source/room 026.png',(162,17,204,43),(.36,4.79,2.51),(.92,.57),'Red_pennant',only={'red','lightred'})
- # Source window has four blue panes and brown crossbars.
- for o in list(bpy.data.objects):
-  if o.name.startswith(('Window_mullion','Window_crossbar')):bpy.data.objects.remove(o,do_unlink=True)
-  elif o.name.startswith('Window_dark_glass'):
-   o.data.materials.clear();o.data.materials.append(g.mats['blue'])
- for dx in [-.5,0,.5]:b('Bedroom_window_mullion',(3+dx,4.72,1.8),(.045,.07,1.6),'brown')
- for dz in [-.8,0,.8]:b('Bedroom_window_crossbar',(3,4.72,1.8+dz),(1.0,.07,.045),'brown')
- for x,z in [(2.75,2.31),(3.26,1.24),(3.32,2.13)]:b('Window_star',(x,4.755,z),(.02,.012,.03),'white')
+ # Preserve the four-pane blue night window, now open through the rear wall.
+ from blender_shared.windows import cut_wall,outside_window
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith('Window_'):bpy.data.objects.remove(obj,do_unlink=True)
+ cut_wall(g,'Wall_back',[(2.5,3.5,1.0,2.6)],author_offset_y=5.1-c['geometry']['depth'])
+ outside_window(g,'Bedroom_window',(3,4.92,1.8),(0,1),1.0,1.6,seed=26)
  finish(c)

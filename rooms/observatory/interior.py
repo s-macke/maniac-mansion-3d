@@ -52,4 +52,4 @@ def furnish(g,c):
  g.cyl('Dome_lamp_cord',(-.8,5.95,4.13),.013,.80,'black')
  verts=[(-.8+r*math.cos(i*math.tau/20),5.95+r*math.sin(i*math.tau/20),z) for r,z in [(.27,3.59),(.06,3.74)] for i in range(20)]
  g.mesh('Dome_lamp_shade',verts,[(i,(i+1)%20,(i+1)%20+20,i+20) for i in range(20)],'gray')
- g.cyl('Dome_lamp_bulb',(-.8,5.95,3.60),.09,.035,'white',16)
+ o=g.cyl('Dome_lamp_bulb',(-.8,5.95,3.60),.09,.035,'white',16);o['bake_unlit']=True;o['bake_no_shadow']=True

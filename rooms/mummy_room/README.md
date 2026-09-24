@@ -6,4 +6,9 @@ Furnished from [the original background](../../source/room%20025.png), preservin
 
 Rebuild with `./docker-build.sh room mummy_room`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=mummy_room`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 297,092 bytes (76,798 bytes with gzip); door and ladder kits are shared separately.
+The optimized room model is 298,892 bytes (77,260 bytes with gzip); door and ladder kits are shared separately.
+
+
+### Artwork detail review
+
+Restored the thin black aerial above the sarcophagus, with its three crossbars. Room connections and navigation footprints are unchanged.

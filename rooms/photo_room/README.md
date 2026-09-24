@@ -10,10 +10,15 @@ Dimensions and independent-space placement are provisional. Rebuild with `./dock
 
 `interior.py` supplies the optional shared-shell furnishing callback; `room.json` owns the bench and cabinet footprints. The entrance and central work aisle remain unobstructed. Shading is baked into vertex colors, with no runtime lights or GI; the dark appearance follows the source.
 
-The optimized room model is 141,728 bytes (41,334 bytes with gzip). It uses the existing unlit vertex-color material and shared doors.
+The optimized room model is 143,336 bytes (41,706 bytes with gzip). It uses the existing unlit vertex-color material and shared doors.
 
 Validation: static build, typecheck and catalog checks pass, with 17 focused navigation/model checks and four desktop Chrome checks across this level, the photo-door round trip and the upper stair route. No physical-mobile test was run.
 
 ## Artwork refinement
 
 The red safelight glass is visibly lit and a finite downward fixture light is baked onto the workbench. The room retains its nearly black walls and original red/brown palette, with no runtime lights. See the [five-room artwork review](../../docs/artwork_review.md).
+
+
+## Artwork detail review — 2026-09-24
+
+Restored the second pale enlarger-head band and the small black ventilation slots.

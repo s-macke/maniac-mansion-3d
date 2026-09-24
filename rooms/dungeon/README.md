@@ -7,3 +7,7 @@ See [cellar layout](../../docs/cellar.md) for door ownership, route evidence and
 Build with `./docker-build.sh room dungeon --site`; start locally at `/?room=dungeon`.
 
 `interior.py` adds scenery to the shared shell builder; authored `room.json` keeps its collision footprints. All generated Blender scenes, previews and models remain under `generated/`.
+
+## Artwork detail review — 2026-09-22
+
+The rear wall uses densely packed, staggered irregular stones with red edges and brown faces, following the closely filled masonry in background 004. Door apertures remain clear.

@@ -9,3 +9,7 @@ See [cellar layout](../../docs/cellar.md) for door ownership, route evidence and
 Build with `./docker-build.sh room outer_lab --site`; start locally at `/?room=outer_lab`.
 
 `interior.py` adds scenery to the shared shell builder; authored `room.json` keeps its collision footprints. All generated Blender scenes, previews and models remain under `generated/`.
+
+## Artwork detail review — 2026-09-22
+
+The two console instruments match background 031: a split pink/aqua dial beside a black-faced dial with a pink rim, each with separate ticks, needle and hub.

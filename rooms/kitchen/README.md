@@ -28,7 +28,19 @@ This folder contains the builder, furnishing recipe, authored `room.json` and do
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 354,624 bytes (100,667 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Original painting/stain pixels use color-run geometry; no extra texture download is needed.
+The furnished optimized GLB is 430,276 bytes (118,207 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Original painting/stain pixels use color-run geometry; no extra texture download is needed.
 
 The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
 Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.
+
+
+The outside windows use `scripts/blender_shared/windows.py`: real openings in
+the existing wall slabs, recessed frames and sills, and distant stars against
+the original blue night color. Near frames occlude the sky naturally as you
+move. The sky is static unlit geometry in this room, not another room connection;
+wall collision still prevents walking outside. Doors and furnishings are unchanged.
+
+
+## Artwork detail review — 2026-09-24
+
+Corrected the knife-rack arrangement: broad cleaver at the left and a toothed white chainsaw guide bar under the red motor at the right.

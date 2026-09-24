@@ -52,6 +52,10 @@ def furnish(g,c):
   for xx in [x-w/2,x+w/2]:b('Tub_end',(xx,y,.57),(.12,d,.58),'aqua')
   for yy in [y-d/2,y+d/2]:b('Tub_white_rim',(x,yy,.90),(w+.12,.18,.09),'white')
   for xx in [x-w/2,x+w/2]:b('Tub_white_rim',(xx,y,.90),(.18,d,.09),'white')
+  # Thin green drip on the front enamel, directly below the rim in 024.
+  for dx,low in [(-.055,.68),(0,.62),(.055,.74)]:
+   b('Tub_green_drip',(x+dx,y-d/2-.063,(.84+low)/2),(.026,.008,.84-low),'lime')
+  g.sphere('Tub_drip_spot',(x,y-d/2-.065,.56),(.023,.006,.022),'lime')
   for xx in [x-1.1,x+1.1]:
    for yy in [y-.44,y+.44]:g.sphere('Tub_claw_foot',(xx,yy,.18),(.12,.12,.16),'white')
   curved_line(g,'Shower_pipe',[(3.50,4.65,.94),(3.50,4.65,2.94),(2.96,4.65,2.94),(2.96,4.65,2.72)],.046,'gray')
@@ -61,12 +65,10 @@ def furnish(g,c):
    xx=.92+i*.115;b('Shower_curtain',(xx,3.25+.028*math.sin(i*2),1.92),(.12,.05,1.91),'lime' if i%2 else 'white')
    g.sphere('Curtain_ring',(xx,3.24,2.94),(.032,.045,.06),'gray')
   source_patch(g,ROOT/'source/room 024.png',(202,16,271,39),(2.83,4.919,2.22),(1.80,.60),'Original_bathroom_graffiti',only={'black'})
-  # Opaque right-wall window preserves the reference without exposing another room space.
-  b('Bathroom_window_frame',(4.075,4.08,2.01),(.10,1.02,1.41),'brown')
-  b('Bathroom_window_glass',(4.011,4.08,2.01),(.025,.85,1.24),'blue')
-  for yy in [3.66,4.50]:b('Bathroom_window_jamb',(3.99,yy,2.01),(.06,.045,1.26),'red')
-  for z in [1.40,2.62]:b('Bathroom_window_rail',(3.99,4.08,z),(.06,.85,.04),'yellow')
-  for yy,z in [(3.91,2.39),(4.30,1.79)]:b('Bathroom_window_star',(3.989,yy,z),(.009,.022,.033),'white')
+ # The narrow right-wall window looks onto a blue night sky.
+ from blender_shared.windows import cut_wall,outside_window
+ cut_wall(g,'Wall_right',[(3.655,4.505,1.39,2.63)],axis='y',author_offset_y=5.1-c['geometry']['depth'])
+ outside_window(g,'Bathroom_window',(3.42,4.08,2.01),(1,0),.85,1.24,columns=1,rows=1,seed=24,edge='red',rail='yellow')
  # Original missing plaster around the mirror and beside the curtain, flush to the wall.
  for crop,x,z,w,h in [((40,0,55,40),-3.10,2.595,.40,1.04),((147,0,165,48),.31,2.485,.50,1.26)]:
   source_patch(g,ROOT/'source/room 024.png',crop,(x,4.919,z),(w,h),'Bathroom_plaster_damage',only={'aqua','gray','darkgray','lime'})

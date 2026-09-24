@@ -25,6 +25,9 @@ def furnish(g,c):
   g.sphere('Sarcophagus_foot',(x+s*.18,y-.05,.12),(.18,.30,.12),'lightblue')
  for k in range(7):
   z=.36+k*.19;curved_line(g,'Wrapping_band',[(x-.24,y-.205,z+.12),(x+.24,y-.22,z-.12)],.023,'blue')
+ # Thin aerial above the headdress: a mast with three crossbars.
+ g.beam('Mummy_aerial_mast',(x,y,2.48),(x,y,2.93),.019,'black')
+ for z,w in [(2.68,.38),(2.77,.46),(2.86,.28)]:g.beam('Mummy_aerial_crossbar',(x-w/2,y,z),(x+w/2,y,z),.016,'black')
  # Exercise machine: open steel uprights, pulley, seat and stacked weights.
  x,y=.03,4.14
  b('Machine_base',(x,y,.07),(1.03,.92,.14),'black')

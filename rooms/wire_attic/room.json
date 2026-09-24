@@ -113,6 +113,19 @@
     "references": [
       "source/room 015.png",
       "source/room 027.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -1.71,
+          3.64,
+          2.43
+        ],
+        "strength": 0.85,
+        "range": 4.8,
+        "radius": 0.1,
+        "coneAngle": 100
+      }
     ]
   }
 }

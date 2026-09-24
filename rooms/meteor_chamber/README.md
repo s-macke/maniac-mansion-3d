@@ -9,3 +9,8 @@ Build with `./docker-build.sh room meteor_chamber --site`; start locally at `/?r
 A shared ladder now links the meteor chamber to a real floor hatch inside the garage. This user-requested shortcut replaces the old meteor-chamber exit door and the original long passage. Use E/click/tap to climb in either direction. Ordinary walking cannot fall through the garage hatch.
 
 `interior.py` adds scenery to the shared shell builder; authored `room.json` keeps its collision footprints. All generated Blender scenes, previews and models remain under `generated/`.
+
+
+## Artwork detail review — 2026-09-24
+
+Replaced the generic polygon puddle with the original irregular purple spill, pink highlights and scattered droplets.

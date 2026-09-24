@@ -11,7 +11,7 @@ from blender_shared.shell import setup,reference
 config=load_config(OUT/'room.json',prepare=True);g=config['geometry']
 scene,collections,geo=setup({**PALETTE,'darkgray':(84,84,84)})
 box=geo.box;W=g['width'];D=g['depth'];F=g['bayFront'];T=g['wallThickness'];H=g['height'];A=g['bayY0'];B=g['bayY1'];O0=g['openingY0'];O1=g['openingY1'];OH=g['openingHeight']
-# Original gray walls and blue floor. The outside slab meets the pool path at x=0.
+# Original gray covered floor contrasts with the blue outdoor forecourt. The outside slab meets the pool path at x=0.
 box('Forecourt_floor',(F/2,D/2,-.06),(F,D,.12),'lightblue')
 holes=g.get('floorHoles',[])
 xs=sorted(set([F,W]+[h[k] for h in holes for k in ['x0','x1']]))
@@ -19,7 +19,8 @@ ys=sorted(set([A,B]+[h[k] for h in holes for k in ['y0','y1']]))
 for x0,x1 in zip(xs,xs[1:]):
  for y0,y1 in zip(ys,ys[1:]):
   if any(h['x0']<(x0+x1)/2<h['x1'] and h['y0']<(y0+y1)/2<h['y1'] for h in holes):continue
-  box('Garage_floor',((x0+x1)/2,(y0+y1)/2,-.06),(x1-x0,y1-y0,.12),'blue')
+  box('Garage_floor',((x0+x1)/2,(y0+y1)/2,-.06),(x1-x0,y1-y0,.12),'darkgray')
+box('Garage_threshold',(F+.07,(O0+O1)/2,.003),(.14,O1-O0,.006),'gray')
 for h in holes:
  for x in [h['x0'],h['x1']]:box('Hatch_rim',(x,(h['y0']+h['y1'])/2,.025),(.065,h['y1']-h['y0']+.065,.05),'gray')
  for y in [h['y0'],h['y1']]:box('Hatch_rim',((h['x0']+h['x1'])/2,y,.025),(h['x1']-h['x0'],.065,.05),'gray')

@@ -11,3 +11,8 @@ The columns, plant pot and balustrade have authored collision footprints. Both d
 The furnished optimized model is 831,624 bytes, or 229,284 bytes with gzip. It uses the existing unlit vertex-color material and shared doors.
 
 Validation: static build, typecheck and catalog checks pass, with 17 focused navigation/model checks and four desktop Chrome checks across this level, the photo-door round trip and the upper stair route. No physical-mobile test was run.
+
+
+## Artwork detail review — 2026-09-24
+
+Added the clipped corners of the leaded window panes, completing their octagonal outlines.

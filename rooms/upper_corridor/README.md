@@ -6,4 +6,9 @@ Furnished from [the original background](../../source/room%20038.png), preservin
 
 Rebuild with `./docker-build.sh room upper_corridor`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=upper_corridor`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 840,672 bytes (202,786 bytes with gzip); door and ladder kits are shared separately.
+The optimized room model is 841,296 bytes (202,752 bytes with gzip); door and ladder kits are shared separately.
+
+
+## Artwork detail review — 2026-09-24
+
+Replaced round branch pots with the original square red planters and rectangular pale rims.

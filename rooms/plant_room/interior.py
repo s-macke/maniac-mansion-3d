@@ -12,6 +12,12 @@ def furnish(geo,c):
  for z,w in [(.16,1.65),(.6,1.55),(2.48,1.65)]:b('Easel_crossbar',(0,3.55,z),(w,.17,.09),'brown')
  b('Canvas_back',(0,3.48,1.6),(1.68,.10,1.43),'gray')
  source_patch(geo,ROOT/'source/room 014.png',(123,41,190,93),(0,3.419,1.6),(1.65,1.39),'Original_still_life')
+ # Two screw clamps project above the canvas in background 014.
+ for x in [-.45,.45]:
+  b('Canvas_clamp_stem',(x,3.48,2.61),(.085,.10,.35),'brown')
+  b('Canvas_clamp_ink',(x,3.405,2.48),(.25,.08,.23),'black')
+  b('Canvas_clamp_red',(x,3.356,2.48),(.19,.025,.17),'red')
+  b('Canvas_clamp_screw',(x,3.333,2.48),(.10,.023,.034),'gray')
  # Timber tub to the right of the canvas.
  geo.cyl('Paint_tub',(1.96,4.47,.47),.54,.91,'brown',16)
  for z in [.19,.72]:geo.cyl('Tub_red_band',(1.96,4.47,z),.56,.09,'red',16)

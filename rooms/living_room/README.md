@@ -25,3 +25,20 @@ The right double doors now open into the library shell. The living room owns bot
 ## Source and generated files
 
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/living_room/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/living_room/`; derived door metadata and shading reports in `generated/reports/rooms/living_room/`. Builders never write derived data back into `room.json`.
+
+## Artwork detail pass
+
+Both windows have real wall apertures and recessed wooden reveals. The original
+curtain contours, ties, sash and blue broken-pane linework remain source-pixel
+geometry; the black pane interiors open onto enclosed black night spaces beyond
+the wall. No stars or additional exterior scenery are invented. Wallpaper stops
+at the openings, and the windows remain non-traversable.
+
+The sofa has three columns of tufting and a brown/gold front rail. The radio's
+arched source face is retained; its cabinet top is brown. The landscape frame
+sits against the wallpaper. Candle flames stay bright and a soft local bake at
+the chandelier adds light to the room, with reduced general fill. All lighting
+remains static vertex color; no browser lights are required.
+
+The optimized room is about 2.01 MB, or 632 KB with gzip. The download check keeps
+a 700 KB compressed budget for this furnished room.

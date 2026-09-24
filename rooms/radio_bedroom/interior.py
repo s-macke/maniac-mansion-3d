@@ -27,4 +27,7 @@ def furnish(g,c):
  panel(g,'Fred_portrait',-1.8,4.83,2.06,1.25,1.23,'yellow')
  source_patch(g,ROOT/'source/room 021.png',(97,28,138,61),(-1.8,4.755,2.06),(.95,.96),'Original_Fred_portrait')
  source_patch(g,ROOT/'source/room 021.png',(160,25,200,73),(-.15,4.79,2.03),(.83,1.0),'Wanted_poster')
- chandelier(g,.3,3.1,'yellow');finish(c)
+ chandelier(g,.3,3.1,'yellow')
+ g.sphere('Pendant_center_globe',(.3,3.1,2.88),(.12,.12,.15),'yellow')
+ g.sphere('Center_globe_glint',(.275,3.005,2.92),(.038,.024,.08),'white')
+ finish(c)

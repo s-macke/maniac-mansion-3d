@@ -33,4 +33,9 @@ The temporary den ladder faces the back wall beneath the visible ceiling opening
 
 See the [top-floor furnishing guide](../../docs/top_floor.md). The dome, slit, floor hatch and ladder transforms are unchanged. The telescope occupies part of the viewing sector, so the aperture test uses an offset sightline that clears the instrument and still exits through the real slit.
 
-The optimized model is 345,056 bytes (130,833 bytes with gzip); ladder geometry is shared separately.
+The optimized model is 449,816 bytes (187,191 bytes with gzip); ladder geometry is shared separately.
+
+
+### Artwork detail review
+
+Made the hanging bulb visibly bright and baked its local light onto the nearby dome and floor. Room connections and navigation footprints are unchanged.

@@ -17,8 +17,15 @@ def furnish(geo,c):
   for inset,col in [(0,'purple'),(.035,'pink'),(.1,'purple'),(.125,'pink')]:b('Pink_wall_panel',(x,3.69-inset*.10,2.0),(1.35-2*inset,.028,1.91-2*inset),col)
  b('White_dado',(0,3.60,.43),(7.45,.12,.65),'white')
  b('Dado_rail',(0,3.52,.82),(7.5,.1,.075),'gray')
+ for x in [-2.45,-.85,.75,2.35]:
+  b('Dado_panel_outline',(x,3.531,.43),(1.33,.014,.49),'black')
+  b('Dado_panel_inset',(x,3.519,.43),(1.25,.014,.41),'white')
  # Small grand piano, rounded tail, solid lid, keyboard and turned legs.
- outline=[(-2.6,2.12),(-.4,2.12),(-.4,2.65),(-.65,3.05),(-1.0,3.23),(-1.65,3.26),(-2.6,2.9)]
+ outline=[(-2.6,2.12),(-.4,2.12),(-.4,2.65)]
+ # Rounded tail from a cubic curve, keeping the existing footprint and angle.
+ for i in range(1,17):
+  t=i/16;s=1-t
+  outline.append((s**3*(-.4)+3*s*s*t*(-.45)+3*s*t*t*(-1.55)+t**3*(-2.6),s**3*2.65+3*s*s*t*3.46+3*s*t*t*3.32+t**3*2.9))
  vs=[(x,y,z) for z in [.73,1.02] for x,y in outline];n=len(outline)
  geo.mesh('Grand_piano_body',vs,[tuple(reversed(range(n))),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],'black')
  for x,y in [(-2.42,2.28),(-.61,2.35),(-1.6,3.08)]:
@@ -30,10 +37,19 @@ def furnish(geo,c):
   x=-2.46+i*.066;b('Piano_key_gap',(x,1.98,.89),(.006,.29,.012),'black')
   if i%7 not in [2,6]:b('Piano_black_key',(x+.03,2.05,.92),(.038,.17,.058),'black')
  b('Music_rest',(-1.7,2.17,1.19),(1.2,.06,.3),'black')
+ # Pedal lyre below the keyboard, moving with the piano's accepted rotation.
+ for x in [-1.86,-1.54]:geo.beam('Piano_pedal_support',(x,2.13,.73),(x,2.13,.20),.045,'black')
+ b('Piano_pedal_crossbar',(-1.70,2.13,.20),(.44,.12,.07),'black')
+ for x in [-1.84,-1.70,-1.56]:
+  geo.beam('Piano_pedal',(x,2.13,.20),(x,1.90,.12),.038,'brown')
+  geo.sphere('Piano_pedal_tip',(x,1.88,.12),(.047,.085,.023),'yellow')
  b('Piano_bench',(-1.72,1.18,.48),(.94,.46,.13),'blue')
  for x in [-2.09,-1.35]:
   for y in [1.02,1.34]:b('Bench_leg',(x,y,.24),(.07,.07,.48),'black')
  geo.sphere('Piano_vase',(-1.03,2.62,1.16),(.11,.11,.18),'lime');geo.cyl('Vase_neck',(-1.03,2.62,1.35),.055,.1,'green',12)
+ geo.cyl('Piano_vase_blue_foot',(-1.03,2.62,1.018),.075,.033,'blue',16)
+ geo.cyl('Vase_rim',(-1.03,2.62,1.405),.063,.025,'lime',16)
+ geo.cyl('Vase_opening',(-1.03,2.62,1.420),.038,.007,'black',16)
  for obj in list(geo.collections[geo.active].objects):
   if obj.name.startswith(('Grand_piano','Piano_','Music_rest','Bench_','Vase_')):obj.location.x+=.60
  # Slightly angled piano and bench, with a solid black keybed underneath.
@@ -61,10 +77,21 @@ def furnish(geo,c):
  b('Cassette_lower_edge',(.49,2.608,.317),(.19,.012,.026),'darkgray')
  for x in [.73,.86,.99]:
   for z in [.34,.43]:b('Tape_player_button',(x,2.653,z),(.045,.025,.035),'red')
- b('Turntable',(.65,3.12,1.34),(.97,.68,.1),'red');geo.cyl('Record',(.65,3.12,1.41),.24,.025,'black',24)
+ b('Turntable',(.65,3.12,1.34),(.97,.68,.1),'red');geo.cyl('Record',(.65,3.12,1.41),.24,.025,'purple',32)
+ geo.cyl('Record_label',(.65,3.12,1.427),.067,.008,'yellow',20)
+ geo.cyl('Record_spindle',(.65,3.12,1.443),.012,.025,'gray',12)
+ geo.cyl('Tonearm_pivot',(.98,3.31,1.43),.05,.08,'brown',12)
+ curved_line(geo,'Gramophone_tonearm',[(.98,3.31,1.47),(.94,3.13,1.48),(.76,3.04,1.46)],.025,'yellow')
+ b('Tonearm_pickup',(.76,3.04,1.44),(.075,.05,.05),'brown')
  # Trumpet axis along X, opening to the left.
- verts=[(x,3.12+r*math.cos(i*math.tau/20),1.94+r*math.sin(i*math.tau/20)) for x,r in [(.9,.07),(.05,.29)] for i in range(20)]
- geo.mesh('Gramophone_horn',verts,[(i,(i+1)%20,(i+1)%20+20,i+20) for i in range(20)],'yellow')
+ rings=[(.9,.07),(.62,.10),(.34,.17),(.05,.29)]
+ verts=[(x,3.12+r*math.cos(i*math.tau/24),1.94+r*math.sin(i*math.tau/24)) for x,r in rings for i in range(24)]
+ geo.mesh('Gramophone_horn',verts,[(j*24+i,j*24+(i+1)%24,(j+1)*24+(i+1)%24,(j+1)*24+i) for j in range(3) for i in range(24)],'yellow')
+ # Recessed red lining and dark throat make the mouth visibly open from both sides.
+ inner=[(.052,.266),(.34,.146),(.62,.076),(.84,.045)]
+ verts=[(x,3.12+r*math.cos(i*math.tau/24),1.94+r*math.sin(i*math.tau/24)) for x,r in inner for i in range(24)]
+ geo.mesh('Horn_inner_lining',verts,[(j*24+i,(j+1)*24+i,(j+1)*24+(i+1)%24,j*24+(i+1)%24) for j in range(3) for i in range(24)],'red')
+ geo.mesh('Horn_dark_throat',[(.841,3.12+.046*math.cos(i*math.tau/24),1.94+.046*math.sin(i*math.tau/24)) for i in range(24)],[tuple(range(24))],'black')
  curved_line(geo,'Horn_rim',[(.05,3.12+.29*math.cos(i*math.tau/20),1.94+.29*math.sin(i*math.tau/20)) for i in range(21)],.035,'red')
  curved_line(geo,'Gramophone_pipe',[(.9,3.12,1.94),(1.02,3.12,1.73),(.73,3.12,1.52)],.06,'brown')
  bpy.context.view_layer.update()

@@ -27,13 +27,15 @@ def furnish(geo,c):
   x,z,w,h=[win[k] for k in ['x','z','width','height']];y=5.737
   for j in range(5):b('Window_lead_vertical',(x-w/2+j*w/4,y,z),(.028,.038,h),'gray')
   for j in range(7):b('Window_lead_horizontal',(x,y,z-h/2+j*h/6),(w,.038,.025),'gray')
-  for i in range(1,4):
-   for j in range(1,6):
-    xx=x-w/2+i*w/4;zz=z-h/2+j*h/6
-    diamond=b('Lead_diamond',(xx,y-.025,zz),(.065,.02,.065),'gray');diamond.rotation_euler.y=math.pi/4
   for i in range(4):
    for j in range(6):
     xx=x-w/2+(i+.2)*w/4;zz=z-h/2+(j+.77)*h/6
+    # Clipped leaded corners give each pane its octagonal source outline.
+    left=x-w/2+i*w/4;bottom=z-h/2+j*h/6
+    for sx in [-1,1]:
+     for sz in [-1,1]:
+      cx=left+(w/4 if sx==1 else 0);cz=bottom+(h/6 if sz==1 else 0)
+      geo.beam('Pane_corner_lead',(cx-sx*.043,y-.008,cz),(cx,y-.008,cz-sz*.043),.018,'gray')
     b('Pane_green_glint',(xx,y+.015,zz),(.04,.008,.018),'green')
   for xx in [x-w/2-.055,x+w/2+.055]:b('Window_red_frame',(xx,5.76,z),(.032,.035,h+.12),'red')
  # Two tall timber columns, based on the foreground posts in the original.

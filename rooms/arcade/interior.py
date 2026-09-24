@@ -14,6 +14,10 @@ def furnish(geo,c):
   profile=[(y+.43,0),(y-.45,0),(y-.45,.88),(y-.57,1.02),(y-.28,1.26),(y-.25,1.84),(y-.49,1.92),(y-.49,2.3),(y+.43,2.3)]
   vs=[(x+side*w/2,yy,z) for side in [-1,1] for yy,z in profile];n=len(profile)
   geo.mesh('Arcade_cabinet_'+str(i),vs,[tuple(reversed(range(n))),tuple(range(n,2*n))]+[(j,(j+1)%n,(j+1)%n+n,j+n) for j in range(n)],'black')
+  # Gray stepped plinths beneath each cabinet are visible in the source.
+  b('Cabinet_plinth',(x,y-.04,.035),(w+.12,.94,.07),'gray')
+  b('Cabinet_plinth_ink',(x,y-.525,.073),(w+.12,.015,.013),'black')
+  b('Cabinet_plinth_step',(x,y-.03,.09),(w+.04,.88,.035),'white')
   b('Cabinet_base_color',(x,y-.465,.43),(w-.07,.025,.76),col)
   b('Coin_slot_plate',(x,y-.485,.51),(.29,.022,.48),'black')
   for dx in [-.08,.08]:

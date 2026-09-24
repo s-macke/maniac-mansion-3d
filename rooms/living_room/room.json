@@ -128,6 +128,20 @@
       ]
     ],
     "previewSuffix": "v4",
-    "startupCutaway": false
+    "startupCutaway": false,
+    "fillStrength": 0.86,
+    "practicalLights": [
+      {
+        "position": [
+          0,
+          3.45,
+          2.96
+        ],
+        "strength": 0.75,
+        "range": 6,
+        "radius": 0.3,
+        "coneAngle": 70
+      }
+    ]
   }
 }

@@ -25,6 +25,9 @@ def furnish(geo,c):
   b('Enlarger_head',(ex-.13,ey,1.98),(.49,.38,.28),'brown')
   b('Enlarger_red_cap',(ex-.13,ey,2.14),(.41,.33,.065),'lightred')
   for z in [1.77+i*.042 for i in range(5)]:b('Bellows_fold',(ex-.13,ey,z),(.37,.34,.019),'red')
+  # Red head has two pale bands and a row of black ventilation slots.
+  b('Enlarger_upper_band',(ex-.13,ey-.202,2.07),(.51,.018,.025),'gray')
+  for dx in [-.13,0,.13]:b('Enlarger_vent',(ex-.13+dx,ey-.205,1.88),(.055,.018,.027),'black')
   b('Enlarger_head_band',(ex-.13,ey-.202,1.96),(.51,.018,.032),'white')
   geo.cyl('Enlarger_lens',(ex-.13,ey,1.715),.092,.13,'gray',16);geo.cyl('Lens_glass',(ex-.13,ey,1.642),.074,.02,'black',16)
   geo.beam('Enlarger_focus_arm',(ex-.32,ey,1.84),(ex-.70,ey,1.84),.035,'brown');geo.sphere('Focus_knob',(ex-.70,ey,1.84),(.075,.075,.045),'red')

@@ -10,6 +10,9 @@ def furnish(geo,root):
     for z in [.18,.88,1.52,2.15,2.68]:
         box('Pantry_shelf',(1.395,4.94,z),(1.58,.68,.09),'brown')
         box('Pantry_shelf_red_edge',(1.395,4.582,z),(1.58,.025,.065),'red')
+    # The source rack has red backing boards; the lowest compartment is brown.
+    box('Pantry_red_backing',(1.395,5.225,1.78),(1.47,.06,1.80),'red')
+    box('Pantry_lower_backing',(1.395,5.225,.53),(1.47,.06,.70),'brown')
     # Tall preserves, cyan tins, packets and the bottle on top follow the reference rows.
     def jar(name,x,z,r,h,color):
         geo.cyl(name,(x,4.83,z+h/2),r,h,color,16)
