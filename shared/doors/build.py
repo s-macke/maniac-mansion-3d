@@ -22,7 +22,7 @@ mat=bpy.data.materials.new('Shared_EGA_vertex_color');mat.use_nodes=True
 n=mat.node_tree.nodes;n.clear();attr=n.new('ShaderNodeVertexColor');attr.layer_name='Col';e=n.new('ShaderNodeEmission');out=n.new('ShaderNodeOutputMaterial');mat.node_tree.links.new(attr.outputs['Color'],e.inputs['Color']);mat.node_tree.links.new(e.outputs[0],out.inputs[0])
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from designs import pool_door,security_door,entrance_transom,concealed_panel,grating_leaf,artwork_leaf
-parts=[('Standard_leaf',leaf),('Standard_frame',frame)]
+parts=[('Standard_leaf',leaf),('Standard_plain_leaf',[o for o in leaf if not o.name.startswith('Template_knob')]),('Standard_frame',frame)]
 before=set(col.objects);pool_door(geo);bpy.context.view_layer.update();pool_parts=list(set(col.objects)-before)
 parts.extend([('Pool_leaf',[o for o in pool_parts if 'jamb' not in o.name]),('Pool_frame',[o for o in pool_parts if 'jamb' in o.name])])
 before=set(col.objects);security_door(geo,ROOT);bpy.context.view_layer.update();security_parts=list(set(col.objects)-before)
@@ -42,7 +42,7 @@ for name,objects in parts:
    start=len(vs)
    for i in poly.vertices:
     p=o.matrix_world@o.data.vertices[i].co
-    if name=='Standard_leaf':p=Vector((p.x/1.265,p.y+.18,(p.z-1.415)/2.73))
+    if name in ('Standard_leaf','Standard_plain_leaf'):p=Vector((p.x/1.265,p.y+.18,(p.z-1.415)/2.73))
     elif name=='Standard_frame':p=Vector((p.x/1.3,p.y,p.z/2.83))
     vs.append(p);cs.append(color)
    fs.append(tuple(range(start,len(vs))))
@@ -50,8 +50,7 @@ for name,objects in parts:
  colors=me.color_attributes.new(name='Col',type='FLOAT_COLOR',domain='POINT')
  for item,c in zip(colors.data,cs):item.color=c
  ob=bpy.data.objects.new(name,me);col.objects.link(ob)
-for _,objects in parts:
- for o in objects:bpy.data.objects.remove(o,do_unlink=True)
+for o in {o for _,objects in parts for o in objects}:bpy.data.objects.remove(o,do_unlink=True)
 bpy.ops.object.select_all(action='DESELECT')
 for o in col.objects:o.select_set(True)
 bpy.ops.export_scene.gltf(filepath=str(ROOT/'generated/models/doors/standard_doors_v1.glb'),use_selection=True,export_format='GLB',export_cameras=False,export_lights=False)
@@ -60,6 +59,7 @@ finalize(ROOT/'generated/models/doors/standard_doors_v1.glb')
 # Room builders append mesh data only, so these display transforms do not affect placement.
 bpy.data.objects['Standard_leaf'].location=(-4.4625,-.18,1.59);bpy.data.objects['Standard_leaf'].scale=(-.89,1,3.08)
 other=bpy.data.objects['Standard_leaf'].copy();col.objects.link(other);other.name='Preview_second_leaf';other.location.x=-3.5375;other.scale.x=.89
+bpy.data.objects['Standard_plain_leaf'].location=(-8,0,1.415);bpy.data.objects['Standard_plain_leaf'].scale=(1.265,1,2.73)
 bpy.data.objects['Standard_frame'].location.x=-4;bpy.data.objects['Standard_frame'].scale=(1.85,1,3.18)
 bpy.data.objects['Entrance_transom'].location=(-4,0,3.18)
 bpy.data.objects['Concealed_leaf'].location=(6,0,1.415);bpy.data.objects['Concealed_leaf'].scale=(1.3,1,2.83)

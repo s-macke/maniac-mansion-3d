@@ -32,3 +32,15 @@ test('cellar route follows door order and uses the requested garage escape ladde
  expect(neighbors('under_house')).toEqual(['front_exterior']);
  expect(v.definitions.meteor_chamber.ports.some(p=>p.id==='exit_door')).toBe(false);
 });
+
+test('laboratory doorway sides match backgrounds 031, 030 and 051',()=>{
+ const v=createHouseRuntime();
+ const port=(room:string,id:string)=>v.definitions[room].ports.find(p=>p.id===id)!;
+ expect(port('outer_lab','dungeon_door').position).toEqual([-3.55,5.1,0]);
+ expect(port('outer_lab','dungeon_door').outward).toEqual([0,1]);
+ expect(port('outer_lab','main_lab_door').outward).toEqual([1,0]);
+ expect(port('main_lab','outer_lab_door').outward).toEqual([-1,0]);
+ expect(port('main_lab','meteor_door').outward).toEqual([1,0]);
+ expect(port('meteor_chamber','lab_door').outward).toEqual([-1,0]);
+ expect(port('meteor_chamber','garage_hatch').position[0]).toBeGreaterThan(0);
+});

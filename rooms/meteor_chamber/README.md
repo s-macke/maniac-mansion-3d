@@ -14,3 +14,7 @@ A shared ladder now links the meteor chamber to a real floor hatch inside the ga
 ## Artwork detail review — 2026-09-24
 
 Replaced the generic polygon puddle with the original irregular purple spill, pink highlights and scattered droplets.
+
+## Door orientation
+
+The teal lab entrance is on the left. The garage escape ladder occupies the right-hand exit bay, clear of the suspended apparatus.

@@ -19,7 +19,7 @@ test('meteor chamber ladder emerges through garage floor and returns seamlessly'
 
 
 
- await go(496.4,2);await go(496.4,3.5);await aim(496.4,4.52);
+ await go(504.9,2);await go(504.9,2.7);await aim(504.9,3.72);
  await page.mouse.move(650,600);await page.mouse.down();await page.mouse.move(650,220,{steps:8});await page.mouse.up();
  await expect(page.locator('.door-action')).toContainText('Climb up');
  await expect.poll(async()=>(await state()).portals.visibleRooms).toContain('garage');

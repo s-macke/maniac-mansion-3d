@@ -7,16 +7,23 @@ from mathutils import Matrix,Vector
 ROOT=Path(__file__).resolve().parents[2]
 KIT='generated/models/doors/standard_doors_v1.glb'
 
-def register(config,specs):
+def register(config,specs,*,leaf_assets=None):
+ leaf_assets=leaf_assets or {}
+ names=list(dict.fromkeys(['Standard_leaf','Standard_frame',*leaf_assets.values()]))
  bpy.context.view_layer.update()
- with bpy.data.libraries.load(str(ROOT/'generated/blender/shared/doors/standard_doors_v1.blend'),link=False) as (a,b):b.meshes=['Standard_leaf','Standard_frame']
- meshes=dict(zip(['Standard_leaf','Standard_frame'],b.meshes));instances=[];remove=set()
+ with bpy.data.libraries.load(str(ROOT/'generated/blender/shared/doors/standard_doors_v1.blend'),link=False) as (a,b):b.meshes=list(names)
+ meshes=dict(zip(names,b.meshes));instances=[];remove=set()
  leaves_by_node={l['node']:l for d in config['geometry'].get('doors',[]) for l in d['leaves']}
  def instance(id,asset,matrix,collection,door_node=None):
   entry={'id':id,'asset':asset,'matrix':[float(matrix[r][c]) for c in range(4) for r in range(4)]}
   o=bpy.data.objects.new('Shared_'+id,meshes[asset]);collection.objects.link(o);o['shared_asset']=asset
   if door_node:
-   leaf=leaves_by_node[door_node];hinge=Vector(leaf['hinge']);pivot=bpy.data.objects.new(door_node,None);collection.objects.link(pivot);pivot.location=hinge;pivot['shared_asset']='pivot'
+   leaf=leaves_by_node[door_node]
+   if asset!='Standard_leaf':
+    points=[matrix@v.co for v in meshes[asset].vertices]
+    leaf['min']=[min(p[i] for p in points) for i in range(3)]
+    leaf['max']=[max(p[i] for p in points) for i in range(3)]
+   hinge=Vector(leaf['hinge']);pivot=bpy.data.objects.new(door_node,None);collection.objects.link(pivot);pivot.location=hinge;pivot['shared_asset']='pivot'
    matrix=Matrix.Translation(-hinge)@matrix;entry['matrix']=[float(matrix[r][c]) for c in range(4) for r in range(4)];entry['doorNode']=door_node
    o.parent=pivot;o['door_node']=door_node
   o.matrix_local=matrix;instances.append(entry)
@@ -34,7 +41,7 @@ def register(config,specs):
    local=leaf.matrix_world.inverted()@knob.matrix_world.translation;mirror=-1 if local.x>0 else 1
    xs=[v.co.x for v in leaf.data.vertices];zs=[v.co.z for v in leaf.data.vertices]
    matrix=leaf.matrix_world@Matrix.Diagonal(Vector(((max(xs)-min(xs))*mirror,1,max(zs)-min(zs),1)))
-   instance(leaf.name,'Standard_leaf',matrix,leaf.users_collection[0],node)
+   instance(leaf.name,leaf_assets.get(prefix,'Standard_leaf'),matrix,leaf.users_collection[0],node)
  for o in remove:bpy.data.objects.remove(o,do_unlink=True)
  config['geometry']['sharedAssets']=instances;config['sharedAssetLibrary']=KIT
  bpy.context.view_layer.update()

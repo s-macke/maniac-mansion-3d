@@ -13,3 +13,7 @@ Build with `./docker-build.sh room outer_lab --site`; start locally at `/?room=o
 ## Artwork detail review — 2026-09-22
 
 The two console instruments match background 031: a split pink/aqua dial beside a black-faced dial with a pink rim, each with separate ticks, needle and hub.
+
+## Door orientation
+
+The dungeon entrance is on the back-left wall; the gray main-lab exit is on the right. Metal panels leave the entrance aperture open.

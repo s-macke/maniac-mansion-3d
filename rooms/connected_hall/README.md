@@ -28,3 +28,9 @@ This folder contains only the builder, authored `room.json` and documentation. O
 The rear-right shared door now opens onto the [cellar](../cellar/README.md) staircase through a seamless portal. The hall owns `cellar_door`; its leaf starts closed.
 
 The entrance wainscot has continuous wooden backing between door openings. Panels intersecting a doorway are trimmed to the jamb instead of discarded, preventing bare cyan patches beside the doors.
+
+## Door hardware correction
+
+The kitchen door hinges on its right edge, opposite its left knob. The cellar
+door uses the shared handleless wooden panel variant, matching background 010.
+Both remain interactive and initially closed.

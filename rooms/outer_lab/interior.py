@@ -6,8 +6,8 @@ from blender_shared.furnishings import source_patch
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
 def furnish(g,c):
- b=g.box;metal_wall(g,c['geometry']['halfWidth'],5.1)
- # Back-wall equipment leaves both side-door approaches clear.
+ b=g.box;metal_wall(g,c['geometry']['halfWidth'],5.1,openings=[(-4.2,-2.9,2.83)])
+ # Back-wall equipment leaves the back-left entrance and right exit clear.
  for z in [.48,1.15,2.80]:pipe(g,'Chamber_pipe',[(-2.25,4.76,z),(4.86,4.76,z)],.042,'cyan')
  for x in [-2.19,1.77,4.53]:pipe(g,'Chamber_riser',[(x,4.76,.08),(x,4.76,3.11)],.070,'cyan')
  b('Console_foot',(-.19,4.14,.18),(3.08,1.18,.36),'black');b('Foot_grille',(-.19,3.527,.19),(2.75,.029,.24),'gray')

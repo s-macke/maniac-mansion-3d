@@ -801,13 +801,13 @@
         "room": "meteor_chamber",
         "port": "garage_hatch",
         "landing": {
-          "x": -3.6,
-          "y": 3.5,
+          "x": 4.9,
+          "y": 2.7,
           "height": 0
         },
         "shaft": {
-          "x": -3.6,
-          "y": 4.07
+          "x": 4.9,
+          "y": 3.27
         },
         "yaw": 0
       },

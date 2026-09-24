@@ -70,12 +70,12 @@
     {
       "id": "outer_lab_door",
       "position": [
-        8.2,
+        -8.2,
         2.6,
         0
       ],
       "outward": [
-        1,
+        -1,
         0
       ],
       "width": 1.3,
@@ -86,12 +86,12 @@
     {
       "id": "meteor_door",
       "position": [
-        -8.2,
+        8.2,
         2.6,
         0
       ],
       "outward": [
-        -1,
+        1,
         0
       ],
       "width": 1.3,
@@ -110,7 +110,7 @@
     "entries": [
       {
         "port": "outer_lab_door",
-        "wall": "right",
+        "wall": "left",
         "owner": false,
         "frame": false,
         "leaf": false,
@@ -119,7 +119,7 @@
       },
       {
         "port": "meteor_door",
-        "wall": "left",
+        "wall": "right",
         "owner": true,
         "frame": false,
         "leaf": false,

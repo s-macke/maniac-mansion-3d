@@ -24,7 +24,7 @@ geo.camera('02_Inside',(-4.5,1.25,1.62),(5,3.15,1.5),lens=22)
 geo.camera('03_Reverse',(4.5,3.8,1.62),(-6.4,2.9,1.5),lens=22)
 scene.camera=bpy.data.objects['02_Inside'];scene['room_id']='007';scene['version']=Path(config['source']).stem;scene['scope']='Furnished interior based on original artwork, with shared interactive doors.'
 scene.render.resolution_x=1000;scene.render.resolution_y=650
-shell.interactive_side_door(config,collections,ports['dining_door'],'Dining_door','Door_dining','Dining room door')
+shell.interactive_side_door(config,collections,ports['dining_door'],'Dining_door','Door_dining','Dining room door',reverse_hinge=True)
 register(config,[('Hall_frame',ports['hall_door']['width'],ports['hall_door']['height']),('Dining_door',ports['dining_door']['width'],ports['dining_door']['height'])])
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/config['source']))
 print('KITCHEN_SOURCE_COMPLETE',flush=True)

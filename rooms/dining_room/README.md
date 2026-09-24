@@ -45,3 +45,7 @@ Desktop Chrome also renders all three furnished rooms without page errors and wa
 ## Artwork detail review — 2026-09-22
 
 The platters distinguish the roast bird from the sliced ham: the bird retains its projecting bone, while the ham has a white fat rim, red cut face and fine white marbling, following background 037.
+
+The shared kitchen/dining leaf is handed to match dining background 037: knob
+on the left, hinge on the right from the dining side, opening into the kitchen.
+Handle and hinge are mirrored together; the two faces remain physically aligned.

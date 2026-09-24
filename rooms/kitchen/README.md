@@ -44,3 +44,7 @@ wall collision still prevents walking outside. Doors and furnishings are unchang
 ## Artwork detail review — 2026-09-24
 
 Corrected the knife-rack arrangement: broad cleaver at the left and a toothed white chainsaw guide bar under the red motor at the right.
+
+The shared kitchen/dining leaf is handed to match dining background 037: knob
+on the left, hinge on the right from the dining side, opening into the kitchen.
+Handle and hinge are mirrored together; the two faces remain physically aligned.

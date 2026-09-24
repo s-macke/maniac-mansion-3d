@@ -41,15 +41,15 @@ The underground route is **008 cellar → 004 dungeon → 031 big-screen outer l
 | Owner | Door | Destination |
 |---|---|---|
 | Cellar | Left door | Dungeon right rear door |
-| Dungeon | Left rear laboratory door | Outer laboratory right door |
-| Outer laboratory | Left gray door | Main laboratory right gray door |
-| Main laboratory | Left teal door | Meteor chamber right teal door |
+| Dungeon | Left rear laboratory door | Outer laboratory back-left door |
+| Outer laboratory | Right gray door | Main laboratory left gray door |
+| Main laboratory | Right teal door | Meteor chamber left teal door |
 
-The user confirmed the artwork order as dungeon (004) → big-screen room (031) → three-apparatus room (030) → meteor room (051). This corrects the earlier reversed assignment of 031 and 051. Shared gray doors join the screen room to the main laboratory; shared teal doors join the main laboratory to the meteor chamber. Room IDs retain their semantic roles, and the final meteor room retains the requested garage escape ladder. Side-door positions and room dimensions remain walkthrough interpretations.
+The user confirmed the artwork order as dungeon (004) → big-screen room (031) → three-apparatus room (030) → meteor room (051). This corrects the earlier reversed assignment of 031 and 051. Shared gray doors join the screen room to the main laboratory; shared teal doors join the main laboratory to the meteor chamber. Room IDs retain their semantic roles, and the final meteor room retains the requested garage escape ladder. Door sides follow the original backgrounds: 031 has a back-left dungeon entrance and right exit, 030 has a left entrance and right exit, and 051 has a left entrance. Exact depths remain inferred.
 
 The dungeon has irregular stonework, barred recesses, graffiti, a chandelier and skeletal remains above a red/brown floor. The laboratories have blue floors and sides with riveted light-blue rear panels, colored pipes, consoles and machinery. Shared `Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` templates reproduce source EGA door pixels on both faces. The main laboratory includes three apparatus chairs, a drinks machine and radiation-marked cabinet; the outer laboratory has its green monitor, console and articulated arm, and the meteor chamber has the suspended apparatus, lever cabinet and horizontal tank. The nested locked-door mechanism remains simplified to one shared interactive leaf. All equipment is static scenery.
 
-At the user's request, the meteor chamber's former exit door is replaced by a direct ladder portal into the garage floor. The original door and long escape passage are omitted in this walkthrough interpretation. The radiation-marked compartment in 030 is equipment, not an extra room connection.
+At the user's request, the meteor chamber's former right-hand exit door is replaced by a direct ladder portal into the garage floor. The original door and long escape passage are omitted in this walkthrough interpretation. The radiation-marked compartment in 030 is equipment, not an extra room connection.
 
 Build the extension with `./docker-build.sh room ROOM --site` for `dungeon`, `outer_lab`, `main_lab` and `meteor_chamber`. Rebuild `cellar` too when starting from the preceding revision. Direct local review links use `/?room=dungeon` (and the other room IDs). `tests/cellar-extension.spec.ts` checks initially closed doors, one shared owner per connection, forward/reverse portal movement and route isolation; `tests/cellar-extension-browser.spec.ts` walks the whole route and returns.
 
@@ -64,3 +64,15 @@ The [drained pool basin](../rooms/pool/README.md) is furnished in this same pass
 Focused coverage includes furnished-room collision routes and browser views, hall stairs and bush crawl round trips, the complete laboratory route, the garage ladder and the pool drain/climb/refill sequence.
 
 Validation of the corrected artwork order: all three affected Blender builds, production web build, TypeScript and catalog checks passed. Ten focused navigation/asset checks and four Chrome checks passed: the full cellar route in both directions, both reassigned interiors, and the meteor-room/garage ladder round trip. The route test steps back before waiting for swinging doors to finish, matching the existing safety prompt. Earlier hall-stair, bush-crawl and pool checks remain documented with those features; physical-mobile performance was not tested.
+
+The laboratory doorway correction preserves room order and furniture orientation;
+rotating whole independent spaces would not correct which wall contains each opening.
+The outer-lab metal panels are cut around its back-left doorway. The meteor
+escape hatch and ladder occupy the clear right-hand bay, with matching portal
+shaft and landing coordinates; the garage hatch itself stays in place.
+
+Validation of doorway-side correction: three Blender builds, production site,
+typecheck and catalog validation pass. Eleven focused model/navigation tests
+pass, including original-artwork doorway sides and actual GLB hatch clearance.
+Chrome completed the full cellar route and return, and the relocated garage
+ladder round trip; updated Blender previews and browser screenshots were inspected.

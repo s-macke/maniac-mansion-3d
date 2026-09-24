@@ -11,3 +11,7 @@ Build with `./docker-build.sh room main_lab --site`; start locally at `/?room=ma
 ## Artwork detail review — 2026-09-22
 
 The meter bank has three columns of two green meters, with a separate switch beneath each meter, matching background 030.
+
+## Door orientation
+
+The gray outer-lab entrance is on the left and the teal meteor-room exit on the right, matching background 030.

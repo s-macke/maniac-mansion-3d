@@ -180,7 +180,7 @@ if next(p for p in CONFIG['ports'] if p['id']=='rear_left')['state']=='open':
   back=o.copy();back.data=o.data.copy();collections['Doors'].objects.link(back)
   back.name=o.name+'_back';back.location.y=2*leaf.location.y-o.location.y;parts.append(back)
  bpy.context.view_layer.update()
- hinge=Vector((-3.72-1.30/2,leaf.location.y,0));angle=-math.pi/2
+ hinge=Vector((-3.72+1.30/2,leaf.location.y,0));angle=math.pi/2
  swing=Matrix.Translation(hinge)@Matrix.Rotation(angle,4,'Z')@Matrix.Translation(-hinge)
  for o in parts:o.matrix_world=swing@o.matrix_world
  CONFIG['geometry']['doors'].append({'id':'kitchen_door','label':'Kitchen door','port':'rear_left','initialOpen':False,'leaves':[movable(parts,hinge,angle,'Door_kitchen')]})
@@ -217,7 +217,7 @@ for prefix,pid in [('Landing_left_door','landing_left'),('Landing_right_door','l
  for o in list(bpy.data.objects):
   if o.name.startswith(tuple(prefix+s for s in ['_leaf','_raised_panel','_knob'])):bpy.data.objects.remove(o,do_unlink=True)
 from blender_shared.door_assets import register
-register(CONFIG,[('Rear_left', 1.3, 2.83), ('Rear_right', 1.3, 2.83), ('Front_double', 1.85, 3.18), ('Right_side', 1.05, 2.75), ('Landing_left_door', 1.05, 2.72), ('Landing_right_door', 1.05, 2.72)])
+register(CONFIG,[('Rear_left', 1.3, 2.83), ('Rear_right', 1.3, 2.83), ('Front_double', 1.85, 3.18), ('Right_side', 1.05, 2.75), ('Landing_left_door', 1.05, 2.72), ('Landing_right_door', 1.05, 2.72)],leaf_assets={'Rear_right':'Standard_plain_leaf'})
 from blender_shared.door_assets import register_static
 register_static(CONFIG,[('Security_frame',Matrix.Translation((.20,BACK,Z)),collections['Landing']),('Entrance_transom',Matrix.Translation((-6.4+(.22 if next(p for p in CONFIG['ports'] if p['id']=='entrance')['state']=='open' else 0),2.35,3.18))@Matrix.Rotation(math.pi/2,4,'Z'),collections['Doors'])])
 from blender_shared.door_assets import register_hinged

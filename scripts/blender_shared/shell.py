@@ -59,16 +59,20 @@ def reference(root,config,collections,background):
   o=bpy.data.objects.new('PORT_'+port['id'],None);collections['Connection_ports'].objects.link(o);o.location=port['position'];o.empty_display_type='ARROWS';o['state']=port['state'];o['outward']=port['outward'];o['width']=port['width']
 
 
-def interactive_side_door(config,collections,port,prefix,node,label):
- """Prepare a right-end door opening into its owning room, using the existing hinge convention."""
+def interactive_side_door(config,collections,port,prefix,node,label,*,reverse_hinge=False):
+ """Prepare a right-end door; reverse_hinge mirrors the handle and hinge together."""
  bpy.context.view_layer.update()
  parts=[o for o in collections['Doors'].objects if o.name.startswith(tuple(prefix+s for s in ['_leaf','_raised_panel','_knob']))]
  leaf=bpy.data.objects[prefix+'_leaf']
+ if reverse_hinge:
+  for o in parts:o.location.y=2*port['position'][1]-o.location.y
+  bpy.context.view_layer.update()
  for o in list(parts):
   if o==leaf:continue
   back=o.copy();back.data=o.data.copy();collections['Doors'].objects.link(back);back.name=o.name+'_back';back.location.x=2*leaf.location.x-o.location.x;parts.append(back)
  bpy.context.view_layer.update()
- hinge=Vector((leaf.location.x,port['position'][1]-port['width']/2,0));angle=math.pi/2
+ side=1 if reverse_hinge else -1
+ hinge=Vector((leaf.location.x,port['position'][1]+side*port['width']/2,0));angle=-side*math.pi/2
  swing=Matrix.Translation(hinge)@Matrix.Rotation(angle,4,'Z')@Matrix.Translation(-hinge)
  for o in parts:o.matrix_world=swing@o.matrix_world;o['door_node']=node;o['door_hinge']=list(hinge)
  bpy.context.view_layer.update()
