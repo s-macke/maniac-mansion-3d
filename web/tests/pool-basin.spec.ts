@@ -54,3 +54,15 @@ test('drained basin equipment blocks walking while the ladder and central aisle 
   const q=at(x,y);expect(v.navigation.canStand(q,-2.8)).toBe(true);p=v.moveWalker(p,q.x-p.x,q.y-p.y);expect(Math.hypot(p.x-q.x,p.y-q.y)).toBeLessThan(.03);
  }
 });
+
+
+test('rear house covers the upper backdrop while leaving the pantry aperture clear',async()=>{
+ const b=await readFile('../generated/models/rooms/pool_v1.glb');
+ const root=(await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength) as ArrayBuffer,'')).scene;root.updateMatrixWorld(true);
+ for(const y of [-2,5,12]){
+  const ray=new THREE.Raycaster(new THREE.Vector3(18,5,-y),new THREE.Vector3(-1,0,0),0,19);
+  expect(ray.intersectObject(root,true).length,'upper facade at '+y).toBeGreaterThan(0);
+ }
+ const opening=new THREE.Raycaster(new THREE.Vector3(1,1.62,-3.2),new THREE.Vector3(-1,0,0),0,8);
+ expect(opening.intersectObject(root,true)).toHaveLength(0);
+});

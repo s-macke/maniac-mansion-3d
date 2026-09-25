@@ -24,7 +24,7 @@ This folder contains only the builder, authored `room.json` and documentation. O
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 859,340 bytes (242,068 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
+The furnished optimized GLB is 865,160 bytes (243,368 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
 
 The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
 Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.
@@ -44,3 +44,14 @@ Restored the spreading green plant in its low red/yellow pot on the middle books
 The reading chair has rounded upholstered edges and thin gray seam piping. The green telephone now has a curved receiver, earpieces, rotary dial and coiled lead. Both fit the existing furniture footprints. The lamp stems now match the original black; their two light bakes and the accepted bookcase/stair proportions remain in use. The reverse Blender review camera now stands in the clear right aisle rather than inside the bookcase.
 
 Remaining: book spacing and spine patterns are an approximation rather than a pixel-for-pixel arrangement. The spiral stair destination and unseen room depth remain unresolved; no new route has been invented.
+
+## Hanging stair sign
+
+The lower spiral rail carries the small white sign shown in background 005.
+Its face reproduces source pixels (308,86)–(322,93), preserving the unreadable
+lettering and gray edge. A thin board and two hanging wires attach it to the
+rail; it introduces no interaction or new stair destination.
+
+Validation: library rebuild, production site and catalog checks pass. The
+updated desktop Chrome library walkthrough passes; the sign close-up and
+Blender reference view were inspected.

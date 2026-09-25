@@ -2,7 +2,7 @@
 
 Backgrounds 006 (filled deck) and 002 (drained basin) share one independent outdoor builder. It recreates the stone deck, turquoise coping, blue filled pool, metal ladder, pink floating chair silhouette, teal/yellow fence and sparse distant night sky using the original EGA palette and baked lighting. No indoor shell template is used.
 
-The provisional deck is 20 × 11 m; the pool opening is 12.2 × 5.8 m. The deck stays at the pantry floor elevation for continuous exploration. The near curb and unseen dimensions are inferred. The far fence opening now connects to the garage forecourt; the around-house connection is deferred.
+The provisional deck is 20 × 11 m; the pool opening is 12.2 × 5.8 m. The deck stays at the pantry floor elevation for continuous exploration. The near curb, matching teal/yellow fence and unseen dimensions are inferred. The far fence opening now connects to the garage forecourt; the around-house connection is deferred. An inferred rear house elevation completes the view behind the pantry doorway.
 
 The pantry owns the shared blue mesh door. Its leaf now separates from the fixed frame, has detail on both faces and starts closed. Open it with E / click / touch to step onto the deck. Pool placement is `(-6.37,44.1,0)`, yaw `pi`; its `pantry_door` meets the pantry rear port at world `(-6.37,40.9,0)`.
 
@@ -31,3 +31,32 @@ This folder contains only the builder, authored `room.json` and documentation. O
 Validated: Blender rebuild, production web build, TypeScript and catalog checks passed. Focused checks cover basin equipment collision, floor support, state isolation and ladder continuity; Chrome completed drain → descend → walk → ascend → refill. Drained, reactor and refilled browser views were inspected. Physical-mobile performance was not tested.
 
 The stars occupy a 40 m hemisphere around the deck, including overhead, instead of a narrow plane just behind the fence. Tiny cyan points and occasional blue crosses retain the source's sparse EGA appearance. The sky geometry is unlit, casts no baked shadows and has no opaque backdrop that could hide the adjoining garage.
+
+## Inferred rear house elevation
+
+At the user's request, `rear_facade.py` fills the previously black house-facing
+view with an invented rear elevation. Gray horizontal siding, narrow dark
+windows with red/yellow trim, a brick plinth, blue hip roofs, an offset tower
+and a shallow gabled pantry canopy borrow the front exterior's visual language.
+This is an interpretation of the unseen rear, not an original background or a
+claim about the interior layout. It belongs to the pool model so portal room
+visibility cannot remove it. The original pantry opening, pool, fence, basin
+and garage connection are retained. Decorative windows do not create new
+rooms or traversable connections. Geometry stays behind the deck boundary
+except shallow trim and the overhead canopy; illumination remains baked.
+
+Validation: pool Blender rebuild, production build, typecheck and catalog pass.
+Nine focused asset/navigation checks pass, including the upper facade and a
+clear ray through the pantry opening. Chrome completed the pantry round trip,
+rear-facade review and drain → basin → refill sequence. The final facade
+without an interior blocking volume was rechecked in Chrome. The complete
+pool model is 1,373,784 bytes optimized (376,510 bytes gzip). No physical-mobile
+validation was performed.
+
+The previously open near edge now has the same pointed teal/yellow fence as
+the far edge, following the existing curb and blocked navigation boundary.
+It closes the black side view without changing the pantry or garage openings.
+
+The added near fence was rebuilt and inspected in Blender and Chrome. Seven
+focused pool/garage checks and the pantry round-trip/browser review pass,
+along with the production build and catalog check.

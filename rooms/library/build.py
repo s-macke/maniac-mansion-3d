@@ -5,7 +5,7 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts'))
 from blender_shared.layout_shell import build
-from blender_shared.furnishings import panel,curved_line
+from blender_shared.furnishings import panel,curved_line,source_patch
 
 
 def furnish(geo,config):
@@ -56,6 +56,14 @@ def furnish(geo,config):
         if z+.68<3.12:geo.beam('Spiral_baluster',p,(p[0],p[1],z+.68),.045,'brown')
         outer.append((p[0],p[1],min(z+.68,3.09)))
     curved_line(geo,'Spiral_handrail',outer,.085,'brown')
+    # Small sign suspended from the lower rail in background 005.
+    # Preserve its illegible lettering as original pixels rather than guessing text.
+    anchor=Vector(outer[1]);sx,sy=anchor.x,anchor.y-.11
+    sw,sh=.42,.252;sz=anchor.z-.34
+    box('Stair_sign_board',(sx,sy,sz),(sw,.028,sh),'gray')
+    box('Stair_sign_reverse',(sx,sy+.0145,sz),(sw-.018,.001,sh-.018),'white')
+    source_patch(geo,ROOT/'source/room 005.png',(308,86,322,93),(sx,sy-.0145,sz),(sw,sh),'Original_stair_sign')
+    curved_line(geo,'Stair_sign_hanger',[(sx-sw*.38,sy,sz+sh/2),(anchor.x,anchor.y-.075,anchor.z),(sx+sw*.38,sy,sz+sh/2)],.007,'gray')
     # Reading chair, phone table and slim standing lamps.
     def upholstered(name,loc,size,bevel):
         obj=box(name,loc,size,'black')

@@ -12,7 +12,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True);bpy.context.preferences.filepat
 scene=bpy.context.scene;scene.unit_settings.system='METRIC';scene.render.engine='CYCLES';scene.cycles.samples=16
 scene.world=bpy.data.worlds.new('Night');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(0,0,0,1)
 scene.view_settings.view_transform='Standard';scene.view_settings.look='None';scene.render.resolution_percentage=100;scene.render.image_settings.file_format='PNG'
-colors={'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'lightgreen':(84,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
+colors={'red':(168,0,0),'brown':(168,84,0),'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'lightgreen':(84,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
 mats={}
 for name,rgb in colors.items():
  m=bpy.data.materials.new('EGA_'+name);m.diffuse_color=(*[linear(v) for v in rgb],1);m.use_nodes=True;n=m.node_tree.nodes;n.clear();e=n.new('ShaderNodeEmission');e.inputs[0].default_value=m.diffuse_color;o=n.new('ShaderNodeOutputMaterial');m.node_tree.links.new(e.outputs[0],o.inputs[0]);mats[name]=m
@@ -32,10 +32,10 @@ for ix in range(36):
   inset=.035;pts=[(a+inset,c+.08),(a+.16,c+inset),(b-.09,c+.035),(b-inset,c+.2),(b-.09,d-.035),(a+.08,d-.02)]
   start=len(verts);verts.extend((x+rng.uniform(-.025,.025),y+rng.uniform(-.025,.025),.006) for x,y in pts);faces.append(tuple(range(start,start+6)))
 geo.mesh('Stone_deck_pattern',verts,faces,'darkgray')
-# Only the wall segment around the pantry doorway; remaining house mass stays room-owned.
+# Inferred rear facade borrows the front entrance's EGA architectural details.
 port=config['ports'][0];cy=port['position'][1];dw=port['width'];dh=port['height']
-for a,b in [(0,cy-dw/2),(cy+dw/2,6.4)]:box('House_wall',(.09,(a+b)/2,1.7),(.18,b-a,3.4),'gray')
-box('House_header',(.09,cy,(dh+3.4)/2),(.18,dw,3.4-dh),'gray')
+from rear_facade import build as build_rear_facade
+build_rear_facade(geo,port)
 # Dark outer door reveal lets the shared pantry leaf be seen from outdoors.
 for side in [-1,1]:box('Pool_entry_reveal',(.05,cy+side*(dw/2+.045),dh/2),(.10,.09,dh),'darkgray')
 geo.active='Pool'
@@ -84,7 +84,9 @@ fence((.22,D-.22),(W-.22,D-.22))
 exit_port=next(p for p in config['ports'] if p['id']=='garage_path');centre=exit_port['position'][1];half=exit_port['width']/2
 fence((W-.22,.22),(W-.22,centre-half-.14))
 fence((W-.22,centre+half+.14),(W-.22,D-.22))
-# Inferred near boundary completes the safe deck perimeter.
+# Complete the unseen near side with the same teal/yellow picket fence.
+fence((.22,.22),(W-.22,.22))
+# Retain the curb beneath the new fence.
 box('Near_deck_curb',(W/2,.18,.12),(W,.36,.24),'darkgray')
 geo.active='Details'
 for a,b,w in [((19.4,10.3,0),(19.1,10.1,4.7),.22),((19.1,10.1,3.4),(17.1,10.1,4.8),.12),((19.1,10.1,4.0),(19.8,9.1,4.9),.10),((17.1,10.1,4.8),(15.5,10.4,4.6),.06)]:geo.beam('Bare_tree',a,b,w,'darkgray')
@@ -110,7 +112,7 @@ for port in config['ports']:
 geo.active='Cameras'
 geo.camera('01_Reference',(10,-9,8),(10,5,0),lens=30)
 geo.camera('02_Inside',(2,3.2,1.62),(12,6,1),lens=20)
-geo.camera('03_Reverse',(18.4,7,1.62),(0,3.2,1.3),lens=22)
+geo.camera('03_Reverse',(18.4,7,1.62),(0,5.0,4.3),lens=22)
 scene.camera=bpy.data.objects['02_Inside'];scene['room_id']='006';scene['scope']='One pool unit: filled deck and explorable drained basin, with a same-room ladder.';scene.render.resolution_x=1100;scene.render.resolution_y=650
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/config['source']))
 print('POOL_SOURCE_COMPLETE',flush=True)
