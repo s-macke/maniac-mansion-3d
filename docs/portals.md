@@ -26,6 +26,8 @@ Low `kind: crawl` apertures use the same doorway renderer with guided crouched m
 
 Only the current space is drawn directly. Visible doorways render destination spaces into cropped render targets, using transformed cameras and clipping at the destination entrance plane. The texture is projected back into the source aperture; real walls, frames and leaves provide depth occlusion. Cropping preserves projected pixel detail without rendering a full-screen texture for every small doorway. The main near plane shrinks near a threshold to avoid a blank flash before crossing.
 
+Portal targets use up to four MSAA samples, capped by the GPU’s supported maximum. Canvas antialiasing alone does not smooth geometry rendered into these textures. This applies to nested doorway views too, retaining the existing cropped pixel resolution and 1.5 device-pixel-ratio cap rather than supersampling the entire scene. Unsupported multisampling falls back to a single-sample target. Fine subpixel patterns can still shimmer; this is spatial antialiasing, not temporal filtering.
+
 `portalDepth: 3` bounds rendering to three consecutive doorways. The reverse entrance is excluded from recursion; offscreen apertures are culled conservatively. At the depth limit further apertures show the dark background, without changing or deleting their door leaves. Closed owner-side doors skip their concealed render pass. Opposite-side closed doors may still need a destination pass to show their inset geometry.
 
 Current-space rooms and immediate neighbors are resident. Visible deeper portal chains request more rooms. Unwanted rooms remain cached for ten seconds; render targets no longer used by the current view are disposed immediately. Shared kit resources remain reusable until the walkthrough is disposed. Crossing into an unloaded or failed destination is blocked; a loading failure preserves the current space and displays the existing reload message.
@@ -35,7 +37,7 @@ The renderer uses existing unlit, baked materials, sRGB output and no tone mappi
 ## Validation
 
 - `tests/portals.spec.ts`: translated/rotated/elevated connections, reverse movement, unloaded/closed gates, overlap isolation, continuous outdoors, camera mapping and clipping.
-- `tests/portal-rendering.spec.ts`: an isolated Vite fixture loads actual GLBs and compares pixels before/after relocating the kitchen, checks three-deep views and render-target release. Fixture pages are not part of the production build.
+- `tests/portal-rendering.spec.ts`: an isolated Vite fixture loads actual GLBs and compares pixels before/after relocating the kitchen, checks three-deep views and render-target release, and verifies multisample coverage on fine diagonal geometry with a single-sample fallback comparison. Fixture pages are not part of the production build.
 - Existing movement, shared-door and room tests select their space explicitly when placing a walker at test coordinates. `tests/relative-hosting.spec.ts` checks the portal-enabled static build at three URL depths.
 
 Browser tests use software-rendered Chrome. Their render counts and touch checks do not establish performance on physical mobile hardware. Blender files do not need rebuilding for this runtime change.

@@ -28,3 +28,15 @@ test('portal image is unchanged when the destination moves and rotates; three-le
  const closed=await page.evaluate(()=>(window as any).portalFixture.close());expect(closed.targets).toBe(0);expect(closed.passes).toBe(1);
  await page.evaluate(()=>(window as any).portalFixture.dispose());expect(errors).toEqual([]);
 });
+
+test('fine diagonal lines receive multisample coverage inside portal targets',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+ await page.goto(origin+'/tests/fixtures/portal-scene.html');await page.waitForFunction(()=>Boolean((window as any).portalFixture));
+ const result=await page.evaluate(()=>(window as any).portalFixture.antialiasProbe());
+ expect(result.maxSamples).toBeGreaterThanOrEqual(4);
+ expect(result.with.targets).toBeGreaterThan(0);
+ expect(result.with.covered).toBeGreaterThan(100);
+ expect(result.with.partial).toBeGreaterThan(result.without.partial+100);
+ expect(errors).toEqual([]);
+ await page.evaluate(()=>(window as any).portalFixture.dispose());
+});

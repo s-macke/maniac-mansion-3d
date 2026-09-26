@@ -46,6 +46,9 @@ export function createPortalRenderer(renderer:THREE.WebGLRenderer,scene:THREE.Sc
  const black=new THREE.DataTexture(new Uint8Array([0,0,0,255]),1,1);black.needsUpdate=true;
  const surfaces=new Map<string,THREE.Mesh<THREE.BufferGeometry,THREE.MeshBasicMaterial>>();
  const targets=new Map<string,THREE.WebGLRenderTarget>();
+ // Canvas antialiasing does not apply to offscreen portal images. Keep each
+ // cropped pass multisampled too, including recursively visible doorways.
+ const samples=Math.min(4,renderer.capabilities.maxSamples);
  let used=new Set<string>(),visibleRooms=new Set<string>(),passes=0;
  for(const edge of view.graph.portals.filter(p=>!p.continuous)){
   const corners=portalCorners(edge),geometry=new THREE.BufferGeometry();
@@ -76,7 +79,7 @@ export function createPortalRenderer(renderer:THREE.WebGLRenderer,scene:THREE.Sc
    if(!view.isLoaded(edge.to.room.id)){maps.set(edge.key,blank);continue;}
    const key=path+'/'+edge.key;
    const width=Math.max(16,Math.min(buffer.x,Math.ceil(buffer.x*rect.z/16)*16)),height=Math.max(16,Math.min(buffer.y,Math.ceil(buffer.y*rect.w/16)*16));
-   let next=targets.get(key);if(!next){next=new THREE.WebGLRenderTarget(width,height,{depthBuffer:true});targets.set(key,next);}
+   let next=targets.get(key);if(!next){next=new THREE.WebGLRenderTarget(width,height,{depthBuffer:true,samples});targets.set(key,next);}
    if(next.width!==width||next.height!==height)next.setSize(width,height);
    const child=portalCamera(camera,edge);
    const crop=new THREE.Matrix4().set(1/rect.z,0,0,(1-2*rect.x-rect.z)/rect.z, 0,1/rect.w,0,(1-2*rect.y-rect.w)/rect.w, 0,0,1,0, 0,0,0,1);
