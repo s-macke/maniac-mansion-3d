@@ -56,7 +56,7 @@
   "shell": {
     "wall": "cyan",
     "floor": "darkgray",
-    "trim": "brown",
+    "trim": "darkgray",
     "entries": [
       {
         "port": "entry_door",

@@ -108,7 +108,7 @@
   "shell": {
     "wall": "purple",
     "floor": "lightblue",
-    "trim": "brown",
+    "trim": "purple",
     "entries": [
       {
         "port": "corridor_door",
@@ -163,6 +163,30 @@
     "startupCutaway": false,
     "references": [
       "source/room 021.png"
+    ],
+    "practicalLights": [
+      {
+        "id": "radio_pendant_left",
+        "position": [
+          1.22,
+          3.4,
+          2.73
+        ],
+        "range": 3,
+        "strength": 0.45,
+        "radius": 0.12
+      },
+      {
+        "id": "radio_pendant_right",
+        "position": [
+          2.08,
+          3.4,
+          2.73
+        ],
+        "range": 3,
+        "strength": 0.45,
+        "radius": 0.12
+      }
     ]
   }
 }

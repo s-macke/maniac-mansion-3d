@@ -2,7 +2,7 @@
 
 Original background: 005. Rear bookcases contain three rows of EGA-colored books above panelled cupboards. A brown spiral staircase, black reading chair, green telephone on its side table and two floor lamps reproduce the main reference features with solid geometry and soft baked shading.
 
-Connects through the living-room double doors, owned by the living room. The spiral staircase is a non-traversable visual feature: its destination remains unresolved, and no new connection is invented. Furniture collision leaves circulation across the front and around the reading corner.
+Connects through the living-room double doors, owned by the living room. The spiral staircase is a non-traversable visual feature that continues through a real ceiling opening into a black shaft. Its upper steps and handrail fade into darkness, leaving its destination mysterious; there is no new connection. Furniture collision leaves circulation across the front and around the reading corner.
 
 The inferred footprint is 12.8 × 5.55 m, with a 3.12 m ceiling. These dimensions and unseen walls are provisional. Placement and connections live in `house/layout.json`; [the first-floor guide](../../docs/first_floor.md) explains the complete addition.
 
@@ -24,7 +24,7 @@ This folder contains only the builder, authored `room.json` and documentation. O
 
 ## Furnishing validation and download
 
-The furnished optimized GLB is 865,160 bytes (243,368 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
+The furnished optimized GLB is 959,352 bytes (268,941 bytes with gzip). The existing unlit vertex-color bake keeps soft shading in the browser without runtime lights. Books, shelving and the spiral staircase use solid EGA geometry with no texture download.
 
 The static build, typecheck, catalog check and 15 focused collision, connection and actual-GLB checks pass, including the retained kitchen facade clearance.
 Desktop Chrome also renders all three furnished rooms without page errors and walks a clear aisle in each; the resulting screenshots were inspected. No physical-mobile validation was run.
@@ -55,3 +55,7 @@ rail; it introduces no interaction or new stair destination.
 Validation: library rebuild, production site and catalog checks pass. The
 updated desktop Chrome library walkthrough passes; the sign close-up and
 Blender reference view were inspected.
+
+## Mysterious stair opening
+
+The ceiling has a 3.2 m square cutout above the spiral. A black enclosed shaft extends to 5.8 m, with additional steps, column and handrail fading into darkness using static baked colors. The hanging sign and lower flight remain. The shaft is scenery within the library’s independent space, with no traversable exit or invented destination.

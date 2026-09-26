@@ -86,15 +86,7 @@
     ],
     "wallColors": {
       "back": "lime"
-    },
-    "windows": [
-      {
-        "x": 3,
-        "z": 1.8,
-        "width": 1,
-        "height": 1.6
-      }
-    ]
+    }
   },
   "bake": {
     "collections": [

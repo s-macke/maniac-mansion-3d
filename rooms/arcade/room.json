@@ -69,7 +69,7 @@
   "shell": {
     "wall": "purple",
     "floor": "lightblue",
-    "trim": "brown",
+    "trim": "purple",
     "entries": [
       {
         "port": "corridor_door",

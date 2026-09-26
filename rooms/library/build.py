@@ -40,22 +40,52 @@ def furnish(geo,config):
             tip=px+side*(.30+k*.09)
             curved_line(geo,'Shelf_plant_leaf',[(px+side*(.36*t*(1-t)+abs(tip-px)*t*t),py-.045*k*t,1.85*(1-t)**2+2*(2.15+k*.02)*t*(1-t)+(1.91-k*.035)*t*t) for t in [j/8 for j in range(9)]],.035,'green')
     box('Bookcase_crown',(0,4.81,3.065),(10.92,.74,.11),'brown')
-    # Brown helical flight as drawn, ending at the ceiling; no invented destination.
+    # Real ceiling aperture and a closed, black shaft conceal the stair destination.
     cx,cy=-.1,3.05
+    ceiling=config['geometry']['height'];shaft_top=5.75
+    hole=config['geometry']['ceilingHoles'][0]
+    x0,x1,y0,y1=[hole[k] for k in ['x0','x1','y0','y1']]
+    for x in [x0-.05,x1+.05]:
+        box('Mystery_shaft_side',(x,cy,(ceiling+shaft_top)/2),(.10,y1-y0+.20,shaft_top-ceiling),'black')
+        box('Stair_opening_side_trim',(x,cy,ceiling-.035),(.10,y1-y0+.20,.07),'brown')
+    for y in [y0-.05,y1+.05]:
+        box('Mystery_shaft_end',(cx,y,(ceiling+shaft_top)/2),(x1-x0,.10,shaft_top-ceiling),'black')
+        box('Stair_opening_end_trim',(cx,y,ceiling-.035),(x1-x0,.10,.07),'brown')
+    box('Mystery_shaft_dark_end',(cx,cy,shaft_top+.025),(x1-x0+.20,y1-y0+.20,.05),'black')
+    def stair_shade(z,base='brown'):
+        if z<ceiling:return base
+        # Pre-shaded brown fades to black inside the shaft, with no runtime effect.
+        key=f'Stair_dark_{base}_{z:.3f}'
+        if key not in geo.mats:
+            mat=geo.mats[base].copy();mat.name=key
+            factor=max(0,1-(z-ceiling)/1.5)**3*.42
+            mat.diffuse_color=tuple(v*factor for v in mat.diffuse_color[:3])+(1,)
+            geo.mats[key]=mat
+        return key
+    def shaded(obj,z):
+        if z>=ceiling:obj['bake_unlit']=True
+        return obj
     geo.cyl('Spiral_central_column',(cx,cy,1.56),.26,3.12,'brown',20)
+    for i in range(18):
+        z=ceiling+(i+.5)*.143
+        shaded(geo.cyl('Spiral_column_in_dark',(cx,cy,z),.26,.143,stair_shade(z),20),z)
     outer=[]
-    for i in range(21):
+    for i in range(34):
         a=-math.pi/2+i*math.tau/25;b=a+math.tau/25;z=.12+i*.143
         vs=[(cx+r*math.cos(t),cy+r*math.sin(t),zz) for zz in [z-.08,z] for r,t in [(.2,a),(1.45,a),(1.45,b),(.2,b)]]
-        geo.mesh('Spiral_tread',vs,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],'brown')
-        geo.beam('Spiral_tread_edge',vs[5],vs[6],.035,'yellow')
-        # Broad curved outer stringer is a defining silhouette in background 005.
+        shaded(geo.mesh('Spiral_tread',vs,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],stair_shade(z)),z)
+        shaded(geo.beam('Spiral_tread_edge',vs[5],vs[6],.035,stair_shade(z,'yellow')),z)
         band=[(cx+1.47*math.cos(t),cy+1.47*math.sin(t),h) for t,h in [(a,max(.02,z-.25)),(b,max(.02,z+.143-.25)),(b,z+.143),(a,z)]]
-        geo.mesh('Spiral_outer_stringer',band,[(0,1,2,3)],'brown')
+        shaded(geo.mesh('Spiral_outer_stringer',band,[(0,1,2,3)],stair_shade(z)),z)
         p=(cx+1.45*math.cos(a),cy+1.45*math.sin(a),z)
-        if z+.68<3.12:geo.beam('Spiral_baluster',p,(p[0],p[1],z+.68),.045,'brown')
-        outer.append((p[0],p[1],min(z+.68,3.09)))
-    curved_line(geo,'Spiral_handrail',outer,.085,'brown')
+        # Split each baluster so it also disappears gradually above the ceiling.
+        for j in range(4):
+            za=z+j*.17;zb=za+.17
+            shaded(geo.beam('Spiral_baluster',(p[0],p[1],za),(p[0],p[1],zb),.045,stair_shade((za+zb)/2)),(za+zb)/2)
+        outer.append((p[0],p[1],z+.68))
+    for a,b in zip(outer,outer[1:]):
+        z=(a[2]+b[2])/2
+        shaded(geo.beam('Spiral_handrail',a,b,.085,stair_shade(z)),z)
     # Small sign suspended from the lower rail in background 005.
     # Preserve its illegible lettering as original pixels rather than guessing text.
     anchor=Vector(outer[1]);sx,sy=anchor.x,anchor.y-.11

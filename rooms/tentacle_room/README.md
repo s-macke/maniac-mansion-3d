@@ -10,9 +10,13 @@ The shared floor hatch returns to the radio bedroom. The left speaker is placed 
 
 Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; room placements and portal destinations are unchanged.
 
-The optimized room model is 468,368 bytes (119,394 bytes with gzip).
+The optimized room model is 506,756 bytes (129,030 bytes with gzip).
 
 
 ### Artwork detail review
 
 Added the small green/yellow key on the right wall as static scenery. Room connections and navigation footprints are unchanged.
+
+## Detailed source review — 2026-09-25
+
+The stereo now has distinct cassette, equalizer and receiver faces instead of repeated tape decks, with visible shelf-bracket faces and screws. Completed the rectangular wainscot outlines and corrected the bedspread from pale lime to the source green. Mounted the three posters against the rear wall. The speaker placement and ladder landing are retained.

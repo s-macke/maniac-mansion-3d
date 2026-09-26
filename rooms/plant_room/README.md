@@ -24,7 +24,7 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 245,188 bytes optimized, 63,816 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 359,340 bytes optimized, 111,750 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 
@@ -32,3 +32,7 @@ Validation: the floor-wide 16 focused navigation/model/portal checks and five de
 ### Artwork detail review
 
 Added the two red/brown screw clamps above the canvas, including their gray screw heads. Room connections and navigation footprints are unchanged.
+
+## Detailed source review — 2026-09-25
+
+Restored the woven fruit basket, open paint tin, painted brush tip and broad spill beneath the leaking tub. The large drawing now belongs to the right wall; the loose sketch stays on the rear wall. Both metal lamp shades have small bright bulbs and local downward baked light. Removed the unsupported brown skirting color. Furniture footprints and doorway clearance are unchanged.

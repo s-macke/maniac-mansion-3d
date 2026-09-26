@@ -1,6 +1,7 @@
 """Background 018: six solid arcade cabinets with original marquee art."""
 from pathlib import Path
 import bpy,math
+from mathutils import Matrix
 from blender_shared.furnishings import source_patch
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -14,24 +15,41 @@ def furnish(geo,c):
   profile=[(y+.43,0),(y-.45,0),(y-.45,.88),(y-.57,1.02),(y-.28,1.26),(y-.25,1.84),(y-.49,1.92),(y-.49,2.3),(y+.43,2.3)]
   vs=[(x+side*w/2,yy,z) for side in [-1,1] for yy,z in profile];n=len(profile)
   geo.mesh('Arcade_cabinet_'+str(i),vs,[tuple(reversed(range(n))),tuple(range(n,2*n))]+[(j,(j+1)%n,(j+1)%n+n,j+n) for j in range(n)],'black')
-  # Gray stepped plinths beneath each cabinet are visible in the source.
-  b('Cabinet_plinth',(x,y-.04,.035),(w+.12,.94,.07),'gray')
-  b('Cabinet_plinth_ink',(x,y-.525,.073),(w+.12,.015,.013),'black')
-  b('Cabinet_plinth_step',(x,y-.03,.09),(w+.04,.88,.035),'white')
+  # Only Disco Crazy has the projecting gray staircase in background 018.
+  if i==1:
+   for level in range(3):
+    b('Disco_plinth_step',(x,y-.12-level*.055,.025+level*.035),(w+.12-level*.025,1.12-level*.12,.035),'gray')
   b('Cabinet_base_color',(x,y-.465,.43),(w-.07,.025,.76),col)
-  b('Coin_slot_plate',(x,y-.485,.51),(.29,.022,.48),'black')
-  for dx in [-.08,.08]:
-   b('Coin_slot',(x+dx,y-.502,.60),(.07,.014,.04),'gray');b('Coin_return',(x+dx,y-.502,.35),(.07,.014,.06),'lightred')
-  b('Screen_trim',(x,y-.30,1.51),(w-.09,.04,.65),col);b('Dark_screen',(x,y-.327,1.51),(w-.15,.03,.55),'black')
+  b('Coin_door_outline',(x,y-.481,.43),(w-.17,.008,.65),'black')
+  b('Coin_door_face',(x,y-.487,.43),(w-.22,.006,.60),col)
+  for dx in [-.21,.21]:
+   b('Coin_slot_plate',(x+dx,y-.497,.51),(.13,.014,.39),'black')
+   b('Coin_entry',(x+dx,y-.507,.65),(.068,.008,.052),'lightred')
+   b('Coin_return',(x+dx,y-.507,.43),(.072,.008,.080),'gray')
+   b('Coin_return_recess',(x+dx,y-.513,.447),(.047,.004,.035),'black')
+  b('Coin_door_lock',(x-.24,y-.494,.20),(.025,.006,.028),'black')
+  b('Screen_trim',(x,y-.30,1.51),(w-.09,.04,.65),['green','gray','gray','gray','cyan','cyan'][i]);b('Dark_screen',(x,y-.327,1.51),(w-.15,.03,.55),'black')
   geo.beam('Screen_glint',(x-.23,y-.347,1.71),(x-.18,y-.347,1.76),.022,'lightblue')
   b('Control_panel',(x,y-.45,1.045),(w-.05,.26,.05),col)
-  geo.cyl('Joystick_stick',(x-.16,y-.48,1.13),.015,.12,'gray');geo.sphere('Joystick_ball',(x-.16,y-.48,1.21),(.045,.045,.045),'red')
+  geo.cyl('Joystick_stick',(x-.16,y-.48,1.13),.015,.12,'gray');geo.sphere('Joystick_ball',(x-.16,y-.48,1.21),(.045,.045,.045),'cyan' if i==1 else 'red')
   for dx in [.05,.16]:geo.cyl('Arcade_button',(x+dx,y-.5,1.084),.027,.025,'white')
+  # Copy only the visible painted side motifs, excluding the purple wall pixels.
+  side_crops=[(210,39,223,88),(267,31,281,80),(331,35,345,91),None,(442,37,458,87),(508,36,519,83)]
+  if side_crops[i]:
+   before=set(bpy.data.objects)
+   source_patch(geo,ROOT/'source/room 018.png',side_crops[i],(0,0,1.22),(.63,1.42),'Cabinet_side_art_'+str(i),only=['yellow','red','lightred','white','gray','blue','lightblue','green','lime','cyan','aqua'])
+   bpy.context.view_layer.update()
+   transform=Matrix.Translation((x+w/2+.001,y,0))@Matrix.Rotation(math.pi/2,4,'Z')
+   for obj in set(bpy.data.objects)-before:obj.matrix_world=transform@obj.matrix_world
   source_patch(geo,ROOT/'source/room 018.png',crop,(x,y-.505,2.11),(w-.03,.35),'Original_marquee_'+str(i))
  # Low pinball table at the left, leaving the front doorway and central aisle free.
  b('Pinball_body',(-4.15,2.27,.69),(1.32,.72,.25),'lightred');b('Pinball_glass',(-4.15,2.27,.83),(1.23,.65,.025),'white')
+ # The source table has tapered blue trestles, rather than four straight metal posts.
  for x in [-4.65,-3.65]:
-  for y in [2.02,2.52]:geo.beam('Pinball_leg',(x,y,.04),(x,y,.65),.06,'gray')
+  for ya,yb in [(1.99,2.17),(2.55,2.37)]:
+   geo.beam('Pinball_splayed_leg',(x,ya,.05),(x,yb,.57),.085,'lightblue')
+  geo.beam('Pinball_trestle_brace',(x,2.06,.14),(x,2.48,.14),.035,'blue')
+ b('Pinball_front_white_stripe',(-4.15,1.903,.72),(1.31,.016,.025),'white')
  geo.cyl('Pinball_dark_detail',(-4.15,2.27,.85),.12,.012,'black')
  # Right-wall target and left-wall original poster, rotated as wall art.
  before=set(geo.collections[geo.active].objects)

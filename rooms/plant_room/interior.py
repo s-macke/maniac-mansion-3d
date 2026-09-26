@@ -1,7 +1,8 @@
 """Background 014 is an art studio; retain the established plant_room package ID."""
 from pathlib import Path
 import math,random,bpy
-from blender_shared.furnishings import source_patch
+from mathutils import Matrix
+from blender_shared.furnishings import source_patch,curved_line
 ROOT=Path(__file__).resolve().parents[2]
 
 def furnish(geo,c):
@@ -27,17 +28,30 @@ def furnish(geo,c):
  for z in [.75,.63,.51]:b('Paint_drip',(1.99,3.905,z),(.10,.015,.17),'purple')
  # Fruit bowl on the low red pedestal, paint tin and fallen brush.
  b('Fruit_pedestal',(-2.05,2.7,.28),(.79,.70,.56),'red')
- geo.sphere('Fruit_bowl',(-2.05,2.7,.64),(.34,.24,.10),'yellow')
+ geo.sphere('Fruit_basket',(-2.05,2.7,.64),(.34,.24,.10),'brown')
+ for j in range(3):
+  z=.60+j*.035
+  curved_line(geo,'Basket_woven_rim',[(-2.05+.34*math.cos(i*math.tau/32),2.7+.24*math.sin(i*math.tau/32),z) for i in range(33)],.018,'yellow' if j%2 else 'lightred')
+ for i in range(16):
+  a=i*math.tau/16
+  geo.beam('Basket_weave',(-2.05+.30*math.cos(a),2.7+.21*math.sin(a),.58),(-2.05+.34*math.cos(a),2.7+.24*math.sin(a),.70),.014,'yellow')
  for dx,dy,col in [(-.17,0,'red'),(.04,-.10,'purple'),(.17,.04,'green'),(-.02,.12,'yellow')]:geo.sphere('Wax_fruit',(-2.05+dx,2.7+dy,.77),(.12,.11,.12),col)
- geo.cyl('Paint_tin',(-1.19,2.58,.17),.13,.33,'cyan',16);geo.cyl('Paint_lid',(-1.19,2.58,.34),.14,.025,'white',16)
- geo.beam('Dropped_brush',(-1.84,2.22,.045),(-1.48,2.42,.045),.035,'brown');b('Brush_bristles',(-1.46,2.44,.045),(.15,.1,.05),'black')
- # Wall sketches preserve the supplied lines, with no invented paintings.
- for crop,x,z,w,h in [((192,20,226,57),1.08,2.46,.70,.76),((290,12,312,70),2.72,2.05,.42,1.11)]:
-  source_patch(geo,ROOT/'source/room 014.png',crop,(x,5.34,z),(w,h),'Studio_sketch',only={'white','gray','black'})
+ geo.cyl('Paint_tin',(-1.19,2.58,.17),.13,.33,'cyan',16);geo.cyl('Paint_tin_rim',(-1.19,2.58,.34),.14,.025,'white',24);geo.cyl('Open_tin_paint',(-1.19,2.58,.355),.115,.008,'aqua',24)
+ geo.beam('Dropped_brush',(-1.84,2.22,.045),(-1.48,2.42,.045),.035,'brown');b('Brush_bristles',(-1.46,2.44,.045),(.15,.1,.05),'aqua')
+ # Original loose paper above the tub and large drawing on the right wall.
+ source_patch(geo,ROOT/'source/room 014.png',(192,20,226,57),(1.08,5.369,2.46),(.70,.76),'Studio_loose_sketch',only={'white','gray','black'})
+ before=set(bpy.data.objects)
+ source_patch(geo,ROOT/'source/room 014.png',(290,12,312,70),(0,0,2.05),(.48,1.25),'Studio_side_drawing',only={'white','gray','black'})
+ bpy.context.view_layer.update()
+ transform=Matrix.Translation((3.019,3.7,0))@Matrix.Rotation(-math.pi/2,4,'Z')
+ for o in set(bpy.data.objects)-before:o.matrix_world=transform@o.matrix_world
  for x in [-1.25,1.6]:
   geo.cyl('Lamp_wire',(x,4.0,2.98),.018,.27,'black')
-  geo.mesh('Studio_lamp_shade',[(x+r*math.cos(i*math.tau/16),4+r*math.sin(i*math.tau/16),z) for r,z in [(.24,2.77),(.055,2.97)] for i in range(16)],[(i,(i+1)%16,(i+1)%16+16,i+16) for i in range(16)],'black')
-  geo.sphere('Studio_bulb',(x,4,2.79),(.08,.08,.04),'white')
+  geo.mesh('Studio_lamp_shade',[(x+r*math.cos(i*math.tau/24),4+r*math.sin(i*math.tau/24),z) for r,z in [(.24,2.77),(.055,2.97)] for i in range(24)],[(i,(i+1)%24,(i+1)%24+24,i+24) for i in range(24)],'gray')
+  geo.cyl('Studio_lamp_rim',(x,4,2.77),.255,.025,'darkgray',24)
+  o=geo.sphere('Studio_bulb',(x,4,2.745),(.08,.08,.04),'white');o['bake_unlit']=True;o['bake_no_shadow']=True
+ # Broad magenta paint run below the leaking tub, in addition to small splashes.
+ geo.mesh('Tub_paint_pool',[(1.55,4.23,.008),(1.64,3.99,.008),(2.05,3.73,.008),(2.56,3.82,.008),(2.75,4.13,.008),(2.31,4.34,.008)],[(0,1,2,3,4,5)],'purple')
  rng=random.Random(14)
  for i in range(85):
   x=rng.uniform(-2.7,2.5);y=4.25+.18*math.sin(x*2)+rng.uniform(-.10,.1)

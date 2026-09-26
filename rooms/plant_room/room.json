@@ -81,7 +81,7 @@
   "shell": {
     "wall": "cyan",
     "floor": "brown",
-    "trim": "brown",
+    "trim": "cyan",
     "entries": [
       {
         "port": "landing_door",
@@ -133,6 +133,30 @@
     "startupCutaway": false,
     "references": [
       "source/room 014.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -1.25,
+          4,
+          2.73
+        ],
+        "range": 3,
+        "strength": 0.8,
+        "radius": 0.12,
+        "coneAngle": 100
+      },
+      {
+        "position": [
+          1.6,
+          4,
+          2.73
+        ],
+        "range": 3,
+        "strength": 0.8,
+        "radius": 0.12,
+        "coneAngle": 100
+      }
     ]
   }
 }

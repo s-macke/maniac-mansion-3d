@@ -24,11 +24,15 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 420,744 bytes optimized, 102,813 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 477,420 bytes optimized, 113,994 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 
 
 ### Artwork detail review
 
-Added the gray stepped plinth and narrow upper step beneath each arcade cabinet. Room connections and navigation footprints are unchanged.
+The first detail pass added generic gray plinths. The source-specific review below corrects that interpretation: only Disco Crazy has the projecting steps. Room connections and navigation footprints are unchanged.
+
+## Detailed source review — 2026-09-25
+
+Background 018 shows a projecting gray stepped base only beneath Disco Crazy; the other five cabinets now stand directly on the floor. Each cabinet has two separate coin mechanisms in an outlined access door, with red entries and gray returns. Corrected the screen-bezel colors and Disco Crazy’s cyan joystick. Original colored side motifs are mounted flush on the visible right cabinet sides; the unseen left sides remain plain. The low table has blue splayed trestles and its white edge stripe. Removed the unsupported brown floor skirting. Dimensions and navigation footprints are unchanged.

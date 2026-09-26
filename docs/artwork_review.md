@@ -155,7 +155,7 @@ original background, checked against the previous Blender interior preview.
 | plant_room | 014 | Added the two red/brown screw clamps above the canvas, including their gray screw heads. |
 | security_hall | 013 | Added the missing wall-mounted keypad beside the medical doorway, with a dark display and three columns of buttons. |
 | arcade | 018 | Added the gray stepped plinth and narrow upper step beneath each arcade cabinet. |
-| radio_bedroom | 021 | Restored the central third globe to the ceiling fixture; the shared helper previously supplied only two. |
+| radio_bedroom | 021 | Earlier third-globe addition was a misreading; superseded by the two-globe correction in the detailed radio-bedroom review below. |
 | green_bedroom | 026 | Completed both hanging model aircraft with propellers, spinners, upright tail fins and landing wheels. |
 | mummy_room | 025 | Restored the thin black aerial above the sarcophagus, with its three crossbars. |
 | typewriter_room | 027 | Replaced generic rectangular fireplace decoration with the original irregular stone faces and colored flecks, mounted on the solid piers and lintel. |
@@ -261,3 +261,119 @@ All three browser aisle/walkaround checks and eight focused model/navigation
 checks pass. The final lamp-stem colour correction was rebuilt and inspected
 in the Blender preview. Production build, typecheck and catalog validation pass.
 No physical-mobile validation was performed.
+
+
+## Darkroom, arcade and observatory — 2026-09-25
+
+Recent history showed only small detail passes for these rooms, so this review
+compares backgrounds 023, 018 and 028 directly with their generated interiors.
+The following fifteen mismatches were corrected:
+
+| Room | Source evidence | Correction |
+|---|---|---|
+| Photo room 023 | Eight broad horizontal drawers | Replaced the nine-drawer stack with eight. |
+| Photo room 023 | Pale red rectangular drawer borders | Replaced the heavy black outlines with pale red borders. |
+| Photo room 023 | Enlarger head narrows in rounded steps | Replaced the flat cap with three circular steps and dark red bands. |
+| Photo room 023 | Small red bulb beneath gray shade | Reduced the oversized luminous underside to a small bulb, retaining its bake. |
+| Photo room 023 | Nearly black wall/floor junction | Removed the unsupported brown skirting color. |
+| Arcade 018 | Gray steps project beneath Disco Crazy only | Removed the five other generic plinths and rebuilt the three Disco steps. |
+| Arcade 018 | Two separate coin mechanisms per machine | Separated the plates, corrected red entry/gray return colors and outlined the access door. |
+| Arcade 018 | Gray and cyan display bezels differ from cabinet colors | Corrected the individual screen surrounds. |
+| Arcade 018 | Disco Crazy has a cyan joystick | Corrected its red ball. |
+| Arcade 018 | Five visible cabinet sides carry colored artwork | Mounted the original colored pixel motifs on those right sides. |
+| Arcade 018 | Low table has blue splayed supports and white edging | Replaced straight gray legs with blue trestles and restored the edge stripe. |
+| Arcade 018 | Purple walls meet blue floor without brown molding | Removed the brown skirting color. |
+| Observatory 028 | Red-ended rod and bent crank below eyepiece | Added both missing focus controls. |
+| Observatory 028 | Two black fittings on white barrel | Restored the missing second fitting. |
+| Observatory 028 | Broad black dish with gray rim on control-box pipe | Replaced the small oval cap with a vertical dish, rim and feed hub. |
+
+Original images, room dimensions, connections and collision footprints are
+unchanged. Side artwork uses original source pixels; hidden sides remain
+uninterpreted. The telescope slit remains a real opening. All additions use the
+existing EGA materials and static bake, with no runtime lighting added.
+
+Validation: all three Docker/Blender room builds completed. Original backgrounds,
+Blender previews and desktop Chrome detail screenshots were inspected. The
+production site build, TypeScript and catalog checks pass, along with twelve
+focused model/navigation checks and all three Chrome room/aisle checks. No
+physical-mobile test was performed. Changes remain uncommitted.
+
+
+The telescope enlargement experiment was reverted after user review. Its prior barrel, mounting assembly, attachments and collision footprint are restored; the fifteen detail corrections above remain.
+
+
+## Library stair mystery — 2026-09-25
+
+At the user's request, the decorative spiral no longer stops against a solid
+ceiling. A real framed ceiling aperture opens into an enclosed black shaft.
+Additional steps, central column and railing fade into darkness using static
+colors. The hanging source-art sign remains, and no destination, traversal or
+new room connection is introduced. The library bounds include the shaft;
+existing floor circulation and furniture collision are unchanged.
+
+Validation: Blender rebuild, production site build, catalog validation, aperture/continuation ray checks and furniture circulation checks pass. The library Chrome walkaround passes; the upward opening screenshot and Blender interior preview were inspected. Changes remain uncommitted.
+
+
+## Radio bedroom — 021, detailed review 2026-09-25
+
+Compared the original background with the room from large shapes to small fittings.
+
+- Lowered the radio console to match its proportions relative to the bed.
+- Replaced two blue tuning scales with the single green display, white ticks and red needle.
+- Added the separate perforated speaker panel and three red top switches; corrected knob faces.
+- Replaced straight uniform coils with tapering yellow coils and blue capped tops.
+- Differentiated the short pale left microphone and rectangular switch base from the taller aqua microphone with its cradle and perforated grille.
+- Corrected the bed to a red headboard, lower brown footboard and uninterrupted blue bedding; joined the rounded board silhouettes.
+- Restored the original clipped-corner portrait frame and mounted both wall pictures against the wall.
+- Corrected our earlier three-globe mistake: the source shows two white/yellow globes around the central stem. Moved the fixture above the equipment and added its local baked light.
+- Removed the unsupported brown skirting color.
+
+No room dimensions, portal routes or ladder approaches were changed. All original
+source artwork remains untouched; equipment stays static and lighting remains baked.
+
+Validation: final Blender package and production site build completed. Original artwork, final Blender preview and Chrome equipment/bed/fixture/portrait screenshots were inspected. Typecheck, catalog validation, five focused navigation/model checks and the radio-bedroom Chrome walkaround pass. No physical-mobile test was run. Changes remain uncommitted.
+
+The final Chrome close-up also caught projecting microphone grille bars. Both grilles now follow their curved microphone surfaces; the room was rebuilt and the Chrome check repeated successfully.
+
+
+## Remaining four-room review and 3D hamster — 2026-09-25
+
+### plant_room
+
+Restored the woven fruit basket, open paint tin, painted brush tip and broad spill beneath the leaking tub. The large drawing now belongs to the right wall; the loose sketch stays on the rear wall. Both metal lamp shades have small bright bulbs and local downward baked light. Removed the unsupported brown skirting color. Furniture footprints and doorway clearance are unchanged.
+
+### tentacle_room
+
+The stereo now has distinct cassette, equalizer and receiver faces instead of repeated tape decks, with visible shelf-bracket faces and screws. Completed the rectangular wainscot outlines and corrected the bedspread from pale lime to the source green. Mounted the three posters against the rear wall. The speaker placement and ladder landing are retained.
+
+### security_hall
+
+Corrected the floor to the original light blue and increased the wallpaper pattern density. Candlesticks now have white wax, flames, drip trays and stepped feet, with subtle static light. Rebuilt the reclining sculpture with rounded limbs, bent legs, face details, a pale plinth rim and the original plaque lettering. Added the red stair newel and aqua finial outside the tread width. Doorways and navigable stairs are retained.
+
+### wire_attic
+
+Replaced the regular window-board ladder with irregular overlapping planks of varied lengths, angles and chipped outlines, with attached nail heads. Tilted the blue lamp fitting and added its socket and pull cord. Restored the black floor outline as static scenery without assigning it a destination or interaction. Removed the unsupported brown skirting color.
+
+### green_bedroom
+
+Replaced the flat hamster-front image and solid blue tank block with a three-dimensional white hamster with a brown back patch, ears, eyes, pink nose, paws and short tail. The enclosure has a floor, blue back and solid frame, leaving the animal visible from the front and sides; it does not use an opaque image or a transparent-material effect. The cabinet and walking footprint are retained. This is static scenery, without animation or gameplay.
+
+Follow-up visual checks moved Tentacle’s posters just ahead of the wallpaper stripes, removed the attic’s duplicate flat lamp silhouette, and enlarged the corridor sculpture relative to its candlesticks. Its collision footprint follows the larger plinth. Corridor wallpaper is now two flat meshes rather than raised boxes.
+
+Moved the green bedroom’s four-pane outside window from the rear door wall to the perpendicular right-hand wall, as shown in background 026. The rear wall is solid again; the recessed frame, distant blue sky and stars remain.
+
+Validation: rebuilt all five affected room models and the static website. Type checking, catalog validation and eight focused model/navigation checks passed. Desktop Chrome walkthrough checks passed for the studio, Tentacle room, security corridor, wire attic and green bedroom; the moved green-bedroom window and hamster were checked again after the final rebuild. Inspected Blender previews and browser detail views. No physical-mobile validation was performed.
+
+## Exercise room and typewriter den — 2026-09-25
+
+### mummy_room
+
+Fitted the blue wrapping bands to the curved sarcophagus body and kept the headdress stripes inside its tapered silhouette. Added the exercise machine’s solid pulley, axle hub, pull cable and upper grip. Mounted the calendar and mummy diagram against the rear wall, and brought the cabinet artwork onto its front surface. Furniture bounds, doors and circulation remain unchanged.
+
+### typewriter_room
+
+Replaced the solid typewriter cupboard with an open red table, four legs, aprons and yellow edge highlights. Shortened the unsupported tall typed page to a small pale carriage sheet, and added roller knobs and a spacebar. Completed the rectangular lower-wall panel outlines, added the mantel’s yellow edge and mounted the family portrait against the wall. Existing furniture collision envelopes, concealed-panel route and observatory ladder are retained.
+
+Both rooms retain the EGA palette and static baked shading. Neither reference shows a lamp requiring a new practical light; the existing soft fill is retained. Original artwork and room connections are unchanged.
+
+Validation: both Blender builds, TypeScript and catalog checks passed, with 12 focused navigation/model checks and both desktop Chrome room walkarounds. Inspected source backgrounds, Blender previews and browser close-ups from multiple angles. A final mummy-only refinement fits wrapping directly to the faceted mesh and seats the eyes and headdress stripes against their surfaces; its rebuilt preview was inspected. No physical-mobile test was run.

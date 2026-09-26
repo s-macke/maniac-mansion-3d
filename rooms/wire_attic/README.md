@@ -10,9 +10,13 @@ The front portal leads to the hidden attic stairs, then the den’s painted pane
 
 Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; room placements and portal destinations are unchanged.
 
-The optimized room model is 517,280 bytes (178,775 bytes with gzip).
+The optimized room model is 509,012 bytes (175,464 bytes with gzip).
 
 
 ### Artwork detail review
 
 Made the exposed bulb visibly bright and added soft local baked light beneath its actual position. Room connections and navigation footprints are unchanged.
+
+## Detailed source review — 2026-09-25
+
+Replaced the regular window-board ladder with irregular overlapping planks of varied lengths, angles and chipped outlines, with attached nail heads. Tilted the blue lamp fitting and added its socket and pull cord. Restored the black floor outline as static scenery without assigning it a destination or interaction. Removed the unsupported brown skirting color.

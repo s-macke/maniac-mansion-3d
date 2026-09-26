@@ -23,7 +23,10 @@ def furnish(geo,c):
   b('Enlarger_column',(ex+.15,ey+.13,1.70),(.095,.09,1.20),'gray')
   b('Enlarger_column_highlight',(ex+.094,ey+.072,1.70),(.021,.016,1.2),'white')
   b('Enlarger_head',(ex-.13,ey,1.98),(.49,.38,.28),'brown')
-  b('Enlarger_red_cap',(ex-.13,ey,2.14),(.41,.33,.065),'lightred')
+  # Original head narrows in three rounded red steps above its brown housing.
+  for r,z,h in [(.205,2.125,.055),(.155,2.18,.055),(.095,2.228,.041)]:
+   geo.cyl('Enlarger_stepped_cap',(ex-.13,ey,z),r,h,'lightred',24)
+  for z,r in [(2.15,.185),(2.202,.125)]:geo.cyl('Cap_dark_band',(ex-.13,ey,z),r,.012,'red',24)
   for z in [1.77+i*.042 for i in range(5)]:b('Bellows_fold',(ex-.13,ey,z),(.37,.34,.019),'red')
   # Red head has two pale bands and a row of black ventilation slots.
   b('Enlarger_upper_band',(ex-.13,ey-.202,2.07),(.51,.018,.025),'gray')
@@ -32,21 +35,21 @@ def furnish(geo,c):
   geo.cyl('Enlarger_lens',(ex-.13,ey,1.715),.092,.13,'gray',16);geo.cyl('Lens_glass',(ex-.13,ey,1.642),.074,.02,'black',16)
   geo.beam('Enlarger_focus_arm',(ex-.32,ey,1.84),(ex-.70,ey,1.84),.035,'brown');geo.sphere('Focus_knob',(ex-.70,ey,1.84),(.075,.075,.045),'red')
   # The orange curled power lead climbs from the head to the ceiling.
-  curved_line(geo,'Enlarger_power_lead',[(ex-.13+.038*math.sin(i*.9),ey+.035*math.cos(i*.9),2.18+i*.022) for i in range(43)],.018,'brown')
+  curved_line(geo,'Enlarger_power_lead',[(ex-.13+.038*math.sin(i*.9),ey+.035*math.cos(i*.9),2.25+i*.020) for i in range(43)],.018,'brown')
   # Hanging safelight with a red underside; illumination stays in the static bake.
   lx,ly=-2.93,4.15
   geo.cyl('Safelight_wire',(lx,ly,2.78),.015,.65,'brown')
   verts=[(lx+r*math.cos(i*math.tau/20),ly+r*math.sin(i*math.tau/20),z) for r,z in [(.31,2.38),(.075,2.55)] for i in range(20)]
   geo.mesh('Safelight_shade',verts,[(i,(i+1)%20,(i+1)%20+20,i+20) for i in range(20)],'gray')
-  lamp=geo.cyl('Safelight_red_glass',(lx,ly,2.365),.20,.035,'lightred',20);lamp['bake_unlit']=True;lamp['bake_no_shadow']=True
- # Wide, shallow nine-drawer paper/negative cabinet from the source.
+  lamp=geo.cyl('Safelight_red_glass',(lx,ly,2.365),.063,.045,'lightred',20);lamp['bake_unlit']=True;lamp['bake_no_shadow']=True
+ # Wide, shallow eight-drawer paper/negative cabinet from the source.
  b('Darkroom_drawer_case',(1.42,4.47,1.05),(3.02,.92,2.10),'brown')
  b('Darkroom_cabinet_front',(1.42,3.985,1.05),(2.88,.045,2.02),'red')
- for i in range(9):
-  z=.17+i*.215
-  b('Drawer_black_outline',(1.42,3.95,z),(2.67,.029,.18),'black')
-  b('Drawer_red_face',(1.42,3.928,z),(2.56,.025,.12),'red')
-  b('Drawer_top_highlight',(1.42,3.909,z+.052),(2.53,.012,.016),'lightred')
+ for i in range(8):
+  z=.23+i*.244
+  b('Drawer_pale_border',(1.42,3.95,z),(2.67,.029,.212),'lightred')
+  b('Drawer_red_face',(1.42,3.928,z),(2.56,.025,.160),'red')
+  b('Drawer_top_highlight',(1.42,3.909,z+.070),(2.53,.012,.016),'lightred')
   b('Drawer_handle',(1.42,3.885,z),(.23,.055,.026),'gray')
   b('Drawer_handle_glint',(1.42,3.852,z+.016),(.17,.012,.018),'white')
  for x in [-.04,2.88]:b('Cabinet_foot',(x,4.46,.06),(.10,.71,.12),'brown')

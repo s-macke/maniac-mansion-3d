@@ -8,9 +8,13 @@ The right painted wall panel remains a shared `Concealed_leaf`, initially closed
 
 Rebuild with `./docker-build.sh room typewriter_room`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=typewriter_room`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 659,332 bytes (147,046 bytes with gzip); door and ladder kits are shared separately.
+The optimized room model is 679,228 bytes (152,360 bytes with gzip); door and ladder kits are shared separately.
 
 
 ### Artwork detail review
 
 Replaced generic rectangular fireplace decoration with the original irregular stone faces and colored flecks, mounted on the solid piers and lintel. Room connections and navigation footprints are unchanged.
+
+## Detailed artwork review — 2026-09-25
+
+Replaced the solid typewriter cupboard with an open red table, four legs, aprons and yellow edge highlights. Shortened the unsupported tall typed page to a small pale carriage sheet, and added roller knobs and a spacebar. Completed the rectangular lower-wall panel outlines, added the mantel’s yellow edge and mounted the family portrait against the wall. Existing furniture collision envelopes, concealed-panel route and observatory ladder are retained.

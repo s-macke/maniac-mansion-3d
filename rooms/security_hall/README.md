@@ -24,7 +24,7 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 1,099,020 bytes optimized, 237,782 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 1,052,532 bytes optimized, 262,892 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 
@@ -32,3 +32,9 @@ Validation: the floor-wide 16 focused navigation/model/portal checks and five de
 ### Artwork detail review
 
 Added the missing wall-mounted keypad beside the medical doorway, with a dark display and three columns of buttons. Room connections and navigation footprints are unchanged.
+
+## Detailed source review — 2026-09-25
+
+Corrected the floor to the original light blue and increased the wallpaper pattern density. Candlesticks now have white wax, flames, drip trays and stepped feet, with subtle static light. Rebuilt the reclining sculpture with rounded limbs, bent legs, face details, a pale plinth rim and the original plaque lettering. Added the red stair newel and aqua finial outside the tread width. Doorways and navigable stairs are retained.
+
+The sculpture and plinth are larger to better match their height relative to the candlesticks in the source; their collision footprint is updated, with the front aisle retained. Wallpaper is painted flush to the wall in two batched meshes.

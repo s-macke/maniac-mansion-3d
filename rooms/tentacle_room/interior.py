@@ -14,7 +14,9 @@ def furnish(g,c):
   x=-4.07+i*.09;n=len(vs);vs.extend([(x,5.009,1.04),(x+.012,5.009,1.04),(x+.012,5.009,3.1),(x,5.009,3.1)]);fs.append((n,n+1,n+2,n+3))
  g.mesh('Music_wall_stripes',vs,fs,'lightblue')
  b('Music_wainscot',(0,4.977,.54),(8.16,.08,1.00),'brown')
- for x in [-4+i*.30 for i in range(28)]:b('Wainscot_stile',(x,4.925,.55),(.026,.02,.88),'lightred')
+ for x in [-3.9+i*.39 for i in range(21)]:
+  for dx in [-.16,.16]:b('Wainscot_stile',(x+dx,4.925,.55),(.026,.02,.80),'lightred')
+  for z in [.15,.95]:b('Wainscot_panel_edge',(x,4.925,z),(.34,.02,.026),'lightred')
  for z,col in [(.08,'red'),(1.02,'yellow'),(1.09,'red')]:b('Wainscot_rail',(0,4.91,z),(8.16,.045,.035),col)
  for x in [-4.085,4.085]:
   b('Side_wainscot',(x,(5.2-c['geometry']['depth'])/2+2.60,.54),(.055,c['geometry']['depth']-.42,1.0),'brown')
@@ -38,23 +40,35 @@ def furnish(g,c):
    if o.name.startswith('Speaker_cabinet'):
     o.location.y-=.09;o.scale.y=.58/.76
  # The room's low green sleeping platform, with no character or gameplay.
- b('Green_bed_base',(.46,3.95,.28),(2.72,1.17,.39),'green');b('Green_bed_cover',(.46,3.95,.51),(2.77,1.20,.13),'lime')
+ b('Green_bed_base',(.46,3.95,.28),(2.72,1.17,.39),'green');b('Green_bed_cover',(.46,3.95,.51),(2.77,1.20,.13),'green')
  b('Bed_front',(.46,3.331,.36),(2.77,.075,.39),'green');g.sphere('Green_pillow',(-.45,4.08,.66),(.38,.35,.14),'green')
  # Shelf and separate hi-fi components under the Disco Sucks sign.
  b('Stereo_shelf',(.48,4.71,1.41),(2.0,.45,.085),'red')
- for x in [-.20,1.16]:b('Shelf_bracket',(x,4.83,1.25),(.06,.23,.33),'brown')
+ for x in [-.20,1.16]:
+  b('Shelf_bracket',(x,4.83,1.25),(.09,.23,.33),'brown')
+  b('Shelf_bracket_red_face',(x,4.707,1.29),(.11,.014,.14),'red')
+  b('Bracket_screw',(x,4.696,1.29),(.027,.009,.027),'black')
  for k,z in enumerate([1.56,1.77,1.98]):
   b('Hifi_component',(.46,4.61,z),(.84,.35,.19),'gray');b('Hifi_face',(.46,4.426,z),(.78,.021,.145),'black')
   if k==2:
    b('Receiver_display',(.38,4.41,z),(.48,.013,.065),'green')
    for i in range(9):b('Receiver_tick',(.16+i*.05,4.396,z),(.012,.012,.055),'lime')
+  elif k==1:
+   # Middle unit is an equalizer, with individual vertical faders.
+   for i in range(7):
+    xx=.18+i*.085
+    b('Equalizer_slot',(xx,4.407,z),(.019,.014,.112),'gray')
+    b('Equalizer_slider',(xx,4.396,z+(.023 if i%2 else -.02)),(.048,.008,.017),'white')
   else:
-   for dx in [-.22,.20]:b('Tape_deck',(.46+dx,4.407,z),(.29,.014,.08),'aqua')
+   b('Cassette_face',(.25,4.407,z),(.31,.014,.088),'gray')
+   for xx in [.17,.33]:b('Cassette_spool',(xx,4.396,z),(.044,.007,.029),'black')
+   b('Deck_display',(.65,4.407,z),(.27,.014,.085),'aqua')
+   b('Deck_display_slot',(.65,4.395,z),(.20,.005,.031),'black')
   for dx in [.29,.34]:b('Hifi_button',(.46+dx,4.392,z-.04),(.023,.017,.024),'white')
  g.sphere('Small_shelf_speaker',(1.06,4.60,1.72),(.09,.085,.27),'black');g.sphere('Shelf_speaker_glint',(1.06,4.508,1.76),(.034,.013,.06),'white')
- source_patch(g,ROOT/'source/room 020.png',(222,16,286,79),(-.56,4.90,2.28),(1.03,1.17),'Original_tour_poster')
- source_patch(g,ROOT/'source/room 020.png',(305,17,351,33),(.56,4.90,2.67),(.92,.36),'Disco_sign')
- source_patch(g,ROOT/'source/room 020.png',(360,17,400,62),(1.60,4.90,2.37),(.67,.93),'Mom_portrait')
+ source_patch(g,ROOT/'source/room 020.png',(222,16,286,79),(-.56,5.007,2.28),(1.03,1.17),'Original_tour_poster')
+ source_patch(g,ROOT/'source/room 020.png',(305,17,351,33),(.56,5.007,2.67),(.92,.36),'Disco_sign')
+ source_patch(g,ROOT/'source/room 020.png',(360,17,400,62),(1.60,5.007,2.37),(.67,.93),'Mom_portrait')
  b('Bedside_outlet',(.4,4.899,.84),(.15,.015,.12),'white')
  for x in [.365,.435]:b('Outlet_slot',(x,4.885,.85),(.012,.008,.045),'black')
  # Small green/yellow wall key to the right of the speaker; scenery only.

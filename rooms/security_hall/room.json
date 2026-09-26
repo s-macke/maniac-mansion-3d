@@ -43,10 +43,10 @@
     },
     "obstacles": [
       {
-        "x0": -6.15,
-        "x1": -4.75,
-        "y0": 3.25,
-        "y1": 4.3
+        "x0": -6.28,
+        "x1": -4.32,
+        "y0": 3.1,
+        "y1": 4.46
       },
       {
         "x0": -4.37,
@@ -130,7 +130,7 @@
   ],
   "shell": {
     "wall": "lightblue",
-    "floor": "blue",
+    "floor": "lightblue",
     "trim": "brown",
     "entries": [
       {
@@ -202,6 +202,28 @@
     "startupCutaway": false,
     "references": [
       "source/room 013.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -4.2,
+          4.95,
+          2.335
+        ],
+        "range": 1.5,
+        "strength": 0.3,
+        "radius": 0.07
+      },
+      {
+        "position": [
+          2.01,
+          4.95,
+          2.335
+        ],
+        "range": 1.5,
+        "strength": 0.3,
+        "radius": 0.07
+      }
     ]
   }
 }

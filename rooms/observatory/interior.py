@@ -18,6 +18,13 @@ def furnish(g,c):
  tube('Telescope_lens',end+axis*.072,.327,.012,'black')
  tube('Lens_blue_glass',end+axis*.079,.28,.008,'blue')
  tube('Eyepiece_tube',a-axis*.24,.07,.55,'gray');tube('Eyepiece_black_rim',a-axis*.53,.08,.08,'black')
+ # Two off-axis focus controls are visible below the eyepiece in background 028.
+ side=Vector((axis.y,-axis.x,0)).normalized()
+ p=a+side*.23-Vector((0,0,.13))
+ g.beam('Red_focus_stem',p,p-axis*.43,.035,'gray')
+ g.sphere('Red_focus_grip',p-axis*.46,(.062,.062,.062),'red')
+ p=a+side*.20-Vector((0,0,.26))
+ curved_line(g,'Bent_focus_crank',[p,p-Vector((0,0,.20)),p+side*.12-Vector((0,0,.27))],.034,'gray')
  # Fork, round pivot and broad stable pedestal.
  x,y=1.55,6.14
  g.cyl('Telescope_foot',(x,y,.10),.58,.20,'black',32);g.cyl('Telescope_column',(x,y,.84),.24,1.42,'black',24)
@@ -29,7 +36,7 @@ def furnish(g,c):
  for z,col in [(1.04,'lime'),(.79,'red')]:
   g.beam('Pedestal_control',(x-.20,y-.12,z),(x-.48,y-.12,z),.035,'gray');g.sphere('Control_knob',(x-.50,y-.12,z),(.065,.065,.065),col)
  # Red and blue finder fittings, plus the curved purple drive cable seen in the original.
- for t,col in [(.22,'lightblue'),(.82,'black')]:
+ for t,col in [(.22,'lightblue'),(.64,'black'),(.86,'black')]:
   p=a+(end-a)*t;g.sphere('Barrel_fitting',(p.x-.12,p.y-.21,p.z+.27),(.055,.055,.055),col)
  curved_line(g,'Telescope_drive_cable',[(1.46,6.40,2.56),(.89,6.47,2.91),(.62,6.47,3.43),(.62,6.47,4.32)],.070,'purple')
  # Standalone control box and pipes remain away from the den hatch and landing.
@@ -41,7 +48,12 @@ def furnish(g,c):
  b('Control_meter',(x-.15,y-.197,.94),(.22,.025,.17),'gray');b('Meter_glass',(x-.15,y-.216,.94),(.15,.012,.09),'white')
  for xx in [x+.12,x+.27]:b('Control_switch',(xx,y-.219,.84),(.035,.028,.10),'gray')
  curved_line(g,'Control_pipe',[(x+.27,y,.1),(x+.27,y,2.27),(x+.14,y,2.50),(x-.27,y,2.50)],.067,'gray')
- g.sphere('Pipe_cap',(x-.29,y,2.5),(.08,.12,.19),'black')
+ # The original pipe ends in a broad vertical dish with a pale rim and hub.
+ for r,yy,col in [(.26,y,'gray'),(.219,y-.025,'black')]:
+  dish=g.cyl('Control_pipe_dish',(0,0,0),r,.025,col,32)
+  dish.rotation_euler.x=math.pi/2;dish.location=(x-.29,yy,2.50)
+ g.beam('Dish_feed_arm',(x-.29,y-.06,2.50),(x-.29,y-.22,2.50),.048,'gray')
+ g.sphere('Dish_feed_hub',(x-.29,y-.23,2.50),(.052,.042,.052),'white')
  # Original chart lies tangent to the round wall, below its dome spring line.
  before=set(bpy.data.objects)
  b('Chart_backing',(0,0,1.28),(1.34,.025,1.02),'lightblue')
