@@ -12,6 +12,7 @@ def furnish(g,p):
  for i in range(count):
   xx=p['x0']+.10+(i+.5)*width/count
   g.box('Basin_tile',(xx,back-.004,-.28),(width/count-.016,.018,.18),'aqua' if i%3 else 'white')
+  g.box('Basin_opposite_tile',(xx,p['y0']+.109,-.28),(width/count-.016,.018,.18),'aqua' if i%3 else 'white')
  g.mesh('Basin_wall_shadow',[(p['x0']+.10,back-.016,-.39),(6.8,back-.016,-.39),(11.0,back-.016,bottom+.02),(p['x0']+.10,back-.016,bottom+.02)],[(0,1,2,3)],'blue')
  # Keep the centre aisle and the original ladder landing open.
  x,y=14.65,7.25
@@ -52,7 +53,11 @@ def furnish(g,p):
  # Original painted numbers retain the artwork's pixel shapes and colors.
  for crop,z in [((47,24,76,42),-.68),((47,80,76,98),-1.93)]:
   source_patch(g,ROOT/'source/room 002.png',crop,(6.60,back-.037,z),(.80,.50),'Depth_mark',only={'black'})
- for z in [-1.05,-2.18]:g.box('Basin_depth_seam',((p['x0']+p['x1'])/2,back-.030,z),(p['x1']-p['x0']-.20,.012,.022),'blue')
+ # Continue the basin finish opposite the source wall, without copying its
+ # equipment, depth numbers, button, leak or directional shadow.
+ for z in [-1.05,-2.18]:
+  g.box('Basin_depth_seam',((p['x0']+p['x1'])/2,back-.030,z),(width,.012,.022),'blue')
+  g.box('Basin_opposite_depth_seam',((p['x0']+p['x1'])/2,p['y0']+.135,z),(width,.012,.022),'blue')
  # Drain grille sits flush with the basin floor.
  g.cyl('Drain_rim',(10,5.85,bottom+.013),.54,.022,'gray',40)
  g.cyl('Drain_recess',(10,5.85,bottom+.027),.43,.007,'black',40)

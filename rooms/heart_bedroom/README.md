@@ -11,3 +11,7 @@ The existing shared ladder and ceiling hatch retain their continuous portal conn
 `build.py`, `interior.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room heart_bedroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=heart_bedroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
 The optimized room model is 413,976 bytes (133,522 bytes with gzip); shared doors and ladders remain separate.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

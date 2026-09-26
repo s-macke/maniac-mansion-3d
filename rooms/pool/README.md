@@ -72,3 +72,7 @@ The shared chair is a floating seat, without black feet or support rails. Its se
 ## Reactor, leak and button correction — 2026-09-26
 
 The reactor has a broad rounded pressure chamber on a narrow stepped pedestal, replacing the generic cylindrical barrel. Its three sockets have differing heights; the ribbed hose arches over and connects into the right wall, with green leakage and droplets on that wall and a small floor splash. The wall control is a red button with original source-pixel arrow and lettering; the earlier hanging brown fitting was a misreading. All details remain static. The reactor collision envelope follows its wider chamber.
+
+The empty basin’s aqua/white tile band and blue depth seams continue on the
+opposite wall. Equipment, numbers, the button and leak stay on their original
+walls. See the [wall-finish audit](../../docs/opposite_walls.md).

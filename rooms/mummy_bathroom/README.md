@@ -29,3 +29,7 @@ Restored the thin green enamel drip and detached spot beneath the bathtub rim.
 ## Toilet, washbasin and opposite wall
 
 The toilet and wall basin have open shaped interiors, ceramic rims and aqua outer surfaces rather than solid ellipsoids. The toilet includes a tapered pedestal, seat hinges, aqua cistern face and linked yellow pull chain. The basin has yellow cross handles, a green soap bar and dish, and four mirror clips. Three distinct jagged plaster patches continue the damaged-wall style onto the unseen opposite wall at the user’s request. Existing furniture footprints and navigation remain unchanged.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

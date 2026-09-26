@@ -17,6 +17,8 @@ shell.build_shell(geo,g,'kitchen',floor='blue',back='lightblue',wall='blue',trim
 shell.side_door(geo,g,ports['hall_door'],-1,'Hall_frame',wall='blue',trim='brown',frame_only=True)
 shell.side_door(geo,g,ports['dining_door'],1,'Dining_door',wall='blue',trim='brown',frame_only=False)
 furnish(geo,ROOT)
+from blender_shared.opposite_walls import apply as opposite_walls
+opposite_walls(geo,config)
 shell.reference(ROOT,config,collections,'007')
 geo.active='Cameras'
 geo.camera('01_Reference',(0,-9,3.4),(0,3,1.4),lens=27)

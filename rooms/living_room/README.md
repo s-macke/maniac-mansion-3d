@@ -42,3 +42,7 @@ remains static vertex color; no browser lights are required.
 
 The optimized room is about 2.01 MB, or 632 KB with gzip. The download check keeps
 a 700 KB compressed budget for this furnished room.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

@@ -24,6 +24,8 @@ for a,b in [(-W,cx-width/2),(cx+width/2,W)]:
  geo.box('Pool_skirting',((a+b)/2,D-T-.018,.13),(b-a,.036,.26),'darkgray')
 geo.box('Pool_header',(cx,D-T/2,(H+dh)/2),(width,T,H-dh),'gray')
 furnish(geo,ROOT)
+from blender_shared.opposite_walls import apply as opposite_walls
+opposite_walls(geo,config)
 shell.reference(ROOT,config,collections,'036')
 geo.active='Cameras'
 geo.camera('01_Reference',(0,-8,3.4),(0,3,1.4),lens=27)

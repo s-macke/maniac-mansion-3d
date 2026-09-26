@@ -38,6 +38,7 @@ test('drain the pool, walk its basin, climb out and refill without changing room
  await expect.poll(async()=>(await state()).poolClimbing,{timeout:12000}).toBe(false);
  expect((await state()).room).toBe('pool');expect((await state()).height).toBeCloseTo(-2.8);
  await go(-15.37,39.1);await aim(-17.37,36.16);await page.screenshot({path:'test-results/pool-basin-inside.png'});
+ await aim(-17.37,41.6);await page.screenshot({path:'test-results/pool-basin-opposite-wall.png'});
  await expect(page.locator('.door-action')).toHaveCount(0);
  await aim(-21.02,36.85);await page.screenshot({path:'test-results/pool-reactor.png'});
  await aim(-16.37,38.25);

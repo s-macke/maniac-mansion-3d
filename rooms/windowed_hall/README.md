@@ -16,3 +16,7 @@ Validation: static build, typecheck and catalog checks pass, with 17 focused nav
 ## Artwork detail review — 2026-09-24
 
 Added the clipped corners of the leaded window panes, completing their octagonal outlines.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

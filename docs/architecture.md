@@ -188,3 +188,10 @@ The green bedroom, mummy bathroom and kitchen use the helper with blue skies
 matching their backgrounds. The safe attic retains its already verified custom
 black-sky window. Living-room branches/broken panes, leaded stair-hall windows and
 the boarded wire-attic opening still need their own artwork-specific treatment.
+
+## Opposite-wall finishes
+
+See [the wall-finish audit](opposite_walls.md) for coverage of all 34 room units.
+`blender_shared.opposite_walls.apply()` runs after furnishing and rear anchoring,
+continuing architectural finishes onto inferred front walls while preserving
+door apertures and reference cutaways. Four custom room builders call it directly.

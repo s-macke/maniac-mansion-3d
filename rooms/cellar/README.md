@@ -15,3 +15,7 @@ The rear wall is light gray, with one ribbed return pipe behind the cyan risers;
 The two small cyan risers join the red ribbed pipe at a shared lower junction, and its other end connects into the furnace manifold. The yellow flared cap sits between the red boiler dome and black chimney.
 
 The furnace has a blue intake manifold, chimney ribs and exhaust flanges, cooler fasteners, a firebox latch and corner bolts, and bands and a label on the extinguisher. Its curved ribbed outlet terminates in a blue flange embedded in the rear wall. The electrical cabinet has an aqua border, yellow warning mark, screws and a solid hanging key. Stair treads and rails are gray rather than brown. All details remain static EGA geometry with baked shading; the staircase and dungeon route retain their navigation dimensions. See the [artwork review](../../docs/artwork_review.md).
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

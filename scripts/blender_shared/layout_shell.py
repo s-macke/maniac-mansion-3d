@@ -80,6 +80,8 @@ def build(path, furnish=None):
     for x in [x0,x1]:box('Hatch_shaft',(x,(y0+y1)/2,z),(.07,y1-y0+.07,top-level),style['wall'])
     for y in [y0,y1]:box('Hatch_shaft',((x0+x1)/2,y,z),(x1-x0,.07,top-level),style['wall'])
  if furnish:furnish(geo,c)
+ from .opposite_walls import apply as opposite_walls
+ opposite_walls(geo,c)
  reference(root,c,cols,c['backgrounds'][0]);geo.active='Cameras'
  geo.camera('01_Reference',(0,-max(8,W*1.6),4.5),(0,D/2,1.3),lens=27)
  geo.camera('02_Inside',(-W+.9,.9,1.62),(0,D-.5,1.5),lens=22)

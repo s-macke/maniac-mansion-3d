@@ -32,3 +32,7 @@ Three desktop Chrome checks pass: garage circulation to the hatch, pantry interi
 ## Artwork detail review — 2026-09-22
 
 The shelving has red backing behind the stocked upper bays and a brown lower compartment, matching background 036 rather than exposing the gray room wall through every shelf.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

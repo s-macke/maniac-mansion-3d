@@ -20,3 +20,7 @@ Made the exposed bulb visibly bright and added soft local baked light beneath it
 ## Detailed source review — 2026-09-25
 
 Replaced the regular window-board ladder with irregular overlapping planks of varied lengths, angles and chipped outlines, with attached nail heads. Tilted the blue lamp fitting and added its socket and pull cord. Restored the black floor outline as static scenery without assigning it a destination or interaction. Removed the unsupported brown skirting color.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

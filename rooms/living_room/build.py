@@ -225,6 +225,8 @@ register(config,[('Left_door', 1.05, 2.75), ('Right_double_door', 1.8, 2.95)])
 from blender_shared.door_assets import register_hinged
 for i,(pose,hinge,angle) in enumerate(library_leaves):
  register_hinged(config,'Standard_leaf',pose,hinge,angle,collections['Architecture'],port='right_double_door',node='Door_library_'+str(i),label='Library doors',instance_id='Library_leaf_'+str(i),append_leaf=i>0)
+from blender_shared.opposite_walls import apply as opposite_walls
+opposite_walls(geo,config)
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/config['source']))
 print('LIVING_ROOM_SOURCE_COMPLETE',flush=True)
 

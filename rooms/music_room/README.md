@@ -43,3 +43,7 @@ Added the pedal lyre, crossbar and three pedals beneath the keyboard, following 
 The piano has a smoother curved tail with the accepted width, angle, supported keys and pedals. The lower wall now has black-outlined white panels. The gramophone has a flared outer horn, recessed red lining and dark throat; its purple record has a yellow label, spindle and supported tonearm. The vase has a blue foot and open neck. The reverse review camera now stands clear of the television. Existing baked illumination remains unchanged.
 
 Remaining: pilaster capitals and turned piano legs are simplified, and the keyboard uses a reduced key count. Equipment depth and the unseen walls remain inferred from the single background.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

@@ -16,3 +16,7 @@ Restored the thin black aerial above the sarcophagus, with its three crossbars. 
 ## Detailed artwork review — 2026-09-25
 
 Fitted the blue wrapping bands to the curved sarcophagus body and kept the headdress stripes inside its tapered silhouette. Added the exercise machine’s solid pulley, axle hub, pull cable and upper grip. Mounted the calendar and mummy diagram against the rear wall, and brought the cabinet artwork onto its front surface. Furniture bounds, doors and circulation remain unchanged.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

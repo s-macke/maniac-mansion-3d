@@ -51,6 +51,7 @@ for(const id of ['living_room','cellar','under_house','dungeon','outer_lab','mai
  if(id==='tentacle_room'){await go(0,2.1);await go(2.8,1.6);await aim(4.03,2.35);await detail('tentacle-wall-key');await go(1.7,2.1);await aim(.46,3.9);await detail('tentacle-stereo-details');await aim(.46,3.25);await detail('tentacle-green-bed',250);await aim(.5,4.2);}
  if(id==='wire_attic'){await go(0,2.7);await aim(-1.71,3.64);await detail('wire-attic-lamp',-130);await aim(2.22,4.11);await detail('attic-overlapping-boards',-100);await go(0,2.1);await aim(0,1.65);await detail('attic-floor-outline',450);await aim(1,4.9);}
  if(id==='observatory'){await go(-.8,3.4);await aim(-.8,5.95);await detail('observatory-lamp',-180);await aim(-3.39,5.62);await detail('observatory-control-dish',-100);await aim(.58,5.3);await detail('observatory-focus-controls');await aim(1.55,6.14);}
+ if(['living_room','kitchen','dining_room','heart_bedroom','tentacle_room','mummy_room','music_room','cellar','mummy_bathroom','security_hall','windowed_hall','upper_corridor','typewriter_room','under_house','pantry','wire_attic'].includes(id)){await aim(0,.2);await detail(id+'-opposite-wall');}
  expect((await state()).room).toBe(id);expect(errors).toEqual([]);
  await page.screenshot({path:`test-results/${id}-furnished.png`});
 });

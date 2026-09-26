@@ -18,3 +18,7 @@ Replaced generic rectangular fireplace decoration with the original irregular st
 ## Detailed artwork review — 2026-09-25
 
 Replaced the solid typewriter cupboard with an open red table, four legs, aprons and yellow edge highlights. Shortened the unsupported tall typed page to a small pale carriage sheet, and added roller knobs and a spacebar. Completed the rectangular lower-wall panel outlines, added the mantel’s yellow edge and mounted the family portrait against the wall. Existing furniture collision envelopes, concealed-panel route and observatory ladder are retained.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

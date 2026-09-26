@@ -38,3 +38,7 @@ Added the missing wall-mounted keypad beside the medical doorway, with a dark di
 Corrected the floor to the original light blue and increased the wallpaper pattern density. Candlesticks now have white wax, flames, drip trays and stepped feet, with subtle static light. Rebuilt the reclining sculpture with rounded limbs, bent legs, face details, a pale plinth rim and the original plaque lettering. Added the red stair newel and aqua finial outside the tread width. Doorways and navigable stairs are retained.
 
 The sculpture and plinth are larger to better match their height relative to the candlesticks in the source; their collision footprint is updated, with the front aisle retained. Wallpaper is painted flush to the wall in two batched meshes.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

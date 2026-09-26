@@ -20,3 +20,7 @@ Added the small green/yellow key on the right wall as static scenery. Room conne
 ## Detailed source review — 2026-09-25
 
 The stereo now has distinct cassette, equalizer and receiver faces instead of repeated tape decks, with visible shelf-bracket faces and screws. Completed the rectangular wainscot outlines and corrected the bedspread from pale lime to the source green. Mounted the three posters against the rear wall. The speaker placement and ladder landing are retained.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.

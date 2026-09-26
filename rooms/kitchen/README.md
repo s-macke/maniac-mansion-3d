@@ -48,3 +48,7 @@ Corrected the knife-rack arrangement: broad cleaver at the left and a toothed wh
 The shared kitchen/dining leaf is handed to match dining background 037: knob
 on the left, hinge on the right from the dining side, opening into the kitchen.
 Handle and hinge are mirrored together; the two faces remain physically aligned.
+
+The inferred opposite wall continues this room’s architectural finish. See the
+[complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
+and the distinction between repeating decoration and unique source details.
