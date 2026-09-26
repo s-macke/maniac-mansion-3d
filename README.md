@@ -1,57 +1,87 @@
 # Maniac Mansion in 3D
 
-A local first-person walkthrough preserving the supplied EGA artwork and soft baked lighting. The entrance and upstairs landing currently form one continuous architectural unit.
+Walk through the Maniac Mansion house in your browser. This fan project reimagines the original EGA backgrounds as connected 3D spaces, keeping their distinctive colors, furniture and odd little details while letting you look beyond the original camera angle.
+
+**[Explore the mansion →](https://s-macke.github.io/maniac-mansion-3d/)**
+
+[![Watch the walkthrough preview: the EGA living room recreated in 3D](docs/media/walkthrough-preview.jpg)](docs/media/walkthrough.mp4?raw=true)
+
+[Watch the 20-second preview](docs/media/walkthrough.mp4?raw=true) · 3.63 MB · Silent
+
+## Explore the house
+
+Start outside, walk up the porch steps and open the front doors. From the entrance hall, explore 34 room spaces: the library and kitchen, bedrooms and attics, the observatory, the cellar laboratories, and the pool and garage. Drain the pool to climb down into its basin, or follow a ladder to another floor.
+
+This is a first-person architectural walkthrough. There are no puzzles to solve, inventory items to collect or characters to control. Doors, ladders and hidden passages let you explore without playing through the original game's puzzles.
+
+The rooms are modeled from the original artwork with simple geometry and soft baked lighting. Some dimensions, unseen walls and connections are interpretations: the original painted backgrounds do not describe a single physically consistent building. Doorway portals let rooms retain their own proportions while remaining connected as you walk through them.
+
+## Controls
+
+| Action | Desktop |
+|---|---|
+| Walk | **WASD**, or **↑ / ↓** |
+| Walk faster | Hold **Shift** |
+| Look around | Click the scene and move the mouse, or drag; **← / →** turn |
+| Open or close doors, use ladders and other interactions | Approach, aim and press **E** |
+| Pause / release the mouse | **Esc** |
+| Reset position | **R** |
+
+On touch devices, use the directional buttons, drag to look, and tap the contextual action button. Doors start closed; the introductory controls hint disappears after you begin walking.
+
+## Run locally
+
+A fresh checkout contains the source artwork and builders. Generate the models and website first using **Docker with Compose**:
 
 ```bash
-./walkthrough.sh
+git clone https://github.com/s-macke/maniac-mansion-3d.git
+cd maniac-mansion-3d
+./docker-build.sh all
 ```
 
-Open http://127.0.0.1:5174/. See [controls and local build instructions](web/README.md).
+The container includes Blender, Python and npm. The first build bakes all rooms and can take tens of minutes. Then serve the finished website with Python 3:
 
-- [House layout](house/layout.json): placement and connections of independent room units.
-- [Living-room preview](http://127.0.0.1:5174/?room=living_room): start in room 003 and walk through to the entrance hall.
-- [Hall package](rooms/connected_hall/README.md): editable scenes, builder, configuration, and previews.
-- [Architecture guide](docs/architecture.md): where changes belong and how to add a room.
-- [Project plan](PLAN.md) and [reference connection map](docs/connection_map.md).
+```bash
+python3 -m http.server 5174 --bind 127.0.0.1 --directory web/dist/client
+```
 
-Original images, current model files and their build dependencies are retained; superseded design iterations have been removed. No gameplay, character, or hosting is required for this prototype.
+Open **http://127.0.0.1:5174/**.
 
-The walkthrough now starts on the front approach. Walk up the steps, open the double doors and enter the hall. See [the exterior package](rooms/front_exterior/README.md) for source references and build commands. Use `?room=hall` to start inside as before.
+If Node.js is installed, `./walkthrough.sh` can serve the built site instead. For building without Docker, see the [local toolchain and rebuild instructions](docs/rebuilding.md).
 
+## How it is built
 
-## Layout-first rooms
+Blender Python builders generate the room geometry, bake the lighting and export compact GLB models. A Three.js viewer assembles the rooms in the browser, reuses shared door and ladder assets, and loads connected spaces as needed. Lighting is baked into the assets; the browser does not need global illumination.
 
-New rooms begin as empty shells with doors; interior details follow after layout review. The library, kitchen, dining room, pantry and garage now have artwork-based furnishings and furniture collision. The [furnished kitchen](rooms/kitchen/README.md) is connected through the hall door left of the staircase. Open that door with E or the touch button, or start directly at [the kitchen](http://127.0.0.1:5174/?room=kitchen). All interactive doors start closed.
+The result is a static website with no backend. Asset URLs are relative, so the same build can run at a domain root or in a subdirectory. The [GitHub Pages workflow](docs/github-pages.md) generates the Blender assets, compiles and checks the website, and deploys from `main`.
 
+| Location | Contents |
+|---|---|
+| [`source/`](source/) | Original background references |
+| [`rooms/`](rooms/) | Per-room Blender builders, configuration and notes |
+| [`shared/`](shared/) | Reusable door and ladder builders |
+| [`house/layout.json`](house/layout.json) | Room spaces and connections |
+| [`scripts/`](scripts/) | Asset generation, baking and build tools |
+| [`web/`](web/) | Browser viewer, navigation and tests |
+| `generated/` | Local Blender scenes, models, reports and previews; ignored by Git |
 
-Standard door models are now maintained in the [shared door kit](shared/doors/README.md). Rooms reference its leaf and frame by placement and size, including mirrored double doors. All interactive doors still start closed.
+After the initial build, rebuild just one room and the website with:
 
-The [furnished pantry](rooms/pantry/README.md) is connected beyond dining; its rear blue mesh door opens onto the [pool deck](rooms/pool/README.md).
+```bash
+./docker-build.sh room kitchen --site
+```
 
-The [garage and forecourt](rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
+For viewer development, use `./walkthrough.sh dev` with Node.js 22.13 or newer. See the [Docker guide](docs/docker.md) for incremental builds and the [architecture guide](docs/architecture.md) for where changes belong.
 
-The [library and furnished landing floor](docs/first_floor.md) are connected: art studio (`plant_room`), music room, security corridor, medical room and arcade. These five rooms are now furnished. All connecting doors start closed. The [furnished upper floors](docs/upper_floor.md) continue through the windowed stair hall, upper corridor and five adjoining rooms. The library is furnished; its spiral staircase is visual only, with no invented upstairs destination.
+## Further reading
 
-For a fresh Git checkout without generated models or dependencies, follow [the source-only rebuild instructions](docs/rebuilding.md).
+- [Artwork, palette and reference documentation](docs/README.md)
+- [Room connections and uncertain routes](docs/connection_map.md)
+- [Doorway portals](docs/portals.md) and [ladder connections](docs/ladders.md)
+- [Browser build, controls and validation](web/README.md)
+- [Source-only rebuilds](docs/rebuilding.md) and [GitHub Pages deployment](docs/github-pages.md)
+- [Project plan and development history](PLAN.md)
 
-Rooms now use [seamless doorway portals](docs/portals.md): overlapping spaces stay separate, while pool and garage remain one continuous outdoor area. Open-door views extend up to three doorways deep.
+## Credits
 
-To regenerate the models and compile the website entirely in Docker, see [the Docker build instructions](docs/docker.md).
-
-The [GitHub Pages workflow](docs/github-pages.md) rebuilds the Blender assets and deploys the static website on pushes to `main`, once Pages is enabled in the repository settings.
-
-For incremental Docker builds, use `./docker-build.sh room kitchen --site`; use `./docker-build.sh all` for every room and the website. [Compose commands](docs/docker.md#everyday-builds-with-compose).
-
-[Ladder portals](docs/ladders.md) connect the heart bedroom to the safe attic and the radio bedroom to Green Tentacle’s room. Approach and face the ladder, then press E or tap the climb action. Both destinations are furnished; see the [top-floor guide](docs/top_floor.md).
-
-The mummy bathroom (024) now connects beyond the exercise/mummy room. The photo darkroom (023) opens from the windowed stair hall one level below the bedrooms. The hall, darkroom, bedroom corridor, three bedrooms, exercise/mummy room, mummy bathroom and typewriter den are furnished. Shared doors start closed.
-
-The furnished [wire attic](rooms/wire_attic/README.md), with damaged plaster, boards and wiring, is reached through the painted wall panel in the den/typewriter room and a short staircase. Open the panel with E or tap it; no puzzle items are needed.
-
-Two [cellar routes](docs/cellar.md) are open for review: the hall’s rear-right door leads down to room 008, and the grating behind the left porch bush leads to passage 029. Both retain separate spaces, now furnished with their original machinery, pipes and supports.
-
-The cellar continues through the furnished dungeon, outer laboratory, main laboratory and meteor chamber. See [cellar routes](docs/cellar.md) for the connection evidence and the simplified garage escape ladder.
-
-The [observatory](rooms/observatory/README.md) is furnished with its telescope and controls, retaining the circular dome, open slit and seamless climb from the den ceiling hatch.
-
-The pool and its basin are one room. Use E/tap at the edge to drain, then the ladder to explore below; refill from the deck after climbing out. The drained basin includes the reactor, pipes, depth markings and drain from background 002.
+Maniac Mansion and its original artwork were created by Lucasfilm Games. This is an unofficial fan reconstruction; the original game and artwork belong to their respective rights holders.

@@ -16,6 +16,8 @@ generated/
   reference/               Inventory, exact palette and contact sheets
 ```
 
+Git also retains the small, selected README presentation assets in `docs/media/` (the promotional MP4 and its poster). Working video captures and intermediate previews remain under `generated/video/`. These documentation assets are not needed to build the walkthrough.
+
 Git tracks the authored inputs and ignores `generated/`, web build products, dependencies and caches. Files named `_source_*.blend` are generated editable scenes, not the authoritative recipe. Durable geometry changes belong in the builders. Hand-authored assets that cannot be regenerated must be kept outside `generated/` and included in both Git and the Docker context.
 
 `room.json` stores authored dimensions, palette choices, navigation, ports, bake settings and output paths. The builder writes derived door pivots, mesh placements and collision bounds to `generated/reports/rooms/<room>/manifest.json`. The catalog merges this metadata with authored inputs for baking and browser synchronization. The generated manifest is required: missing room output is an error, not an invitation to reuse stale values from source config.
