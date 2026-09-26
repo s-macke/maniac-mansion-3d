@@ -1,7 +1,7 @@
 """030: three apparatus chairs, control banks, vending machine and radiation cabinet."""
 from pathlib import Path
 import math
-from blender_shared.lab_furniture import metal_wall,pipe,panel,gauge,disc
+from blender_shared.lab_furniture import metal_wall,opposite_metal_wall,pipe,panel,gauge,disc,cylinder
 from blender_shared.furnishings import source_patch
 from blender_shared.bedroom_furniture import finish
 ROOT=Path(__file__).resolve().parents[2]
@@ -18,9 +18,21 @@ def furnish(g,c):
    b('Meter_case',(x,4.800,z),(.39,.04,.28),'gray');b('Meter_glass',(x,4.772,z),(.29,.024,.18),'green');b('Meter_glint',(x-.065,4.753,z+.035),(.046,.015,.075),'white')
    b('Meter_switch_frame',(x,4.79,z-.23),(.16,.035,.11),'white')
    b('Meter_switch',(x,4.766,z-.23),(.11,.016,.065),'pink' if x<-1.5 else 'lightred')
- for x in [.24,.91,1.58]:
+ for x in [1.58]:
   b('Indicator_black_column',(x,4.82,2.22),(.38,.039,1.48),'black')
   for i in range(11):b('Indicator_lamp',(x,4.788,1.58+i*.127),(.26,.021,.069),['aqua','yellow','lightred','lime'][i%4])
+ # Black cooling grille between the meters and the single colored indicator stack.
+ b('Bank_cooling_recess',(.35,4.82,2.34),(1.05,.04,1.48),'black')
+ for z in [1.66+i*.12 for i in range(12)]:b('Bank_cooling_slat',(.35,4.786,z),(.94,.018,.024),'cyan')
+ for x in [-.28,.97]:pipe(g,'Bank_grille_border',[(x,4.73,1.66),(x,4.73,3.01)],.044,'cyan')
+ gauge(g,2.32,4.70,1.72,.19)
+ # Split red/aqua auxiliary dial on the left of the apparatus bank.
+ b('Auxiliary_instrument',(-3.77,4.72,1.67),(.92,.24,.74),'cyan')
+ disc(g,'Auxiliary_dial',-3.77,4.57,1.67,.31,'aqua')
+ pts=[(-3.77,4.55,1.67)]+[(-3.77+.30*math.cos(-i*math.pi/20),4.55,1.67+.30*math.sin(-i*math.pi/20)) for i in range(21)]
+ g.mesh('Auxiliary_red_half',pts,[tuple(reversed(range(len(pts))))],'red')
+ disc(g,'Auxiliary_hub',-3.77,4.53,1.67,.09,'white')
+ g.beam('Auxiliary_needle',(-3.77,4.51,1.67),(-3.77,4.51,1.92),.025,'black')
  # Circular green scanner at the upper right of the bank.
  for r,y,col in [(.57,4.86,'cyan'),(.48,4.80,'blue'),(.42,4.76,'green'),(.34,4.72,'lime')]:disc(g,'Scanner',2.42,y,2.53,r,col)
  for dx in [-.24,-.12,0,.12,.24]:b('Scanner_grid',(2.42+dx,4.699,2.53),(.016,.015,.55),'green')
@@ -29,15 +41,24 @@ def furnish(g,c):
  for x,h in [(-2.16,1.62),(-.18,2.11),(1.80,1.62)]:
   b('Chair_base',(x,4.09,.13),(1.51,1.27,.26),'red');b('Chair_body',(x,4.30,h/2+.15),(1.18,.73,h),'brown')
   b('Red_chair_back',(x,3.914,h*.80),(1.16,.048,h*.59),'red')
-  b('Chair_seat',(x,3.73,.60),(1.21,.76,.14),'brown')
+  b('Chair_seat',(x,3.87,.60),(1.21,.45,.14),'brown')
+  for dx in [-.60,.60]:b('Chair_edge_trim',(x+dx,3.90,h/2+.15),(.065,.065,h),'red')
   for dx in [-.68,.68]:
    pipe(g,'Chair_arm_frame',[(x+dx,3.48,.13),(x+dx,3.48,.95),(x+dx,4.45,.95)],.061,'gray')
    b('Chair_armrest',(x+dx,3.83,1.01),(.17,.63,.10),'gray')
-  for z in [.29,.74]:
+  for z in ([] if h>2 else [.29,.93]):
    b('Chair_restraint',(x,3.876,z),(.97,.055,.065),'black');b('Restraint_buckle',(x+.22,3.838,z),(.16,.025,.10),'gray')
   g.sphere('Blue_chair_helmet',(x,4.20,h+.32),(.45,.34,.30),'blue');g.cyl('Helmet_collar',(x,4.20,h+.17),.45,.06,'lightblue',28)
-  pipe(g,'Helmet_feed',[(x,4.20,h+.60),(x,4.66,3.08)],.043,'red')
-  gauge(g,x,3.865,h+.33,.12)
+  pipe(g,'Helmet_feed',[(x,4.20,h+.60),(x,4.20,3.12)],.043,'red',False)
+  for i in range(int((3.12-h-.60)/.05)):
+   g.cyl('Helmet_feed_rib',(x,4.20,h+.62+i*.05),.057,.014,'pink',16)
+  disc(g,'Helmet_front_plate',x,3.854,h+.32,.19,'lightblue')
+  disc(g,'Helmet_dark_grille',x,3.830,h+.32,.145,'blue')
+  for dx in [-.075,0,.075]:b('Helmet_grille_slot',(x+dx,3.808,h+.32),(.022,.018,.17),'black')
+  for side in [-1,1]:
+   cylinder(g,'Helmet_electrode',(x+side*.40,4.20,h+.26),(x+side*.68,4.20,h+.26),.042,'blue')
+   for i in range(5):
+    xx=x+side*(.45+i*.045);cylinder(g,'Electrode_fin',(xx-.007,4.20,h+.26),(xx+.007,4.20,h+.26),.078,'lightblue',12)
  # Original vending-machine artwork on a solid case.
  x,y=-5.83,4.59
  b('Vending_case',(x,y,1.26),(1.42,1.04,2.52),'cyan');b('Vending_front',(x,4.045,1.26),(1.22,.04,2.36),'lightblue')
@@ -49,7 +70,11 @@ def furnish(g,c):
  b('Radiation_cabinet',(x,y,1.28),(1.24,.94,2.56),'gray');b('Cabinet_black_border',(x,4.099,1.28),(1.09,.027,2.42),'black');b('Cabinet_closed_face',(x,4.076,1.28),(.97,.026,2.29),'gray')
  source_patch(g,ROOT/'source/room 030.png',(520,43,536,61),(x,4.054,2.09),(.31,.34),'Original_radiation_sign')
  b('Radiation_handle',(x+.29,4.028,1.22),(.27,.04,.045),'black')
+ for dx in [-.52,.52]:b('Radiation_door_trim',(x+dx,4.06,1.28),(.025,.022,2.34),'white')
+ for z in [.10,2.46]:b('Radiation_door_trim',(x,4.06,z),(1.06,.022,.025),'white')
  for i in range(9):b('Cabinet_vent',(x,4.048,.33+i*.045),(.68,.018,.018),'black')
+ for dx in [-.23,0,.23]:b('Cabinet_vent_divider',(x+dx,4.031,.51),(.018,.018,.41),'gray')
  panel(g,3.74,4.03,1.14,1.05,.78)
  for x in [3.34,4.14]:pipe(g,'Control_pedestal_leg',[(x,4.05,.04),(x,4.05,.80)],.044,'cyan')
+ opposite_metal_wall(g,c['geometry']['halfWidth'],c['geometry']['depth'],c['geometry']['height'])
  finish(c)

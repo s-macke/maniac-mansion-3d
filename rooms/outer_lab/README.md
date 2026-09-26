@@ -17,3 +17,11 @@ The two console instruments match background 031: a split pink/aqua dial beside 
 ## Door orientation
 
 The dungeon entrance is on the back-left wall; the gray main-lab exit is on the right. Metal panels leave the entrance aperture open.
+
+The shared dungeon/outer-lab doorway is 1.95 m wide, matching the broader reinforced left door in background 004. Both room apertures agree; its destination and closed-first interaction are unchanged.
+
+## Detailed laboratory review — 2026-09-26
+
+Added the tall gray manipulator guide, upper articulated linkage, joint axles, side handle and lower aqua reader. The console now has diagonal base vents, panel screws and its left cable. The wall-panel cutout derives from the authored dungeon port width, keeping the full 1.95 m opening clear. The keypad and its collision footprint fit entirely beside that opening.
+
+The opposite wall also uses the matching light-blue metal panels, blue seams and black rivets, continued across its full width at the user’s request. This inferred wall has no copied doorway or machinery.

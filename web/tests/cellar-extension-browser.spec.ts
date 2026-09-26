@@ -14,7 +14,15 @@ test('walk the complete cellar laboratory route and return through the same door
  }
  async function go(x:number,y:number){
   await aim(x,y);const p=await state(),dx=x-p.x,dy=y-p.y,d=Math.hypot(dx,dy);if(d<.16)return;
-  await page.keyboard.down('w');try{await expect.poll(async()=>{const q=await state();return ((q.x-p.x)*dx+(q.y-p.y)*dy)/d;},{timeout:18000,intervals:[50]}).toBeGreaterThan(d-.13);}finally{await page.keyboard.up('w');}
+  // Software-rendered portal views can advance slowly. Allow distance-based time,
+  // but fail promptly if the walker actually stops progressing against geometry.
+  let lastProgress=0,lastMovement=Date.now();
+  await page.keyboard.down('w');try{await expect.poll(async()=>{
+   const q=await state(),progress=((q.x-p.x)*dx+(q.y-p.y)*dy)/d;
+   if(progress>lastProgress+.02){lastProgress=progress;lastMovement=Date.now();}
+   if(Date.now()-lastMovement>5000)throw new Error('Walker stalled: '+JSON.stringify({target:{x,y},state:q}));
+   return progress;
+  },{timeout:Math.max(18000,d*4000),intervals:[50]}).toBeGreaterThan(d-.13);}finally{await page.keyboard.up('w');}
  }
  async function cross(x:number,y:number,room:string){
   await aim(x,y);await page.keyboard.down('w');try{await expect.poll(async()=>(await state()).room,{timeout:15000,intervals:[50]}).toBe(room);}finally{await page.keyboard.up('w');await page.screenshot({path:'test-results/upper-route-last.png'});}

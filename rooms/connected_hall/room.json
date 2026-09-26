@@ -217,6 +217,72 @@
       "source/room 010.png",
       "source/room 011.png"
     ],
-    "previewSuffix": "v6"
+    "previewSuffix": "v6",
+    "practicalLights": [
+      {
+        "position": [
+          -4.62,
+          5.98,
+          2.97
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.15,
+        "strength": 0.24,
+        "radius": 0.025,
+        "coneAngle": 115
+      },
+      {
+        "position": [
+          -2.67,
+          5.98,
+          2.97
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.15,
+        "strength": 0.24,
+        "radius": 0.025,
+        "coneAngle": 115
+      },
+      {
+        "position": [
+          2.18,
+          5.98,
+          2.97
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.15,
+        "strength": 0.24,
+        "radius": 0.025,
+        "coneAngle": 115
+      },
+      {
+        "position": [
+          4.05,
+          5.98,
+          2.97
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.15,
+        "strength": 0.24,
+        "radius": 0.025,
+        "coneAngle": 115
+      }
+    ]
   }
 }

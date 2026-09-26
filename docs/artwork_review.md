@@ -8,7 +8,7 @@ This pass applies the medical-room review method to five existing interiors: com
 |---|---|---|
 | Library | 005 | Broader spiral with a continuous curved outer stringer, complete bookcase crown, green telephone receiver and visibly lit reading lamps with local baked light. The staircase remains decorative because its destination is unresolved. |
 | Music room | 017 | Broader grand piano while retaining its height, depth, angle and supported keyboard; piano, stereo and television redistributed to retain doorway clearance; original rounded rectangular CRT glass replaces the oval approximation. Existing cassette and foreground record desk remain. |
-| Cellar | 008 | Restored three horizontal ribbed gray return pipes behind the cyan risers; broadened the furnace/cooler assembly without raising chimney tops through the ceiling. Stairs and dungeon access remain clear. |
+| Cellar | 008 | Broadened the furnace/cooler assembly without raising chimney tops through the ceiling. The return-pipe count was corrected in the later cellar overhaul below. Stairs and dungeon access remain clear. |
 | Photo room | 023 | Visible red safelight glass and a localized baked pool on the workbench, retaining the nearly black room and original red/brown palette. |
 | Mummy bathroom | 024 | Toilet/cistern backs onto the left wall and faces inward; original jagged plaster damage restored above the mirror and beside the curtain. Graffiti lies flush against the rear wall. |
 
@@ -377,3 +377,83 @@ Replaced the solid typewriter cupboard with an open red table, four legs, aprons
 Both rooms retain the EGA palette and static baked shading. Neither reference shows a lamp requiring a new practical light; the existing soft fill is retained. Original artwork and room connections are unchanged.
 
 Validation: both Blender builds, TypeScript and catalog checks passed, with 12 focused navigation/model checks and both desktop Chrome room walkarounds. Inspected source backgrounds, Blender previews and browser close-ups from multiple angles. A final mummy-only refinement fits wrapping directly to the faceted mesh and seats the eyes and headdress stripes against their surfaces; its rebuilt preview was inspected. No physical-mobile test was run.
+
+## Drained pool basin — 002, 2026-09-26
+
+Compared the basin with background 002. Corrected the dark-blue floor and end walls to pale blue with the source's dark triangular rear-wall region. Restored the aqua/white tile band beneath the rim and blue depth seams, added floor fractures, completed the crossed drain grille and pink basin chair, extended the feed pipes toward the rim and added a wall fitting, subsequently corrected to the source red button with arrow and lettering (see below). Pool dimensions, reactor placement, collision, drain/refill state and ladder navigation are unchanged.
+
+## Entrance-hall sconces — 010, 2026-09-26
+
+Replaced the four shallow gray pixel reliefs around the downstairs doors with solid gothic wall fittings, preserving their positions and gray/white palette. Backplates, masks, arms, finials, brackets and candle cups now have visible depth, with subtle static baked light. Upper landing lamps, door connections and navigation are unchanged.
+
+Validation for the pool and hall: rebuilt both Blender packages and the static website; TypeScript, catalog validation and eight pool model/navigation checks passed. Both Chrome scenarios passed: pool drain → descend → basin inspection → ascend → refill, and hall-fixture front/side approaches. Inspected browser close-ups of the basin floor, chair, wall fitting and sconces. No physical-mobile validation was performed.
+
+
+### Pool chair correction — 2026-09-26
+
+The pink object in the drained basin was incorrectly interpreted as a plug. Both pool states now use the identical chair builder in `rooms/pool/chair.py`, preserving the accepted floating design. Removed the invented cord and white highlights; expanded the basin collision footprint to fit the chair.
+
+Removed the invented black support rails from both chairs. The shared seat now rests directly at its base height, on the water or basin floor, preserving identical geometry in both states.
+
+Chair validation: rebuilt the pool and static site; all eight pool model/navigation checks passed after sharing the chair and expanding its collision. After removing the black supports, rebuilt again and passed the full Chrome drain/basin/refill scenario; inspected the final basin-chair close-up.
+
+
+### Basin reactor and controls — 2026-09-26
+
+A closer pixel-enlarged comparison exposed the remaining major mismatches. Replaced the generic barrel with a broad rounded pressure chamber and narrow stepped pedestal, differentiated the three pipe sockets, reshaped the ribbed hose into its raised arch and right-wall connection, and added the green wall leak, droplets and floor splash. Replaced the invented brown hanging fitting with a solid red button and the original arrow/lettering pixels, without guessing unreadable text. The pressure chamber’s collision envelope now covers its larger silhouette.
+
+Pool final verification: the hose now terminates in a fitting embedded in the right wall, and green leakage lies against the wall below it. Corrected the right feed socket attachment and cleared the button lettering from the wall seam. Final Blender/site builds and the complete Chrome basin/refill route passed; inspected the wall-joint close-up.
+
+## Dungeon overhaul — 004, 2026-09-26
+
+Replaced the wrong left door with a distinct shared reinforced design, including original panels, solid crossbars, keepers and padlocks. Added blue metal door surrounds. Rebuilt the blue chandelier with linked suspension, shaped arms and pronged cups plus subtle baked light. Reposed the skeleton, attached its wrist cuffs through open alternating chain links to the wall anchor, and adjusted collision to retain the door approach. Restored the right blue wall's rivets and pale corner facet. Extended the rear wall's irregular red/brown stonework to the opposite wall at the user's request; removed the blue skirting. No puzzles, destinations or additional runtime lighting were introduced.
+
+Validation: rebuilt the dungeon, matching outer-lab doorway and shared door kit, then compiled the static site. TypeScript, catalog validation and eight focused model/navigation/door checks passed. Chrome passed the dungeon walkaround and the complete cellar route in both directions. Rechecked the dungeon after aligning the two solid padlocks with the source panels, and inspected close-ups of the chandelier, skeleton chains, reinforced door, blue wall and opposite stonework. No physical-mobile validation was performed.
+
+## Cellar machinery overhaul — 008, 2026-09-26
+
+Compared the enlarged original with the generated room. Corrected the rear wall to gray and the stairs from brown to gray. Replaced the three invented return pipes with the single ribbed pipe visible in the artwork. Restored the separate ceiling intake with red elbow wraps, blue duct flange, narrow furnace risers, small pipe gauge, green drip and source-shaped floor spill. Added the blue manifold, exhaust flanges and chimney ribs, cooler fasteners, firebox latch and bolts, extinguisher bands and label, and curved ribbed outlet with a wall-mounted blue flange. Restored the electrical cabinet's aqua trim, warning triangle, screws and hanging key. Existing portals and navigation dimensions remain unchanged.
+
+Validation: rebuilt the cellar in Blender and compiled the static website. Catalog validation, TypeScript and four focused navigation checks passed. Sequential Chrome checks passed for the hall-to-cellar stair round trip and the furnished cellar walkaround; inspected cabinet/key, leak, pipework, furnace and stair close-ups. The final manifold shortening and dark exhaust-stack correction were rebuilt and inspected in the Blender reference view. No physical-mobile test was run.
+
+Cellar follow-up: restored the yellow flared cap and black neck above the red boiler. Joined both small cyan risers into the red ribbed pipe, shortened its ribs to the actual red section, and connected the far end into the blue manifold.
+Rebuilt the cellar and inspected the cap and continuous lower pipe junction in both reference and inside Blender views.
+
+## Safe-attic wall — 009, 2026-09-26
+
+Replaced the repeated full-width boards with source-traced staggered plank lengths, paired nail holes, blue seam edges and small chipped ends. Replaced uniform random speckles with the original turquoise-pixel shapes across the wall, preserving the winding trail and dense lower patches. Existing window, bulb, safe and ladder route remain unchanged; the previously excluded circular overlay remains excluded.
+
+Removed the rear skirting that covered the bottom board. Blender and static-site builds passed; inspected the inside preview and Chrome wall close-up. The existing safe-attic browser walkaround passed.
+
+Safe-attic follow-up: continued the boarded wall onto the opposite side at the user’s request, with mirrored staggered joints and nail holes, plus a distinct arrangement of turquoise damp patches. Removed the front skirting so the lowest board remains visible. This is an inferred wall treatment, not an additional source view.
+Validation: rebuilt the room and static site, inspected the reverse Blender preview and browser view facing the new wall; the safe-attic Chrome walkaround passed.
+
+Opposite-wall pattern correction: retained the accepted wood, but replaced the repeated source weathering with separate clustered stains and low patches. The original reference wall is unchanged.
+Rebuilt and inspected the reverse Blender view to confirm the opposite-wall stains no longer repeat the original winding pattern.
+
+## Mummy bathroom fittings — 024, 2026-09-26
+
+Rebuilt the toilet and washbasin as open ceramic profiles with shaped rims and recessed interiors. Restored aqua ceramic faces, a tapered toilet pedestal, seat hinges, cistern trim, linked yellow pull chain, yellow tap crosses, green soap and dish, and mirror clips. Added three distinct plaster-damage silhouettes to the opposite wall as a requested inferred continuation. Existing door, tub, window and furniture collision footprints remain unchanged.
+
+Validation: Blender and production-site builds passed. Inspected inside/reverse previews and browser close-ups of the toilet, basin and opposite-wall patches. The existing mummy-bathroom Chrome walkaround passed.
+
+## Laboratory detail review — 031, 030, 051, 2026-09-26
+
+### outer_lab
+
+Added the tall gray manipulator guide, upper articulated linkage, joint axles, side handle and lower aqua reader. The console now has diagonal base vents, panel screws and its left cable. The wall-panel cutout derives from the authored dungeon port width, keeping the full 1.95 m opening clear. The keypad and its collision footprint fit entirely beside that opening.
+
+### main_lab
+
+Corrected the three colored indicator stacks to one beside a black cooling grille. Added the auxiliary split red/aqua dial and lower scanner gauge. The apparatus helmets have slotted front plates, side electrodes and vertical ribbed feeds rather than generic face gauges. Shortened the projecting seats, added red edge trim, removed invented restraints from the taller central apparatus, and detailed the radiation cabinet frame and vent dividers. The new auxiliary dial has its own collision footprint.
+
+### meteor_chamber
+
+Added the switch lever bracket, axle, ribbed grip and cabinet bolts. The horizontal tank has end caps, flange bolts, outward red arrows, connected purple end pipes and an inlet connected from the switch cabinet down to its front socket. The tank collision footprint includes the projecting end fittings. The hanging rig has red ribbed feed, green-tipped antennae, neck rings, perforated bell rim, jointed pincers, terminal contacts and a collared side guide. The garage ladder bay remains clear.
+
+Validation: all three Blender models and the production site were rebuilt; catalog validation, TypeScript and five focused navigation/door checks passed. Chrome passed all three room inspections, the meteor/garage ladder round trip, and the complete cellar route in both directions. Inspected Blender previews and browser close-ups. The route initially exceeded its fixed 18-second allowance on the long main-lab return walk; distance-based timing with explicit no-progress detection passed the same route without changing navigation. A final meteor-only rebuild removed an old black segment obscuring the red rig feed; its preview was inspected and the complete route passed with the final assets. No physical-mobile validation was performed.
+
+## Opposite laboratory walls — 2026-09-26
+
+Continued the light-blue riveted panel finish onto the opposite wall in the outer laboratory, main laboratory and meteor chamber. A shared helper reuses the existing panel geometry with inward-facing rivets and preserves the reference cutaway. Front skirting is removed so panels reach the floor. Rear openings and all machinery remain unchanged.
+Validation: rebuilt all three Blender packages and inspected their reverse previews. Catalog validation passed.

@@ -116,7 +116,10 @@
         "asset": "Dungeon_leaf",
         "label": "Dungeon door"
       }
-    ]
+    ],
+    "wallColors": {
+      "back": "gray"
+    }
   },
   "bake": {
     "collections": [

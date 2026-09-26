@@ -12,7 +12,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True);bpy.context.preferences.filepat
 scene=bpy.context.scene;scene.unit_settings.system='METRIC';scene.render.engine='CYCLES';scene.cycles.samples=16
 scene.world=bpy.data.worlds.new('Night');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(0,0,0,1)
 scene.view_settings.view_transform='Standard';scene.view_settings.look='None';scene.render.resolution_percentage=100;scene.render.image_settings.file_format='PNG'
-colors={'red':(168,0,0),'brown':(168,84,0),'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'lightgreen':(84,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
+colors={'lightred':(252,84,84),'green':(0,168,0),'red':(168,0,0),'brown':(168,84,0),'black':(0,0,0),'gray':(168,168,168),'darkgray':(84,84,84),'blue':(0,0,168),'lightblue':(84,84,252),'cyan':(0,168,168),'aqua':(84,252,252),'yellow':(252,252,84),'lightgreen':(84,252,84),'pink':(252,84,252),'purple':(168,0,168),'white':(252,252,252)}
 mats={}
 for name,rgb in colors.items():
  m=bpy.data.materials.new('EGA_'+name);m.diffuse_color=(*[linear(v) for v in rgb],1);m.use_nodes=True;n=m.node_tree.nodes;n.clear();e=n.new('ShaderNodeEmission');e.inputs[0].default_value=m.diffuse_color;o=n.new('ShaderNodeOutputMaterial');m.node_tree.links.new(e.outputs[0],o.inputs[0]);mats[name]=m
@@ -39,9 +39,9 @@ build_rear_facade(geo,port)
 # Dark outer door reveal lets the shared pantry leaf be seen from outdoors.
 for side in [-1,1]:box('Pool_entry_reveal',(.05,cy+side*(dw/2+.045),dh/2),(.10,.09,dh),'darkgray')
 geo.active='Pool'
-box('Basin_floor',((x0+x1)/2,(y0+y1)/2,p['bottom']-.1),(x1-x0,y1-y0,.2),'blue')
+box('Basin_floor',((x0+x1)/2,(y0+y1)/2,p['bottom']-.1),(x1-x0,y1-y0,.2),'lightblue')
 for x in [x0,x1]:box('Basin_side',(x,(y0+y1)/2,p['bottom']/2),(.18,y1-y0,-p['bottom']),'lightblue')
-for y in [y0,y1]:box('Basin_end',((x0+x1)/2,y,p['bottom']/2),(x1-x0,.18,-p['bottom']),'blue')
+for y in [y0,y1]:box('Basin_end',((x0+x1)/2,y,p['bottom']/2),(x1-x0,.18,-p['bottom']),'lightblue')
 for x in [x0-.14,x1+.14]:box('Turquoise_coping',(x,(y0+y1)/2,.035),(.28,y1-y0+.56,.07),'aqua')
 for y in [y0-.14,y1+.14]:box('Turquoise_coping',((x0+x1)/2,y,.035),(x1-x0,.28,.07),'aqua')
 water=box('Water_surface',((x0+x1)/2,(y0+y1)/2,p['water']),(x1-x0-.18,y1-y0-.18,.025),'blue');water['bake_unlit']=True
@@ -58,11 +58,9 @@ for x in [10.65,11.35]:
 for z in [-2.55,-2.23,-1.83,-1.51,-1.19,-.87,-.55,-.23,.09,.41]:geo.beam('Ladder_rung',(10.65,y1-.16,z),(11.35,y1-.16,z),.048,'white')
 from interior import furnish
 furnish(geo,p)
-# Pink floating chair silhouette visible in the original pool background.
-box('Chair_seat',(12,5.5,p['water']+.16),(.72,.72,.13),'pink')
-box('Chair_back',(12,5.82,p['water']+.54),(.65,.12,.78),'pink')
-box('Chair_side',(11.65,5.5,p['water']+.25),(.10,.70,.20),'purple')
-for x in [11.72,12.28]:geo.beam('Chair_foot',(x,5.15,p['water']+.02),(x,5.85,p['water']+.02),.07,'black')
+# Both pool states use exactly the same chair geometry.
+from chair import build_chair
+build_chair(geo,'Chair',12,5.5,p['water'])
 # Keep wet-only surfaces in one independently switchable baked mesh.
 for o in bpy.data.objects:
  if o.type=='MESH' and o.name.startswith(('Water_','Chair_')):o['bake_group']='Pool_water';o['bake_no_shadow']=True

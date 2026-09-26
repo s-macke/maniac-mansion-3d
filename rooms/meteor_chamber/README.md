@@ -18,3 +18,9 @@ Replaced the generic polygon puddle with the original irregular purple spill, pi
 ## Door orientation
 
 The teal lab entrance is on the left. The garage escape ladder occupies the right-hand exit bay, clear of the suspended apparatus.
+
+## Detailed laboratory review — 2026-09-26
+
+Added the switch lever bracket, axle, ribbed grip and cabinet bolts. The horizontal tank has end caps, flange bolts, outward red arrows, connected purple end pipes and an inlet connected from the switch cabinet down to its front socket. The tank collision footprint includes the projecting end fittings. The hanging rig has red ribbed feed, green-tipped antennae, neck rings, perforated bell rim, jointed pincers, terminal contacts and a collared side guide. The garage ladder bay remains clear.
+
+The opposite wall also uses the matching light-blue metal panels, blue seams and black rivets, continued across its full width at the user’s request. This inferred wall has no copied doorway or machinery.

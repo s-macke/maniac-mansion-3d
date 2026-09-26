@@ -52,6 +52,22 @@ def metal_wall(g,halfwidth,depth,height=3.12,openings=()):
   for left,right in segments(-w/2,w/2,(bottom+top)/2):
    g.box('Lab_wall_joint_backing',((left+right)/2,y+.023,(bottom+top)/2),(right-left,.024,top-bottom),'blue')
 
+def opposite_metal_wall(g,halfwidth,depth,height=3.12):
+ """Continue the lab panel finish on the inferred front wall, without rear doors."""
+ import bpy
+ from mathutils import Matrix
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith('Skirting') and obj.location.y<.3:
+   bpy.data.objects.remove(obj,do_unlink=True)
+ before=set(bpy.data.objects)
+ metal_wall(g,halfwidth,depth,height)
+ bpy.context.view_layer.update()
+ transform=Matrix.Translation((0,depth,0))@Matrix.Rotation(math.pi,4,'Z')
+ for obj in set(bpy.data.objects)-before:
+  obj.name='Front_inferred_'+obj.name
+  obj.matrix_world=transform@obj.matrix_world
+
+
 def panel(g,x,y,z,w=.85,h=.70):
  g.box('Control_panel',(x,y,z),(w,.19,h),'cyan');g.box('Panel_border',(x,y-.107,z),(w-.09,.025,h-.08),'black');g.box('Panel_face',(x,y-.125,z),(w-.15,.02,h-.15),'cyan')
  for i in range(2):

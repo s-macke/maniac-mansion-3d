@@ -9,21 +9,73 @@ ROOT=Path(__file__).resolve().parents[2]
 @rear_anchored(5.2)
 def furnish(g,c):
  b=g.box
- # Boards fill the rear wall all the way to the floor, corners and ceiling.
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith('Skirting') and (obj.location.y>c['geometry']['depth']-.3 or obj.location.y<.3):
+   bpy.data.objects.remove(obj,do_unlink=True)
+ wall_before=set(bpy.data.objects)
+ # Trace the staggered plank ends from 009 instead of repeating equal boards.
  b('Board_dark_backing',(0,5.013,1.56),(8.24,.014,3.12),'black')
- for row in range(13):
-  z=.12+row*.24
-  b('Attic_wall_board',(0,5.009,z),(8.24,.018,.224),'darkgray')
-  for x in [-4.06,4.06,(-1.7 if row%2 else 1.50)]:
-   b('Board_joint',(x,4.997,z),(.014,.005,.224),'black')
-   for dz in [-.054,.054]:b('Board_nail',(x+.035,4.993,z+dz),(.018,.005,.018),'gray')
+ joints=[[119,190,239],[214],[143],[94,134,207],[],[111,135,190],[],[87,119],[],[135,206],[],[94,119,207],[167]]
+ def wall_x(u):return -4.12+(u-63)/195*8.24
+ def wall_z(v):return 3.12-v/104*3.12
+ for row,ends in enumerate(joints):
+  top=wall_z(row*8);bottom=wall_z((row+1)*8)
+  cuts=[63,*ends,258]
+  for j,(left,right) in enumerate(zip(cuts,cuts[1:])):
+   x0=wall_x(left)+.012;x1=wall_x(right)-.012
+   # Slightly uneven depth and chipped end cuts retain the old timber surface.
+   y=5.001-.004*((row+j)%3)
+   vertices=[(x0,y,bottom+.018),(x1-.018,y,bottom+.018),
+             (x1,y,bottom+.07),(x1,y,top-.025),
+             (x0+.012,y,top-.014),(x0,y,top-.065)]
+   g.mesh('Attic_staggered_plank',vertices,[tuple(range(6))],'darkgray')
+   # Blue seam edges and paired dark nail holes visible in the original.
+   b('Plank_lower_edge',((x0+x1)/2,y-.002,bottom+.012),(x1-x0,.006,.015),'blue')
+   if right<258:
+    for dz in [.075,.145]:b('Board_nail',(x1-.095,y-.006,bottom+dz),(.032,.008,.026),'black')
  for x in [-4.105,4.105]:b('Wall_corner_edge',(x,5.00,1.56),(.018,.022,3.12),'black')
- # Sparse turquoise weathering below the boards, without reproducing the blue circular overlay.
- rng=random.Random(9);vs=[];fs=[]
- for i in range(440):
-  x=rng.uniform(-4.04,4.04);z=rng.uniform(.15,1.08);w=rng.uniform(.012,.035);h=rng.uniform(.008,.03);n=len(vs)
-  vs.extend([(x,4.996,z),(x+w,4.996,z),(x+w,4.996,z+h),(x,4.996,z+h)]);fs.append((n,n+1,n+2,n+3))
- g.mesh('Board_weathering',vs,fs,'cyan')
+ # Preserve the actual winding/dense weathering silhouette, not uniform noise.
+ # Only turquoise pixels are used; the established circular-overlay exclusion stays.
+ image=bpy.data.images.load(str(ROOT/'source/room 009.png'),check_existing=False)
+ image.colorspace_settings.name='Non-Color';pixels=list(image.pixels);iw,ih=image.size
+ groups={'cyan':([],[]),'aqua':([],[])}
+ for v in range(104):
+  for u in range(63,258):
+   if 157<=u<=176 and 25<=v<=43:continue # hanging bulb belongs to its solid model
+   off=((ih-1-v)*iw+u)*4;rgb=tuple(round(k*255) for k in pixels[off:off+3])
+   if rgb not in [(0,168,168),(84,252,252)]:continue
+   color='cyan' if rgb==(0,168,168) else 'aqua';vs,fs=groups[color];n=len(vs)
+   vs.extend([(wall_x(u),4.979,wall_z(v+1)),(wall_x(u+1),4.979,wall_z(v+1)),
+              (wall_x(u+1),4.979,wall_z(v)),(wall_x(u),4.979,wall_z(v))]);fs.append((n,n+1,n+2,n+3))
+ for color,(vs,fs) in groups.items():g.mesh('Original_board_weathering_'+color,vs,fs,color)
+ bpy.data.images.remove(image)
+ # User-requested continuation on the unseen opposite wall. Rotate the complete
+ # board treatment, preserving inward-facing surfaces. Weathering is distinct below.
+ bpy.context.view_layer.update()
+ opposite=Matrix.Translation((0,10.4-c['geometry']['depth'],0))@Matrix.Rotation(math.pi,4,'Z')
+ for obj in set(bpy.data.objects)-wall_before:
+  if obj.name.startswith('Original_board_weathering'):continue
+  copy=obj.copy();copy.data=obj.data.copy();obj.users_collection[0].objects.link(copy)
+  copy.name='Front_inferred_safe_attic_'+obj.name
+  copy.matrix_world=opposite@obj.matrix_world
+ # Independent damp patches on the inferred wall: a tall left-hand stain,
+ # separated low islands and a small upper-right patch, not the source's winding trail.
+ rng=random.Random(19009);groups={'cyan':([],[]),'aqua':([],[])}
+ patches=[(-2.9,.33,.82,.30),(-2.65,.87,.50,.48),(-2.88,1.55,.31,.43),
+          (-.35,.22,.88,.22),(1.75,.35,.70,.32),(2.75,.72,.46,.48),(2.25,2.04,.52,.24)]
+ y=10.4-c['geometry']['depth']-4.979
+ for row in range(104):
+  z=(row+.5)*3.12/104
+  for col in range(195):
+   x=-4.12+(col+.5)*8.24/195
+   # Coherent ragged edges with sparse holes inside each damp patch.
+   xx=x+.12*math.sin(z*17+x*3);zz=z+.075*math.sin(x*13-z*5)
+   density=max(math.exp(-2*((xx-cx)/rx)**2-2*((zz-cz)/rz)**2) for cx,cz,rx,rz in patches)
+   if density<.12 or rng.random()>density*.77:continue
+   color='aqua' if rng.random()<.21 else 'cyan';vs,fs=groups[color];n=len(vs)
+   dx=8.24/195/2;dz=3.12/104/2
+   vs.extend([(x-dx,y,z-dz),(x-dx,y,z+dz),(x+dx,y,z+dz),(x+dx,y,z-dz)]);fs.append((n,n+1,n+2,n+3))
+ for color,(vs,fs) in groups.items():g.mesh('Front_inferred_safe_attic_weathering_'+color,vs,fs,color)
  # Replace the solid left shell wall with four slabs around a real window.
  # This is visual access only; navigation retains the solid outer boundary.
  for obj in list(bpy.data.objects):

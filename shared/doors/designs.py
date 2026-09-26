@@ -98,3 +98,25 @@ def artwork_leaf(geo,root,background,crop):
  obj=geo.mesh('Original_metal_door',verts,faces,None)
  for mat in materials.values():obj.data.materials.append(mat)
  for poly,index in zip(obj.data.polygons,indices):poly.material_index=index
+
+
+def dungeon_reinforced_leaf(geo,root):
+ """Source 004 left door: nested panels, two crossbars and padlocks."""
+ before=set(bpy.data.objects)
+ artwork_leaf(geo,root,'004',(109,17,184,102))
+ for side in [-1,1]:
+  y=side*.08
+  for z in [-.20,.20]:
+   geo.box('Dungeon_crossbar',(0,y,z),(.98,.065,.048),'blue')
+   geo.box('Dungeon_bar_highlight',(0,y+side*.034,z+.014),(.96,.012,.014),'gray')
+   for x in [-.31,.31]:geo.box('Dungeon_bar_keeper',(x,y+side*.02,z),(.063,.09,.12),'blue')
+   # Match the source padlock centers so the relief covers its painted detail.
+   x=.347;lock_z=-.008 if z>0 else -.368
+   shackle_h=z-lock_z-.055
+   for dx in [-.045,.045]:geo.box('Padlock_shackle',(x+dx,y+side*.07,(z+lock_z)/2),(.015,.018,shackle_h),'gray')
+   geo.box('Padlock_shackle_top',(x,y+side*.07,z-.033),(.105,.018,.014),'gray')
+   geo.box('Padlock_body',(x,y+side*.07,lock_z),(.17,.045,.115),'gray')
+   geo.box('Padlock_keyhole',(x,y+side*.098,lock_z+.005),(.018,.008,.025),'black')
+ # The shell mirrors unit leaves; compensate to keep the source's hinge/lock sides.
+ for obj in set(bpy.data.objects)-before:
+  obj.scale.x*=-1;obj.location.x*=-1

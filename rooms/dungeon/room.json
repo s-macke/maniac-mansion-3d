@@ -35,10 +35,10 @@
     "wallThickness": 0.18,
     "obstacles": [
       {
-        "x0": -2.97,
-        "x1": -1.09,
-        "y0": 3.13,
-        "y1": 4.65
+        "x0": -3.35,
+        "x1": -2.21,
+        "y0": 3.44,
+        "y1": 4.6
       }
     ]
   },
@@ -70,7 +70,7 @@
         0,
         1
       ],
-      "width": 1.3,
+      "width": 1.95,
       "height": 2.83,
       "state": "open",
       "destination": "outer_lab"
@@ -81,7 +81,8 @@
     "floor": "red",
     "trim": "blue",
     "wallColors": {
-      "back": "gray"
+      "back": "gray",
+      "front": "gray"
     },
     "entries": [
       {
@@ -99,7 +100,7 @@
         "owner": true,
         "frame": false,
         "leaf": false,
-        "asset": "Dungeon_leaf",
+        "asset": "Dungeon_reinforced_leaf",
         "label": "Lab door"
       }
     ]
@@ -146,6 +147,40 @@
     "startupCutaway": false,
     "references": [
       "source/room 004.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -0.39,
+          3.73,
+          2.94
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "range": 2.0,
+        "strength": 0.4,
+        "radius": 0.04,
+        "coneAngle": 100
+      },
+      {
+        "position": [
+          0.39,
+          3.73,
+          2.94
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "range": 2.0,
+        "strength": 0.4,
+        "radius": 0.04,
+        "coneAngle": 100
+      }
     ]
   }
 }

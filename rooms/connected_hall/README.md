@@ -34,3 +34,7 @@ The entrance wainscot has continuous wooden backing between door openings. Panel
 The kitchen door hinges on its right edge, opposite its left knob. The cellar
 door uses the shared handleless wooden panel variant, matching background 010.
 Both remain interactive and initially closed.
+
+## Downstairs sconces — 2026-09-26
+
+The four gray sconces flanking the two rear downstairs doors are now solid fixtures: shaped silver backplates, mask-like faces, curved arms, lower finials, projecting supports, candle cups and small white candle/flame forms. They replace the shallow source-pixel reliefs. Gentle local light is baked into vertex colors; no runtime lamps are added. The upstairs illustrated lamps are unchanged.

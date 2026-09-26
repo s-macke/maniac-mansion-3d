@@ -10,4 +10,8 @@ Rebuild with `./docker-build.sh room cellar`; use `?room=cellar` for direct revi
 
 ## Artwork refinement
 
-Three ribbed gray return pipes now span the rear wall behind the cyan risers. The furnace/cooler group is broader horizontally; chimney height remains unchanged and the right staircase stays clear. See the [five-room artwork review](../../docs/artwork_review.md).
+The rear wall is light gray, with one ribbed return pipe behind the cyan risers; the earlier three-pipe interpretation was incorrect. The large duct has its blue flange and a separate ceiling intake with red elbow wraps. Narrow black furnace risers, a small pipe gauge and the green drip are restored. The floor spill uses the original pixel silhouette beneath the leaking pipe.
+
+The two small cyan risers join the red ribbed pipe at a shared lower junction, and its other end connects into the furnace manifold. The yellow flared cap sits between the red boiler dome and black chimney.
+
+The furnace has a blue intake manifold, chimney ribs and exhaust flanges, cooler fasteners, a firebox latch and corner bolts, and bands and a label on the extinguisher. Its curved ribbed outlet terminates in a blue flange embedded in the rear wall. The electrical cabinet has an aqua border, yellow warning mark, screws and a solid hanging key. Stair treads and rails are gray rather than brown. All details remain static EGA geometry with baked shading; the staircase and dungeon route retain their navigation dimensions. See the [artwork review](../../docs/artwork_review.md).

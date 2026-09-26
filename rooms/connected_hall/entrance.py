@@ -274,10 +274,25 @@ def build_entrance():
        if color in allowed:
         box(name,(cx+((u+end)/2-(u0+u1)/2)*pitch,y,z+(v1-v-.5)*pitch*1.2),((end-u)*pitch,.075,pitch*1.2),reverse[color])
        u=end
-    # Wall sconces visible between clock and doors. Gray-only segmentation excludes wallpaper.
-    for cx,rect in [(-4.62,(140,5,154,43)),(-2.67,(210,5,226,43)),(2.18,(412,5,430,43)),(4.05,(481,5,499,43))]:
-     relief('Original_pixel_sconce',rect,cx,6.30,2.42,.023)
-    
+    # Solid silver gothic sconces, replacing shallow source-pixel reliefs.
+    # The combined-hall builder lowers this collection by 0.25 m.
+    for cx in [-4.62,-2.67,2.18,4.05]:
+     sphere('Sconce_wall_plate',(cx,6.32,2.87),(.105,.045,.29),'darkgray')
+     sphere('Sconce_silver_plate',(cx,6.285,2.87),(.085,.035,.25),'gray')
+     sphere('Sconce_mask',(cx,6.21,2.91),(.105,.085,.125),'gray')
+     for side in [-1,1]:
+      sphere('Sconce_eye',(cx+side*.04,6.133,2.935),(.025,.014,.028),'black')
+      points=[(cx,6.27,2.76),(cx+side*.15,6.24,2.84),(cx+side*.16,6.20,2.98),(cx+side*.11,6.18,3.035)]
+      for start,end in zip(points,points[1:]):beam('Sconce_curved_arm',start,end,.035,'gray')
+     beam('Sconce_drop',(cx,6.26,2.77),(cx,6.26,2.56),.037,'gray')
+     sphere('Sconce_bottom_finial',(cx,6.26,2.57),(.04,.045,.065),'gray')
+     beam('Sconce_projecting_bracket',(cx,6.28,2.85),(cx,6.04,2.85),.04,'gray')
+     cyl('Sconce_candle_cup',(cx,6.04,3.015),.073,.045,'gray',16)
+     beam('Sconce_cup_support',(cx,6.04,2.85),(cx,6.04,3.015),.028,'gray')
+     cyl('Sconce_candle',(cx,6.04,3.095),.027,.13,'white',12)
+     flame=sphere('Sconce_flame',(cx,6.04,3.20),(.026,.026,.055),'white')
+     flame['bake_unlit']=True
+
     relief('Original_plaster_patch',(250,10,288,40),-1.65,6.28,2.45,.025,{(252,84,84),(168,0,0)})
     
     active='Collision'

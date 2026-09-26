@@ -10,7 +10,7 @@ The shared floor hatch returns to the heart bedroom. The safe sits forward of th
 
 The visible bulb supplies local, soft baked illumination; the floor beneath it is brighter than the distant corners. Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; room placements and portal destinations are unchanged.
 
-The optimized room model is 401,424 bytes (126,328 bytes with gzip).
+The rear wall follows the original staggered plank ends, with varied lengths, small chipped edges, blue seam edges and paired nail holes. Turquoise weathering is traced from the original pixels, including its winding upper trail and dense lower patches, rather than randomly scattered. The circular overlay remains excluded.
 
 
 The left wall has a real window aperture, deep jambs, crossbar and sill. A small
@@ -20,3 +20,5 @@ part of this room package, uses unlit EGA colors, and adds no room connection,
 walkable exterior, transparent sorting or runtime lighting. Navigation still
 blocks walking through the outside wall. The original window placement and
 ladder route are preserved.
+
+At the user’s request, the opposite wall carries the same boarded treatment, rotated into the room with mirrored plank joints and a separate turquoise weathering pattern: a tall stain, isolated low patches and a small upper patch. This unseen wall is an inferred continuation of background 009; the window, safe and hatch are unchanged.

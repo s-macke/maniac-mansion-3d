@@ -8,7 +8,7 @@ Furnished from [the original background](../../source/room%20024.png), preservin
 
 Rebuild with `./docker-build.sh room mummy_bathroom`. Generated Blender scenes, GLBs and previews live under `generated/`. Review at `http://127.0.0.1:5174/?room=mummy_bathroom`. See [upper-floor layout](../../docs/upper_floor.md) for door ownership and provisional dimensions.
 
-The optimized room model is 414,100 bytes (110,394 bytes with gzip).
+
 
 ## Artwork refinement
 
@@ -25,3 +25,7 @@ wall collision still prevents walking outside. Doors and furnishings are unchang
 ## Artwork detail review — 2026-09-24
 
 Restored the thin green enamel drip and detached spot beneath the bathtub rim.
+
+## Toilet, washbasin and opposite wall
+
+The toilet and wall basin have open shaped interiors, ceramic rims and aqua outer surfaces rather than solid ellipsoids. The toilet includes a tapered pedestal, seat hinges, aqua cistern face and linked yellow pull chain. The basin has yellow cross handles, a green soap bar and dish, and four mirror clips. Three distinct jagged plaster patches continue the damaged-wall style onto the unseen opposite wall at the user’s request. Existing furniture footprints and navigation remain unchanged.

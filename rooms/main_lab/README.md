@@ -15,3 +15,9 @@ The meter bank has three columns of two green meters, with a separate switch ben
 ## Door orientation
 
 The gray outer-lab entrance is on the left and the teal meteor-room exit on the right, matching background 030.
+
+## Detailed laboratory review — 2026-09-26
+
+Corrected the three colored indicator stacks to one beside a black cooling grille. Added the auxiliary split red/aqua dial and lower scanner gauge. The apparatus helmets have slotted front plates, side electrodes and vertical ribbed feeds rather than generic face gauges. Shortened the projecting seats, added red edge trim, removed invented restraints from the taller central apparatus, and detailed the radiation cabinet frame and vent dividers. The new auxiliary dial has its own collision footprint.
+
+The opposite wall also uses the matching light-blue metal panels, blue seams and black rivets, continued across its full width at the user’s request. This inferred wall has no copied doorway or machinery.

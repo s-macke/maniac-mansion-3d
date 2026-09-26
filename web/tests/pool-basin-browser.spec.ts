@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('drain the pool, walk its basin, climb out and refill without changing room',async({page})=>{
- test.setTimeout(180000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ test.setTimeout(240000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
  await page.goto('/?room=pool');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
@@ -40,6 +40,19 @@ test('drain the pool, walk its basin, climb out and refill without changing room
  await go(-15.37,39.1);await aim(-17.37,36.16);await page.screenshot({path:'test-results/pool-basin-inside.png'});
  await expect(page.locator('.door-action')).toHaveCount(0);
  await aim(-21.02,36.85);await page.screenshot({path:'test-results/pool-reactor.png'});
+ await aim(-16.37,38.25);
+ await page.mouse.move(650,430);await page.mouse.down();await page.mouse.move(650,830,{steps:5});await page.mouse.up();
+ await page.screenshot({path:'test-results/pool-drain-floor.png'});
+ await page.mouse.move(650,830);await page.mouse.down();await page.mouse.move(650,430,{steps:5});await page.mouse.up();
+ await aim(-13.47,37.08);
+ await page.mouse.move(650,430);await page.mouse.down();await page.mouse.move(650,630,{steps:5});await page.mouse.up();
+ await page.screenshot({path:'test-results/pool-chair-depth-marks.png'});
+ await page.mouse.move(650,630);await page.mouse.down();await page.mouse.move(650,430,{steps:5});await page.mouse.up();
+ await aim(-19.02,36.34);await page.screenshot({path:'test-results/pool-red-button.png'});
+ await go(-19.37,38.6);await aim(-21.02,36.85);await page.screenshot({path:'test-results/pool-reactor-shape.png'});
+ await go(-21.9,38.6);await aim(-23.04,36.85);await page.screenshot({path:'test-results/pool-green-leak.png'});
+
+
  await go(-17.37,36.95);await aim(-17.37,36.16);
  await expect(page.locator('.door-action')).toContainText('Climb out of pool');await page.keyboard.press('e');
  await expect.poll(async()=>(await state()).poolClimbing).toBe(true);
