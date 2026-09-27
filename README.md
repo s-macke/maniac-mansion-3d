@@ -4,8 +4,7 @@ Walk through the Maniac Mansion house in your browser. This fan project reimagin
 
 **[Explore the mansion →](https://s-macke.github.io/maniac-mansion-3d/)**
 
-[![Watch the walkthrough preview: the EGA living room recreated in 3D](docs/media/walkthrough-preview.jpg)](https://github.com/user-attachments/assets/97f56075-cd70-4319-b6c8-3dcc580e6338)
-
+https://github.com/user-attachments/assets/97f56075-cd70-4319-b6c8-3dcc580e6338
 
 ## Explore the house
 
