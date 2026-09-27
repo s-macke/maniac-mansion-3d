@@ -1,8 +1,6 @@
 name: Build and deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       rebuild_models:

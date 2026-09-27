@@ -1,6 +1,6 @@
 # GitHub Pages
 
-The [Pages workflow](../.github/workflows/pages.yaml) builds and deploys on pushes to `main`. It can also be started from the Actions tab. Manual runs on other branches build only; deployment is restricted to `main`.
+The [Pages workflow](../.github/workflows/pages.yaml) runs only when started manually. Open **Actions → Build and deploy GitHub Pages → Run workflow**, select **main**, and click **Run workflow** to build and publish. Pushing commits does not start a build or deployment. Runs on other branches build only; deployment is restricted to `main`.
 
 ## Enable once
 

@@ -53,7 +53,7 @@ If Node.js is installed, `./walkthrough.sh` can serve the built site instead. Fo
 
 Blender Python builders generate the room geometry, bake the lighting and export compact GLB models. A Three.js viewer assembles the rooms in the browser, reuses shared door and ladder assets, and loads connected spaces as needed. Lighting is baked into the assets; the browser does not need global illumination.
 
-The result is a static website with no backend. Asset URLs are relative, so the same build can run at a domain root or in a subdirectory. The [GitHub Pages workflow](docs/github-pages.md) generates the Blender assets, compiles and checks the website, and deploys from `main`.
+The result is a static website with no backend. Asset URLs are relative, so the same build can run at a domain root or in a subdirectory. The [GitHub Pages workflow](docs/github-pages.md) generates the Blender assets, compiles and checks the website, and deploys from `main` when manually started with **Actions → Build and deploy GitHub Pages → Run workflow**.
 
 | Location | Contents |
 |---|---|
