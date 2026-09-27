@@ -1,10 +1,14 @@
 # Maniac Mansion in 3D
 
-Walk through the Maniac Mansion house in your browser. This fan project reimagines the original EGA backgrounds as connected 3D spaces, keeping their distinctive colors, furniture and odd little details while letting you look beyond the original camera angle.
+Walk through the [Maniac Mansion](https://en.wikipedia.org/wiki/Maniac_Mansion) house in your browser. This fan project reimagines the original EGA backgrounds as connected 3D spaces, keeping their distinctive colors, furniture and odd little details while letting you look beyond the original camera angle.
 
 **[Explore the mansion →](https://s-macke.github.io/maniac-mansion-3d/)**
 
-[![Explore the mansion: the EGA living room recreated in 3D](docs/media/walkthrough-preview.jpg)](https://s-macke.github.io/maniac-mansion-3d/)
+| Original EGA artwork | Recreated in 3D |
+|:---:|:---:|
+| [![Original living-room background from Maniac Mansion](source/room%20003.png)](https://s-macke.github.io/maniac-mansion-3d/) | [![Explore the mansion: the living room recreated in 3D](docs/media/walkthrough-preview.jpg)](https://s-macke.github.io/maniac-mansion-3d/) |
+
+Click either image to explore the mansion.
 
 https://github.com/user-attachments/assets/97f56075-cd70-4319-b6c8-3dcc580e6338
 
