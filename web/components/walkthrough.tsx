@@ -8,8 +8,9 @@ import {createPool} from '@/lib/house/pool';
 import {createCrawls} from '@/lib/house/crawls';
 import {createLadders} from '@/lib/house/ladders';
 import * as THREE from 'three';
+import {createFloatingStick} from '@/lib/floating-stick';
 
-type Runtime = { interact:()=>void; enter: (capture?:boolean) => void; reset: () => void; pause: () => void; key: (key:string,down:boolean)=>void };
+type Runtime = { interact:()=>void; pause:()=>void };
 export default function Walkthrough() {
   const host=useRef<HTMLDivElement>(null),runtime=useRef<Runtime|null>(null);
   const [ready,setReady]=useState(false),[progress,setProgress]=useState(0),[active,setActive]=useState(false);
@@ -35,11 +36,13 @@ export default function Walkthrough() {
     const camera=new THREE.PerspectiveCamera(68,1,.05,60);camera.rotation.order='YXZ';
     let walker={...START},yaw=START_YAW,pitch=START_PITCH,eye=START.height+EYE_HEIGHT,last=performance.now();
     const keys=new Set<string>();
+    let touchControls:ReturnType<typeof createFloatingStick>|undefined;
+    const clearInput=()=>{keys.clear();touchControls?.clear();};
     const sync=()=>{camera.position.set(walker.x,eye,-walker.y);camera.rotation.set(pitch,yaw,0);};sync();
-    const resize=()=>{const {width,height}=container.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();needsRender=true;};resize();
+    const resize=()=>{touchControls?.clear();const {width,height}=container.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();needsRender=true;};resize();
     const observer=new ResizeObserver(resize);observer.observe(container);
-    const pause=()=>{walking=false;keys.clear();dragging=false;setActive(false);if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();};
-    const reset=()=>{ladders.cancel();crawls.cancel();pool.cancel();view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;keys.clear();sync();needsRender=true;};
+    const pause=()=>{walking=false;clearInput();dragging=false;setActive(false);if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();};
+    const reset=()=>{ladders.cancel();crawls.cancel();pool.cancel();view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;clearInput();sync();needsRender=true;};
     const enableFallback=()=>{if(!disposed){setFallback(true);walking=true;setActive(true);container.focus();}};
     const enter=(capture=true)=>{
       if(!loaded||disposed)return;
@@ -47,8 +50,8 @@ export default function Walkthrough() {
       if(!capture || coarse || !renderer.domElement.requestPointerLock){enableFallback();return;}
       try { const p=renderer.domElement.requestPointerLock();if(p)p.catch(enableFallback); }catch{enableFallback();}
     };
-    const interact=(point?:THREE.Vector2)=>{if(!walking||ladders.active||crawls.active||pool.active)return;const poolChoice=pool.target(walker,yaw);if(poolChoice){if(pool.begin(poolChoice,walker,yaw))keys.clear();needsRender=true;return;}const crawl=crawls.target(walker,yaw);if(crawl){const hit=point?assets.doorView.target(camera,point):null;if(hit){view.doors.toggle(hit.key);}else if(crawls.begin(crawl,walker,yaw))keys.clear();needsRender=true;return;}const ladder=ladders.target(walker,yaw);if(ladder){if(ladders.begin(ladder,walker,yaw)){keys.clear();needsRender=true;}return;}const door=assets.doorView.target(camera,point);if(door){view.doors.toggle(door.key);needsRender=true;}};
-    runtime.current={interact:()=>interact(),enter,reset,pause,key:(key,down)=>{if(down)keys.add(key);else keys.delete(key);}};
+    const interact=(point?:THREE.Vector2)=>{if(!walking||ladders.active||crawls.active||pool.active)return;const poolChoice=pool.target(walker,yaw);if(poolChoice){if(pool.begin(poolChoice,walker,yaw))clearInput();needsRender=true;return;}const crawl=crawls.target(walker,yaw);if(crawl){const hit=point?assets.doorView.target(camera,point):null;if(hit){view.doors.toggle(hit.key);}else if(crawls.begin(crawl,walker,yaw))clearInput();needsRender=true;return;}const ladder=ladders.target(walker,yaw);if(ladder){if(ladders.begin(ladder,walker,yaw)){clearInput();needsRender=true;}return;}const door=assets.doorView.target(camera,point);if(door){view.doors.toggle(door.key);needsRender=true;}};
+    runtime.current={interact:()=>interact(),pause};
     const onLock=()=>{const locked=document.pointerLockElement===renderer.domElement;
       if(hadLock&&!locked)pause();if(locked)dragging=false;hadLock=locked;setFallback(!locked);
     };
@@ -77,7 +80,14 @@ export default function Walkthrough() {
     document.addEventListener('pointerlockchange',onLock);document.addEventListener('pointerlockerror',onLockError);
     document.addEventListener('keydown',onKey);document.addEventListener('keyup',onUp);document.addEventListener('mousemove',mouse);
     document.addEventListener('visibilitychange',hidden);window.addEventListener('blur',pause);
-    renderer.domElement.addEventListener('pointerdown',down);renderer.domElement.addEventListener('pointermove',drag);renderer.domElement.addEventListener('pointerup',up);renderer.domElement.addEventListener('pointercancel',up);
+    if(coarse){
+      touchControls=createFloatingStick(renderer.domElement,container,{
+        enabled:()=>loaded&&!disposed,begin:()=>enter(false),look,
+        tap:(x,y)=>{const rect=renderer.domElement.getBoundingClientRect();interact(new THREE.Vector2((x-rect.left)/rect.width*2-1,1-(y-rect.top)/rect.height*2));},
+      });
+    }else{
+      renderer.domElement.addEventListener('pointerdown',down);renderer.domElement.addEventListener('pointermove',drag);renderer.domElement.addEventListener('pointerup',up);renderer.domElement.addEventListener('pointercancel',up);
+    }
     const toolLife=new AbortController();
     type Tool = { name:string;description:string;inputSchema:object;annotations:{readOnlyHint:boolean};execute:(input:unknown)=>unknown };
     const context=(document as Document & {modelContext?:{registerTool:(tool:Tool,options:{signal:AbortSignal})=>unknown}}).modelContext;
@@ -94,16 +104,18 @@ export default function Walkthrough() {
     const tick=(now:number)=>{
       if(disposed)return;const dt=Math.min((now-last)/1000,.15);last=now;
       if(walking&&pool.active){
-        const climb=pool.step(dt);if(climb){walker=climb.walker;eye=walker.height+EYE_HEIGHT;needsRender=true;if(climb.done)keys.clear();}
+        const climb=pool.step(dt);if(climb){walker=climb.walker;eye=walker.height+EYE_HEIGHT;needsRender=true;if(climb.done)clearInput();}
       }else if(walking&&crawls.active){
-        const crawl=crawls.step(dt);if(crawl){walker=crawl.walker;yaw+=crawl.yawDelta;eye=walker.height+crawl.eyeHeight;needsRender=true;if(crawl.done)keys.clear();}
+        const crawl=crawls.step(dt);if(crawl){walker=crawl.walker;yaw+=crawl.yawDelta;eye=walker.height+crawl.eyeHeight;needsRender=true;if(crawl.done)clearInput();}
       }else if(walking&&ladders.active){
-        const climb=ladders.step(dt);if(climb){walker=climb.walker;yaw+=climb.yawDelta;eye=walker.height+EYE_HEIGHT;needsRender=true;if(climb.done)keys.clear();}
+        const climb=ladders.step(dt);if(climb){walker=climb.walker;yaw+=climb.yawDelta;eye=walker.height+EYE_HEIGHT;needsRender=true;if(climb.done)clearInput();}
       }else if(walking){
         const turn=(Number(keys.has('ArrowLeft'))-Number(keys.has('ArrowRight')))*1.55*dt;yaw+=turn;
         let forward=Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'));
-        let right=Number(keys.has('KeyD'))-Number(keys.has('KeyA'));const length=Math.hypot(forward,right);
-        if(length){const before=walker;forward/=length;right/=length;const speed=2.5*(keys.has('ShiftLeft')||keys.has('ShiftRight')?2:1)*dt;const moved=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);walker=moved;yaw+=moved.yawDelta;eye+=moved.heightDelta;
+        let right=Number(keys.has('KeyD'))-Number(keys.has('KeyA'));
+        forward+=touchControls?.movement.forward??0;right+=touchControls?.movement.right??0;
+        const length=Math.hypot(forward,right);
+        if(length){const before=walker;const scale=Math.max(1,length);forward/=scale;right/=scale;const speed=2.5*(keys.has('ShiftLeft')||keys.has('ShiftRight')?2:1)*dt;const moved=moveWalker(walker,(-Math.sin(yaw)*forward+Math.cos(yaw)*right)*speed,(Math.cos(yaw)*forward+Math.sin(yaw)*right)*speed);walker=moved;yaw+=moved.yawDelta;eye+=moved.heightDelta;
           if(!hintFinished){distanceWalked+=moved.crossed?speed:Math.hypot(walker.x-before.x,walker.y-before.y,walker.height-before.height);if(distanceWalked>=3){hintFinished=true;setShowHint(false);}}
         }
       }
@@ -126,10 +138,10 @@ export default function Walkthrough() {
       frame=requestAnimationFrame(tick);
     };frame=requestAnimationFrame(tick);
     return ()=>{
-      disposed=true;toolLife.abort();cancelAnimationFrame(frame);observer.disconnect();keys.clear();if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();
+      disposed=true;toolLife.abort();cancelAnimationFrame(frame);observer.disconnect();clearInput();if(document.pointerLockElement===renderer.domElement)document.exitPointerLock();
       document.removeEventListener('pointerlockchange',onLock);document.removeEventListener('pointerlockerror',onLockError);document.removeEventListener('keydown',onKey);document.removeEventListener('keyup',onUp);document.removeEventListener('mousemove',mouse);document.removeEventListener('visibilitychange',hidden);window.removeEventListener('blur',pause);
       renderer.domElement.removeEventListener('pointerdown',down);renderer.domElement.removeEventListener('pointermove',drag);renderer.domElement.removeEventListener('pointerup',up);renderer.domElement.removeEventListener('pointercancel',up);
-      assets.dispose();renderer.dispose();renderer.domElement.remove();runtime.current=null;
+      touchControls?.dispose();assets.dispose();renderer.dispose();renderer.domElement.remove();runtime.current=null;
     };
   },[]);
   return <main className="walkthrough">
@@ -149,7 +161,6 @@ export default function Walkthrough() {
     </section>}
     {active && <div className="reticle" aria-hidden="true" />}
     {active && doorAction && <Button className="door-action" aria-label={doorAction} aria-keyshortcuts={!touch?'E':undefined} onClick={()=>runtime.current?.interact()}>{!touch && <kbd>E</kbd>}{doorAction}</Button>}
-    {active && touch && <div className="touch-pad" aria-label="Movement controls">{[['KeyW','↑','Forward'],['KeyA','←','Left'],['KeyS','↓','Backward'],['KeyD','→','Right']].map(([code,label,title])=><Button key={code} aria-label={title} onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);runtime.current?.key(code,true);}} onPointerUp={()=>runtime.current?.key(code,false)} onPointerCancel={()=>runtime.current?.key(code,false)}>{label}</Button>)}</div>}
     <footer className="footer"><span className="status" aria-live="polite">{error?'ROOM UNAVAILABLE':!ready?'LOADING':active?'EXPLORING':'PAUSED'}</span><span className="desktop-help">{fallback?'Click or drag to look · Shift to walk faster · Arrow keys also work · R to reset':'WASD to walk · Shift to walk faster · Mouse to look · R to reset'}</span></footer>
   </main>;
 }

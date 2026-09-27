@@ -36,7 +36,8 @@ test('load failure gives a visible actionable error',async({page})=>{
 test('mobile layout loads and touch movement is available',async({browser})=>{
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const page=await context.newPage();
  await page.goto(process.env.WALKTHROUGH_URL || 'http://127.0.0.1:5173');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
- await expect(page.getByRole('button',{name:'Forward',exact:true})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Forward',exact:true})).toHaveCount(0);
+ await expect(page.locator('.floating-stick')).toBeHidden();
  await expect(page.getByRole('region',{name:'Walkthrough controls'})).toHaveCount(0);
  await expect(page.locator('header').getByRole('link',{name:'View source on GitHub (opens in a new tab)',exact:true})).toBeVisible();
  await page.screenshot({path:'test-results/entrance-mobile.png'});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await context.close();

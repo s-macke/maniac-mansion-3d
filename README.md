@@ -44,7 +44,7 @@ These links start you in the selected room, with the rest of the house still con
 | Pause / release the mouse | **Esc** |
 | Reset position | **R** |
 
-On touch devices, use the directional buttons, drag to look, and tap the contextual action button. Doors start closed; the introductory controls hint disappears after you begin walking.
+On touch devices, place your thumb anywhere on the left half to create a floating joystick. Drag it to walk; release to stop. Swipe on the right half to look around, and tap the contextual action button for doors and ladders. Doors start closed; the introductory controls hint disappears after you begin walking.
 
 ## Run locally
 

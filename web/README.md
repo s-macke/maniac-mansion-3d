@@ -26,7 +26,7 @@ The build uses Vite and React directly. No OpenAI Sites plugin, hosting configur
 - **Esc** pauses and releases the mouse; click or tap the scene to continue.
 - **R** returns to the initial viewpoint.
 - If mouse capture is unavailable, drag to look instead.
-- Touch devices get directional buttons and drag-to-look.
+- On touch devices, touching anywhere on the left half creates a floating joystick at that point. Deflection controls direction and speed; releasing stops movement and hides the stick. Swipe on the right half to look, independently of the movement thumb. Right-side taps and the contextual action button still interact with doors and ladders. Cancelling a touch, pausing, resizing or resetting clears the stick.
 - The GitHub icon and link at the top right open the repository in a new tab and pause the walkthrough.
 
 The hall connects to the exterior, living room and kitchen; the kitchen connects to the dining room. Unassigned doors remain boundaries. There is no jumping, gameplay, or character. The curved stairway connects the entrance to the upstairs landing at 3.36 m. Walk around the gallery and look down into the entrance, then return along the same stairs. Collision uses a player radius, room limits, furniture footprints, stair rails, and a continuous stair surface, rather than every decorative mesh triangle.
