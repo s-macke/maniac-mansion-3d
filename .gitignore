@@ -10,6 +10,7 @@ source/connection_suggestion.png
 
 # Browser build products and copies of generated room data.
 /web/public/models/
+/web/public/originals/
 /web/lib/house/generated.json
 /web/lib/house/adapters.generated.ts
 /web/next-env.d.ts

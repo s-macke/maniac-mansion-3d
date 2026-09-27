@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { EYE_HEIGHT } from '@/lib/house/navigation';
 import { createHouseRuntime } from '@/lib/house/runtime';
@@ -8,14 +8,18 @@ import {createPool} from '@/lib/house/pool';
 import {createCrawls} from '@/lib/house/crawls';
 import {createLadders} from '@/lib/house/ladders';
 import * as THREE from 'three';
+import {OriginalArtworkView} from '@/components/original-artwork';
+import {originalArtwork,type OriginalArtwork} from '@/lib/original-artwork';
 import {createFloatingStick} from '@/lib/floating-stick';
 
-type Runtime = { interact:()=>void; pause:()=>void };
+type Runtime = { referenceModal:(open:boolean)=>void; interact:()=>void; pause:()=>void };
 export default function Walkthrough() {
   const host=useRef<HTMLDivElement>(null),runtime=useRef<Runtime|null>(null);
   const [ready,setReady]=useState(false),[progress,setProgress]=useState(0),[active,setActive]=useState(false);
   const [doorAction,setDoorAction]=useState('');
   const [showHint,setShowHint]=useState(true);
+  const [artwork,setArtwork]=useState<OriginalArtwork|null>(null);
+  const referenceModal=useCallback((open:boolean)=>runtime.current?.referenceModal(open),[]);
   const [zone,setZone]=useState('Entrance hall');
   const [preview,setPreview]=useState(false);
   const [error,setError]=useState(''),[fallback,setFallback]=useState(true),[touch,setTouch]=useState(false);
@@ -25,6 +29,8 @@ export default function Walkthrough() {
     const {START,START_YAW,START_PITCH,moveWalker,zoneAt}=view;
     setPreview(view.preview);setZone(zoneAt(START));
     const container=host.current!;let disposed=false,frame=0,walking=false,dragging=false,needsRender=true;let lastZone=zoneAt(START);
+    let referenceOpen=false,resumeAfterReference=false;
+    let lastArtwork='';
     let loaded=false,hadLock=false,distanceWalked=0,hintFinished=false;
     const coarse=matchMedia('(pointer:coarse)').matches;setTouch(coarse);
     let renderer:THREE.WebGLRenderer;
@@ -45,18 +51,23 @@ export default function Walkthrough() {
     const reset=()=>{ladders.cancel();crawls.cancel();pool.cancel();view.resetSpace();walker={...START};yaw=START_YAW;pitch=START_PITCH;eye=START.height+EYE_HEIGHT;clearInput();sync();needsRender=true;};
     const enableFallback=()=>{if(!disposed){setFallback(true);walking=true;setActive(true);container.focus();}};
     const enter=(capture=true)=>{
-      if(!loaded||disposed)return;
+      if(!loaded||disposed||referenceOpen)return;
       walking=true;setActive(true);container.focus();
       if(!capture || coarse || !renderer.domElement.requestPointerLock){enableFallback();return;}
       try { const p=renderer.domElement.requestPointerLock();if(p)p.catch(enableFallback); }catch{enableFallback();}
     };
     const interact=(point?:THREE.Vector2)=>{if(!walking||ladders.active||crawls.active||pool.active)return;const poolChoice=pool.target(walker,yaw);if(poolChoice){if(pool.begin(poolChoice,walker,yaw))clearInput();needsRender=true;return;}const crawl=crawls.target(walker,yaw);if(crawl){const hit=point?assets.doorView.target(camera,point):null;if(hit){view.doors.toggle(hit.key);}else if(crawls.begin(crawl,walker,yaw))clearInput();needsRender=true;return;}const ladder=ladders.target(walker,yaw);if(ladder){if(ladders.begin(ladder,walker,yaw)){clearInput();needsRender=true;}return;}const door=assets.doorView.target(camera,point);if(door){view.doors.toggle(door.key);needsRender=true;}};
-    runtime.current={interact:()=>interact(),pause};
+    runtime.current={interact:()=>interact(),pause,referenceModal:open=>{
+      if(open===referenceOpen)return;
+      if(open){resumeAfterReference=walking;pause();referenceOpen=true;}
+      else {referenceOpen=false;if(resumeAfterReference&&!document.hidden)enter(false);}
+    }};
     const onLock=()=>{const locked=document.pointerLockElement===renderer.domElement;
       if(hadLock&&!locked)pause();if(locked)dragging=false;hadLock=locked;setFallback(!locked);
     };
     const onLockError=()=>enableFallback();
     const onKey=(e:KeyboardEvent)=>{
+      if(referenceOpen||(e.target instanceof HTMLElement&&e.target.closest('select')))return;
       if(e.code==='Escape'){pause();return;}
       if(!walking)return;
       if(e.code==='KeyE'&&!e.repeat){e.preventDefault();interact();return;}
@@ -82,7 +93,7 @@ export default function Walkthrough() {
     document.addEventListener('visibilitychange',hidden);window.addEventListener('blur',pause);
     if(coarse){
       touchControls=createFloatingStick(renderer.domElement,container,{
-        enabled:()=>loaded&&!disposed,begin:()=>enter(false),look,
+        enabled:()=>loaded&&!disposed&&!referenceOpen,begin:()=>enter(false),look,
         tap:(x,y)=>{const rect=renderer.domElement.getBoundingClientRect();interact(new THREE.Vector2((x-rect.left)/rect.width*2-1,1-(y-rect.top)/rect.height*2));},
       });
     }else{
@@ -122,6 +133,10 @@ export default function Walkthrough() {
       if(view.doors.update(walking?dt:0,walker)){assets.doorView.sync();needsRender=true;}
       assets.update(walker);
       const nextZone=zoneAt(walker);
+      const currentRoom=view.rooms.find(room=>room.id===view.activeRoom)!;
+      const nextArtwork=originalArtwork(view.definitions[currentRoom.definition],nextZone,view.poolState.drained);
+      const artworkKey=`${nextArtwork.room}:${nextArtwork.selected}:${nextArtwork.label}`;
+      if(artworkKey!==lastArtwork){lastArtwork=artworkKey;setArtwork(nextArtwork);}
       if(nextZone!==lastZone){lastZone=nextZone;setZone(nextZone);}
       if(!crawls.active)eye+=(walker.height+EYE_HEIGHT-eye)*(1-Math.exp(-16*dt));sync();
       if(now-lastDoorCheck>120){
@@ -146,10 +161,10 @@ export default function Walkthrough() {
   },[]);
   return <main className="walkthrough">
     <div ref={host} className="viewport" tabIndex={-1} aria-label={`First-person view of ${zone}`} />
-    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION</p><h1>{zone}</h1></div><a className="github-link" href="https://github.com/s-macke/maniac-mansion-3d" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub (opens in a new tab)" onClick={()=>runtime.current?.pause()}>
+    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION</p><h1>{zone}</h1></div><div className="view-links"><OriginalArtworkView artwork={artwork} mobile={touch} onModalChange={referenceModal} /><a className="github-link" href="https://github.com/s-macke/maniac-mansion-3d" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub (opens in a new tab)" onClick={()=>runtime.current?.pause()}>
       <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.86c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg>
       <span>GitHub</span>
-    </a></header>
+    </a></div></header>
     {(error || !ready || (active && showHint && !touch)) && <section className={`entry${ready&&!error?' hint':''}`} aria-label="Walkthrough controls">
       <h2>{error?'Unable to enter':ready?'Explore the house':'Opening the house…'}</h2>
       {error?<p className="error" role="alert">{error}</p>:<>

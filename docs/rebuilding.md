@@ -44,6 +44,6 @@ python3 scripts/build.py all
 
 `all` creates the shared door and ladder kits, all room scenes/GLBs, inventories and assembly previews, then runs `npm ci`, compilation and typechecking. It stops immediately on failure. Use `all --assets-only` to omit npm, `room kitchen` for one room, `room kitchen --site` to also update the browser build, or `site` to compile existing models. `check`, `sync`, `doors` and `export exports/local` are also available through the same command. `scripts/rooms.py` is the lower-level catalog/sync helper; it contains no second full-build recipe.
 
-`npm run build` calls `scripts/build.py sync` before compilation. Browser models and TypeScript adapters are generated copies under `web/`; they remain ignored. A clean checkout must generate Blender outputs before npm compilation. Baking can take several minutes per detailed room.
+`npm run build` calls `scripts/build.py sync` before compilation. Browser models, reference artwork under `web/public/originals/`, and TypeScript adapters are generated copies under `web/`; they remain ignored. Synchronization copies the catalogued originals from `source/` for the in-view comparison, and Vite includes them in the static site. A clean checkout must generate Blender outputs before npm compilation. Baking can take several minutes per detailed room.
 
 Existing output filenames retain their version suffixes to avoid changing model URLs during this refactor. The directory boundary establishes ownership; renaming rooms or changing geometry is unnecessary.

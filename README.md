@@ -20,6 +20,8 @@ This is a first-person architectural walkthrough. There are no puzzles to solve,
 
 The rooms are modeled from the original artwork with simple geometry and soft baked lighting. Some dimensions, unseen walls and connections are interpretations: the original painted backgrounds do not describe a single physically consistent building. Doorway portals let rooms retain their own proportions while remaining connected as you walk through them.
 
+Use **Original** to compare the current room with its EGA background. On desktop, the small preview can be enlarged; on mobile, the image opens in an overlay and pauses movement.
+
 ## Jump to a room
 
 These links start you in the selected room, with the rest of the house still connected. The pool link starts on the deck; drain the pool there to explore the basin.

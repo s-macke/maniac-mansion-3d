@@ -112,6 +112,11 @@ def sync(layout, definitions):
         source=ROOT/path;compact=source.with_name(source.stem+'_compact.glb');optimize(source,compact)
         target=ROOT/'web/public/models/shared'/source.name;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(compact,target);shutil.copyfile(str(compact)+'.gz',str(target)+'.gz')
+    # Copy only catalogued artwork; source/ remains the authoritative input.
+    originals=ROOT/'web/public/originals';originals.mkdir(parents=True,exist_ok=True)
+    for background in sorted({b for d in definitions.values() for b in d['backgrounds']}):
+        if not re.fullmatch(r'[0-9]{3}',background): raise ValueError('Invalid background: '+background)
+        shutil.copyfile(ROOT/'source'/f'room {background}.png',originals/f'{background}.png')
     runtime={**layout,'rooms':rooms,'definitions':{k:{**{field:d[field] for field in ['id','label','backgrounds','navigation','bounds','spawn','geometry','ports']},'asset':'/models/'+d['id']+'/'+Path(d['asset']).name,**({'sharedAssetLibrary':'/models/shared/'+Path(d['sharedAssetLibrary']).name} if d.get('sharedAssetLibrary') else {}),**({'sharedAssetLibraries':{id:'/models/shared/'+Path(path).name for id,path in d['sharedAssetLibraries'].items()}} if d.get('sharedAssetLibraries') else {})} for k,d in definitions.items()}}
     target=ROOT/'web/lib/house/generated.json';target.write_text(json.dumps(runtime,indent=2)+'\n')
     names=sorted({d['navigation'] for d in definitions.values()})

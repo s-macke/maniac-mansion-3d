@@ -16,3 +16,16 @@
 
 .floating-stick{position:absolute;z-index:2;width:112px;height:112px;margin:-56px 0 0 -56px;border:2px solid #54fcfc90;border-radius:50%;background:#080d1166;pointer-events:none;box-shadow:0 0 0 1px #0005}
 .floating-stick-thumb{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border:1px solid #54fcfccc;border-radius:50%;background:#54fcfc66;box-shadow:0 2px 8px #0006}
+
+.view-links{display:flex;align-items:center;gap:16px;pointer-events:auto}
+.original-toggle{min-height:44px;padding:0 10px;border:1px solid #54fcfc70;background:#080d11cc;color:#fcfcfc;font-size:14px;cursor:pointer}
+.original-toggle:hover{background:#163436}.original-toggle:disabled{opacity:.5}
+.original-preview{position:fixed;right:24px;bottom:52px;width:min(360px,calc(100vw - 48px));padding:10px;background:#080d11ed;border:1px solid #54fcfc80;pointer-events:auto}
+.original-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fcfcfc;font-size:14px}
+.original-heading h2{margin:0;font-size:18px;font-weight:500}.original-heading button{flex-shrink:0;min-width:44px;min-height:44px;font-size:26px;background:transparent;color:#fcfcfc;cursor:pointer}
+.original-enlarge{display:block;width:100%;cursor:zoom-in;background:#000}
+.original-preview img{display:block;width:100%;max-height:210px;object-fit:contain;image-rendering:pixelated}
+.original-selector{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#d2dcdc}.original-selector select{min-height:36px;background:#152a2d;color:#fcfcfc;padding:4px 8px;border:1px solid #366263}
+.original-dialog{position:fixed;inset:0;margin:auto;width:min(1000px,94vw);max-width:94vw;max-height:90svh;padding:16px;background:#080d11;color:#fcfcfc;border:1px solid #54fcfc80;pointer-events:auto;overflow:auto}
+.original-dialog::backdrop{background:#000b}.original-dialog img{display:block;width:100%;max-height:65svh;object-fit:contain;image-rendering:pixelated;background:#000}
+@media(max-width:600px){.view-links{gap:8px}.original-toggle{padding:0 8px}.original-dialog{padding:10px}}
