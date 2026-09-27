@@ -43,7 +43,7 @@ Application: `web/components/walkthrough.tsx`. Room collision: `web/lib/rooms/co
 
 The hall asset is `./models/connected_hall/connected_hall_v6.glb`, losslessly compacted from `generated/models/rooms/connected_hall_v6.glb`. The current room space and connected neighbors load independently. Doorway portals isolate overlapping rooms, with views up to three doors deep; pool and garage share a continuous space. See [portal architecture](../docs/portals.md) and [the architecture guide](../docs/architecture.md).
 
-The viewer uses sRGB output and no tone mapping, preserving the baked appearance. The static room is not continuously redrawn while paused. At higher screen densities, rendering is capped at 1.5× device pixel ratio.
+The viewer uses sRGB output and no tone mapping, preserving the baked appearance. The 3D view renders only when the camera or room space changes, an animation advances, assets load/unload, or the viewport resizes. Standing still does not redraw the scene, even while exploration is active. The input/update loop continues so movement and interactions can respond immediately. At higher screen densities, rendering is capped at 1.5× device pixel ratio.
 
 ## Validation
 

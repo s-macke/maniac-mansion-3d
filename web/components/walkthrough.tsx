@@ -111,7 +111,8 @@ export default function Walkthrough() {
       changed:()=>{needsRender=true;},ready:()=>{loaded=true;setReady(true);if(!document.hidden)enter(false);},progress:setProgress,error:message=>{pause();setError(message);},
     },view);
     assets.update(walker);
-    let lastAction='',lastDoorCheck=-Infinity;
+    let lastAction='',lastDoorCheck=-Infinity,renderedSpace='';
+    const renderedPosition=new THREE.Vector3(NaN,NaN,NaN),renderedRotation=new THREE.Quaternion();
     const tick=(now:number)=>{
       if(disposed)return;const dt=Math.min((now-last)/1000,.15);last=now;
       if(walking&&pool.active){
@@ -138,7 +139,7 @@ export default function Walkthrough() {
       const artworkKey=`${nextArtwork.room}:${nextArtwork.selected}:${nextArtwork.label}`;
       if(artworkKey!==lastArtwork){lastArtwork=artworkKey;setArtwork(nextArtwork);}
       if(nextZone!==lastZone){lastZone=nextZone;setZone(nextZone);}
-      if(!crawls.active)eye+=(walker.height+EYE_HEIGHT-eye)*(1-Math.exp(-16*dt));sync();
+      if(!crawls.active){const target=walker.height+EYE_HEIGHT;eye+= (target-eye)*(1-Math.exp(-16*dt));if(Math.abs(target-eye)<.00001)eye=target;}sync();
       if(now-lastDoorCheck>120){
         lastDoorCheck=now;
         const crawl=walking?crawls.target(walker,yaw):null;
@@ -148,7 +149,11 @@ export default function Walkthrough() {
         const action=pool.active?'Climbing…':poolChoice?poolChoice.label:crawls.active?'Crawling…':crawl?crawl.label:ladders.active?'Climbing…':ladder?(ladder.ready?ladder.label:'Loading ladder destination…'):selected?(selected.blocked?'Step back · ': '')+(selected.target===1?'Close':'Open')+' '+selected.def.label.toLowerCase():'';
         if(action!==lastAction){lastAction=action;setDoorAction(action);}
       }
-      if(walking||needsRender){assets.render(renderer,camera);needsRender=false;}
+      const cameraChanged=!camera.position.equals(renderedPosition)||!camera.quaternion.equals(renderedRotation)||view.activeSpace!==renderedSpace;
+      if(needsRender||cameraChanged){
+        assets.render(renderer,camera);needsRender=false;
+        renderedPosition.copy(camera.position);renderedRotation.copy(camera.quaternion);renderedSpace=view.activeSpace;
+      }
       container.dataset.walker=JSON.stringify({...walker,room:view.activeRoom,space:view.activeSpace,portals:assets.portalStats,loadedRooms:assets.loadedRooms,crawling:crawls.active,eyeHeight:eye-walker.height,poolDrained:view.poolState.drained,poolClimbing:pool.active,climbing:ladders.active||pool.active,climbProgress:ladders.progress,movingDoors:view.doors.items.filter(d=>d.amount!==d.target).map(d=>d.key),yaw,pitch,walking,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
       frame=requestAnimationFrame(tick);
     };frame=requestAnimationFrame(tick);
