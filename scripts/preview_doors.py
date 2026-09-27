@@ -16,7 +16,14 @@ for room in json.loads((ROOT/'house/layout.json').read_text())['rooms']:
  bpy.context.view_layer.update()
  transform=Matrix.Translation(Vector(room['position']))@Matrix.Rotation(room['yaw'],4,'Z')
  for door in cfg.get('geometry',{}).get('doors',[]):
-  for leaf in door['leaves']:moving.append((col.objects[leaf['node']],transform,col.objects[leaf['node']].matrix_world.copy(),leaf['openAngle']))
+  for leaf in door['leaves']:
+   # Appending rooms can rename duplicate objects (e.g. Door_higher_floor.001).
+   # Shared leaf metadata retains the authored node ID across Blender renames.
+   hinges={o.parent for o in col.all_objects if o.get('door_node')==leaf['node'] and o.parent}
+   if len(hinges)!=1:
+    raise ValueError(f"{cfg['id']}: expected one hinge for {leaf['node']}, found {len(hinges)}")
+   hinge=hinges.pop()
+   moving.append((hinge,transform,hinge.matrix_world.copy(),leaf['openAngle']))
  for o in col.objects:
   if not o.parent:o.matrix_world=transform@o.matrix_world
   o.hide_render=False

@@ -33,7 +33,7 @@ All interactive doors continue to start closed. No puzzles, locks or new destina
 
 All designs use the same unlit vertex-color material and neutral edge shading. The special doors now use this reusable shading instead of a room-specific light pattern; room walls retain their soft baked lighting. Door dimensions, original pixel artwork and placement are preserved. The pantry pool door is now interactive and initially closed; its frame stays fixed. The landing security door remains closed and unconnected. Front and other connected doors keep their existing behavior.
 
-The browser loads one library for the house. Tests cover geometry reuse, mirrored instances, door collision and targeting, one library request, room reload and resource disposal. Open/closed Blender previews live in `generated/previews/assembly/`.
+The browser loads one library for the house. Tests cover geometry reuse, mirrored instances, door collision and targeting, one library request, room reload and resource disposal. Open/closed Blender previews live in `generated/previews/assembly/`. The full-house door preview resolves each hinge through its shared leaf's `door_node` metadata, since Blender can rename duplicate objects when appending independent rooms into one scene.
 
 The optimized library is shared across the house. Regenerate exports with `scripts/rooms.py sync`. The wooden leaf/frame triangles and colors were checked against their previous exports; security-door and transom placement were checked against the previous hall source.
 
