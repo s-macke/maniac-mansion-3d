@@ -19,14 +19,15 @@ The build uses Vite and React directly. No OpenAI Sites plugin, hosting configur
 ## Controls
 
 - Walking starts automatically when the room loads.
-- The controls hint disappears after 3 metres of actual walking.
+- The controls hint appears only on desktop and disappears after 3 metres of actual walking.
 - Click the scene to capture the mouse, or drag to look.
 - **WASD** walks; the **mouse** looks around. Hold either **Shift** key to move twice as fast (5 m/s instead of 2.5 m/s). Release it to return to normal speed. Ladder and crawl animations keep their normal speed.
 - **Arrow Up/Down** walk, **Arrow Left/Right** turn.
-- **Esc** pauses and releases the mouse; click the scene or **Resume** to continue.
-- **R** or **Reset position** returns to the initial viewpoint.
+- **Esc** pauses and releases the mouse; click or tap the scene to continue.
+- **R** returns to the initial viewpoint.
 - If mouse capture is unavailable, drag to look instead.
 - Touch devices get directional buttons and drag-to-look.
+- The GitHub icon and link at the top right open the repository in a new tab and pause the walkthrough.
 
 The hall connects to the exterior, living room and kitchen; the kitchen connects to the dining room. Unassigned doors remain boundaries. There is no jumping, gameplay, or character. The curved stairway connects the entrance to the upstairs landing at 3.36 m. Walk around the gallery and look down into the entrance, then return along the same stairs. Collision uses a player radius, room limits, furniture footprints, stair rails, and a continuous stair surface, rather than every decorative mesh triangle.
 

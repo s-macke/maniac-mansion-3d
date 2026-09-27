@@ -29,7 +29,7 @@ test('exterior browser entry walks up the steps through visible front doors and 
  test.setTimeout(150000);
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.setViewportSize({width:1000,height:700});await page.goto('/');
- await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  await expect(page.getByRole('heading',{name:'Front exterior',exact:true})).toBeVisible();
  await page.screenshot({path:'test-results/exterior-approach.png'});

@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 test('pool rear facade remains visible and its pantry portal stays usable',async({page})=>{
  test.setTimeout(150000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Drag'));});
- await page.goto('/?room=pool');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=pool');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){
   const p=await state(),target=-Math.atan2(x-p.x,y-p.y);let delta=target-p.yaw;

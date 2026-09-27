@@ -20,6 +20,19 @@ This is a first-person architectural walkthrough. There are no puzzles to solve,
 
 The rooms are modeled from the original artwork with simple geometry and soft baked lighting. Some dimensions, unseen walls and connections are interpretations: the original painted backgrounds do not describe a single physically consistent building. Doorway portals let rooms retain their own proportions while remaining connected as you walk through them.
 
+## Jump to a room
+
+These links start you in the selected room, with the rest of the house still connected. The pool link starts on the deck; drain the pool there to explore the basin.
+
+| Area | Rooms |
+|---|---|
+| Outside | [Front exterior](https://s-macke.github.io/maniac-mansion-3d/?room=front_exterior) · [Pool deck](https://s-macke.github.io/maniac-mansion-3d/?room=pool) · [Garage and forecourt](https://s-macke.github.io/maniac-mansion-3d/?room=garage) |
+| Ground floor | [Entrance hall and landing](https://s-macke.github.io/maniac-mansion-3d/?room=hall) · [Living room](https://s-macke.github.io/maniac-mansion-3d/?room=living_room) · [Kitchen](https://s-macke.github.io/maniac-mansion-3d/?room=kitchen) · [Dining room](https://s-macke.github.io/maniac-mansion-3d/?room=dining_room) · [Pantry](https://s-macke.github.io/maniac-mansion-3d/?room=pantry) · [Library](https://s-macke.github.io/maniac-mansion-3d/?room=library) |
+| Above the entrance | [Art studio](https://s-macke.github.io/maniac-mansion-3d/?room=plant_room) · [Music room](https://s-macke.github.io/maniac-mansion-3d/?room=music_room) · [Security corridor](https://s-macke.github.io/maniac-mansion-3d/?room=security_hall) · [Medical room](https://s-macke.github.io/maniac-mansion-3d/?room=medical_room) · [Arcade](https://s-macke.github.io/maniac-mansion-3d/?room=arcade) · [Windowed stair hall](https://s-macke.github.io/maniac-mansion-3d/?room=windowed_hall) · [Photo room](https://s-macke.github.io/maniac-mansion-3d/?room=photo_room) |
+| Bedrooms and upper corridor | [Upper corridor](https://s-macke.github.io/maniac-mansion-3d/?room=upper_corridor) · [Radio bedroom](https://s-macke.github.io/maniac-mansion-3d/?room=radio_bedroom) · [Heart bedroom](https://s-macke.github.io/maniac-mansion-3d/?room=heart_bedroom) · [Green bedroom](https://s-macke.github.io/maniac-mansion-3d/?room=green_bedroom) · [Mummy room](https://s-macke.github.io/maniac-mansion-3d/?room=mummy_room) · [Mummy bathroom](https://s-macke.github.io/maniac-mansion-3d/?room=mummy_bathroom) · [Typewriter room](https://s-macke.github.io/maniac-mansion-3d/?room=typewriter_room) |
+| Attics and roof | [Safe attic](https://s-macke.github.io/maniac-mansion-3d/?room=safe_attic) · [Green Tentacle’s room](https://s-macke.github.io/maniac-mansion-3d/?room=tentacle_room) · [Hidden attic stairs](https://s-macke.github.io/maniac-mansion-3d/?room=attic_stairs) · [Wire attic](https://s-macke.github.io/maniac-mansion-3d/?room=wire_attic) · [Observatory](https://s-macke.github.io/maniac-mansion-3d/?room=observatory) |
+| Cellar and laboratories | [Cellar](https://s-macke.github.io/maniac-mansion-3d/?room=cellar) · [Under-house passage](https://s-macke.github.io/maniac-mansion-3d/?room=under_house) · [Dungeon](https://s-macke.github.io/maniac-mansion-3d/?room=dungeon) · [Outer laboratory](https://s-macke.github.io/maniac-mansion-3d/?room=outer_lab) · [Main laboratory](https://s-macke.github.io/maniac-mansion-3d/?room=main_lab) · [Meteor chamber](https://s-macke.github.io/maniac-mansion-3d/?room=meteor_chamber) |
+
 ## Controls
 
 | Action | Desktop |

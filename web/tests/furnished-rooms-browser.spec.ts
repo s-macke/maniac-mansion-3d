@@ -5,7 +5,7 @@ import {toWorld} from '../lib/house/placement';
 for(const id of ['living_room','cellar','under_house','dungeon','outer_lab','main_lab','meteor_chamber','library','kitchen','dining_room','garage','pantry','plant_room','music_room','security_hall','medical_room','arcade','windowed_hall','photo_room','upper_corridor','radio_bedroom','heart_bedroom','green_bedroom','mummy_room','mummy_bathroom','typewriter_room','safe_attic','tentacle_room','wire_attic','observatory'])test(id+' furnished interior renders and its aisle is walkable',async({page})=>{
  test.setTimeout(['library','music_room','garage','arcade','plant_room','tentacle_room','security_hall','wire_attic','green_bedroom','mummy_room','typewriter_room','dungeon','outer_lab','main_lab','meteor_chamber'].includes(id)?180000:90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/?room='+id);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room='+id);await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const room=createHouseRuntime(id).rooms.find(r=>r.id===id)!;
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){

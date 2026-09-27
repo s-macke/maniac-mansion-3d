@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 test('walk down from the entrance hall into the cellar and return',async({page})=>{
  test.setTimeout(150000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/?room=hall');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=hall');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){
   const p=await state(),target=-Math.atan2(x-p.x,y-p.y);let delta=target-p.yaw;
@@ -32,7 +32,7 @@ test('walk down from the entrance hall into the cellar and return',async({page})
 test('open the bush grating and crawl through its portal in both directions',async({page})=>{
  test.setTimeout(150000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){
   const p=await state(),target=-Math.atan2(x-p.x,y-p.y);let delta=target-p.yaw;

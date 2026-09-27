@@ -84,7 +84,7 @@ export default function Walkthrough() {
     const validateEmpty=(input:unknown)=>{if(!input || typeof input!=='object' || Array.isArray(input) || Object.keys(input).length)throw new Error('Expected an empty object.');};
     if(context?.registerTool) for(const tool of [
       {name:'read_walkthrough_position',description:'Read the current room position and whether walking is active.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute:(input:unknown)=>{validateEmpty(input);return {...walker,walking};}},
-      {name:'reset_walkthrough_position',description:'Return to the starting position, just like Reset position.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:false},execute:(input:unknown)=>{validateEmpty(input);reset();return {...walker,walking};}},
+      {name:'reset_walkthrough_position',description:'Return to the starting position, just like pressing R.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:false},execute:(input:unknown)=>{validateEmpty(input);reset();return {...walker,walking};}},
     ]) {try{void Promise.resolve(context.registerTool(tool,{signal:toolLife.signal})).catch(()=>{});}catch{/* optional browser capability */}}
     const assets=createHouseAssets(scene,{
       changed:()=>{needsRender=true;},ready:()=>{loaded=true;setReady(true);if(!document.hidden)enter(false);},progress:setProgress,error:message=>{pause();setError(message);},
@@ -134,17 +134,17 @@ export default function Walkthrough() {
   },[]);
   return <main className="walkthrough">
     <div ref={host} className="viewport" tabIndex={-1} aria-label={`First-person view of ${zone}`} />
-    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION</p><h1>{zone}</h1></div><div className="hud-actions">
-      {ready && !error && <Button className="hud-button" onClick={()=>active?runtime.current?.pause():runtime.current?.enter()}>{active?'Pause':'Resume'}</Button>}
-      <Button className="hud-button" disabled={!ready} onClick={()=>runtime.current?.reset()}>Reset position</Button>
-    </div></header>
-    {(error || !ready || (active && showHint)) && <section className={`entry${ready&&!error?' hint':''}${touch?' touch-hint':''}`} aria-label="Walkthrough controls">
+    <header className="hud"><div className="identity"><p className="eyebrow">MANIAC MANSION</p><h1>{zone}</h1></div><a className="github-link" href="https://github.com/s-macke/maniac-mansion-3d" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub (opens in a new tab)" onClick={()=>runtime.current?.pause()}>
+      <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.86c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg>
+      <span>GitHub</span>
+    </a></header>
+    {(error || !ready || (active && showHint && !touch)) && <section className={`entry${ready&&!error?' hint':''}`} aria-label="Walkthrough controls">
       <h2>{error?'Unable to enter':ready?'Explore the house':'Opening the house…'}</h2>
       {error?<p className="error" role="alert">{error}</p>:<>
-        <p>{touch?'Drag to look around. Use the arrows to walk. Tap a nearby door to open it, or a ladder to climb.':'Walk with WASD. Click or drag to look. Aim at a nearby door or ladder and press E to use it.'}</p>
-        <div className="key-row"><kbd>W A S D</kbd><span>walk</span><kbd>Shift</kbd><span>faster</span><kbd>Mouse</kbd><span>look</span><kbd>Esc</kbd><span>pause</span></div>
+        {!touch && <p>Walk with WASD. Click or drag to look. Aim at a nearby door or ladder and press E to use it.</p>}
+        {!touch && <div className="key-row"><kbd>W A S D</kbd><span>walk</span><kbd>Shift</kbd><span>faster</span><kbd>Mouse</kbd><span>look</span><kbd>Esc</kbd><span>pause</span></div>}
         {!ready && <><div className="progress-line" role="progressbar" aria-label="Loading room" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}><span style={{width:`${progress}%`}} /></div><p className="small" aria-live="polite">Loading room · {progress}%</p></>}
-        <p className="small">{preview?'Independent room preview. Doors stay closed for now.':'The front steps lead into the hall. Walk through to the living room or take the grand staircase upstairs.'}</p>
+        {!touch && <p className="small">{preview?'Independent room preview. Doors stay closed for now.':'The front steps lead into the hall. Walk through to the living room or take the grand staircase upstairs.'}</p>}
       </>}
     </section>}
     {active && <div className="reticle" aria-hidden="true" />}

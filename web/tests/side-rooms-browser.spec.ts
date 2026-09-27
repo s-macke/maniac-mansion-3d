@@ -5,7 +5,7 @@ for(const [from,to,approach,door,out,back,label] of [
 ] as const)test(`open portal from ${from} to ${to} and return`,async({page})=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/?room='+from);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room='+from);await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){
   const p=await state(),target=-Math.atan2(x-p.x,y-p.y);let delta=target-p.yaw;

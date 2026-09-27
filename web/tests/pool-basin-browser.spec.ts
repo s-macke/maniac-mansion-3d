@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 test('drain the pool, walk its basin, climb out and refill without changing room',async({page})=>{
  test.setTimeout(240000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/?room=pool');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=pool');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){
   const p=await state(),target=-Math.atan2(x-p.x,y-p.y);let delta=target-p.yaw;

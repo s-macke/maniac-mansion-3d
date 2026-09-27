@@ -4,7 +4,7 @@ import {toWorld} from '../lib/house/placement';
 for(const id of ['dining_room','kitchen','hall'])test(id+' kitchen-dining door knob and swing review',async({page})=>{
  test.setTimeout(150000);
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Drag'));});
- await page.goto('/?room='+id);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room='+id);await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const room=createHouseRuntime(id).rooms.find(r=>r.id===id)!;
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');
  async function aim(x:number,y:number){

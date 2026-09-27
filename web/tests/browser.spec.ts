@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 const state=async(page:any)=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker'));
 test('room loads, mouse look and walking work, pause and reset recover',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/?room=hall');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=hall');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  await expect(page.locator('canvas')).toBeVisible();
  await page.screenshot({path:'test-results/entrance-ready.png'});
- await expect(page.getByRole('button',{name:'Explore room'})).toHaveCount(0);
+ await expect(page.getByRole('button',{name:/^(Explore room|Pause|Resume|Reset position)$/})).toHaveCount(0);
  await expect(page.getByRole('region',{name:'Walkthrough controls'})).toBeVisible();
  const before=await state(page);await page.keyboard.down('w');await expect.poll(async()=>{const p=await state(page);return Math.hypot(p.x-before.x,p.y-before.y);},{timeout:10000}).toBeGreaterThan(3.15);await page.keyboard.up('w');
  await expect(page.getByRole('region',{name:'Walkthrough controls'})).toHaveCount(0);
@@ -14,35 +14,37 @@ test('room loads, mouse look and walking work, pause and reset recover',async({p
  await expect.poll(async()=>Math.abs((await state(page)).yaw-before.yaw)).toBeGreaterThan(.1);
  await page.keyboard.press('r');await expect(page.getByRole('region',{name:'Walkthrough controls'})).toHaveCount(0);await expect.poll(async()=>(await state(page)).x).toBeCloseTo(-4.65,2);const reset=await state(page);expect(reset.x).toBeCloseTo(-4.65,2);expect(reset.y).toBeCloseTo(1.1,2);
  await page.screenshot({path:'test-results/entrance-walking.png'});
- await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Resume',exact:true})).toBeVisible();
+ await page.keyboard.press('Escape');await expect(page.locator('.status')).toHaveText('PAUSED');
  const paused=await state(page);await page.keyboard.down('w');await page.waitForTimeout(150);await page.keyboard.up('w');expect((await state(page)).x).toBeCloseTo(paused.x,3);
- await page.mouse.click(700,450);await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible();
+ await page.mouse.click(700,450);await expect(page.locator('.status')).toHaveText('EXPLORING');
  expect(errors).toEqual([]);expect(after.triangles).toBeGreaterThan(1000);expect(after.drawCalls).toBeLessThan(20);
 });
-test('pointer-lock denial falls back to dragging; reset button shares state',async({page})=>{
+test('pointer-lock denial falls back to dragging; keyboard reset recovers',async({page})=>{
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Test denial'));});
- await page.goto('/?room=hall');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=hall');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  await expect(page.getByText('Click or drag to look · Shift to walk faster · Arrow keys also work · R to reset')).toBeVisible();
  const before=await state(page);await page.mouse.move(800,400);await page.mouse.down();await page.mouse.move(950,450,{steps:5});await page.mouse.up();
  await expect.poll(async()=>Math.abs((await state(page)).yaw-before.yaw)).toBeGreaterThan(.1);
  await page.keyboard.down('w');await page.waitForTimeout(180);await page.keyboard.up('w');
- await page.getByRole('button',{name:'Reset position'}).click();expect((await state(page)).x).toBeCloseTo(-4.65,2);
+ await page.keyboard.press('r');await expect.poll(async()=>(await state(page)).x).toBeCloseTo(-4.65,2);
 });
 test('load failure gives a visible actionable error',async({page})=>{
  await page.route('**/models/connected_hall/*.glb',route=>route.abort());await page.goto('/?room=hall');
  await expect(page.getByRole('alert')).toContainText('Reload the page',{timeout:30000});
- await expect(page.getByRole('button',{name:'Reset position'})).toBeDisabled();
+ await expect(page.locator('.status')).toHaveText('ROOM UNAVAILABLE');
 });
 test('mobile layout loads and touch movement is available',async({browser})=>{
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const page=await context.newPage();
- await page.goto(process.env.WALKTHROUGH_URL || 'http://127.0.0.1:5173');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto(process.env.WALKTHROUGH_URL || 'http://127.0.0.1:5173');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  await expect(page.getByRole('button',{name:'Forward',exact:true})).toBeVisible();
+ await expect(page.getByRole('region',{name:'Walkthrough controls'})).toHaveCount(0);
+ await expect(page.locator('header').getByRole('link',{name:'View source on GitHub (opens in a new tab)',exact:true})).toBeVisible();
  await page.screenshot({path:'test-results/entrance-mobile.png'});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await context.close();
 });
 test('walk upstairs into the landing and look back into the same hall',async({page})=>{
  test.setTimeout(180000);await page.setViewportSize({width:960,height:600});
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag for deterministic route steering'));});
- await page.goto('/?room=hall');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=hall');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  await page.keyboard.press('r');
  await expect.poll(async()=>(await state(page)).x).toBeCloseTo(-4.65,2);
  async function lookToward(x:number,y:number){

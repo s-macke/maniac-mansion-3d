@@ -14,7 +14,7 @@ test('living room entry uses world coordinates and furniture blocks movement',()
 test('living room entry loads the connected assets and starts walking',async({page})=>{
  const errors:string[]=[],models:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.url().includes('.glb'))models.push(r.url());});
  await page.goto('/?room=living_room');await expect(page.getByRole('heading',{name:'Living room',exact:true})).toBeVisible();
- await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  const state=async()=>JSON.parse(await page.locator('.viewport').getAttribute('data-walker')||'{}');const start=await state();
  await page.keyboard.down('w');await expect.poll(async()=>{const p=await state();return Math.hypot(p.x-start.x,p.y-start.y);},{timeout:10000}).toBeGreaterThan(.5);await page.keyboard.up('w');
  expect(new Set(models).size).toBe(models.length);expect(models.some(m=>m.includes('living_room_v4.glb'))).toBe(true);expect(errors).toEqual([]);

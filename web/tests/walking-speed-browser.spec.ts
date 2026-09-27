@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 
 test('either Shift key doubles walking speed and release restores normal speed',async({page})=>{
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
- await page.goto('/?room=under_house');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible({timeout:45000});
+ await page.goto('/?room=under_house');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
  // Measure actual displacement per animation time along the long, clear aisle.
  const speed=()=>page.evaluate(()=>new Promise<number>(resolve=>{
   const read=()=>JSON.parse(document.querySelector('.viewport')!.getAttribute('data-walker')!);

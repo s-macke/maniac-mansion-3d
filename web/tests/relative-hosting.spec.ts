@@ -47,7 +47,7 @@ for (const mount of mounts) {
     });
     await page.addInitScript(() => { HTMLCanvasElement.prototype.requestPointerLock = () => Promise.reject(new Error('Use deterministic drag controls')); });
     await page.goto(`${origin}${mount}?room=hall`);
-    await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible({ timeout: 45000 });
+    await expect(page.locator('.status')).toHaveText('EXPLORING', { timeout: 45000 });
     await expect(page.locator('canvas')).toBeVisible();
     const state = async () => JSON.parse((await page.locator('.viewport').getAttribute('data-walker'))!);
     const before = await state();
@@ -66,7 +66,7 @@ for (const mount of mounts) {
     await expect(page.locator('.door-action')).toContainText('Close');
     await expect.poll(async () => (await state()).portals.passes).toBeGreaterThan(1);
     await page.reload();
-    await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible({ timeout: 45000 });
+    await expect(page.locator('.status')).toHaveText('EXPLORING', { timeout: 45000 });
     const favicon = await page.locator('link[rel="icon"]').getAttribute('href');
     expect(new URL(favicon!, page.url()).pathname).toBe(`${mount}favicon.svg`);
     expect((await request.get(new URL(favicon!, page.url()).href)).ok()).toBe(true);
@@ -85,6 +85,6 @@ test('directory redirects preserve room queries and explicit index.html works', 
   for (const mount of mounts) {
     await page.goto(`${origin}${mount}index.html?room=kitchen`);
     await expect(page.getByRole('heading', { name: 'Kitchen', exact: true })).toBeVisible({ timeout: 45000 });
-    await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeVisible();
+    await expect(page.locator('.status')).toHaveText('EXPLORING');
   }
 });
