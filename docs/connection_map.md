@@ -163,7 +163,7 @@ Pantry `pool_door` local `(-0.8,5.55,0)` meets pool `pantry_door` local `(0,3.2,
 
 The [garage and forecourt](../rooms/garage/README.md) connect through the far pool fence opening. Room 016 includes an outdoor approach and a covered empty bay; the exact path placement is provisional.
 
-The [library and complete furnished landing-floor layout](first_floor.md) are connected: art studio, music room, security corridor, medical room and arcade. All connecting doors start closed. The [furnished upper floors](upper_floor.md) now implement the provisional 013 ↔ 012 ↔ 038 route, with branches to 026, 019, 021, 025 and 027. Bedroom slots are confirmed left to right as 021, 019, 026 and 025, as documented in the upper-floor guide. The photo room (023) and mummy bathroom (024) are connected; the library spiral staircase remains unresolved.
+The [library and complete furnished landing-floor layout](first_floor.md) are connected: art studio, music room, security corridor, medical room and arcade. All connecting doors start closed. The [furnished upper floors](upper_floor.md) now implement the provisional 013 ↔ 012 ↔ 038 route, with branches to 026, 019, 021, 025 and 027. Bedroom slots are confirmed left to right as 021, 019, 026 and 025, as documented in the upper-floor guide. The 013 → 012 stair arrives openly from the right behind the balustrade, using a quarter-turn portal rather than a front doorway. The photo room (023) and mummy bathroom (024) are connected; the library spiral staircase remains unresolved.
 
 ## Verified correction: attic access
 

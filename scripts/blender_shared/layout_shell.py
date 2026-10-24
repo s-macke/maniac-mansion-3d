@@ -17,7 +17,20 @@ def build(path, furnish=None):
    for low,high in zip(ys,ys[1:]):
     if any(h['x0']<(a+b)/2<h['x1'] and h['y0']<(low+high)/2<h['y1'] for h in holes):continue
     if b>a and high>low:box(name,((a+b)/2,(low+high)/2,z),(b-a,high-low,thickness),color)
- slab('Room_floor',-W,W,0,D,-.06,.12,style['floor'],g.get('floorHoles',[]))
+ descent=g.get('descendingStairs')
+ slab('Room_floor',-W,W,0,D,-.06,.12,style['floor'],g.get('floorHoles',[])+([descent] if descent else []))
+ if descent:
+  x0,x1,y0,y1,drop,n=[descent[k] for k in ['x0','x1','y0','y1','drop','segments']]
+  bottom=-drop-.12
+  for i in range(n):
+   a=x0+(x1-x0)*i/n;b=x0+(x1-x0)*(i+1)/n;top=-drop*i/n
+   # Only exposed treads and risers: buried box sides would coincide with the shaft walls.
+   low=-drop*(i+1)/n
+   geo.mesh('Descending_stair_tread',[(a,y0,top),(b,y0,top),(b,y1,top),(a,y1,top),(b,y0,low),(b,y1,low)],[(0,1,2,3),(1,4,5,2)],'brown')
+   box('Descending_stair_edge',(b-.018,(y0+y1)/2,top+.006),(.036,y1-y0-.016,.012),'white')
+  # Meet the underside of the floor slab; do not duplicate its exposed cut edges.
+  for y in [y0-.04,y1+.04]:
+   box('Descending_stairwell_side',((x0+x1)/2,y,(bottom-.12)/2),(x1-x0,.08,-.12-bottom),style['wall'])
  stair_side='left' if stair and stair['x0']<0 else 'right'
  inner=(stair['x1']+.15 if stair_side=='left' else stair['x0']-.15) if stair else W
  ceiling_lo=inner if stair and stair_side=='left' else -W

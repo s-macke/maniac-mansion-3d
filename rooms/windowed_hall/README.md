@@ -6,9 +6,9 @@ Furnished from [background 012](../../source/room%20012.png): cyan patterned wal
 
 The rear `photo_door` beside the stairs now connects to the [photo darkroom](../photo_room/README.md) on this level, one floor below the bedroom corridor. Its shared leaf starts closed.
 
-The columns, plant pot and balustrade have authored collision footprints. Both door approaches and the full left stair remain clear. The balustrade is a decorative barrier on the existing solid landing; no new floor opening or circulation route is invented. The shell navigation helper supports optional furniture footprints alongside stairs and floor holes.
+The columns, plant pot and balustrade have authored collision footprints. Both door approaches and the full left stair remain clear. The upper half of the lower staircase descends 1.68 m through a real floor opening behind the balustrade, from its left end toward the right wall. Its ten treads continue through the right-side `security_door` portal into the lower half in the security corridor. The rail guards the stairwell, rather than bordering a flat aisle. The portal supplies the quarter-turn from the security corridor; no door leaf or frame blocks the stairs. The shell navigation helper supports optional furniture footprints alongside stairs and floor holes.
 
-The furnished optimized model is 831,624 bytes, or 229,284 bytes with gzip. It uses the existing unlit vertex-color material and shared doors.
+The furnished optimized model is 1,391,580 bytes, or 377,456 bytes with gzip. It uses the existing unlit vertex-color material and shared doors.
 
 Validation: static build, typecheck and catalog checks pass, with 17 focused navigation/model checks and four desktop Chrome checks across this level, the photo-door round trip and the upper stair route. No physical-mobile test was run.
 

@@ -13,7 +13,7 @@
     "min": [
       -6.4,
       0,
-      -0.12
+      -1.85
     ],
     "max": [
       6.4,
@@ -62,23 +62,31 @@
       },
       {
         "x0": 2.87,
-        "x1": 5.91,
+        "x1": 6.22,
         "y0": 4.66,
         "y1": 4.84
       }
-    ]
+    ],
+    "descendingStairs": {
+      "x0": 2.9,
+      "x1": 6.4,
+      "y0": 4.825,
+      "y1": 5.875,
+      "drop": 1.68,
+      "segments": 10
+    }
   },
   "ports": [
     {
       "id": "security_door",
       "position": [
-        3.8,
-        0,
-        0
+        6.4,
+        5.35,
+        -1.68
       ],
       "outward": [
-        0,
-        -1
+        1,
+        0
       ],
       "width": 1.05,
       "height": 2.72,
@@ -125,7 +133,7 @@
     "entries": [
       {
         "port": "security_door",
-        "wall": "front",
+        "wall": "right",
         "owner": false,
         "frame": false
       },

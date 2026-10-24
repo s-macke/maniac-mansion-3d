@@ -18,7 +18,7 @@
     "max": [
       6.6,
       5.55,
-      6.6
+      4.92
     ]
   },
   "spawn": {
@@ -38,8 +38,8 @@
       "x1": 6.4,
       "y0": 1.15,
       "y1": 5.1,
-      "rise": 3.36,
-      "segments": 20
+      "rise": 1.68,
+      "segments": 10
     },
     "obstacles": [
       {
@@ -116,7 +116,7 @@
       "position": [
         5.825,
         5.55,
-        3.36
+        1.68
       ],
       "outward": [
         0,
@@ -154,8 +154,8 @@
       {
         "port": "higher_floor",
         "wall": "back",
-        "frame": true,
-        "owner": true
+        "frame": false,
+        "owner": false
       }
     ],
     "frontOffset": 0.22

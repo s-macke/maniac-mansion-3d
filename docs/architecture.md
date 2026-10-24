@@ -195,3 +195,5 @@ See [the wall-finish audit](opposite_walls.md) for coverage of all 34 room units
 `blender_shared.opposite_walls.apply()` runs after furnishing and rear anchoring,
 continuing architectural finishes onto inferred front walls while preserving
 door apertures and reference cutaways. Four custom room builders call it directly.
+
+The rectangular shell supports an optional `geometry.descendingStairs` section (`x0`, `x1`, `y0`, `y1`, `drop`, `segments`), descending along +X. It cuts the floor slab, builds exposed tread/riser surfaces and side walls meeting the slab underside without coincident faces, and supplies the matching navigation slope with guarded sides. The windowed hall uses it for the upper half of the security staircase; its lowered portal joins the two flights at the same elevation.

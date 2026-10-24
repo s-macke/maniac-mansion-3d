@@ -57,11 +57,12 @@ def furnish(geo,c):
   verts=[root,(end[0]+perp[0],end[1]+perp[1],end[2]+perp[2]),tip,(end[0]-perp[0],end[1]-perp[1],end[2]-perp[2]),(end[0],end[1],end[2]+.045)]
   geo.mesh('Broad_plant_leaf',verts,[(0,1,4),(1,2,4),(2,3,4),(3,0,4),(4,1,0),(4,2,1),(4,3,2),(4,0,3)],'green')
   geo.beam('Leaf_rib',root,tip,.016,'lime')
- # Original balustrade as a solid railing; no new floor hole or invented stair route.
- for z in [.10,1.04]:b('Landing_balustrade_rail',(4.38,4.75,z),(3.02,.14,.10),'brown')
- b('Balustrade_gold_top',(4.38,4.745,1.11),(3.05,.16,.025),'yellow')
- for i in range(12):
-  x=2.95+i*.258
+ # The lower staircase arrives through the right-side portal behind this rail.
+ # Carry the guard to the wall; reach the landing around its open left end.
+ for z in [.10,1.04]:b('Landing_balustrade_rail',(4.545,4.75,z),(3.35,.14,.10),'brown')
+ b('Balustrade_gold_top',(4.545,4.745,1.11),(3.38,.16,.025),'yellow')
+ for i in range(13):
+  x=2.95+i*.265
   geo.cyl('Balustrade_spindle',(x,4.75,.57),.039,.89,'red',8)
   for z in [.28,.79]:geo.sphere('Spindle_turning',(x,4.75,z),(.057,.057,.055),'brown')
  # Add the red/gold stair trim and upright balusters without changing tread heights.

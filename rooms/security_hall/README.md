@@ -2,7 +2,7 @@
 
 Original background: 013. Patterned wallpaper, the original framed portraits, candlesticks, a pink rug and a solid reclining aqua statue furnish the corridor. The existing navigable staircase receives white tread edges; doors, stair geometry and destinations remain unchanged.
 
-Connects through the reinforced landing door, owned by the hall. Owns the medical and arcade doors. The staircase rises another 3.36 m to the initially closed `higher_floor` door, now owned here and connected to the [windowed stair hall](../windowed_hall/README.md).
+Connects through the reinforced landing door, owned by the hall. Owns the medical and arcade doors. The staircase rises 1.68 m through the open `higher_floor` portal, then continues another 1.68 m on the actual steps behind the balustrade in the [windowed stair hall](../windowed_hall/README.md). The former door and frame are removed. The portal rotates the view and movement by 90 degrees.
 
 The inferred footprint is 13.2 × 5.55 m, with a 3.12 m ceiling. These dimensions and unseen walls are provisional. Placement and connections live in `house/layout.json`; [the first-floor guide](../../docs/first_floor.md) explains the complete addition.
 
@@ -24,7 +24,7 @@ This folder contains source builders, authored `room.json` and documentation. Or
 
 Furniture leaves the entry, circulation routes and any stair approaches clear. The original EGA palette and existing soft vertex-baked shading require no runtime GI. Rebuild with the existing room command; all Blender scenes, model files and previews remain generated outputs.
 
-Current furnished export: 1,052,532 bytes optimized, 262,892 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
+Current furnished export: 1,796,804 bytes optimized, 418,574 bytes gzip. Download size includes furniture and source-art details; the existing shared door kit is cached separately.
 
 Validation: the floor-wide 16 focused navigation/model/portal checks and five desktop Chrome furnishing checks pass, alongside the catalog check, static build and typecheck. Browser screenshots and Blender previews were inspected; physical-mobile performance was not measured.
 

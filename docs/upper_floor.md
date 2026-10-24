@@ -8,7 +8,7 @@ These are independent room spaces with shared doors and soft baked shading. The 
 
 ## Interpretation and unresolved exits
 
-The connection drawing supplies the visual basis, with corridor assignments corrected from user feedback. Metric dimensions remain provisional. In particular, the security-stair arrival is represented by an inferred front doorway on the stair hall's right side, where the reference suggests circulation. The rear door beside its stairs now opens into the photo darkroom (023), on the same level at 6.72 m. The top of the left stair leads through a portal to the upper corridor's left entrance.
+The connection drawing supplies the visual basis, with corridor assignments corrected from user feedback. Metric dimensions remain provisional. The security staircase arrives from the right, behind the visible balustrade in background 012. The flight is split across the portal: ten lower steps rise 1.68 m in the security corridor, and ten upper steps rise another 1.68 m through a real floor opening behind the balustrade. There is no flat aisle behind the railing and no door or frame. Its portal rotates travel and the view by 90 degrees relative to the lower corridor; upper rooms retain their independent local coordinates. The rear door beside its stairs now opens into the photo darkroom (023), on the same level at 6.72 m. The top of the left stair leads through a portal to the upper corridor's left entrance.
 
 The windowed hall starts at 6.72 m and the upper corridor/bedroom level at 10.08 m. These are walkthrough elevations derived from two 3.36 m flights, not measurements from the game. Authoring placements deliberately separate the new shells; doorway portals establish their adjacency without requiring exterior cutouts or overlapping geometry.
 
@@ -18,7 +18,7 @@ The exercise/mummy room's far door now opens into the mummy bathroom (024) on th
 
 | Connection | Moving door owner |
 |---|---|
-| Security corridor → windowed hall | Security corridor `higher_floor` |
+| Security corridor → windowed hall | Open right-side stair landing; no door |
 | Windowed hall → upper corridor | Windowed hall `higher_floor` |
 | Upper corridor → four bedrooms | Upper corridor, one door per bedroom |
 | Upper corridor → typewriter room | Upper corridor `typewriter_door` |
