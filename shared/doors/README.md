@@ -31,7 +31,7 @@ All interactive doors continue to start closed. No puzzles, locks or new destina
 
 ## Appearance and validation
 
-All designs use the same unlit vertex-color material and neutral edge shading. The special doors now use this reusable shading instead of a room-specific light pattern; room walls retain their soft baked lighting. Door dimensions, original pixel artwork and placement are preserved. The pantry pool door is now interactive and initially closed; its frame stays fixed. The landing security door remains closed and unconnected. Front and other connected doors keep their existing behavior.
+All designs use the same unlit vertex-color material and neutral edge shading. The special doors use this reusable shading instead of a room-specific light pattern; room walls retain their soft baked lighting. Door opening dimensions, original face colors and placement are preserved. The pantry pool door is interactive and initially closed; its frame stays fixed. The landing security door starts closed and opens into the security corridor. Front and other connected doors keep their existing behavior.
 
 The browser loads one library for the house. Tests cover geometry reuse, mirrored instances, door collision and targeting, one library request, room reload and resource disposal. Open/closed Blender previews live in `generated/previews/assembly/`. The full-house door preview resolves each hinge through its shared leaf's `door_node` metadata, since Blender can rename duplicate objects when appending independent rooms into one scene.
 
@@ -41,13 +41,39 @@ Validation after extraction: Blender geometry/placement checks and room previews
 
 `register_hinged` attaches the mesh-door leaf with its hinge, open rest transform, collision bounds and initially closed state. Both faces share the same source design.
 
-The reinforced door has separate leaf/frame meshes and pixel artwork on both faces. `register_hinged` supports unique instance names and multiple leaves per door; the living-room/library connection uses two mirrored leaves owned by the living room. `register_static` accepts unique instance names for repeated frames.
+The reinforced door has separate leaf/frame meshes and solid mechanical relief on both faces. `register_hinged` supports unique instance names and multiple leaves per door; the living-room/library connection uses two mirrored leaves owned by the living room. `register_static` accepts unique instance names for repeated frames.
 
 `Concealed_leaf` is a flat red unit panel with the original paint blotch sampled from `source/room 027.png`. It reuses the standard hinge, interaction, collision and resource lifecycle. The den entry selects it through `shell.entries[].asset` and supplies a descriptive `label`; ordinary entries retain `Standard_leaf`. Adding this mesh preserves the existing seven templates and their transforms.
 
 `Grating_leaf` is the reusable metal-bar leaf of the low porch opening. Its frame stays in the exterior model; the leaf uses the same shared hinge, collision and disposal rules as doors. The crawl action requires it fully open.
 
-`Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` are normalized unit leaves with original EGA pixels from backgrounds 004, 030 and 031 on both faces. They retain shallow physical thickness, use the same unlit material and hinge lifecycle, and are reused throughout the cellar extension. Closed placeholder leaves can select these assets too.
+`Dungeon_leaf`, `Lab_leaf` and `Metal_leaf` are normalized unit leaves with original EGA colors from backgrounds 004, 030 and 031 on both faces. Their mechanical details have physical depth, use the same unlit material and hinge lifecycle, and are reused throughout the cellar extension. Closed placeholder leaves can select these assets too.
+
+## Mechanical relief
+
+`designs.py` defines source-aligned profiles for the landing security door's
+crossbars, keypad case, wheel/lever and bolt heads; the dungeon door's locking
+bar, wheel and keeper; the lab door's display, wheel and fasteners; and the plain
+metal door's handle. The double-barred dungeon door also has raised nested
+panels and hinge plates beneath its existing solid bars and padlocks.
+
+The original color runs form the front surfaces of these solid profiles, with
+side faces at changes in depth and recessed dark seams. There are no image
+textures, normal maps or additional runtime materials. Both faces receive the
+same geometry; the deepest mechanisms project up to 19 cm beyond their original
+artwork plane. Leaf width/height and pivot locations stay unchanged. Rebuild the
+six owning rooms (`connected_hall`, `cellar`, `dungeon`, `outer_lab`, `main_lab`,
+`meteor_chamber`) after a kit edit to regenerate collision bounds and previews.
+
+The door build additionally writes oblique `*_relief.png` close-ups under
+`generated/previews/shared/`. The saved `.blend` retains the full library layout.
+
+The revised compact library is 2,575,600 bytes (510,518 bytes gzip), shared once
+across the house. Validation covers relief on both faces, all moving mesh bounds,
+hinge/handle alignment, collision, opening state and shared-resource reuse. Ten
+focused checks pass; a desktop browser review opened the reinforced door and
+crossed into the hall. The nine other kit components retain identical geometry
+and colors; sampled front-face colors of the revised leaves match the old kit.
 
 ## Knobs and hinges
 

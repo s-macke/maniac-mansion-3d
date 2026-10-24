@@ -79,4 +79,14 @@ for screen in bpy.data.screens:
   if area.type=='VIEW_3D':area.spaces.active.region_3d.view_perspective='CAMERA';area.spaces.active.shading.type='MATERIAL'
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'generated/blender/shared/doors/standard_doors_v1.blend'))
 bpy.ops.render.render(write_still=True)
+# Oblique close-ups make the new mechanical depth reviewable, unlike the
+# front-facing library overview. These do not change the saved authoring scene.
+for name in ['Security_leaf','Dungeon_leaf','Lab_leaf','Metal_leaf','Dungeon_reinforced_leaf']:
+ for obj in col.objects:obj.hide_render=obj.name!=name
+ obj=bpy.data.objects[name];bpy.context.view_layer.update()
+ points=[obj.matrix_world@Vector(p) for p in obj.bound_box]
+ low=Vector([min(p[i] for p in points) for i in range(3)]);high=Vector([max(p[i] for p in points) for i in range(3)]);center=(low+high)/2
+ cam.location=center+Vector((3,-7,1.5));cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=(high.z-low.z)*1.25
+ scene.render.resolution_x=700;scene.render.resolution_y=850
+ scene.render.filepath=str(ROOT/'generated/previews/shared'/f'{name}_relief.png');bpy.ops.render.render(write_still=True)
 print('DOOR_KIT_COMPLETE',flush=True)
