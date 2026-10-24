@@ -1,6 +1,30 @@
 import {test,expect} from '@playwright/test';
 import {createHouseRuntime} from '../lib/house/runtime';
 import {toWorld} from '../lib/house/placement';
+import {readFile} from 'node:fs/promises';
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+test('boarded attic window exposes distant star geometry through the wall',async()=>{
+ const bytes=await readFile('../generated/models/rooms/wire_attic_v1_compact.glb');
+ const root=(await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength) as ArrayBuffer,'')).scene;
+ root.updateMatrixWorld(true);
+ const origin=new THREE.Vector3(2.22,1.7,-2),factor=14.2/2.2;
+ const x=(202.5-160)*8.16/240,z=1.58+(.5-45.5/101)*2.99;
+ const star=new THREE.Vector3(2.22+factor*(x-2.22),1.7+factor*(z-1.7),-16.2);
+ const hit=new THREE.Raycaster(origin,star.sub(origin).normalize(),0,40).intersectObject(root,true)[0];
+ expect(hit.object.name).toBe('Attic_window_sky');expect(hit.distance).toBeGreaterThan(12);
+ const mesh=hit.object as THREE.Mesh,col=mesh.geometry.attributes.color;
+ expect(col.getX(hit.face!.a)).toBeGreaterThan(.9);
+ for(const [x,z] of [[1,1.8],[3.4,2],[2.2,.8]]){
+  const wall=new THREE.Raycaster(new THREE.Vector3(x,z,-3.9),new THREE.Vector3(0,0,-1),0,1).intersectObject(root,true);
+  expect(wall.length).toBeGreaterThan(0);
+ }
+ // Upper plank crosses the top frame in projection, but sits wholly in front.
+ const plankRay=new THREE.Raycaster(new THREE.Vector3(2.75,3.02,-3.8),new THREE.Vector3(0,0,-1),0,1);
+ expect(plankRay.intersectObject(root,true)[0].distance).toBeLessThan(.27);
+ plankRay.near=.3173;plankRay.far=.3177;
+ expect(plankRay.intersectObject(root,true)).toHaveLength(1);
+});
 test('painted panel starts shut and opens onto a ladder shaft',()=>{
  const v=createHouseRuntime('typewriter_room'),panel=v.graph.outgoing(v.activeSpace).find(e=>e.from.port.id==='hidden_panel')!,door=v.portalDoor(panel)!;
  expect(door.amount).toBe(0);expect(door.def.label).toBe('Painted wall panel');

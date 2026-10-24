@@ -25,7 +25,9 @@ def furnish(geo,c):
   for z,col in [(.21,'red'),(.30,'yellow')]:b('Corridor_rail',((xa+xb)/2,5.29,z),(xb-xa,.09,.07),col)
  # The high rail clears both door frames and must remain continuous.
  b('Corridor_ceiling_rail',(( -6.35+5.1)/2,5.29,3.03),(5.1+6.35,.09,.07),'red')
- for crop,x,z,w,h in [((313,29,362,75),0,2.05,1.30,1.23),((62,34,92,55),-4.93,2.13,.66,.46),((206,32,231,57),-1.73,2.25,.48,.48),((402,42,427,70),1.61,2.08,.50,.56)]:
+ # Tight outer picture bounds: the old left crop included wallpaper on its
+ # right, and the right portrait included wallpaper below its bottom frame.
+ for crop,x,z,w,h in [((313,29,362,75),0,2.05,1.30,1.23),((61,33,87,55),-4.93,2.13,.572,.482),((206,32,231,57),-1.73,2.25,.48,.48),((400,40,428,66),1.61,2.08,.56,.52)]:
   panel(geo,'Portrait_frame',x,5.25,z,w+.16,h+.16)
   source_patch(geo,ROOT/'source/room 013.png',crop,(x,5.18,z),(w,h),'Original_corridor_portrait')
  # Small wall keypad beside the medical door, as in background 013.
@@ -71,12 +73,25 @@ def furnish(geo,c):
  bpy.context.view_layer.update()
  transform=Matrix.Translation((-5.30,sy,0))@Matrix.Scale(1.4,4)@Matrix.Translation((-sx,-sy,0))
  for obj in set(bpy.data.objects)-statue_before:obj.matrix_world=transform@obj.matrix_world
- # White tread faces and carved red stringer accents on the existing navigable stairs.
+ # Broad white steps and dark wooden nosings, not just thin white edge strips.
  st=c['geometry']['stairs']
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith('Stair_tread'):
+   obj.data.materials.append(geo.mats['white'])
+   for face in obj.data.polygons:
+    if face.normal.z>.5 or face.normal.y<-.5:face.material_index=1
+  elif obj.name.startswith('Stair_edge'):
+   obj.data.materials.clear();obj.data.materials.append(geo.mats['brown'])
  for i in range(st['segments']):
   y=st['y0']+(st['y1']-st['y0'])*i/st['segments'];z=st['rise']*(i+1)/st['segments']
-  b('White_stair_nosing',((st['x0']+st['x1'])/2,y+.018,z+.007),(st['x1']-st['x0'],.036,.013),'white')
- x=st['x0']-.10;y=st['y0']+.02
+  # Vertical timber joints on the exposed wooden stair side.
+  for offset in [.08,.25]:
+   b('Stair_stringer_vertical_joint',(st['x0']-.004,y+offset,z/2),(.008,.012,z),'red')
+  # Uprights meet the existing inclined handrail at its actual height.
+  post_y=y+.09;rail_z=.9+st['rise']*(post_y-st['y0'])/(st['y1']-st['y0'])
+  b('Stair_vertical_baluster',(st['x0'],post_y,(z+rail_z)/2),(.055,.055,rail_z-z),'brown')
+  b('Stair_baluster_red_face',(st['x0']-.030,post_y,(z+rail_z)/2),(.008,.025,rail_z-z),'red')
+ x=st['x0'];y=st['y0']+.02
  b('Stair_newel_foot',(x,y,.08),(.16,.18,.16),'brown')
  b('Stair_newel_post',(x,y,.52),(.07,.075,.82),'red')
  geo.sphere('Stair_newel_aqua_finial',(x,y,.99),(.085,.085,.09),'aqua')

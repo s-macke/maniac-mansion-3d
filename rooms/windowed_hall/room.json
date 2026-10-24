@@ -218,6 +218,56 @@
     "startupCutaway": false,
     "references": [
       "source/room 012.png"
+    ],
+    "practicalLights": [
+      {
+        "position": [
+          -0.35,
+          5.65,
+          2.15
+        ],
+        "direction": [
+          0,
+          -1,
+          -0.55
+        ],
+        "range": 4.2,
+        "strength": 0.28,
+        "radius": 0.22,
+        "coneAngle": 105
+      },
+      {
+        "position": [
+          2,
+          5.65,
+          2.15
+        ],
+        "direction": [
+          0,
+          -1,
+          -0.55
+        ],
+        "range": 4.2,
+        "strength": 0.28,
+        "radius": 0.22,
+        "coneAngle": 105
+      },
+      {
+        "position": [
+          4.35,
+          5.65,
+          2.15
+        ],
+        "direction": [
+          0,
+          -1,
+          -0.55
+        ],
+        "range": 4.2,
+        "strength": 0.28,
+        "radius": 0.22,
+        "coneAngle": 105
+      }
     ]
   }
 }

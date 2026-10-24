@@ -7,6 +7,11 @@ ROOT=Path(__file__).resolve().parents[2]
 
 def furnish(geo,c):
  b=geo.box;g=c['geometry'];windows=c['shell']['windows'];ports=[p for p in c['ports'] if p['id']=='photo_door']
+ # Continue the security corridor's white steps and wooden nosings above
+ # the quarter-turn portal without changing the stair profile.
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith(('Descending_stair_tread','Descending_stair_edge')):
+   obj.data.materials.clear();obj.data.materials.append(geo.mats['white' if obj.name.startswith('Descending_stair_tread') else 'brown'])
  # Small repeated cyan motifs on the existing rear wall, leaving all openings clear.
  vs=[];fs=[]
  def quad(x,z,dx,dz):
@@ -23,6 +28,11 @@ def furnish(geo,c):
  # Replace the shell's coarse bars with the reference's dense leaded grid.
  for o in list(bpy.data.objects):
   if o.name.startswith(('Window_mullion','Window_crossbar')):bpy.data.objects.remove(o,do_unlink=True)
+  elif o.name.startswith('Window_dark_glass'):
+   # A recessed dark backing, behind the curved glass rather than in its surface.
+   o.name='Window_recess_backing';o.location.y=5.807;o.scale.y=.01/.06
+ glass=geo.mats['darkgray'].copy();glass.name='Dark_leaded_glass'
+ glass.diffuse_color=tuple(v*.18 for v in glass.diffuse_color[:3])+(1,)
  for win in windows:
   x,z,w,h=[win[k] for k in ['x','z','width','height']];y=5.737
   for j in range(5):b('Window_lead_vertical',(x-w/2+j*w/4,y,z),(.028,.038,h),'gray')
@@ -32,11 +42,32 @@ def furnish(geo,c):
     xx=x-w/2+(i+.2)*w/4;zz=z-h/2+(j+.77)*h/6
     # Clipped leaded corners give each pane its octagonal source outline.
     left=x-w/2+i*w/4;bottom=z-h/2+j*h/6
+    cx=left+w/8;cz=bottom+h/12;rx=w/8-.014;rz=h/12-.014
+    # Small convex octagonal panes: the centre protrudes 6.6 cm from the edge.
+    outline=[(-1,-.70),(-.70,-1),(.70,-1),(1,-.70),(1,.70),(.70,1),(-.70,1),(-1,.70)]
+    boundary=[]
+    for k,a in enumerate(outline):
+     bb=outline[(k+1)%8]
+     for t in [0,.25,.5,.75]:boundary.append((a[0]+(bb[0]-a[0])*t,a[1]+(bb[1]-a[1])*t))
+    def surface(u,v):return (cx+u*rx,5.790-.066*math.sqrt(max(0,1-max(abs(u),abs(v))**2)),cz+v*rz)
+    verts=[surface(0,0)];faces=[]
+    for r in [.25,.5,.75,1.0]:verts.extend(surface(u*r,v*r) for u,v in boundary)
+    n=len(boundary)
+    for k in range(n):faces.append((0,1+k,1+(k+1)%n))
+    for ring in range(3):
+     a=1+ring*n;bb=a+n
+     for k in range(n):faces.append((a+k,bb+k,bb+(k+1)%n,a+(k+1)%n))
+    pane=geo.mesh('Convex_leaded_pane',verts,faces,glass)
+    pane['bake_curved_center']=(cx,5.790,cz);pane['bake_curved_radii']=(rx,.066,rz);pane['bake_curved_sign']=1
+    # Restrained EGA green highlight follows the upper-left curve of the glass.
+    glint=[]
+    for u,v in [(-.72,.32),(-.69,.47),(-.60,.59)]:
+     xx,yy,zz=surface(u,v);glint.append((xx,yy-.003,zz))
+    curved_line(geo,'Pane_curved_green_glint',glint,.012,'green')
     for sx in [-1,1]:
      for sz in [-1,1]:
       cx=left+(w/4 if sx==1 else 0);cz=bottom+(h/6 if sz==1 else 0)
       geo.beam('Pane_corner_lead',(cx-sx*.043,y-.008,cz),(cx,y-.008,cz-sz*.043),.018,'gray')
-    b('Pane_green_glint',(xx,y+.015,zz),(.04,.008,.018),'green')
   for xx in [x-w/2-.055,x+w/2+.055]:b('Window_red_frame',(xx,5.76,z),(.032,.035,h+.12),'red')
  # Two tall timber columns, based on the foreground posts in the original.
  for x in [-3.75,.85]:

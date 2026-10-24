@@ -4,13 +4,13 @@ Current footprint: **8.6 × 4.5 m**, revised after the [room size audit](../../d
 
 Furnished from [the original background](../../source/room%20015.png). Original jagged plaster, cracks, damp streaks and exposed laths separated into shallow depth layers; solid angled yellow boards over the dark window recess; projecting loose wire ends and a hanging fitting. The floor and left wall use the source’s dark gray.
 
-The floor opening leads down a shared ladder through the black shaft behind the den’s painted panel. Climb down from the front side of the opening, facing the ladder; ascending also lands on that side. It replaces the earlier front doorway and inferred stairs; there is no additional destination. The damaged window remains opaque; the room does not reveal unrelated spaces.
+The floor opening leads down a shared ladder through the black shaft behind the den’s painted panel. Climb down from the front side of the opening, facing the ladder; ascending also lands on that side. It replaces the earlier front doorway and inferred stairs; there is no additional destination. The boarded window is a real, non-traversable opening through the shell and damaged plaster layers, with a recessed frame and distant black night sky in this room's independent space.
 
 `build.py`, `interior.py` and `room.json` are the authored inputs. Rebuild with `./docker-build.sh room wire_attic`; generated Blender scenes, models and previews stay under `generated/`. Local review: `http://127.0.0.1:5174/?room=wire_attic`. See [top-floor guide](../../docs/top_floor.md) and [ladder connections](../../docs/ladders.md).
 
 Simple geometry and baked vertex colors preserve the EGA style without runtime lighting. Static furniture uses authored collision footprints; room placements and portal destinations are unchanged.
 
-The optimized room model is 795,544 bytes (283,549 bytes with gzip).
+The optimized room model is 797,384 bytes (280,561 bytes with gzip).
 
 
 ### Artwork detail review
@@ -25,4 +25,4 @@ The inferred opposite wall continues this room’s architectural finish. See the
 [complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
 and the distinction between repeating decoration and unique source details.
 
-Window boards sit directly against the black window recess, with millimetric offsets at overlaps. All directional baked lighting originates at the visible hanging bulb (including the softened fill); the former two unrelated room lights are removed.
+Window boards sit directly against the recessed frame, with millimetric offsets at overlaps. The three white star pixels from background 015 are represented by unlit solid squares 12 m behind the opening, alongside the shared distant star field. They are viewed through the gaps with parallax, rather than painted onto a black panel. All directional baked lighting originates at the visible hanging bulb (including the softened fill); the former two unrelated room lights are removed.

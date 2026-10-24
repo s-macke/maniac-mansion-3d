@@ -8,7 +8,7 @@ The rear `photo_door` beside the stairs now connects to the [photo darkroom](../
 
 The columns, plant pot and balustrade have authored collision footprints. Both door approaches and the full left stair remain clear. The upper half of the lower staircase descends 1.68 m through a real floor opening behind the balustrade, from its left end toward the right wall. Its ten treads continue through the right-side `security_door` portal into the lower half in the security corridor. The rail guards the stairwell, rather than bordering a flat aisle. The portal supplies the quarter-turn from the security corridor; no door leaf or frame blocks the stairs. The shell navigation helper supports optional furniture footprints alongside stairs and floor holes.
 
-The furnished optimized model is 1,391,580 bytes, or 377,456 bytes with gzip. It uses the existing unlit vertex-color material and shared doors.
+The furnished optimized model is 1,882,844 bytes, or 589,938 bytes with gzip. It uses the existing unlit vertex-color material and shared doors.
 
 Validation: static build, typecheck and catalog checks pass, with 17 focused navigation/model checks and four desktop Chrome checks across this level, the photo-door round trip and the upper stair route. No physical-mobile test was run.
 
@@ -16,6 +16,17 @@ Validation: static build, typecheck and catalog checks pass, with 17 focused nav
 ## Artwork detail review — 2026-09-24
 
 Added the clipped corners of the leaded window panes, completing their octagonal outlines.
+
+Each of the 72 panes now has a shallow convex glass surface inside the leaded
+grid, with dark baked shading and small curved green reflections. Recessed black
+backing keeps the night-time glass opaque; there is no clear outside view or
+transparent rendering. Three soft, low-strength bake sources sit at the windows
+and add a restrained light spill into the room. All lighting remains baked into
+vertex colors; the browser needs no runtime lights or glass/refraction shader.
+
+The descending security staircase uses the same broad white step faces and
+brown wooden nosings as its lower half in the security corridor, including
+across the rotated portal.
 
 The inferred opposite wall continues this room’s architectural finish. See the
 [complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
