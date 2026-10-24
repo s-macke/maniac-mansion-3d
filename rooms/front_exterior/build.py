@@ -47,9 +47,10 @@ box('Entrance_lintel',(0,-.27,3.25),(2.24,.24,.15),'brown')
 geo.active='Porch'
 grate=config['geometry']['grating'];gx,gy,gz=grate['x'],grate['y'],grate['z'];gw,gh=grate['width'],grate['height']
 gl,gr=gx-gw/2,gx+gw/2;gb,gt=gz-gh/2,gz+gh/2
+# Brickwork ends at the deck underside: their front faces must not overlap.
 # A genuine recess in the brickwork, with its closed metal grille in front.
-for lo,hi in [(-8.25,gl),(gr,8.25)]:box('Porch_foundation',((lo+hi)/2,-1.1,-.63),(hi-lo,2.2,1.14),'red')
-for lo,hi in [(-1.2,gb),(gt,-.06)]:box('Grating_brick_header_sill',(gx,-1.1,(lo+hi)/2),(gw,2.2,hi-lo),'red')
+for lo,hi in [(-8.25,gl),(gr,8.25)]:box('Porch_foundation',((lo+hi)/2,-1.1,-.66),(hi-lo,2.2,1.08),'red')
+for lo,hi in [(-1.2,gb),(gt,-.12)]:box('Grating_brick_header_sill',(gx,-1.1,(lo+hi)/2),(gw,2.2,hi-lo),'red')
 # The portal supplies the view through the recess.
 for x in [gl,gr]:
  box('Grating_reveal',(x,gy+.15,gz),(.05,.3,gh),'darkgray')
@@ -68,7 +69,19 @@ for row in range(4):
  for i in range(33):
   x=-8.1+i*.5+(row%2)*.25
   for lo,hi in ([ (z+.015,min(z+.245,gb)),(max(z+.015,gt),z+.245)] if gl-.015<x<gr+.015 else [(z+.015,z+.245)]):
+   hi=min(hi,-.12)
    if hi>lo:box('Brick_joint',(x,-2.21,(lo+hi)/2),(.018,.014,hi-lo),'brown')
+# Continue the staggered masonry courses around both exposed porch ends.
+for side in [-1,1]:
+ for row in range(4):
+  z=-1.1+row*.26
+  box('Side_brick_mortar',(side*8.26,-1.1,z),(.014,2.2,.018),'brown')
+  corner_gap=(.15+(row%2)*.25) if side<0 else (.35-(row%2)*.25)
+  for i in range(5):
+   y=-2.2+(.5-corner_gap)+i*.5
+   if y>=-.015:continue
+   lo,hi=z+.015,min(z+.245,-.12)
+   if hi>lo:box('Side_brick_joint',(side*8.26,y,(lo+hi)/2),(.014,.018,hi-lo),'brown')
 for i in range(8):
  front=-4.6+i*.3;top=-1.2+(i+1)*.15
  box('Entrance_step',(0,(front-2.2)/2,(top-1.2)/2),(3,(-2.2-front),top+1.2),'darkgray')

@@ -22,7 +22,9 @@ def furnish(geo,c):
     vs.extend([(x-w/2,y,z-h/2),(x+w/2,y,z-h/2),(x+w/2,y,z+h/2),(x-w/2,y,z+h/2)]);fs.append((n,n+1,n+2,n+3))
  for color,(vs,fs) in patterns.items():geo.mesh('Wallpaper_'+color,vs,fs,color)
  for xa,xb in [(-6.35,-3.8),(-2.2,2.4),(4.0,5.1)]:
-  for z,col in [(.21,'red'),(.30,'yellow'),(3.03,'red')]:b('Corridor_rail',((xa+xb)/2,5.29,z),(xb-xa,.09,.07),col)
+  for z,col in [(.21,'red'),(.30,'yellow')]:b('Corridor_rail',((xa+xb)/2,5.29,z),(xb-xa,.09,.07),col)
+ # The high rail clears both door frames and must remain continuous.
+ b('Corridor_ceiling_rail',(( -6.35+5.1)/2,5.29,3.03),(5.1+6.35,.09,.07),'red')
  for crop,x,z,w,h in [((313,29,362,75),0,2.05,1.30,1.23),((62,34,92,55),-4.93,2.13,.66,.46),((206,32,231,57),-1.73,2.25,.48,.48),((402,42,427,70),1.61,2.08,.50,.56)]:
   panel(geo,'Portrait_frame',x,5.25,z,w+.16,h+.16)
   source_patch(geo,ROOT/'source/room 013.png',crop,(x,5.18,z),(w,h),'Original_corridor_portrait')

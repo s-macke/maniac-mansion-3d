@@ -176,8 +176,10 @@ def build_entrance():
     for i in range(N):
      z=(i+1)*rise
      a,b,c,d=left[i],right[i],right[i+1],left[i+1]
-     verts=[(p.x,p.y,h) for h in [0,z] for p in [a,b,c,d]]
-     mesh(f'Step_{i+1:02}',verts,[(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],'brown')
+     # Exposed top and riser only; the continuous side panels close the stair body.
+     # Separate step sides used to overlap the curved panels, especially at the inside bend.
+     verts=[(p.x,p.y,z) for p in [a,b,c,d]]+[(p.x,p.y,z-rise) for p in [a,b]]
+     mesh(f'Step_{i+1:02}',verts,[(0,1,2,3),(4,5,1,0)],'brown')
      # Palette-defined riser shadow and thin gold tread edge.
      beam('Tread_ink',(a.x,a.y-.015,z+.012),(b.x,b.y-.015,z+.012),.047,'black')
      beam('Tread_gold',(a.x,a.y-.04,z+.033),(b.x,b.y-.04,z+.033),.022,'yellow')
@@ -186,10 +188,15 @@ def build_entrance():
      mesh('Red_carpet_tread',[(p.x,p.y,z+.01) for p in [ac,bc,cc,dc]],[(0,1,2,3)],'red')
      mesh('Red_carpet_riser',[(ac.x,ac.y-.005,z-rise),(bc.x,bc.y-.005,z-rise),(bc.x,bc.y-.005,z),(ac.x,ac.y-.005,z)],[(0,1,2,3)],'red')
     # Solid curved wooden side panels, as in the illustration; gold edges and dark outlines.
-    for side in [left,right]:
+    for side_index,side in enumerate([left,right]):
      for i in range(N):
       a,b=side[i],side[i+1];z0=i*rise+.68;z1=(i+1)*rise+.68
-      mesh('Curved_wood_balustrade',[(a.x,a.y,i*rise),(b.x,b.y,(i+1)*rise),(b.x,b.y,z1),(a.x,a.y,z0)],[(0,1,2,3)],'brown')
+      # Preserve the original lighting directions of the outward-facing body and inner panel.
+      # They meet at the tread height instead of overlapping along a sloped lower edge.
+      tread_z=(i+1)*rise
+      body_face=(3,2,1,0) if side_index==0 else (0,1,2,3)
+      mesh('Curved_stair_body',[(a.x,a.y,0),(b.x,b.y,0),(b.x,b.y,tread_z),(a.x,a.y,tread_z)],[body_face],'brown')
+      mesh('Curved_wood_balustrade',[(a.x,a.y,tread_z),(b.x,b.y,tread_z),(b.x,b.y,z1),(a.x,a.y,z0)],[(0,1,2,3)],'brown')
       beam('Rail_ink',(a.x,a.y,z0),(b.x,b.y,z1),.10,'black')
       beam('Rail_gold',(a.x,a.y,z0+.04),(b.x,b.y,z1+.04),.06,'yellow')
     for p in [left[0],right[0]]:

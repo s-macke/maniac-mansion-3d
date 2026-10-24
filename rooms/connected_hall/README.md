@@ -35,6 +35,10 @@ The kitchen door hinges on its right edge, opposite its left knob. The cellar
 door uses the shared handleless wooden panel variant, matching background 010.
 Both remain interactive and initially closed.
 
-## Downstairs sconces — 2026-09-26
+## Three-dimensional wall lights
 
-The four gray sconces flanking the two rear downstairs doors are now solid fixtures: shaped silver backplates, mask-like faces, curved arms, lower finials, projecting supports, candle cups and small white candle/flame forms. They replace the shallow source-pixel reliefs. Gentle local light is baked into vertex colors; no runtime lamps are added. The upstairs illustrated lamps are unchanged.
+The four gray sconces flanking the two rear downstairs doors are now solid fixtures: shaped silver backplates, mask-like faces, curved arms, lower finials, projecting supports, candle cups and small white candle/flame forms. They replace the shallow source-pixel reliefs. Gentle local light is baked into vertex colors; no runtime lamps are added. The two upstairs twin lamps are also solid fixtures: open conical white shades, gray stems, projecting gold arms, red/gold finials and wall plates. They replace the flat illustrated lamps from background 011. Small local highlights are baked at the four bulb positions.
+
+The sweeping entrance stair uses exposed treads/risers and separate lower body faces and upper wooden panels, meeting exactly at tread height. Their original face directions preserve the lighting contrast between stair body and inner wood. This replaces overlapping step-box sides, eliminating coincident surfaces on the inside curve without changing tread heights, rail positions or walking geometry.
+
+The brown crown moulding continues over all three upstairs door headers, joining the existing wall-top strips without gaps.

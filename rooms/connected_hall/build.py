@@ -56,6 +56,8 @@ for i,(a,b) in enumerate(zip(boundary,boundary[1:])):
 # Upper rear and side walls with real doorway apertures behind closed leaves.
 for name,width,origin,rot,doors in [('Gallery_back',12.8,(0,BACK),0,[(.20,1.90,2.95)]),('Gallery_left',3.8,(-6.4,7.85),math.pi/2,[(.65,1.05,2.72)]),('Gallery_right',3.8,(6.4,7.85),-math.pi/2,[(-.65,1.05,2.72)])]:
  before=set(bpy.data.objects);wall(name,width,origin,rot,doors)
+ # Crown moulding continues above the door headers; only low rails need jamb gaps.
+ for u,w,h in doors:localbox(name+'_crown_above_door',u,-.08,3.61,w,.12,.07,'brown',origin,rot)
  for o in set(bpy.data.objects)-before:o.location.z+=Z
 for name,u,origin,rot in [('Landing_left_door',.65,(-6.4,7.85),math.pi/2),('Landing_right_door',-.65,(6.4,7.85),-math.pi/2)]:
  before=set(bpy.data.objects);door(name,u,1.05,2.72,origin,rot)
@@ -108,9 +110,34 @@ def artwork(name,rect,x,y,z,width,exclude=None):
 for x,rect in [(-2.25,(184,16,240,64)),(2.65,(376,17,434,65))]:
  geo.active='Landing';box('Portrait_frame_depth',(x,BACK-.10,Z+1.84),(1.45,.19,1.48),'brown')
  geo.active='Landing_art';artwork('Original_family_portrait',rect,x,BACK-.21,Z+1.12,1.40)
-# Two illustrated lamps, with source silhouettes rather than a generic modern fixture.
-for x,rect in [(-4.55,(103,0,145,46)),(4.85,(494,0,539,46))]:
- artwork('Original_wall_lamp',rect,x,BACK-.24,Z+2.02,.86,exclude={(0,168,168),(84,252,252),(0,0,0)})
+# Solid twin wall lights retain the white shades and ornate gold/red arms in 011.
+geo.active='Landing'
+for x in [-4.55,4.85]:
+ sphere('Landing_lamp_backplate',(x,BACK-.11,Z+2.38),(.095,.055,.18),'brown')
+ sphere('Landing_lamp_gold_plate',(x,BACK-.17,Z+2.38),(.068,.022,.145),'yellow')
+ beam('Landing_lamp_bracket',(x,BACK-.17,Z+2.39),(x,BACK-.39,Z+2.39),.045,'brown')
+ sphere('Landing_lamp_center',(x,BACK-.40,Z+2.39),(.07,.055,.10),'yellow')
+ beam('Landing_lamp_drop',(x,BACK-.40,Z+2.32),(x,BACK-.40,Z+2.14),.035,'red')
+ sphere('Landing_lamp_finial',(x,BACK-.40,Z+2.12),(.043,.04,.065),'yellow')
+ for side in [-1,1]:
+  points=[(x,BACK-.39,Z+2.38),(x+side*.14,BACK-.42,Z+2.36),(x+side*.25,BACK-.44,Z+2.44),(x+side*.23,BACK-.44,Z+2.57)]
+  for start,end in zip(points,points[1:]):beam('Landing_lamp_curled_arm',start,end,.036,'yellow')
+  cx=x+side*.23;cy=BACK-.44
+  cyl('Landing_lamp_cup',(cx,cy,Z+2.58),.083,.045,'brown',16)
+  cyl('Landing_lamp_cup_rim',(cx,cy,Z+2.61),.095,.022,'yellow',16)
+  bulb=sphere('Landing_lamp_bulb',(cx,cy,Z+2.67),(.045,.045,.065),'white')
+  bulb['bake_unlit']=True;bulb['bake_no_shadow']=True
+  # Hollow truncated shades, with real inner walls and an open underside.
+  n=16;verts=[(cx+r*math.cos(i*math.tau/n),cy+r*math.sin(i*math.tau/n),Z+z) for r,z in [(.18,2.68),(.085,2.85),(.165,2.68),(.073,2.84)] for i in range(n)]
+  faces=[]
+  for i in range(n):
+   j=(i+1)%n
+   faces.extend([(i,j,n+j,n+i),(2*n+i,3*n+i,3*n+j,2*n+j),(i,2*n+i,2*n+j,j),(n+i,n+j,3*n+j,3*n+i)])
+  mesh('Landing_lamp_shade',verts,faces,'white')
+  bpy.ops.mesh.primitive_torus_add(major_segments=16,minor_segments=4,location=(cx,cy,Z+2.68),major_radius=.174,minor_radius=.011)
+  put(bpy.context.object,'Landing_lamp_shade_rim','gray')
+  beam('Landing_lamp_upper_stem',(cx,cy,Z+2.85),(cx,cy,Z+3.10),.024,'gray')
+  sphere('Landing_lamp_top',(cx,cy,Z+3.12),(.036,.036,.045),'white')
 # Finials at each gallery opening echo the source's stair-head ornaments.
 geo.active='Landing'
 for x in [-1.15,1.55]:

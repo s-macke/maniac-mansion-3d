@@ -42,3 +42,5 @@ The sculpture and plinth are larger to better match their height relative to the
 The inferred opposite wall continues this room’s architectural finish. See the
 [complete wall-finish audit](../../docs/opposite_walls.md) for the specific treatment
 and the distinction between repeating decoration and unique source details.
+
+The upper red/brown wooden rail continues across both medical-room and arcade door headers. Only the lower rails retain doorway gaps.

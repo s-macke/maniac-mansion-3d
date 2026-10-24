@@ -25,3 +25,6 @@ The independent exterior space owns the complete upper facade, siding, windows a
 ## Source and generated files
 
 This folder contains only the builder, authored `room.json` and documentation. Original artwork is in `source/`. Generated scenes live in `generated/blender/front_exterior/`; GLBs in `generated/models/rooms/`; previews in `generated/previews/rooms/front_exterior/`; derived door metadata and shading reports in `generated/reports/rooms/front_exterior/`. Builders never write derived data back into `room.json`.
+
+The red foundation and grating header terminate at the porch deck’s underside (-0.12 m). Their front faces meet edge-to-edge, without the previous overlapping strip that flickered along the gray deck.
+The same staggered brick courses continue around both exposed side walls, with corner spacing matched to the front. All vertical joints stop below the gray deck.

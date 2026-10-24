@@ -282,6 +282,74 @@
         "strength": 0.24,
         "radius": 0.025,
         "coneAngle": 115
+      },
+      {
+        "id": "landing_lamp_-4.55_-1",
+        "position": [
+          -4.78,
+          9.31,
+          6.01
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.5,
+        "strength": 0.2,
+        "radius": 0.04,
+        "coneAngle": 125
+      },
+      {
+        "id": "landing_lamp_-4.55_1",
+        "position": [
+          -4.319999999999999,
+          9.31,
+          6.01
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.5,
+        "strength": 0.2,
+        "radius": 0.04,
+        "coneAngle": 125
+      },
+      {
+        "id": "landing_lamp_4.85_-1",
+        "position": [
+          4.619999999999999,
+          9.31,
+          6.01
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.5,
+        "strength": 0.2,
+        "radius": 0.04,
+        "coneAngle": 125
+      },
+      {
+        "id": "landing_lamp_4.85_1",
+        "position": [
+          5.08,
+          9.31,
+          6.01
+        ],
+        "direction": [
+          0,
+          1,
+          -0.4
+        ],
+        "range": 1.5,
+        "strength": 0.2,
+        "radius": 0.04,
+        "coneAngle": 125
       }
     ]
   }
