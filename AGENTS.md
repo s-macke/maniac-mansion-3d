@@ -43,7 +43,7 @@ Read the documents relevant to the task; this index does not require reading eve
 | [Top-floor interiors](docs/top_floor.md) | Safe attic, speaker room, wire attic and observatory furnishings |
 | [Mummy bathroom](rooms/mummy_bathroom/README.md) | Furnished bathroom beyond the exercise/mummy room |
 | [Photo room](rooms/photo_room/README.md) | Furnished darkroom beside the windowed-hall stairs |
-| [Hidden attic stairs](rooms/attic_stairs/README.md) | Stair passage behind the den’s painted wall panel |
+| [Hidden ladder shaft](rooms/attic_stairs/README.md) | Ladder shaft behind the den’s painted wall panel |
 | [Wire attic](rooms/wire_attic/README.md) | Damaged plaster, boards, wiring and den connection |
 | [Observatory](rooms/observatory/README.md) | Telescope, circular dome, open slit and den hatch |
 | [Cellar routes](docs/cellar.md) | Hall cellar stairs, furnished dungeon/laboratories, low bush grating and crawl portals |

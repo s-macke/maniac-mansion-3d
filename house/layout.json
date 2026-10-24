@@ -825,6 +825,38 @@
         },
         "yaw": 0
       }
+    },
+    {
+      "id": "wire_attic_access",
+      "label": "Wire attic",
+      "lower": {
+        "room": "attic_stairs",
+        "port": "higher_floor",
+        "landing": {
+          "x": 0,
+          "y": 0.8,
+          "height": 0
+        },
+        "shaft": {
+          "x": 0,
+          "y": 1.67
+        },
+        "yaw": 0
+      },
+      "upper": {
+        "room": "wire_attic",
+        "port": "entry_door",
+        "landing": {
+          "x": 0,
+          "y": 0.6,
+          "height": 0
+        },
+        "shaft": {
+          "x": 0,
+          "y": 1.7
+        },
+        "yaw": 0
+      }
     }
   ],
   "crawls": [

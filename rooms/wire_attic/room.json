@@ -23,7 +23,7 @@
   },
   "spawn": {
     "x": 0,
-    "y": 2,
+    "y": 3,
     "height": 0,
     "yaw": 0,
     "pitch": 0
@@ -33,22 +33,44 @@
     "depth": 4.5,
     "height": 3.12,
     "wallThickness": 0.18,
-    "obstacles": []
+    "obstacles": [],
+    "floorHoles": [
+      {
+        "x0": -0.5,
+        "x1": 0.5,
+        "y0": 1.15,
+        "y1": 2.25
+      }
+    ],
+    "ladders": [
+      {
+        "id": "wire_ladder",
+        "position": [
+          0,
+          2.15,
+          -3.36
+        ],
+        "yaw": 0,
+        "height": 4.2
+      }
+    ]
   },
   "ports": [
     {
       "id": "entry_door",
+      "kind": "hatch",
       "position": [
         0,
-        0,
+        1.7,
         0
       ],
       "outward": [
         0,
+        0,
         -1
       ],
-      "width": 1.3,
-      "height": 2.83,
+      "width": 1,
+      "depth": 1.1,
       "state": "open",
       "destination": "attic_stairs"
     }
@@ -57,14 +79,7 @@
     "wall": "cyan",
     "floor": "darkgray",
     "trim": "darkgray",
-    "entries": [
-      {
-        "port": "entry_door",
-        "wall": "front",
-        "owner": false,
-        "frame": false
-      }
-    ],
+    "entries": [],
     "wallColors": {
       "left": "darkgray",
       "front": "darkgray"
@@ -77,14 +92,9 @@
     ],
     "lights": [
       [
-        -2.0,
-        2.25,
-        2.95
-      ],
-      [
-        2.0,
-        2.25,
-        2.95
+        -1.71,
+        3.64,
+        2.5
       ]
     ],
     "cell": 0.22,
@@ -119,13 +129,14 @@
         "position": [
           -1.71,
           3.64,
-          2.43
+          2.5
         ],
-        "strength": 0.85,
-        "range": 4.8,
-        "radius": 0.1,
-        "coneAngle": 100
+        "strength": 1.05,
+        "range": 7.5,
+        "radius": 0.045,
+        "coneAngle": 140
       }
-    ]
+    ],
+    "fillStrength": 0.65
   }
 }

@@ -56,7 +56,7 @@ Source images were compared with the project's 1.2 vertical display correction. 
 | Exercise/mummy room / 025 | 10.4 × 5.1 | Keep | Long source supports the equipment and sarcophagus sequence. |
 | Mummy bathroom / 024 | 7.2 × 4.5 | Revised | Reduced footprint, repositioned fixtures, fitted tiles and preserved the rear entry. |
 | Typewriter/den / 027 | 9 × 5.1 | Review | Fireplace and desk feel small relative to free floor. Separate furniture scale from room size; preserve both concealed passage and hatch access. |
-| Hidden attic stairs / inferred from 015 route | 2.4 × 6.1 | Inferred | Purpose-built connecting passage, not a reconstruction of the rectangular room in 015. Judge tread geometry, headroom and portal clearance instead of source-image aspect. |
+| Hidden ladder shaft / inferred from 015 route | 2.4 × 2.5 | Inferred | Purpose-built connecting passage, not a reconstruction of the rectangular room in 015. Judge ladder access, headroom and hatch clearance instead of source-image aspect. |
 | Safe attic / 009 | 8.6 × 4.5 | Revised | Reduced depth with hatch and landing shifted together; safe remains forward of the hatch. |
 | Tentacle room / 020 | 8.6 × 4.5 | Revised | Reduced depth without shrinking speakers or bed; side panels fit the shorter walls. |
 | Wire attic / 015 | 8.6 × 4.5 | Revised | Reduced depth; rear artwork follows wall and roof-edge beams fit the new span. |

@@ -1,7 +1,9 @@
-# Hidden attic stairs
+# Hidden ladder shaft
 
-A circulation unit between the den/typewriter room (027) and wire attic (015). The original hint book, printed page 39, describes stairs beyond the paint-concealed door. The staircase dimensions and plain gray enclosure are inferred: no separate stair background was supplied.
+The den/typewriter room’s red painted panel opens into a compact black shaft with a shared vertical ladder up to the wire attic. This corrects the earlier inferred staircase. The stable `attic_stairs` identifier is retained for links and room packaging.
 
-The lower front portal connects to the den's `hidden_panel`; the rear upper portal opens directly into the attic. One 3.36 m flight rises over 4.1 m, with continuous walking and camera movement. The den owns the only interactive panel, closed initially. There is no extra door at the top.
+The lower front doorway connects to the den’s `hidden_panel`, which starts closed. The ladder climbs 3.36 m through the ceiling hatch into the wire attic’s floor opening. Use E near the ladder to climb or descend; movement crosses the portal continuously. The upper landing and descent interaction are on the front side of the attic floor opening, in front of the ladder. There is no extra door at the top.
 
-Rebuild with `./docker-build.sh room attic_stairs`. Source lives here; Blender scenes, GLBs and previews are generated under `generated/`. This unit remains independently placed and connected by portals, avoiding overlaps with neighboring rooms.
+The shaft is 2.4 × 2.5 m; these dimensions are inferred circulation space. Black walls preserve the dark opening while the shared ladder remains visible.
+
+Rebuild: `./docker-build.sh room attic_stairs`. Rebuild `wire_attic` too when changing their paired hatch geometry.

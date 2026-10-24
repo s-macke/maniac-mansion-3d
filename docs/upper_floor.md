@@ -22,8 +22,8 @@ The exercise/mummy room's far door now opens into the mummy bathroom (024) on th
 | Windowed hall → upper corridor | Windowed hall `higher_floor` |
 | Upper corridor → four bedrooms | Upper corridor, one door per bedroom |
 | Upper corridor → typewriter room | Upper corridor `typewriter_door` |
-| Typewriter room → hidden attic stairs | Typewriter room `hidden_panel` |
-| Hidden attic stairs → wire attic | Open portal, no door leaf |
+| Typewriter room → hidden ladder shaft | Typewriter room `hidden_panel` |
+| Hidden ladder shaft → wire attic | Vertical ladder and floor hatch, no door leaf |
 | Exercise/mummy room → mummy bathroom | Mummy room `bathroom_door` |
 | Windowed stair hall → photo room | Windowed hall `photo_door` |
 
@@ -40,7 +40,7 @@ Furniture footprints preserve both stair routes, every door approach and all thr
 
 Use `?room=windowed_hall` or `?room=upper_corridor` at the local preview URL to review these spaces directly. `web/tests/upper-floor.spec.ts` covers closed doors, crossing/return transforms, both stair flights, actual model floor/headroom, corrected corridor slots and bathroom/photo-room connections.
 
-The [original hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed pages 39 and 43, confirms den/typewriter-room access to the wire attic and Edna’s bedroom ladder to the safe attic. There is no bathroom-to-attic connection to implement. The Edna route is now implemented using background 009 as the boarded safe-room reference; its cutaway placement remains tentative. The wire-attic route is implemented: open the painted panel on the den’s right wall, walk through the independent stair passage, then enter the furnished wire attic through its upper portal.
+The [original hint book](https://c64sets.com/maniac_mansion/hint_book.pdf), printed pages 39 and 43, confirms den/typewriter-room access to the wire attic and Edna’s bedroom ladder to the safe attic. There is no bathroom-to-attic connection to implement. The Edna route is now implemented using background 009 as the boarded safe-room reference; its cutaway placement remains tentative. The wire-attic route is implemented: open the painted panel on the den’s right wall, enter the black shaft and climb the ladder through the wire attic’s floor opening.
 
 ## Validation
 

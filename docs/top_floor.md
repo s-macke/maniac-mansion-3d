@@ -8,10 +8,10 @@ Four independent rooms at 13.44 m complete the existing top level. All are recon
 |---|---|---|---|
 | [Safe attic](../rooms/safe_attic/README.md) | 009 | Gray boards, weathering, window, bulb, portrait-covered safe | Heart bedroom ladder |
 | [Green Tentacle’s music room](../rooms/tentacle_room/README.md) | 020 | Speakers, green bed, stereo, posters and timber panels | Radio bedroom ladder |
-| [Wire attic](../rooms/wire_attic/README.md) | 015 | Damaged plaster, laths, boarded window, loose wiring | Den panel and hidden attic stairs |
+| [Wire attic](../rooms/wire_attic/README.md) | 015 | Damaged plaster, laths, boarded window, loose wiring | Den panel and hidden ladder shaft |
 | [Observatory](../rooms/observatory/README.md) | 028 | Telescope, pedestal controls, control box, star chart and lamp | Den ladder |
 
-The hidden attic stairs remain the existing inferred passage because there is no separate stair background. No new destinations, characters or gameplay are introduced. The safe portrait is a static cover; the instruments, stereo and wires are decorative. Interactive doors retain their closed initial state.
+The hidden ladder shaft replaces the earlier inferred stairs, following the corrected den-to-attic route. No new destinations, characters or gameplay are introduced. The safe portrait is a static cover; the instruments, stereo and wires are decorative. Interactive doors retain their closed initial state.
 
 ## Artwork and geometry
 

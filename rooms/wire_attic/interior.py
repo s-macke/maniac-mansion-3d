@@ -23,17 +23,16 @@ def furnish(g,c):
  # Restore the gray plaster behind the removed flat ceiling-wire pixels.
  b('Old_wire_plaster_fill',(-1.70,4.956,2.87),(.17,.003,.42),'darkgray')
  # Solid boards cross the black window recess at alternating angles.
- b('Window_recess',(2.22,4.99,2.06),(1.76,.035,1.92),'black')
+ b('Window_recess',(2.22,4.90,2.06),(1.76,.035,1.92),'black')
+ # Boards sit against the recess face; tiny depth offsets avoid coplanar overlap.
  # Irregular crossed boards, with varied lengths and chipped ends.
  for i,(x,z,w,angle) in enumerate([(2.18,2.80,1.44,-.24),(2.17,2.55,1.75,.27),(2.29,2.29,1.86,-.05),(2.18,2.03,1.66,.32),(2.13,1.71,1.80,-.19),(2.30,1.43,1.36,-.28)]):
   profile=[(-w/2,-.10),(-w/2+.035,.08),(-w/2+.12,.12),(w/2-.08,.105),(w/2,.07),(w/2-.02,-.08),(w/2-.16,-.105)]
   n=len(profile);vs=[(xx,yy,zz) for yy in [-.0325,.0325] for xx,zz in profile]
-  o=g.mesh('Window_board',vs,[tuple(range(n)),tuple(reversed(range(n,2*n)))]+[(j,(j+1)%n,(j+1)%n+n,j+n) for j in range(n)],'yellow');o.location=(x,4.81-i*.014,z);o.rotation_euler.y=angle
+  o=g.mesh('Window_board',vs,[tuple(range(n)),tuple(reversed(range(n,2*n)))]+[(j,(j+1)%n,(j+1)%n+n,j+n) for j in range(n)],'yellow');o.location=(x,4.85-i*.003,z);o.rotation_euler.y=angle
   for dx in [-w*.40,w*.40]:
-   b('Board_nail',(x+dx*math.cos(angle),4.773-i*.014,z-dx*math.sin(angle)),(.024,.006,.032),'red')
- # The black floor outline is scenery; its destination is deliberately unspecified.
- with_floor_y=5.2-c['geometry']['depth']
- curved_line(g,'Attic_floor_outline',[(-.65,with_floor_y+1.40,.006),(.65,with_floor_y+1.40,.006),(.44,with_floor_y+1.96,.006),(-.44,with_floor_y+1.96,.006),(-.65,with_floor_y+1.40,.006)],.018,'black')
+   b('Board_nail',(x+dx*math.cos(angle),4.813-i*.003,z-dx*math.sin(angle)),(.024,.006,.032),'red')
+ # The floor opening is now cut by the shell and connects to the den ladder shaft.
  # Actual projecting wire ends at the left broken-plaster opening.
  for dx,col in [(0,'red'),(.10,'blue')]:
   curved_line(g,'Exposed_loose_wire',[(-2.86+dx,4.83,1.40),(-2.70+dx,4.75,1.41),(-2.62+dx,4.72,1.20),(-2.76+dx,4.68,1.09)],.027,col)

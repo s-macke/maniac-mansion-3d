@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-test('reveal the den panel, walk upstairs into the attic, and return',async({page})=>{
+test('reveal the den panel, climb the shaft into the attic, and return',async({page})=>{
  test.setTimeout(120000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{HTMLCanvasElement.prototype.requestPointerLock=()=>Promise.reject(new Error('Use drag controls'));});
  await page.goto('/?room=typewriter_room');await expect(page.locator('.status')).toHaveText('EXPLORING', {timeout:45000});
@@ -26,11 +26,22 @@ test('reveal the den panel, walk upstairs into the attic, and return',async({pag
  await page.keyboard.press('e');await expect(page.locator('.door-action')).toContainText('Close painted wall panel');
  await expect.poll(async()=>(await state()).movingDoors).not.toContain('typewriter_room:hidden_panel');
  await page.screenshot({path:'test-results/painted-panel-open.png'});await cross(189.5,2.6,'attic_stairs');
- await go(292,5.65);expect((await state()).height).toBeCloseTo(13.44,1);
- await cross(292,7,'wire_attic');await go(316,2);await page.screenshot({path:'test-results/wire-attic-browser.png'});
- await cross(316,-1,'attic_stairs');await go(292,.6);expect((await state()).height).toBeCloseTo(10.08,1);
+ await go(292,.8);await aim(292,1.67);
+ await expect(page.locator('.door-action')).toContainText('Climb up');
+ await page.screenshot({path:'test-results/wire-shaft.png'});
+ await page.keyboard.press('e');
+ await expect.poll(async()=>(await state()).room,{timeout:15000}).toBe('wire_attic');
+ await expect.poll(async()=>(await state()).climbing).toBe(false);
+ expect((await state()).y).toBeCloseTo(.6,1);
+ await page.screenshot({path:'test-results/wire-attic-browser.png'});
+ await aim(316,1.7);
+ await expect(page.locator('.door-action')).toContainText('Climb down');await page.keyboard.press('e');
+ await expect.poll(async()=>(await state()).room,{timeout:15000}).toBe('attic_stairs');
+ await expect.poll(async()=>(await state()).climbing).toBe(false);
+ await go(292,.6);expect((await state()).height).toBeCloseTo(10.08,1);
  await cross(292,-1,'typewriter_room');
- await go(186.6,2.6);await aim(188.5,2.6);await page.keyboard.press('e');
+ await go(187,2.1);await aim(188.5,2.6);
+ await expect(page.locator('.door-action')).toContainText('Close painted wall panel');await page.keyboard.press('e');
  await expect(page.locator('.door-action')).toContainText('Open painted wall panel');
  await expect.poll(async()=>(await state()).movingDoors).not.toContain('typewriter_room:hidden_panel');expect(errors).toEqual([]);
 });

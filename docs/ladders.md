@@ -1,16 +1,18 @@
 # Ladder connections
 
-Four climb routes use shared ladders and continuous hatch portals:
+Five climb routes use shared ladders and continuous hatch portals:
 
 | Lower room | Upper room | Reference |
 |---|---|---|
 | Heart bedroom / Edna (019) | Safe attic (009) | Original hint book, printed page 43 |
 | Radio bedroom / Fred (021) | Green Tentacle’s speaker room (020) | Original hint book, printed pages 37–38 |
 | Den / typewriter room (027) | Observatory (028) | Printed pages 39–41; shared ladder substitutes for climbing the grown plant |
+| Black shaft behind the den panel | Wire attic (015) | User-corrected ladder route; replaces inferred stairs |
+| Meteor chamber (051) | Garage (016) | User-requested direct connection |
 
 The [original Lucasfilm hint book](https://c64sets.com/maniac_mansion/hint_book.pdf) confirms these routes. Background 009 is used as the safe-attic reference: boarded wall, left window and portrait on the right. Its position in the supplied cutaway remains tentative; the blue circular telescope overlay is not reproduced as room lighting. Room 020 supplies the speaker-room palette. The safe attic and speaker room are now furnished; their landing footprints stay clear. See the [top-floor guide](top_floor.md). Hatch placement and dimensions are inferred to suit the walkthrough.
 
-The mummy bathroom has no attic connection. The separate wire attic (015) is accessed from the den/typewriter room (027), according to printed page 39; that route now uses an interactive painted wall panel and [walkable stairs](../rooms/attic_stairs/README.md), followed by a seamless portal into the furnished wire attic.
+The mummy bathroom has no attic connection. The separate wire attic (015) is accessed from the den/typewriter room (027), according to printed page 39; that route now uses an interactive painted wall panel and [a black ladder shaft](../rooms/attic_stairs/README.md), followed by a seamless portal into the furnished wire attic.
 
 The fourth route is a user-requested direct **meteor chamber (051) ↔ garage (016)** ladder. It replaces the original exit door and long passage; the garage floor has an actual open hatch.
 
@@ -42,3 +44,5 @@ The shared kit rebuilds automatically when missing or changed. `all` also genera
 `tests/ladders.spec.ts` checks continuous up/down transforms, the camera-plane switch, safe landings, unloaded destinations, hatch collision, real GLB openings and shared geometry batching. `tests/ladders-browser.spec.ts` walks both routes in software-rendered Chrome, checks portal visibility, and exercises a round trip with emulated phone touch controls. This does not establish physical-mobile performance.
 
 The [observatory](../rooms/observatory/README.md) has circular collision, a curved dome with a real open telescope slit, and a floor hatch to the den. The painted wall panel still leads separately to the wire attic.
+
+The den’s black shaft (`attic_stairs`) now also uses the shared ladder kit and continuous hatch portal to `wire_attic`, replacing the inferred staircase. Its red panel remains the entrance door.

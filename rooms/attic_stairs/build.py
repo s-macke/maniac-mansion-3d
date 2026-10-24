@@ -1,4 +1,4 @@
-"""Room 015: artwork-led shell; furnishings deferred."""
+"""Black ladder shaft behind the den panel, connecting to room 015."""
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[2]

@@ -8,7 +8,7 @@ import {readFile} from 'node:fs/promises';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {instantiateSharedAssets} from '../lib/house/shared-assets';
-for(const id of ['heart_bedroom','radio_bedroom','typewriter_room','meteor_chamber'])test(`${id} climbs through a continuous hatch in both directions`,()=>{
+for(const id of ['heart_bedroom','radio_bedroom','typewriter_room','meteor_chamber','attic_stairs'])test(`${id} climbs through a continuous hatch in both directions`,()=>{
  const v=createHouseRuntime(id),ladders=createLadders(v),link=v.house.ladders!.find(l=>l.lower.room===id)!;
  const edge=v.graph.portals.find(e=>e.from.room.id===id&&e.from.port.kind==='hatch')!,reverse=v.graph.portals.find(e=>e.key===edge.reverse)!;
  for(const up of [true,false]){
@@ -43,7 +43,7 @@ test('shared ladder sections batch once and room GLBs leave the hatch clear',asy
  const load=async(path:string)=>{const b=await readFile(path);return (await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength) as ArrayBuffer,'')).scene;};
  const kit=await load('../generated/models/ladders/ladder_v1.glb'),v=createHouseRuntime();
  const geometries=new Set();
- for(const id of ['heart_bedroom','radio_bedroom','safe_attic','tentacle_room','typewriter_room','observatory','meteor_chamber','garage']){
+ for(const id of ['heart_bedroom','radio_bedroom','safe_attic','tentacle_room','typewriter_room','observatory','meteor_chamber','garage','attic_stairs','wire_attic']){
   const def=v.definitions[id],root=new THREE.Group();instantiateSharedAssets(root,def,kit,'ladders');
   expect(root.children).toHaveLength(1);const batch=root.children[0] as THREE.InstancedMesh;expect(batch.isInstancedMesh).toBe(true);expect(batch.count).toBeGreaterThanOrEqual(12);geometries.add(batch.geometry);
   const shell=await load('../generated/models/rooms/'+def.asset.split('/').at(-1));shell.updateMatrixWorld(true);

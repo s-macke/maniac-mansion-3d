@@ -7,7 +7,8 @@ ROOT=Path(__file__).resolve().parents[2]
 def furnish(g,c):
  b=g.box
  source_patch(g,ROOT/'source/room 027.png',(176,8,313,64),(1.45,4.907,2.14),(5.55,1.87),'Original_den_wallpaper')
- source_patch(g,ROOT/'source/room 027.png',(71,8,110,64),(-3.53,4.907,2.14),(1.40,1.87),'Original_den_wallpaper_left')
+ # Reuse clean wallpaper: the left source crop also contains the plant silhouette.
+ source_patch(g,ROOT/'source/room 027.png',(176,8,215,64),(-3.53,4.907,2.14),(1.40,1.87),'Original_den_wallpaper_left')
  b('Den_wainscot',(0,4.85,.54),(8.5,.10,1.02),'brown')
  for z,col in [(.13,'red'),(1.06,'black'),(1.12,'yellow')]:b('Den_panel_rail',(0,4.77,z),(8.5,.045,.055),col)
  # Complete the inset rectangular outlines of the original timber panels.
@@ -16,11 +17,19 @@ def furnish(g,c):
   for xx in [left,right]:b('Den_panel_border',(xx,4.788,.58),(.025,.018,.72),'red')
  # Three-dimensional fireplace surrounds an actual recess with a dark back.
  x,y=-1.8,4.39
+ # A shallow stone hearth separates the firebox and piers from the carpet.
+ b('Fireplace_hearth',(x,4.20,.065),(2.38,1.30,.13),'darkgray')
+ b('Hearth_front_edge',(x,3.55,.065),(2.38,.035,.13),'gray')
+ for dx in [-.40,.40]:b('Hearth_stone_joint',(x+dx,3.79,.132),(.018,.48,.006),'black')
+ b('Firebox_soot_floor',(x,4.38,.137),(1.36,.72,.012),'black')
+ b('Firebox_ash',(x,4.40,.147),(.86,.38,.012),'darkgray')
+ for dx,angle in [(-.18,.15),(.20,-.22)]:
+  log=b('Firebox_charred_log',(x+dx,4.39,.21),(.15,.52,.12),'brown');log.rotation_euler.z=angle
  b('Fireplace_dark_recess',(x,4.765,.57),(1.43,.03,1.08),'black')
  for dx in [-.81,.81]:b('Stone_fireplace_pier',(x+dx,y,.57),(.43,.74,1.14),'gray')
  b('Fireplace_lintel',(x,y,1.07),(2.10,.74,.27),'gray');b('Fireplace_mantel',(x,y,1.26),(2.26,.88,.12),'brown')
  # Original irregular red/brown stone faces and colored flecks, flush with
- # the solid three-dimensional piers and lintel (the opening remains empty).
+ # the solid three-dimensional piers and lintel (the firebox opening stays clear).
  source_patch(g,ROOT/'source/room 027.png',(99,74,183,108),(x,4.012,.57),(2.10,1.14),'Original_fireplace_stones',only={'red','lightred','brown','gray','darkgray'})
  b('Mantel_yellow_edge',(x,3.944,1.26),(2.26,.014,.032),'yellow')
  panel(g,'Family_portrait_frame',-1.8,4.91,2.18,1.80,1.60)
