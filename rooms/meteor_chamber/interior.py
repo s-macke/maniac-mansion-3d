@@ -8,6 +8,18 @@ from blender_shared.bedroom_furniture import finish
 
 def furnish(g,c):
  b=g.box;half=c['geometry']['halfWidth'];metal_wall(g,half,5.1)
+ # The garage hatch's brown trim and shaft previously shared the same inner
+ # faces over 5.5 cm of height. Replace that surround with butt-jointed rings.
+ for obj in list(bpy.data.objects):
+  if obj.name.startswith(('Hatch_frame','Hatch_shaft')):bpy.data.objects.remove(obj,do_unlink=True)
+ for hole in c['geometry']['ceilingHoles']:
+  x0,x1,y0,y1=[hole[k] for k in ['x0','x1','y0','y1']];level=c['geometry']['height'];trim_top=level+.055
+  def ring(name,bottom,top,color):
+   for x in [x0,x1]:b(name,(x,(y0+y1)/2,(bottom+top)/2),(.07,y1-y0+.07,top-bottom),color)
+   # End rails meet the long rails; their top faces never overlap at corners.
+   for y in [y0,y1]:b(name,((x0+x1)/2,y,(bottom+top)/2),(x1-x0-.07,.07,top-bottom),color)
+  ring('Garage_hatch_wood_frame',level-.005,trim_top,'brown')
+  ring('Garage_hatch_shaft',trim_top,hole['top'],c['shell']['wall'])
  for z,col in [(.47,'purple'),(.59,'purple'),(1.51,'red'),(1.65,'purple'),(1.79,'purple'),(2.54,'cyan')]:pipe(g,'Lab_wall_pipe',[(-half+.41,4.76,z),(half-.41,4.76,z)],.026,col,False)
  for x in [-3.63,-.63,1.62,4.71]:pipe(g,'Vertical_lab_pipe',[(x,4.71,.20),(x,4.71,3.10)],.052,'cyan')
  b('Switch_cabinet',(-2.55,4.36,.79),(1.20,.69,1.58),'cyan');b('Cabinet_gray_rim',(-2.55,3.994,.79),(1.06,.04,1.44),'gray');b('Cabinet_inset',(-2.55,3.965,.79),(.95,.02,1.31),'cyan')

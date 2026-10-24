@@ -29,7 +29,7 @@ before=set(col.objects);security_door(geo,ROOT);bpy.context.view_layer.update();
 parts.extend([('Security_leaf',[o for o in security_parts if not o.name.startswith('Security_door_frame')]),('Security_frame',[o for o in security_parts if o.name.startswith('Security_door_frame')])])
 for name,build in [('Entrance_transom',lambda:entrance_transom(geo)),('Concealed_leaf',lambda:concealed_panel(geo,ROOT)),('Grating_leaf',lambda:grating_leaf(geo))]:
  before=set(col.objects);build();bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
-for name,bg,crop in [('Dungeon_leaf','004',(482,18,524,102)),('Lab_leaf','030',(584,16,617,114)),('Metal_leaf','031',(378,18,392,120))]:
+for name,bg,crop in [('Dungeon_leaf','004',(482,18,524,102)),('Lab_leaf','030',(584,16,617,114)),('Metal_leaf','031',(378,18,391,109))]:
  before=set(col.objects);artwork_leaf(geo,ROOT,bg,crop);bpy.context.view_layer.update();parts.append((name,list(set(col.objects)-before)))
 before=set(col.objects);dungeon_reinforced_leaf(geo,ROOT);bpy.context.view_layer.update();parts.append(('Dungeon_reinforced_leaf',list(set(col.objects)-before)))
 for name,objects in parts:

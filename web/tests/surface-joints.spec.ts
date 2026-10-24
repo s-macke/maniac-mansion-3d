@@ -59,3 +59,18 @@ test('garage facade corners and gable have a single exposed surface',async()=>{
   expect(hits[0].distance).toBeCloseTo(.11,4);
  }
 });
+
+test('meteor garage hatch has no coincident wood-frame or shaft faces',async()=>{
+ const room=await model('meteor_chamber_v1_compact.glb');
+ for(const z of [3.14,3.17,3.20])for(const [x,y,dx,dy,distance] of [
+  [4.6,3.2,-1,0,.165],[5.2,3.2,1,0,.165],
+  [4.7,3.1,0,-1,.115],[4.7,3.9,0,1,.115],
+ ]){
+  const ray=new THREE.Raycaster(new THREE.Vector3(x,z,-y),new THREE.Vector3(dx,0,-dy),distance-.001,distance+.001);
+  expect(ray.intersectObject(room,true).length,`shaft/frame ${x},${y},${z}`).toBe(1);
+ }
+ for(const x of [4.42,5.38])for(const y of [2.96,4.04]){
+  const ray=new THREE.Raycaster(new THREE.Vector3(x,3.10,-y),new THREE.Vector3(0,1,0),.014,.016);
+  expect(ray.intersectObject(room,true).length,`wood corner ${x},${y}`).toBe(1);
+ }
+});

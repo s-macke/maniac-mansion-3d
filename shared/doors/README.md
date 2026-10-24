@@ -57,6 +57,16 @@ bar, wheel and keeper; the lab door's display, wheel and fasteners; and the plai
 metal door's handle. The double-barred dungeon door also has raised nested
 panels and hinge plates beneath its existing solid bars and padlocks.
 
+The plain metal door uses only the gray door area of background 031,
+`(378,18)-(391,109)`, excluding the blue floor and surrounding wall. Its core,
+edges and both faces are gray metal; the handle and seams remain dark. The
+handle relief is aligned to this corrected crop.
+
+The lab door leading into the meteor room has a cyan metal core matching
+background 030, including all four exposed edges; it does not use the blue core
+of the reinforced security doors. Five blue floor pixels at the source crop's
+lower-left corner are replaced by the same cyan metal continuation.
+
 The original color runs form the front surfaces of these solid profiles, with
 side faces at changes in depth and recessed dark seams. There are no image
 textures, normal maps or additional runtime materials. Both faces receive the
@@ -68,12 +78,14 @@ six owning rooms (`connected_hall`, `cellar`, `dungeon`, `outer_lab`, `main_lab`
 The door build additionally writes oblique `*_relief.png` close-ups under
 `generated/previews/shared/`. The saved `.blend` retains the full library layout.
 
-The revised compact library is 2,575,600 bytes (510,518 bytes gzip), shared once
+The revised compact library is 2,550,208 bytes (505,199 bytes gzip), shared once
 across the house. Validation covers relief on both faces, all moving mesh bounds,
-hinge/handle alignment, collision, opening state and shared-resource reuse. Ten
+hinge/handle alignment, collision, opening state and shared-resource reuse. Twelve
 focused checks pass; a desktop browser review opened the reinforced door and
 crossed into the hall. The nine other kit components retain identical geometry
-and colors; sampled front-face colors of the revised leaves match the old kit.
+and colors; the mechanical relief preserves the source face colors. The plain
+metal leaf deliberately excludes the former crop's blue floor/wall pixels and
+uses a neutral gray core; a full vertex-color check covers both faces and edges.
 
 ## Knobs and hinges
 

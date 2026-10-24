@@ -42,7 +42,7 @@ def mechanical_depth(design,u,v,rgb):
   for x,y in [(.10,.69),(.68,.72),(.72,.06),(.16,.92)]:
    if ellipse(x,y,.055,.025)<1:depth=max(depth,.04)
  elif design=='metal':
-  if rect(.02,.405,.24,.49):depth=.10
+  if rect(.02,.45,.27,.55):depth=.10
   elif u<.085:depth=.012
  elif design=='reinforced':
   if u<.14 and any(a<v<b for a,b in [(.065,.24),(.72,.91)]):depth=.07
@@ -68,6 +68,9 @@ def relief_artwork(geo,root,background,crop,width,height,left,bottom,center_y,ba
   cr=[];dr=[]
   for col in range(w):
    k=((ih-1-y0-row)*iw+x0+col)*4;rgb=tuple(round(pixels[k+i]*255) for i in range(3))
+   # The slanted source door leaves five blue floor pixels in the lower-left
+   # corner of this rectangular crop. Continue the cyan metal into that corner.
+   if design=='lab' and rgb==(0,0,168):rgb=(0,168,168)
    cr.append(rgb);dr.append(base_depth+mechanical_depth(design,(col+.5)/w,(row+.5)/h,rgb))
    if rgb not in materials:
     m=bpy.data.materials.new(design+'_metal_'+'_'.join(map(str,rgb)));m.diffuse_color=(*[linear(v) for v in rgb],1);materials[rgb]=m
@@ -151,7 +154,12 @@ def grating_leaf(geo):
 
 def artwork_leaf(geo,root,background,crop):
  """Unit leaf with solid mechanical profiles and original EGA face colors."""
- geo.box('Metal_leaf_body',(0,0,0),(1,.08,1),'blue')
+ # Match the exposed core to each door's artwork, including its top/bottom edges.
+ body_color={'031':'darkgray','030':(0,168,168)}.get(background,'blue')
+ if isinstance(body_color,tuple):
+  material=bpy.data.materials.new('Lab_door_cyan_core');material.diffuse_color=(*[linear(v) for v in body_color],1)
+  body_color=material
+ geo.box('Metal_leaf_body',(0,0,0),(1,.08,1),body_color)
  design={'030':'lab','031':'metal'}.get(background,'reinforced' if crop[0]==109 else 'dungeon')
  relief_artwork(geo,root,background,crop,1,1,-.5,-.5,0,.041,design)
 
