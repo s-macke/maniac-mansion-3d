@@ -24,14 +24,18 @@ box('Garage_threshold',(F+.07,(O0+O1)/2,.003),(.14,O1-O0,.006),'gray')
 for h in holes:
  for x in [h['x0'],h['x1']]:box('Hatch_rim',(x,(h['y0']+h['y1'])/2,.025),(.065,h['y1']-h['y0']+.065,.05),'gray')
  for y in [h['y0'],h['y1']]:box('Hatch_rim',((h['x0']+h['x1'])/2,y,.025),(h['x1']-h['x0'],.065,.05),'gray')
-for y in [A+T/2,B-T/2]:box('Garage_side',((F+W)/2,y,H/2),(W-F,T,H),'darkgray')
+# Butt side walls against front/back walls instead of overlapping their full
+# thickness: the old exposed end faces fought the facade at both outer corners.
+for y in [A+T/2,B-T/2]:box('Garage_side',((F+W)/2,y,H/2),(W-F-2*T,T,H),'darkgray')
 box('Garage_back',(W-T/2,(A+B)/2,H/2),(T,B-A,H),'darkgray')
 for a,b in [(A,O0),(O1,B)]:box('Garage_front',(F+T/2,(a+b)/2,H/2),(T,b-a,H),'gray')
 box('Garage_header',(F+T/2,(O0+O1)/2,(OH+H)/2),(T,O1-O0,H-OH),'gray')
-for y in [O0,O1]:box('Bay_reveal',(F+.07,y,OH/2),(.22,.12,OH),'black')
-box('Bay_lintel',(F+.07,(O0+O1)/2,OH),(.22,O1-O0,.12),'black')
+for y in [O0,O1]:box('Bay_reveal',(F+.075,y,OH/2),(.23,.12,OH),'black')
+box('Bay_lintel',(F+.075,(O0+O1)/2,OH),(.23,O1-O0,.12),'black')
 # Roof and gable silhouette are inferred from the cutaway artwork.
-box('Ceiling_garage',((F+W)/2,(A+B)/2,H+.035),(W-F,B-A,.07),'gray')
+# Keep the slab inside the wall footprint; its vertical edge must not share
+# the front/back gable plane. The wall/gable silhouette stays unchanged.
+box('Ceiling_garage',((F+W)/2,(A+B)/2,H+.035),(W-F-2*T,B-A-2*T,.07),'gray')
 ridge=4.75;mid=(A+B)/2
 for y in [A-.15,B+.15]:
  geo.mesh('Garage_roof',[(F-.18,y,H+.06),(W+.18,y,H+.06),(W+.18,mid,ridge),(F-.18,mid,ridge)],[(0,1,2,3)] if y<mid else [(3,2,1,0)],'darkgray')

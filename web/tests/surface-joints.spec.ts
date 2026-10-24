@@ -44,3 +44,18 @@ test('ceiling rails continue across landing and security door headers',async()=>
   expect(hits.length).toBeGreaterThan(0);expect(hits[0].distance).toBeLessThan(.27);
  }
 });
+
+test('garage facade corners and gable have a single exposed surface',async()=>{
+ const garage=await model('garage_v1_compact.glb');
+ for(const x of [4,14])for(const [y,z] of [[.55,.73],[7.455,1.54],[.55,3.19],[7.455,3.19],[1.521,3.347],[6.479,3.323],[4.1,3.335]]){
+  const direction=x===4?1:-1;
+  const ray=new THREE.Raycaster(new THREE.Vector3(x-direction*.1,z,-y),new THREE.Vector3(direction,0,0),.099,.101);
+  expect(ray.intersectObject(garage,true).length,`facade ${x}, ${y}, ${z}`).toBe(1);
+ }
+ // The inner faces of the black jambs/header must stand clear of the gray wall.
+ for(const [y,z] of [[1.57,1.31],[6.43,1.31],[3.71,2.98]]){
+  const ray=new THREE.Raycaster(new THREE.Vector3(4.3,z,-y),new THREE.Vector3(-1,0,0),.10,.121);
+  const hits=ray.intersectObject(garage,true);
+  expect(hits[0].distance).toBeCloseTo(.11,4);
+ }
+});

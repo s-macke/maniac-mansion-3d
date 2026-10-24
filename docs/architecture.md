@@ -52,6 +52,27 @@ Set `BLENDER_BIN` to select Blender locally, or use `./docker-build.sh` for the 
 
 Website build/dev commands validate and copy active assets automatically. `web/lib/house/generated.json`, `adapters.generated.ts`, and `web/public/models/<unit>/` are generated; edit room packages and the house layout instead. Superseded asset copies have been removed.
 
+## Read-only surface audit
+
+With existing room GLBs and installed web dependencies, run
+`node web/scripts/audit-surfaces.mjs` (optionally followed by room definition IDs).
+Filtered runs use a subdirectory named after the selected rooms, preserving the
+full-house report for before/after comparisons.
+It writes `generated/reports/surface-audit/positions.md` and `findings.json` with
+room-local Blender coordinates, triangle references, overlap areas and plane gaps.
+`review-first.md` lists candidates with an unobstructed geometric ray from the
+configured room spawn (eye height 1.6 m), sampling the 100 largest same-direction
+overlaps per room. This shortlist is a starting point, not exhaustive visibility
+coverage; shared kits are absent from the ray test too.
+The scan finds parallel triangle overlaps within 0.5 mm; common edges are excluded.
+Nearby findings are grouped into 25 cm cells. Opposite face normals are reported
+separately because they often indicate internal solid contacts. These candidates
+are not proof of visible flicker: occlusion, intentional layers, camera depth
+precision and fine-line aliasing require visual review. Separately instanced shared
+kits, inter-room seams and runtime portal surfaces are outside this first scan.
+Run its synthetic geometry checks with
+`node --test web/scripts/audit-surfaces.test.mjs`. No models are modified.
+
 ## Adding another room
 
 1. Create `rooms/<new_room>/` with its authored `room.json`, builder and README. Reference original PNGs in `source/` and declare output paths beneath `generated/`. Call `load_config(..., prepare=True)` at construction start and `save_generated(config)` when construction completes. Use the shared geometry helpers and bake configuration.

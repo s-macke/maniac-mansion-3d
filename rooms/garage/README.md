@@ -42,3 +42,12 @@ Restored the small white/red bumper sticker beside the rear plate using the orig
 The covered floor now matches the dark gray in 016, with a lighter gray threshold. The rear window carries the source cyan arc and yellow emblem on its actual sloping glass. Curved shoulder trim, the trunk badge and bumper guards complete the rear details; the EDSEL plate has a solid bracket rather than floating ahead of the body. Floor/hatch positions and the existing circulation route are unchanged.
 
 Remaining: the compound car body curves and roof profile are still simplified. The unseen nose, roof construction and bay depth remain inferred; the rear-facing orientation and pool/cellar routes are established decisions.
+
+## Wall surface joints
+
+Side walls butt against the front and rear walls without overlapping their
+thickness. The ceiling slab ends inside the wall footprint, avoiding coplanar
+edges on the gables. Black bay trim retains its outer face and extends 1 cm past
+the inner wall face, so its back no longer competes with the gray wall. These
+changes remove facade, corner and roof-edge surface overlaps without changing
+the building outline or opening dimensions.
